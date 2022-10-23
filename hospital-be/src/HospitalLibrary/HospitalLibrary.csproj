@@ -9,6 +9,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,8 +18,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Model\" />
-    <Folder Include="Core\Repository\" />
     <Folder Include="Core\Service\" />
     <Folder Include="GraphicalEditor\Model\" />
     <Folder Include="GraphicalEditor\Service\" />
@@ -26,7 +25,6 @@
     <Folder Include="MedicalRecords\Model\" />
     <Folder Include="MedicalRecords\Service\" />
     <Folder Include="MedicalRecords\Repository\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

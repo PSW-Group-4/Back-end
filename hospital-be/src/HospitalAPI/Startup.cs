@@ -1,3 +1,6 @@
+using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Patients.Repository;
+using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,13 +25,17 @@ namespace HospitalAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<HospitalDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")));
+            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
+
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IPatientRepository, PatientRepository>();
+            services.AddScoped<IPatientService, PatientService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
