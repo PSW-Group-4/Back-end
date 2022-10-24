@@ -8,8 +8,8 @@ namespace HospitalLibrary.Patients.Service
     {
         IEnumerable<Patient> GetAll();
         Patient GetById(Guid id);
-        void Create(Patient patient);
-        void Update(Patient patient);
+        Patient Create(Patient patient);
+        Patient Update(Patient patient);
         void Delete(Guid patientId);
     }
 }

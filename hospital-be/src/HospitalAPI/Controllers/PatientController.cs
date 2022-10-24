@@ -2,6 +2,8 @@
 using HospitalLibrary.Patients.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using AutoMapper;
+using HospitalAPI.Controllers.Dtos.Patient;
 using HospitalLibrary;
 
 namespace HospitalAPI.Controllers
@@ -11,10 +13,12 @@ namespace HospitalAPI.Controllers
     public class PatientController : ControllerBase
     {
         private readonly IPatientService _patientService;
+        private readonly IMapper _mapper;
 
-        public PatientController(IPatientService patientService)
+        public PatientController(IPatientService patientService, IMapper mapper)
         {
             _patientService = patientService;
+            _mapper = mapper;
         }
 
         // GET: api/Patient
@@ -41,30 +45,29 @@ namespace HospitalAPI.Controllers
 
         // POST api/Patient
         [HttpPost]
-        public ActionResult Create([FromBody]Patient patient)
+        public ActionResult Create([FromBody]PatientRequestDTO patientDto)
         {
+            var patient = _mapper.Map<Patient>(patientDto);
             _patientService.Create(patient);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
         // PUT api/Patient/2
         [HttpPut("{id}")]
-        public ActionResult Update([FromRoute]Guid id,[FromBody] Patient patient)
+        public ActionResult Update([FromRoute]Guid id,[FromBody] PatientRequestDTO patientDto)
         {
-            if (id != patient.Id)
-            {
-                return BadRequest();
-            }
-
+            var patient = _mapper.Map<Patient>(patientDto);
+            patient.Id = id;
+            
             try
             {
-                _patientService.Update(patient);
+                var result = _patientService.Update(patient);
+                return Ok(result);
             }
-            catch
+            catch(NotFoundException)
             {
-                return BadRequest();
+                return NotFound();
             }
-            return Ok(patient);
         }
 
         // DELETE api/Patient/2

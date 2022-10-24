@@ -7,8 +7,8 @@ namespace HospitalLibrary.Core.Repository
     {
         IEnumerable<T> GetAll();
         T GetById(Guid id);
-        void Create(T entity);
-        void Update(T entity);
+        T Create(T entity);
+        T Update(T entity);
         void Delete(Guid id);
     }
 }

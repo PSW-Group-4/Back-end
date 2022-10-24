@@ -31,16 +31,18 @@ namespace HospitalLibrary.Core.Repository
             return result;
         }
 
-        public void Create(Address address)
+        public Address Create(Address address)
         {
             _context.Addresses.Add(address);
             _context.SaveChanges();
+            return address;
         }
 
-        public void Update(Address address)
+        public Address Update(Address address)
         {
             _context.Entry(address).State = EntityState.Modified;
             _context.SaveChanges();
+            return address;
         }
 
         public void Delete(Guid addressId)

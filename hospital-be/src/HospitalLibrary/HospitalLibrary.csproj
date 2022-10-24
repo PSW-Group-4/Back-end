@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,6 +26,7 @@
     <Folder Include="MedicalRecords\Model\" />
     <Folder Include="MedicalRecords\Service\" />
     <Folder Include="MedicalRecords\Repository\" />
+    <Folder Include="Settings\Configurations" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -9,5 +10,13 @@ namespace HospitalLibrary.Core.Model
         public string Country { get; set; }
         public string Street { get; set; }
         public string StreetNumber { get; set; }
+        
+        public void Update(Address address)
+        {
+            City = address.City;
+            Country = address.Country;
+            Street = address.Street;
+            StreetNumber = address.StreetNumber;
+        }
     }
 }

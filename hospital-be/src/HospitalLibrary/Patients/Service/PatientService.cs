@@ -24,14 +24,14 @@ namespace HospitalLibrary.Patients.Service
             return _patientRepository.GetById(id);
         }
 
-        public void Create(Patient patient)
+        public Patient Create(Patient patient)
         {
-            _patientRepository.Create(patient);
+            return _patientRepository.Create(patient);
         }
 
-        public void Update(Patient patient)
+        public Patient Update(Patient patient)
         {
-            _patientRepository.Update(patient);
+            return _patientRepository.Update(patient);
         }
 
         public void Delete(Guid patientId)

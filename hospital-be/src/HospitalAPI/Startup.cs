@@ -1,3 +1,4 @@
+using HospitalAPI.Mapper;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
@@ -32,6 +33,8 @@ namespace HospitalAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
+
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddScoped<IAddressRepository, AddressRepository>();
             //Patient

@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -24,5 +19,17 @@ namespace HospitalLibrary.Core.Model
         public string Jmbg { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
+
+        public void Update(Person person)
+        {
+            Name = person.Name;
+            Surname = person.Surname;
+            Birthdate = person.Birthdate;
+            Gender = person.Gender;
+            Address.Update(person.Address);
+            Jmbg = person.Jmbg;
+            Email = person.Email;
+            PhoneNumber = person.PhoneNumber;
+        }
     }
 }

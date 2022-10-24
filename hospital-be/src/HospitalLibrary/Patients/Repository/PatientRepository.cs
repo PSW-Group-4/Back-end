@@ -1,19 +1,21 @@
 ﻿using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Settings;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Core.Repository;
 
 namespace HospitalLibrary.Patients.Repository
 {
     public class PatientRepository : IPatientRepository
     {
         private readonly HospitalDbContext _context;
+        private readonly IAddressRepository _addressRepository;
 
-        public PatientRepository(HospitalDbContext context)
+        public PatientRepository(HospitalDbContext context, IAddressRepository addressRepository)
         {
             _context = context;
+            _addressRepository = addressRepository;
         }
 
         public IEnumerable<Patient> GetAll()
@@ -31,16 +33,25 @@ namespace HospitalLibrary.Patients.Repository
             return  result;
         }
 
-        public void Create(Patient patient)
+        public Patient Create(Patient patient)
         {
             _context.Patients.Add(patient);
             _context.SaveChanges();
+            return patient;
         }
 
-        public void Update(Patient patient)
+        public Patient Update(Patient patient)
         {
-            _context.Entry(patient).State = EntityState.Modified;
+            var updatingPatient = _context.Patients.SingleOrDefault(p => p.Id == patient.Id);
+            if (updatingPatient == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            updatingPatient.Update(patient);
+            
             _context.SaveChanges();
+            return updatingPatient;
         }
 
         public void Delete(Guid patientId)
