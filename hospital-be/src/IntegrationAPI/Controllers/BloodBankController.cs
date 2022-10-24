@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.BloodBanks.Service;
+using AutoMapper;
+using System.Collections.Generic;
+using IntegrationLibrary.BloodBanks.Model;
 
 namespace IntegrationAPI.Controllers
 {
@@ -8,10 +11,20 @@ namespace IntegrationAPI.Controllers
     public class BloodBankController : ControllerBase
     {
         private readonly IBloodBankService _service;
+        private readonly IMapper _mapper;
+
+        public BloodBankController(IBloodBankService service, IMapper mapper)
+        {
+            _service = service;
+            _mapper = mapper;
+        }
+
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_service.GetAll());
+            IEnumerable<BloodBank> bloodBanks = _service.GetAll();
+            IEnumerable<BloodBankDto> bloodBanksDto = _mapper.Map<IEnumerable<BloodBank>, IEnumerable<BloodBankDto>>(bloodBanks);
+            return Ok(bloodBanksDto);
         }
 
     }

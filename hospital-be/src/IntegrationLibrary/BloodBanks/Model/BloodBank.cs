@@ -8,11 +8,11 @@ namespace IntegrationLibrary.BloodBanks.Model
 {
     public class BloodBank
     {
-        private Guid Id { get; set; }
-        private string Name { get; set; }
-        private string ServerAddress { get; set; }
-        private string EmailAddress { get; set; }
-        private string Password { get; set; }
-        private string ApiKey { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string ServerAddress { get; set; }
+        public string EmailAddress { get; set; }
+        public string Password { get; set; }
+        public string ApiKey { get; set; }
     }
 }
