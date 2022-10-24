@@ -2,44 +2,41 @@
 using HospitalLibrary.Patients.Repository;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Patients.Service
 {
     public class PatientService : IPatientService
     {
-        private readonly IPatientRepository _PatientRepository;
+        private readonly IPatientRepository _patientRepository;
 
-        public PatientService(IPatientRepository PatientRepository)
+        public PatientService(IPatientRepository patientRepository)
         {
-            _PatientRepository = PatientRepository;
+            _patientRepository = patientRepository;
         }
 
         public IEnumerable<Patient> GetAll()
         {
-            return _PatientRepository.GetAll();
+            return _patientRepository.GetAll();
         }
 
         public Patient GetById(Guid id)
         {
-            return _PatientRepository.GetById(id);
+            return _patientRepository.GetById(id);
         }
 
-        public void Create(Patient Patient)
+        public void Create(Patient patient)
         {
-            _PatientRepository.Create(Patient);
+            _patientRepository.Create(patient);
         }
 
-        public void Update(Patient Patient)
+        public void Update(Patient patient)
         {
-            _PatientRepository.Update(Patient);
+            _patientRepository.Update(patient);
         }
 
-        public void Delete(Patient Patient)
+        public void Delete(Guid patientId)
         {
-            _PatientRepository.Delete(Patient);
+            _patientRepository.Delete(patientId);
         }
     }
 }

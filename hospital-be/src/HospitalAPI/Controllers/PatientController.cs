@@ -1,8 +1,8 @@
 ﻿using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using HospitalLibrary;
 
 namespace HospitalAPI.Controllers
 {
@@ -10,55 +10,47 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class PatientController : ControllerBase
     {
-        private readonly IPatientService _patientervice;
+        private readonly IPatientService _patientService;
 
-        public PatientController(IPatientService Patientervice)
+        public PatientController(IPatientService patientService)
         {
-            _patientervice = Patientervice;
+            _patientService = patientService;
         }
 
         // GET: api/Patient
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_patientervice.GetAll());
+            return Ok(_patientService.GetAll());
         }
 
         // GET api/Patient/2
         [HttpGet("{id}")]
-        public ActionResult GetById(Guid id)
+        public ActionResult GetById([FromRoute]Guid id)
         {
-            var patient = _patientervice.GetById(id);
-            if (patient == null)
+            try
+            {
+                var patient = _patientService.GetById(id);
+                return Ok(patient);
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
-
-            return Ok(patient);
         }
 
         // POST api/Patient
         [HttpPost]
-        public ActionResult Create(Patient patient)
+        public ActionResult Create([FromBody]Patient patient)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _patientervice.Create(patient);
+            _patientService.Create(patient);
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
         // PUT api/Patient/2
         [HttpPut("{id}")]
-        public ActionResult Update(Guid id, Patient patient)
+        public ActionResult Update([FromRoute]Guid id,[FromBody] Patient patient)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (id != patient.Id)
             {
                 return BadRequest();
@@ -66,28 +58,28 @@ namespace HospitalAPI.Controllers
 
             try
             {
-                _patientervice.Update(patient);
+                _patientService.Update(patient);
             }
             catch
             {
                 return BadRequest();
             }
-
             return Ok(patient);
         }
 
         // DELETE api/Patient/2
         [HttpDelete("{id}")]
-        public ActionResult Delete(Guid id)
+        public ActionResult Delete([FromRoute]Guid id)
         {
-            var patient = _patientervice.GetById(id);
-            if (patient == null)
+            try
+            {
+                _patientService.Delete(id);
+                return NoContent();
+            }
+            catch (NotFoundException)
             {
                 return NotFound();
             }
-
-            _patientervice.Delete(patient);
-            return NoContent();
         }
     }
 }

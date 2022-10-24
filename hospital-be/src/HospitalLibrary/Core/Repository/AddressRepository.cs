@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Repository
 {
@@ -25,32 +23,30 @@ namespace HospitalLibrary.Core.Repository
 
         public Address GetById(Guid id)
         {
-            return _context.Addresses.Find(id);
+            var result = _context.Addresses.Find(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
+            return result;
         }
 
-        public void Create(Address Address)
+        public void Create(Address address)
         {
-            _context.Addresses.Add(Address);
+            _context.Addresses.Add(address);
             _context.SaveChanges();
         }
 
-        public void Update(Address Address)
+        public void Update(Address address)
         {
-            _context.Entry(Address).State = EntityState.Modified;
-
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                throw;
-            }
+            _context.Entry(address).State = EntityState.Modified;
+            _context.SaveChanges();
         }
 
-        public void Delete(Address Address)
+        public void Delete(Guid addressId)
         {
-            _context.Addresses.Remove(Address);
+            var address = GetById(addressId);
+            _context.Addresses.Remove(address);
             _context.SaveChanges();
         }
     }

@@ -34,6 +34,7 @@ namespace HospitalAPI
             });
 
             services.AddScoped<IAddressRepository, AddressRepository>();
+            //Patient
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IPatientService, PatientService>();
         }
