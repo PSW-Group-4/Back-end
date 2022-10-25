@@ -8,7 +8,7 @@ namespace HospitalLibrary.BuildingManagment.Model
 {
     public class Floor
     {
-        public Guid Guid {get; set;}
+        public Guid Id {get; set;}
         public String Name {get; set;}
         public Int16 Number {get; set;}
 

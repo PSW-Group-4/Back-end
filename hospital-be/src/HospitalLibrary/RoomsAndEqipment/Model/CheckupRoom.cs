@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.RoomsAndEqipment.Model
 {
-    public class CheckupRoom
+    public class CheckupRoom : Room
     {
         
     }
