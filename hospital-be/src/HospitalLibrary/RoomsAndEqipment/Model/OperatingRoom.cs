@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.RoomsAndEqipment.Model
 {
-    public class OperatingRoom
+    public class OperatingRoom : Room
     {
-        
+        public virtual ICollection<Equipment> EquipmentList {get; set;}
     }
 }

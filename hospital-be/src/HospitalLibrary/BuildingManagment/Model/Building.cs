@@ -10,6 +10,6 @@ namespace HospitalLibrary.BuildingManagment.Model
         public Guid Guid {get; set;}
         public String Name {get; set;}
 
-        public List<Floor> FloorList {get; set;}
+        public virtual ICollection<Floor> FloorList {get; set;}
     }
 }

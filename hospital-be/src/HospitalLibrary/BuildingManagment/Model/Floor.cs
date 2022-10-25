@@ -12,6 +12,6 @@ namespace HospitalLibrary.BuildingManagment.Model
         public String Name {get; set;}
         public Int16 Number {get; set;}
 
-        public List<Room> RoomList {get; set;}
+        public virtual ICollection<Room> RoomList {get; set;}
     }
 }
