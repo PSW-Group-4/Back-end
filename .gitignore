@@ -350,3 +350,6 @@ MigrationBackup/
 .ionide/
 #Rider
 .idea/
+
+# VS Code
+.vscode/
