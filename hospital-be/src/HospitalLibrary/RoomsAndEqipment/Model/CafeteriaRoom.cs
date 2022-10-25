@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.RoomsAndEqipment.Model
 {
-    public class Cafeteria
+    public class CafeteriaRoom
     {
-        
+        //TODO Change to DateTime
+        public String Workhours {get; set;}
     }
 }
