@@ -26,12 +26,12 @@ namespace IntegrationAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<IntegrationDbContext>(options =>
-            options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
+            options.UseNpgsql(Configuration.GetConnectionString("IntegrationDb")).UseLazyLoadingProxies());
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Integration Project", Version = "v1" });
             });
 
             services.AddAutoMapper(typeof(MappingProfile));
