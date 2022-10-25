@@ -20,7 +20,7 @@ namespace HospitalLibrary.Feedbacks.Model
         public bool IsAnonimous { get; set; }
         public bool IsPublic { get; private set; }
         public Status Status { get; set; }
-        public Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; }
         public DateTime Date { get; set; }
 
         public void Update(Feedback feedback)

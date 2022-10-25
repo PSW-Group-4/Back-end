@@ -73,7 +73,8 @@ namespace HospitalAPI.Controllers
         {
             var feedback = _mapper.Map<Feedback>(feedbackDto);
             _feedbackService.Create(feedback);
-            return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
+            //return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
+            return Ok(feedback);
         }
     }
 }
