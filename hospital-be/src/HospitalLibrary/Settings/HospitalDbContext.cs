@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
