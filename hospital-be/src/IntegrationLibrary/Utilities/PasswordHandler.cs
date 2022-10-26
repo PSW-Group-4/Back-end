@@ -11,13 +11,15 @@ namespace IntegrationLibrary.Utilities
 {
     public class PasswordHandler : PasswordHasher<BloodBank>
     {
+
+        const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
+        const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string NUMBERS = "123456789";
+        const string SPECIALS = @"!@£$%^&*()#€";
+
         public static string GeneratePassword(bool useLowercase = true, bool useUppercase = true, bool useNumbers = true, bool useSpecial = true,
-                int passwordSize = 14)
+                int passwordSize = 20)
         {
-            const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
-            const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            const string NUMBERS = "123456789";
-            const string SPECIALS = @"!@£$%^&*()#€";
 
             char[] _password = new char[passwordSize];
             string charSet = "";

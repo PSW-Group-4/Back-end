@@ -31,10 +31,9 @@ namespace IntegrationLibrary.BloodBanks.Service
         public BloodBank Create(BloodBank bloodBank)
         {
             
-            List<String> keys = _repository.GetApiKeys().ToList();
-            bloodBank.ApiKey = ApiKeyGeneration.generateKey(keys);
-            EmailSending.sendEmail(CreateEmailMessage(bloodBank));
+            bloodBank.ApiKey = ApiKeyGeneration.generateKey();
             bloodBank.Password = PasswordHandler.GeneratePassword();
+            //EmailSending.sendEmail(CreateEmailMessage(bloodBank));
             return _repository.Create(bloodBank);
         }
         private MimeMessage CreateEmailMessage(BloodBank bloodBank)
