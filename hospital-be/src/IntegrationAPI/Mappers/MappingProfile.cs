@@ -7,7 +7,7 @@ namespace IntegrationAPI.Mappers
     {
         public MappingProfile()
         {
-            CreateMap<BloodBankDto, BloodBank>();
+            CreateMap<BloodBankRegisterDto, BloodBank>();
         }
     }
 }

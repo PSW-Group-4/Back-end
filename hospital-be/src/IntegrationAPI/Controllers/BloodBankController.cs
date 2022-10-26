@@ -3,6 +3,7 @@ using IntegrationLibrary.BloodBanks.Service;
 using AutoMapper;
 using System.Collections.Generic;
 using IntegrationLibrary.BloodBanks.Model;
+using Microsoft.AspNetCore.Http;
 
 namespace IntegrationAPI.Controllers
 {
@@ -23,15 +24,14 @@ namespace IntegrationAPI.Controllers
         public ActionResult GetAll()
         {
             IEnumerable<BloodBank> bloodBanks = _service.GetAll();
-            IEnumerable<BloodBankDto> bloodBanksDto = _mapper.Map<IEnumerable<BloodBank>, IEnumerable<BloodBankDto>>(bloodBanks);
-            return Ok(bloodBanksDto);
+            return Ok(bloodBanks);
         }
         [HttpPost]
-        public ActionResult Create( BloodBankDto bloodBankDto)
+        public ActionResult Create(BloodBankRegisterDto bloodBankDto)
         {
             var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Create(bloodBank);
-            return CreatedAtAction("GetById", new { id = bloodBank.Id }, bloodBank);
+            return Ok(bloodBank);
         }
     }
 }
