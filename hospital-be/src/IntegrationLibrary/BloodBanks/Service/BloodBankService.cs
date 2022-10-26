@@ -32,7 +32,11 @@ namespace IntegrationLibrary.BloodBanks.Service
         {
             
             bloodBank.ApiKey = ApiKeyGeneration.generateKey();
-            bloodBank.Password = PasswordHandler.GeneratePassword();
+            string generatedPassword = PasswordHandler.GeneratePassword();
+            //when we figure out how to do dependency injection in .Net, call:
+            //string hashedPassword = passwordHandler.HashPassword(generatedPassword);
+            //and set that as blood bank's password
+            bloodBank.Password = generatedPassword;
             //EmailSending.sendEmail(CreateEmailMessage(bloodBank));
             return _repository.Create(bloodBank);
         }
