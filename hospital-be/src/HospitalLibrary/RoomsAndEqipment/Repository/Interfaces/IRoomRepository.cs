@@ -9,6 +9,6 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository
 {
     public interface IRoomRepository : IRepositoryBase<Room>
     {
-    
+        
     }
 }

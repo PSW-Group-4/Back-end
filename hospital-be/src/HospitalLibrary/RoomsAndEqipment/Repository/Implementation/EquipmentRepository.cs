@@ -18,27 +18,45 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
         }
         public Equipment Create(Equipment entity)
         {
-            throw new NotImplementedException();
+            _context.Equipments.Add(entity);
+            _context.SaveChanges();
+            return entity;
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = GetById(id);
+            _context.Equipments.Remove(entity);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Equipment> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Equipments.ToList();
         }
 
         public Equipment GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var result =  _context.Equipments.Find(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
+            return result;
         }
 
         public Equipment Update(Equipment entity)
         {
-            throw new NotImplementedException();
+            var updatingEntity = _context.Equipments.SingleOrDefault(e => e.Id == entity.Id);
+            if (updatingEntity == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            updatingEntity.Update(entity);
+            
+            _context.SaveChanges();
+            return updatingEntity;
         }
     }
 }
