@@ -41,7 +41,7 @@ namespace HospitalLibrary.BuildingManagment.Repository.Implementation
             {
                 throw new NotFoundException();
             }
-            return  result;
+            return result;
         }
 
         public Building Update(Building entity)

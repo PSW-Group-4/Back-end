@@ -42,7 +42,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
             {
                 throw new NotFoundException();
             }
-            return  result;
+            return result;
         }
 
         public CafeteriaRoom Update(CafeteriaRoom entity)

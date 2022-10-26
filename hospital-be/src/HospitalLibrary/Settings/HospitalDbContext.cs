@@ -16,7 +16,10 @@ namespace HospitalLibrary.Settings
         public DbSet<Floor> Floors {get; set; }
         public DbSet<Building> Buildings {get; set;}
         
+        public DbSet<Room> Rooms {get; set;}
         public DbSet<CafeteriaRoom> CafeteriaRooms {get; set;}
+        public DbSet<Equipment> Equipments {get; set;}
+
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
