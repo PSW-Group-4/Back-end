@@ -1,3 +1,4 @@
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
@@ -25,6 +26,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Equipment> Equipments {get; set;}
 
         public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
