@@ -13,5 +13,11 @@ namespace HospitalLibrary.BuildingManagment.Model
         public Int16 Number {get; set;}
 
         public virtual ICollection<Room> RoomList {get; set;}
+    
+        public void Update(Floor floor) {
+            Name = floor.Name;
+            Number = floor.Number;
+            RoomList = floor.RoomList;
+        }
     }
 }

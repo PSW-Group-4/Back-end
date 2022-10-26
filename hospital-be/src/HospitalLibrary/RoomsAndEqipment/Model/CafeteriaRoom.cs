@@ -9,5 +9,10 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
     {
         //TODO Change to DateTime
         public String Workhours {get; set;}
+
+        public void Update(CafeteriaRoom room) {
+            //base.Update(room);
+            Workhours = room.Workhours;
+        }
     }
 }

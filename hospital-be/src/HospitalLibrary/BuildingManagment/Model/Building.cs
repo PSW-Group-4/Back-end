@@ -11,5 +11,10 @@ namespace HospitalLibrary.BuildingManagment.Model
         public String Name {get; set;}
 
         public virtual ICollection<Floor> FloorList {get; set;}
+   
+        public void Update(Building building) {
+            Name = building.Name;
+            FloorList = building.FloorList;
+        }
     }
 }

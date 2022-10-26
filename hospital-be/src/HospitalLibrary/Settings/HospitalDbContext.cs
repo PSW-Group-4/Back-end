@@ -1,5 +1,7 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.BuildingManagment.Model;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.RoomsAndEqipment.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;

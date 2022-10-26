@@ -27,7 +27,7 @@ namespace HospitalLibrary.BuildingManagment.Repository.Implementation
         public void Delete(Guid id)
         {
             var entity = GetById(id);
-            _context.Floor.Remove(entity);
+            _context.Floors.Remove(entity);
             _context.SaveChanges();
         }
 
