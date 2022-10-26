@@ -21,16 +21,23 @@ namespace HospitalAPI.Mapper
         {
             CreateMap<AddressRequestDto, Address>();
             CreateMap<PersonRequestDto, Person>();
+            CreateMap<MapItemRequestDto, MapItem>();
+
             CreateMap<PatientRequestDTO, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
+
             CreateMap<BuildingMapRequestDto,BuildingMap>()
                 .IncludeBase<MapItemRequestDto,MapItem>();
+
             CreateMap<FloorMapRequestDto, FloorMap>()
                 .IncludeBase<MapItemRequestDto, MapItem>();
+
             CreateMap<RoomMapRequestDto, RoomMap>()
                 .IncludeBase<MapItemRequestDto, MapItem>();
+
             CreateMap<DoctorRequestDto, Doctor>()
                 .IncludeBase<PersonRequestDto, Person>();
+
             CreateMap<RoomRequestDto, Room>();
             CreateMap<AppointmentRequestDto, Appointment>();
 

@@ -1,3 +1,3 @@
-INSERT INTO public."Doctors" ("Id","LicenceNum","Speciality","WorkingTimeStart","WorkingTimeEnd","Name","Surname","Birthdate","Gender","AddressId","Jmbg","Email","PhoneNumber") VALUES
-	 ('1412c639-c5e1-47a1-b29b-1fe935536612','41234123414','Fizioterapeut','08:00','12:00','Petar','Popovic','2001-11-04 00:00:00',0,'de3ebdd7-d0da-4646-9bd1-e04df2c562ad','837198219312','marko1@gmail.com','06412332111'),
-	 ('15f4c4e0-08b2-44ef-9e1b-0f14184d59d2','123412341234','Oftamolog','08:00','13:00','Milovan','Miric','1956-12-12 00:00:00',0,'be3135bf-47fb-454a-9e64-6af7a0fc838c','49371947194192','stefan1@gmail.com','06315124125');
+INSERT INTO public."Doctors" ("Id","LicenceNum","Speciality","WorkingTimeStart","WorkingTimeEnd","Name","Surname","Birthdate","Gender","AddressId","Jmbg","Email","PhoneNumber","RoomId") VALUES
+	 ('1412c639-c5e1-47a1-b29b-1fe935536612','41234123414','Fizioterapeut','08:00','12:00','Petar','Popovic','2001-11-04 00:00:00',0,'de3ebdd7-d0da-4646-9bd1-e04df2c562ad','837198219312','marko1@gmail.com','06412332111','9ae3255d-261f-472f-a961-7f2e7d05d95c'),
+	 ('15f4c4e0-08b2-44ef-9e1b-0f14184d59d2','123412341234','Oftamolog','08:00','13:00','Milovan','Miric','1956-12-12 00:00:00',0,'be3135bf-47fb-454a-9e64-6af7a0fc838c','49371947194192','stefan1@gmail.com','06315124125','8dd731ee-197f-40a8-a5e1-845662b0c0cd');
