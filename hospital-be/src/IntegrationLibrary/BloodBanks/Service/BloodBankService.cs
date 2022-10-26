@@ -29,7 +29,10 @@ namespace IntegrationLibrary.BloodBanks.Service
 
         public BloodBank Create(BloodBank bloodBank)
         {
+            
             List<String> keys = _repository.GetApiKeys().ToList();
+            bloodBank.ApiKey = ApiKeyGeneration.generateKey(keys);
+            bloodBank.Password = PasswordHandler.GeneratePassword();
             return _repository.Create(bloodBank);
         }
     }
