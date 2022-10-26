@@ -9,6 +9,7 @@ namespace HospitalLibrary.Appointments.Model
         public Guid RoomId { get; set; }
         public Guid PatientId { get; set; }
         public DateTime DateTime { get; set; }
+        public bool IsDone { get; set; }
 
         public void Update(Appointment appointment)
         {

@@ -9,7 +9,8 @@ namespace HospitalAPI.Controllers.Dtos.Appointment
         public DoctorRequestDto Doctor { get; set; }
         public PatientRequestDTO Patient { get; set; }
 
-        // TODO: RoomRequestDto Room
+        //Uncomment when RoomRequestDto gets added
+        //public RoomRequestDto Room { get; set; }
         public DateTime DateTime { get; set; }
     }
 }
