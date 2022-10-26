@@ -9,7 +9,7 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
 {
     public class RoomMap : MapItem
     {
-        public Room Room { get; set; }
+        public virtual Room Room { get; set; }
 
         public void Update(RoomMap map)
         {

@@ -8,6 +8,10 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalAPI.Controllers.Dtos.Doctor;
+using HospitalLibrary.Doctors.Model;
+using HospitalAPI.Controllers.Dtos.Appointment;
+using HospitalLibrary.Appointments.Model;
 
 namespace HospitalAPI.Mapper
 {
@@ -28,6 +32,8 @@ namespace HospitalAPI.Mapper
             CreateMap<DoctorRequestDto, Doctor>()
                 .IncludeBase<PersonRequestDto, Person>();
             CreateMap<RoomRequestDto, Room>();
+            CreateMap<AppointmentRequestDto, Appointment>();
+
         }
     }
 }

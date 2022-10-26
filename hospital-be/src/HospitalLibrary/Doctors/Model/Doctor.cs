@@ -15,6 +15,7 @@ namespace HospitalLibrary.Doctors.Model
         public string Speciality { get; set; }
         public string WorkingTimeStart { get; set; }
         public string WorkingTimeEnd { get; set; }
+        public Guid RoomId { get; set; }
         public virtual Room Room { get; set; }
 
         public void Update(Doctor doctor)

@@ -49,7 +49,7 @@ namespace HospitalLibrary.BuildingManagmentMap.Repository.Implementation
 
         public FloorMap Update(FloorMap entity)
         {
-            var updatingFloorMap = _context.FloorMaps.FirstOrDefault(x => x.Guid == entity.Guid);
+            var updatingFloorMap = _context.FloorMaps.FirstOrDefault(x => x.Id == entity.Id);
             if (updatingFloorMap == null)
             {
                 throw new NotFoundException();

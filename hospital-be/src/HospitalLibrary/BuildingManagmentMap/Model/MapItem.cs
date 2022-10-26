@@ -8,7 +8,7 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
 {
     public abstract class MapItem
     {
-        public Guid Guid { get; set; }
+        public Guid Id { get; set; }
 
         public int CoordinateX { get; set; } 
 
