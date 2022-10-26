@@ -7,5 +7,6 @@ namespace HospitalAPI.Controllers.Dtos.Rooms
         public Guid Id { get; set; }
         public String Name { get; set; }
         public int Number { get; set; }
+        public String Description { get; set; }
     }
 }

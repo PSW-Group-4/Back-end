@@ -6,6 +6,9 @@ using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
+using HospitalLibrary.RoomsAndEqipment.Repository;
+using HospitalLibrary.RoomsAndEqipment.Service.Implementation;
+using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -50,6 +53,9 @@ namespace HospitalAPI
             //Appointment
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
+            //Room
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IRoomService, RoomService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
