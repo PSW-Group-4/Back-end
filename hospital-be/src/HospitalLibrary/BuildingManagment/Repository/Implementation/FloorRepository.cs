@@ -19,27 +19,45 @@ namespace HospitalLibrary.BuildingManagment.Repository.Implementation
 
         public Floor Create(Floor entity)
         {
-            throw new NotImplementedException();
+            _context.Floors.Add(entity);
+            _context.SaveChanges();
+            return entity;
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = GetById(id);
+            _context.Floor.Remove(entity);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Floor> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Floors.ToList();
         }
 
         public Floor GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var result =  _context.Floors.Find(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
+            return  result;
         }
 
         public Floor Update(Floor entity)
         {
-            throw new NotImplementedException();
+            var updatingEntity = _context.Floors.SingleOrDefault(e => e.Id == entity.Id);
+            if (updatingEntity == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            updatingEntity.Update(entity);
+            
+            _context.SaveChanges();
+            return updatingEntity;
         }
     }
 }

@@ -9,6 +9,5 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
     {
         public Guid Id {get; set;}
         public String Name {get; set;}
-        public String Description {get; set;}
     }
 }
