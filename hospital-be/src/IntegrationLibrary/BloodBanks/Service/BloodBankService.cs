@@ -1,6 +1,7 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.Utilities;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +32,16 @@ namespace IntegrationLibrary.BloodBanks.Service
         {
             List<String> keys = _repository.GetApiKeys().ToList();
             bloodBank.ApiKey = ApiKeyGeneration.generateKey(keys);
+            EmailSending.sendEmail(CreateEmailMessage(bloodBank));
             return _repository.Create(bloodBank);
+        }
+        private MimeMessage CreateEmailMessage(BloodBank bloodBank)
+        {
+            String emailBody = "API key:" + bloodBank.ApiKey + NewLineFormat.Unix +
+                                "Password:" + bloodBank.Password + NewLineFormat.Unix +
+                                "Link: links go here"; //TODO: Add link to public front app to settings and pass it here
+
+           return EmailSending.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, "PSW Integrations", emailBody);
         }
     }
 }

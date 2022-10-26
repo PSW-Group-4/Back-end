@@ -17,27 +17,45 @@ namespace HospitalLibrary.BuildingManagment.Repository.Implementation
         }
         public Building Create(Building entity)
         {
-            throw new NotImplementedException();
+            _context.Buildings.Add(entity);
+            _context.SaveChanges();
+            return entity;
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var entity = GetById(id);
+            _context.Buildings.Remove(entity);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Building> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Buildings.ToList();
         }
 
         public Building GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var result =  _context.Buildings.Find(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
+            return result;
         }
 
         public Building Update(Building entity)
         {
-            throw new NotImplementedException();
+            var updatingEntity = _context.Buildings.SingleOrDefault(e => e.Id == entity.Id);
+            if (updatingEntity == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            updatingEntity.Update(entity);
+            
+            _context.SaveChanges();
+            return updatingEntity;
         }
     }
 }

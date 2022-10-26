@@ -9,16 +9,16 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
     public abstract class Room
     {
         public Guid Id {get; set;}
+        public String Description {get; set;}
         public String Name {get; set;}        
         public int Number { get; set; }
 
         public void Update(Room room) 
         {       
-           
+            Description = room.Description;
             Name = room.Name;
             Number = room.Number;
         }
-
-
+        
     }
 }
