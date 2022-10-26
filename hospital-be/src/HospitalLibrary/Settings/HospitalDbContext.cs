@@ -7,6 +7,7 @@ using HospitalLibrary.RoomsAndEqipment.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
+using HospitalLibrary.BuildingManagmentMap.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -27,6 +28,12 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+
+        public DbSet<BuildingMap> BuildingMaps { get; set; }
+
+        public DbSet<FloorMap> FloorMaps { get; set; }
+
+        public DbSet<RoomMap> RoomMaps { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
