@@ -1,5 +1,7 @@
 using HospitalAPI.Mapper;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Settings;
@@ -40,6 +42,9 @@ namespace HospitalAPI
             //Patient
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IPatientService, PatientService>();
+            //Doctor
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IDoctorService, DoctorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
