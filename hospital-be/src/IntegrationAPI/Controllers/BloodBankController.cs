@@ -26,6 +26,12 @@ namespace IntegrationAPI.Controllers
             IEnumerable<BloodBankDto> bloodBanksDto = _mapper.Map<IEnumerable<BloodBank>, IEnumerable<BloodBankDto>>(bloodBanks);
             return Ok(bloodBanksDto);
         }
-
+        [HttpPost]
+        public ActionResult Create( BloodBankDto bloodBankDto)
+        {
+            var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
+            _service.Create(bloodBank);
+            return CreatedAtAction("GetById", new { id = bloodBank.Id }, bloodBank);
+        }
     }
 }
