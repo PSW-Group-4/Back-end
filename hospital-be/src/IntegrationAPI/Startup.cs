@@ -34,7 +34,7 @@ namespace IntegrationAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Integrations", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Integration Project", Version = "v1" });
             });
 
             services.AddAutoMapper(typeof(MappingProfile));
