@@ -47,14 +47,14 @@ namespace HospitalAPI.Controllers.MapItem
         {
             var roomMap = _mapper.Map<RoomMap>(dto);
             _roomMapService.Create(roomMap);
-            return CreatedAtAction("GetById", new { id = roomMap.Guid }, roomMap);
+            return CreatedAtAction("GetById", new { id = roomMap.Id }, roomMap);
         }
 
         [HttpPut("{id}")]
         public ActionResult Update([FromRoute] Guid id, [FromBody] RoomMapRequestDto dto)
         {
             var roomMap = _mapper.Map<RoomMap>(dto);
-            roomMap.Guid = id;
+            roomMap.Id = id;
 
             try
             {

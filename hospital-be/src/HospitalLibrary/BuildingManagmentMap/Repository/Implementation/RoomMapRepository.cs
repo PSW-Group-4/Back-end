@@ -50,7 +50,7 @@ namespace HospitalLibrary.BuildingManagmentMap.Repository.Implementation
 
         public RoomMap Update(RoomMap entity)
         {
-            var updatingRoomMaps = _context.RoomMaps.SingleOrDefault(p => p.Guid == entity.Guid);
+            var updatingRoomMaps = _context.RoomMaps.SingleOrDefault(p => p.Id == entity.Id);
             if (updatingRoomMaps == null)
             {
                 throw new NotFoundException();
