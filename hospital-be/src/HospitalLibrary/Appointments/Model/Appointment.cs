@@ -20,6 +20,7 @@ namespace HospitalLibrary.Appointments.Model
         public void Update(Appointment appointment)
         {
             DateTime = appointment.DateTime;
+            IsDone = appointment.IsDone;
         }
     }
 }
