@@ -9,7 +9,7 @@ using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.BuildingManagmentMap.Repository.Implementation
 {
-    internal class BuildingMapRepository : IBuildingMapRepository
+    public class BuildingMapRepository : IBuildingMapRepository
     {
 
         private readonly HospitalDbContext _context;

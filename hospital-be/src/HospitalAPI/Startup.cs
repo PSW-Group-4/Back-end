@@ -1,6 +1,10 @@
 using HospitalAPI.Mapper;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
+using HospitalLibrary.BuildingManagmentMap.Repository.Implementation;
+using HospitalLibrary.BuildingManagmentMap.Service.Implementation;
+using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
@@ -56,6 +60,15 @@ namespace HospitalAPI
             //Room
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IRoomService, RoomService>();
+            //MapItems
+            services.AddScoped<IBuildingMapService,BuildingMapService>();
+            services.AddScoped<IBuildingMapRepository,BuildingMapRepository>();
+
+            services.AddScoped<IFloorMapService, FloorMapService>();
+            services.AddScoped<IFloorMapRepository, FloorMapRepository>();
+
+            services.AddScoped<IRoomMapService, RoomMapService>();
+            services.AddScoped<IRoomMapRepository, RoomMapRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

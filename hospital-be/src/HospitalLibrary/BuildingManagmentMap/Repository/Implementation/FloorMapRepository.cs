@@ -8,7 +8,7 @@ using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.BuildingManagmentMap.Repository.Implementation
 {
-    internal class FloorMapRepository : IFloorMapRepository
+    public class FloorMapRepository : IFloorMapRepository
     {
 
         private readonly HospitalDbContext _context;
