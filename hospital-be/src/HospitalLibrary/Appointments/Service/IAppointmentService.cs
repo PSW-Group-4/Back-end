@@ -11,7 +11,5 @@ namespace HospitalLibrary.Appointments.Service
         Appointment Create(Appointment appointment);
         Appointment Update(Appointment appointment);
         void Delete(Guid appointmentId);
-        IEnumerable<Appointment> GetDoctorsOldAppointments(Guid id);
-        IEnumerable<Appointment> GetDoctorsCurrentAppointments(Guid id);
     }
 }

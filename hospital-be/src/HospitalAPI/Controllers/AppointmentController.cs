@@ -84,21 +84,5 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
-
-        // GET: api/Appointment/Old/Doctor/1
-        [HttpGet("Old/Doctor/{id}")]
-        public ActionResult GetDoctorsOldAppoinments([FromRoute] Guid id)
-        {
-            return Ok(_appointmentService.GetDoctorsOldAppointments(id));
-        }
-
-        // GET: api/Appointment/Current/Doctor/1
-        [HttpGet("Current/Doctor/{id}")]
-        public ActionResult GetDoctorsCurrentAppoinments([FromRoute] Guid id)
-        {
-            return Ok(_appointmentService.GetDoctorsCurrentAppointments(id));
-        }
-
-
     }
 }
