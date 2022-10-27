@@ -38,5 +38,37 @@ namespace HospitalLibrary.Appointments.Service
         {
             _appointmentRepository.Delete(appointmentId);
         }
+
+        public IEnumerable<Appointment> GetDoctorsOldAppointments(Guid id)
+        {
+            IEnumerable<Appointment> allAppointments =  _appointmentRepository.GetAll();
+            List<Appointment> doctorsOldAppointments = new List<Appointment>();
+
+            foreach (Appointment appointment in allAppointments)
+            {
+                if (appointment.DoctorId.Equals(id) && appointment.DateTime < DateTime.Now){
+                    doctorsOldAppointments.Add(appointment);
+                }
+            }
+
+            return doctorsOldAppointments;
+        }
+
+        public IEnumerable<Appointment> GetDoctorsCurrentAppointments(Guid id)
+        {
+            IEnumerable<Appointment> allAppointments = _appointmentRepository.GetAll();
+            List<Appointment> doctorsCurrentAppointments = new List<Appointment>();
+
+            foreach (Appointment appointment in allAppointments)
+            {
+                if (appointment.DoctorId.Equals(id) && appointment.DateTime > DateTime.Now)
+                {
+                    doctorsCurrentAppointments.Add(appointment);
+                }
+            }
+
+            return doctorsCurrentAppointments;
+        }
+
     }
 }
