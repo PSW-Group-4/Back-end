@@ -20,7 +20,7 @@ namespace HospitalLibrary.SchedulingAppointment.Service
             _appointmentRepository = appointmentRepository;
             _dctorService = doctorService;
         }
-        public bool IsAvailavle(DateTime time)
+        public bool IsAvailable(DateTime time)
         {
             List<Appointment> appointments = getAll();
             foreach(Appointment appointment in appointments)
@@ -55,7 +55,7 @@ namespace HospitalLibrary.SchedulingAppointment.Service
             DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(getDoctor().WorkingTimeEnd).Hour, DateTime.Parse(getDoctor().WorkingTimeEnd).Minute, 0);
             while (DateTime.Compare(WorkTimeEnd,WorkTimeStart)>0)
             {
-                if(IsAvailavle(WorkTimeStart))
+                if(IsAvailable(WorkTimeStart))
                     list.Add(WorkTimeStart);
                 WorkTimeStart = WorkTimeStart.AddMinutes(30);
             }

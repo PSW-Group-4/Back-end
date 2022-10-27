@@ -20,8 +20,8 @@ namespace HospitalLibrary.Appointments.Service
 
         public IEnumerable<Appointment> GetAll()
         {
-            SchedulingService sc = new SchedulingService(_appointmentRepository, _doctorService);
-            sc.UpdateDoneAppointments();
+            SchedulingService schedulingService = new SchedulingService(_appointmentRepository, _doctorService);
+            schedulingService.UpdateDoneAppointments();
             return _appointmentRepository.GetAll();
         }
 
