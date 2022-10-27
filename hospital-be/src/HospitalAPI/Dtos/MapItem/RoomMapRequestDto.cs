@@ -4,6 +4,6 @@ namespace HospitalAPI.Dtos.MapItem
 {
     public class RoomMapRequestDto : MapItemRequestDto
     {
-        public Room Room { get; set; }
+        public RoomMapRequestDto RoomDto { get; set; }
     }
 }
