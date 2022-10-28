@@ -48,5 +48,20 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_doctorAppointmentService.GetDoctorsCurrentAppointments(id));
         }
+
+        // DELETE api/DoctorAppointment/Email/AppointmentId
+        [HttpDelete("Email/{id}")]
+        public ActionResult deleteAppointmentEndSendNotification([FromRoute] Guid id)
+        {
+            try
+            {
+                _doctorAppointmentService.deleteAppointmentEndSendNotification(id);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

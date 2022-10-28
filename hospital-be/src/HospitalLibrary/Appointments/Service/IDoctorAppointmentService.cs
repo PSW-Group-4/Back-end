@@ -12,5 +12,6 @@ namespace HospitalLibrary.Appointments.Service
         IEnumerable<Appointment> GetDoctorAppointments(Guid id);
         IEnumerable<Appointment> GetDoctorsOldAppointments(Guid id);
         IEnumerable<Appointment> GetDoctorsCurrentAppointments(Guid id);
+        void deleteAppointmentEndSendNotification(Guid id);
     }
 }
