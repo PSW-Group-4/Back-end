@@ -350,3 +350,5 @@ MigrationBackup/
 .ionide/
 #Rider
 .idea/
+#ResetDbScript
+dbResetScript.sql
