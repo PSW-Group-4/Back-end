@@ -10,7 +10,7 @@ namespace HospitalAPI.Dtos.Feedback
     }
     public class FeedbackManagerResponseDto
     {
-        public  Guid PatientId { get; set; }
+        public  Guid Id { get; set; }
         public string PatientFullname { get; set; }
         public DateTime Date  { get; set; }
         public string Text { get; set; }
