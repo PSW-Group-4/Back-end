@@ -22,9 +22,8 @@ namespace HospitalLibrary.Feedbacks.Service
         public Feedback Create(Feedback feedback)
         {
             feedback.Date = DateTime.Now;
-            //TODO implementirati postavljanje tacnog pacijenta
             feedback.Status = Status.Pending;
-            feedback.Patient = _patientRepository.GetAll().FirstOrDefault();
+            feedback.Patient = _patientRepository.GetById(feedback.PatientId);
             return _feedbackRepository.Create(feedback);
         }
 

@@ -5,6 +5,7 @@ using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using HospitalAPI.Dtos.Feedback;
 
 namespace HospitalAPI.Controllers
 {
@@ -74,7 +75,7 @@ namespace HospitalAPI.Controllers
             var feedback = _mapper.Map<Feedback>(feedbackDto);
             _feedbackService.Create(feedback);
             //return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
-            return Ok(feedback);
+            return Ok(_mapper.Map<FeedbackPatientResponseDto>(feedback));
         }
     }
 }
