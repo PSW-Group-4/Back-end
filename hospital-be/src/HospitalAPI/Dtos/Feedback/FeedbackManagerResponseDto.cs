@@ -15,6 +15,6 @@ namespace HospitalAPI.Dtos.Feedback
         public DateTime Date  { get; set; }
         public string Text { get; set; }
         public Status Status { get; set; } 
-        public bool IsPublic { get; set; } 
+        public bool IsDesiredPublic { get; set; } 
     }
 }

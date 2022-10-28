@@ -1,8 +1,8 @@
 using AutoMapper;
 using HospitalAPI.Controllers.Dtos.Address;
-using HospitalAPI.Controllers.Dtos.Feedback;
 using HospitalAPI.Controllers.Dtos.Patient;
 using HospitalAPI.Controllers.Dtos.Person;
+using HospitalAPI.Dtos.Feedback;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;

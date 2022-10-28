@@ -9,8 +9,8 @@ namespace HospitalLibrary.Feedbacks.Model
 {
     public enum Status
     {
-        Approved,
-        Denied,
+        Published,
+        Hidden,
         Pending
     }
     public class Feedback
@@ -18,7 +18,7 @@ namespace HospitalLibrary.Feedbacks.Model
         public Guid Id { get; set; }
         public string Text { get; set; }
         public bool IsAnonimous { get; set; }
-        public bool IsPublic { get; private set; }
+        public bool IsDesiredPublic { get; private set; }
         public Status Status { get; set; }
         public Guid PatientId { get; set; }
         public virtual Patient Patient { get; set; }
@@ -29,19 +29,19 @@ namespace HospitalLibrary.Feedbacks.Model
             Text = feedback.Text;
             IsAnonimous = feedback.IsAnonimous;
             Status = feedback.Status;
-            IsPublic = feedback.IsPublic;
+            IsDesiredPublic = feedback.IsDesiredPublic ;
             Patient = feedback.Patient;
             Date = feedback.Date;
         }
 
-        public Feedback SetPublic(Feedback feedback)
+        public Feedback Publish(Feedback feedback)
         {
-            IsPublic = true;
+            feedback.Status = Status.Published;
             return feedback;
         }
-        public Feedback SetPrivate(Feedback feedback)
+        public Feedback Hide(Feedback feedback)
         {
-            IsPublic = false;
+            feedback.Status = Status.Hidden;
             return feedback;
         }
     }
