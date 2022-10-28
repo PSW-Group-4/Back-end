@@ -28,14 +28,14 @@ namespace HospitalAPI.Controllers
             return Ok(_feedbackService.GetAll());
         }
 
-        //GET api/feedback/public/2
-        [HttpGet("public/{id}")]
-        public ActionResult SetPublic([FromRoute]Guid id)
+        //GET api/feedback/publish/2
+        [HttpGet("publish/{id}")]
+        public ActionResult Publish([FromRoute]Guid id)
         {
             try
             {
                 var feedback = _feedbackService.GetById(id);
-                _feedbackService.SetPublic(feedback);
+                _feedbackService.Publish(feedback);
                 return Ok(feedback);
             }
             catch (NotFoundException)
@@ -44,14 +44,14 @@ namespace HospitalAPI.Controllers
             }
         }
 
-        //GET api/feedback/private/2
-        [HttpGet("private/{id}")]
-        public ActionResult SetPrivate([FromRoute]Guid id)
+        //GET api/feedback/hide/2
+        [HttpGet("hide/{id}")]
+        public ActionResult Hide([FromRoute]Guid id)
         {
             try
             {
                 var feedback = _feedbackService.GetById(id);
-                _feedbackService.SetPrivate(feedback);
+                _feedbackService.Hide(feedback);
                 return Ok(feedback);
             }
             catch(NotFoundException)
@@ -60,11 +60,11 @@ namespace HospitalAPI.Controllers
             }
         }
 
-        //GET api/feedback/accepted
-        [HttpGet("accepted")]
-        public ActionResult GetAllAccepted()
+        //GET api/feedback/published
+        [HttpGet("published")]
+        public ActionResult GetAllPublished()
         {
-            return Ok(_feedbackService.GetAllApproved());
+            return Ok(_feedbackService.GetAllPublished());
         }
 
         //POST api/feedback

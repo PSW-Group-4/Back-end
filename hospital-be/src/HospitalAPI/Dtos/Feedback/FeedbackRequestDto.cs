@@ -8,6 +8,6 @@ namespace HospitalAPI.Controllers.Dtos.Feedback
     {
         public string Text { get; set; }
         public bool IsAnonimous { get; set; }
-        public bool IsPublic { get; set; }
+        public bool IsDesiredPublic { get; set; }
     }
 }

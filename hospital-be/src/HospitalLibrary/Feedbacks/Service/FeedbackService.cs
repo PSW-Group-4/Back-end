@@ -23,7 +23,8 @@ namespace HospitalLibrary.Feedbacks.Service
         {
             feedback.Date = DateTime.Now;
             //TODO implementirati postavljanje tacnog pacijenta
-            feedback.Status = Status.Pending;
+            if (feedback.IsDesiredPublic ) feedback.Status = Status.Pending;
+            else feedback.Status = Status.Hidden;
             feedback.Patient = _patientRepository.GetAll().FirstOrDefault();
             return _feedbackRepository.Create(feedback);
         }
@@ -48,23 +49,23 @@ namespace HospitalLibrary.Feedbacks.Service
             return _feedbackRepository.Update(feedback);
         }
 
-        public Feedback SetPublic(Feedback feedback)
+        public Feedback Publish(Feedback feedback)
         {
-            feedback.SetPublic(feedback);
+            feedback.Publish(feedback);
             return Update(feedback);
         }
-        public Feedback SetPrivate(Feedback feedback)
+        public Feedback Hide(Feedback feedback)
         {
-            feedback.SetPrivate(feedback);
+            feedback.Hide(feedback);
             return Update(feedback);
         }
 
-        public IEnumerable<Feedback> GetAllApproved()
+        public IEnumerable<Feedback> GetAllPublished()
         {
             List<Feedback> result = new List<Feedback>();
             foreach (Feedback feedback in _feedbackRepository.GetAll())
             {
-                if (feedback.Status.Equals(Status.Approved)) result.Add(feedback);
+                if (feedback.Status.Equals(Status.Published)) result.Add(feedback);
             }
             return result;
         }

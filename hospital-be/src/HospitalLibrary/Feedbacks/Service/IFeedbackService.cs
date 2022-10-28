@@ -10,8 +10,8 @@ namespace HospitalLibrary.Feedbacks.Service
 {
     public interface IFeedbackService : IServiceBase<Feedback> 
     {
-        public Feedback SetPublic(Feedback feedback);
-        public Feedback SetPrivate(Feedback feedback);
-        public IEnumerable<Feedback> GetAllApproved();
+        public Feedback Publish(Feedback feedback);
+        public Feedback Hide(Feedback feedback);
+        public IEnumerable<Feedback> GetAllPublished();
     }
 }
