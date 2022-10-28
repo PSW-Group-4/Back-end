@@ -68,11 +68,11 @@ namespace HospitalLibrary.Appointments.Service
         {
             Appointment appointment = _appointmentRepository.GetById(appointmentId);
 
-            String recipientName = appointment.Patient.Name + appointment.Patient.Surname;
+            String recipientName = appointment.Patient.Name + " " + appointment.Patient.Surname;
             //String recipientEmail = appointment.Patient.Email;
             String recipientEmail = "the2922000@gmail.com";
             String subject = "Otkazivanje pregleda";
-            String emailText = "Vaš pregled dana " + appointment.DateTime.ToString("dd.MM.yyyy. dd:mm") + "je otkazan";
+            String emailText = "Vaš pregled dana " + appointment.DateTime.ToString("dd.MM.yyyy. dd:mm") + " je otkazan";
 
             _appointmentRepository.Delete(appointmentId);
             MimeMessage emailMessage = EmailSending.createTxtEmail(recipientName,recipientEmail,subject,emailText );
