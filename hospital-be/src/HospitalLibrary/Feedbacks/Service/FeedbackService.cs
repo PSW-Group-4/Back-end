@@ -22,8 +22,9 @@ namespace HospitalLibrary.Feedbacks.Service
         public Feedback Create(Feedback feedback)
         {
             feedback.Date = DateTime.Now;
-            
-            feedback.Patient = _patientRepository.GetById(feedback.PatientId);
+
+            //  feedback.Patient = _patientRepository.GetById(feedback.PatientId);
+            feedback.Patient = _patientRepository.GetAll().FirstOrDefault();
             if (feedback.IsDesiredPublic)
             {
                 feedback.Status = Status.Pending;
