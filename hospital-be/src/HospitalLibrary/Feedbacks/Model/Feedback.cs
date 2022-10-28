@@ -18,7 +18,7 @@ namespace HospitalLibrary.Feedbacks.Model
         public Guid Id { get; set; }
         public string Text { get; set; }
         public bool IsAnonimous { get; set; }
-        public bool IsDesiredPublic { get; private set; }
+        public bool IsDesiredPublic { get;  set; }
         public Status Status { get; set; }
         public Guid PatientId { get; set; }
         public virtual Patient Patient { get; set; }
