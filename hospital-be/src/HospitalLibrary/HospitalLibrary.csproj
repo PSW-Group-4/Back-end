@@ -31,4 +31,8 @@
     <Folder Include="Settings\Configurations" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
+  </ItemGroup>
+
 </Project>

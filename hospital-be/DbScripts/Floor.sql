@@ -1,0 +1,1 @@
+insert into Public."Floors" ("Id", "Name", "Number", "BuildingId") values ('9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'sit amet nunc viverra dapibus nulla suscipit ligula in lacus curabitur at ipsum ac tellus semper interdum mauris ullamcorper purus', '5', '4c08ff1f-0227-4a3c-93db-dcd865a1069b');

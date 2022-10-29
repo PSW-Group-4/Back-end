@@ -1,9 +1,20 @@
 using HospitalAPI.Mapper;
+using HospitalLibrary.Appointments.Repository;
+using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
+using HospitalLibrary.BuildingManagmentMap.Repository.Implementation;
+using HospitalLibrary.BuildingManagmentMap.Service.Implementation;
+using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Doctors.Repository;
+using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
+using HospitalLibrary.RoomsAndEqipment.Repository;
+using HospitalLibrary.RoomsAndEqipment.Service.Implementation;
+using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,9 +53,31 @@ namespace HospitalAPI
             //Patient
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IPatientService, PatientService>();
+
             //TODO Feedback
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
             services.AddScoped<IFeedbackService, FeedbackService>();
+
+            //Doctor
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
+            services.AddScoped<IDoctorService, DoctorService>();
+            //Appointment
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IDoctorAppointmentService, DoctorAppointmentService>();
+            //Room
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IRoomService, RoomService>();
+            //MapItems
+            services.AddScoped<IBuildingMapService,BuildingMapService>();
+            services.AddScoped<IBuildingMapRepository,BuildingMapRepository>();
+
+            services.AddScoped<IFloorMapService, FloorMapService>();
+            services.AddScoped<IFloorMapRepository, FloorMapRepository>();
+
+            services.AddScoped<IRoomMapService, RoomMapService>();
+            services.AddScoped<IRoomMapRepository, RoomMapRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

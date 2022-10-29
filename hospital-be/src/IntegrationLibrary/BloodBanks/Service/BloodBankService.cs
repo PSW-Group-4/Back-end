@@ -1,5 +1,7 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
+using IntegrationLibrary.Utilities;
+using MimeKit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +30,16 @@ namespace IntegrationLibrary.BloodBanks.Service
 
         public BloodBank Create(BloodBank bloodBank)
         {
+            bloodBank.ApiKey = ApiKeyGeneration.generateKey();
+            string generatedPassword = PasswordHandler.GeneratePassword();
+            //when we figure out how to do dependency injection in .Net, call:
+            //string hashedPassword = passwordHandler.HashPassword(generatedPassword);
+            //and set that as blood bank's password
+            bloodBank.Password = generatedPassword;
+            //Keep the .sendEmail commented no need to spam people or me
+            //EmailSending.sendEmail(EmailSending.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, Settings.EmailingResources.EmailSubjectBB, EmailSending.CreateEmailText(bloodBank)));
             return _repository.Create(bloodBank);
         }
+        
     }
 }

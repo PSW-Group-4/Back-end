@@ -352,3 +352,5 @@ MigrationBackup/
 .idea/
 #ResetDbScript
 dbResetScript.sql
+# VS Code
+.vscode/

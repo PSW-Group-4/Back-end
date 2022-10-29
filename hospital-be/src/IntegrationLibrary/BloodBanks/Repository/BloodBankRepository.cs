@@ -41,5 +41,10 @@ namespace IntegrationLibrary.BloodBanks.Repository
                 return bloodBank;
             }
         }
+
+        public IEnumerable<String> GetApiKeys()
+        {
+            return _context.BloodBanks.Select(bank => bank.ApiKey);
+        }
     }
 }
