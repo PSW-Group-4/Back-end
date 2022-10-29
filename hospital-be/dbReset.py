@@ -7,7 +7,7 @@ for fileName in os.listdir("DbScripts"):
     print('delete from "' + fileName[:len(fileName)-4] +'";', file=destFile)
 
 #Merges scripts
-#Bitno je da dodas prvo skripte kod kojih zavise strani kljucevi od njih
+#Bitno je da dodas prvo skripte od kojih zavise strani kljucevi
 with open('DbScripts/Addresses.sql', 'r') as f:
     print(f.read(), file=destFile)
 

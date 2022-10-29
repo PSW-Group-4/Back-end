@@ -1,13 +1,11 @@
 using AutoMapper;
-using AutoMapper.Internal.Mappers;
-using HospitalAPI.Controllers.Dtos.Address;
-using HospitalAPI.Controllers.Dtos.Patient;
-using HospitalAPI.Controllers.Dtos.Person;
+using HospitalAPI.Dtos.Address;
 using HospitalAPI.Dtos.Feedback;
+using HospitalAPI.Dtos.Patient;
+using HospitalAPI.Dtos.Person;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
-using Microsoft.OpenApi.Expressions;
 
 namespace HospitalAPI.Mapper
 {
@@ -17,7 +15,7 @@ namespace HospitalAPI.Mapper
         {
             CreateMap<AddressRequestDto, Address>();
             CreateMap<PersonRequestDto, Person>();
-            CreateMap<PatientRequestDTO, Patient>()
+            CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
             CreateMap<FeedbackRequestDto, Feedback>();
             CreateMap<Feedback, FeedbackPatientResponseDto>().ForMember(dest => dest.PatientFullname,

@@ -1,8 +1,8 @@
 using System;
-using HospitalAPI.Controllers.Dtos.Address;
+using HospitalAPI.Dtos.Address;
 using HospitalLibrary.Core.Model;
 
-namespace HospitalAPI.Controllers.Dtos.Person
+namespace HospitalAPI.Dtos.Person
 {
     public class PersonRequestDto
     {

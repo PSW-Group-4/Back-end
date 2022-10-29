@@ -1,6 +1,6 @@
 using System;
 
-namespace HospitalLibrary
+namespace HospitalLibrary.Exceptions
 {
     public class NotFoundException : Exception
     {

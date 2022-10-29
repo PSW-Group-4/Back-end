@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Core.Service
 {
-    public interface IServiceBase<T>
+    public interface ICrudService<T>
     {
         IEnumerable<T> GetAll();
         T GetById(Guid id);

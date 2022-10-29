@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Feedbacks.Service
 {
@@ -24,6 +22,7 @@ namespace HospitalLibrary.Feedbacks.Service
         {
             feedback.Date = DateTime.Now;
 
+            //TODO "Uncomment when Login is implemented"
             //  feedback.Patient = _patientRepository.GetById(feedback.PatientId);
             feedback.Patient = _patientRepository.GetAll().FirstOrDefault();
             if (feedback.IsDesiredPublic)
@@ -60,8 +59,6 @@ namespace HospitalLibrary.Feedbacks.Service
 
         public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel)
         {
-            //feedback.Publish(feedback);
-            //return Update(feedback);
             return _feedbackRepository.PublishHide(feedback, feedbackModel);
         }
 

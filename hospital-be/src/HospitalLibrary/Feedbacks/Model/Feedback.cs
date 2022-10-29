@@ -1,9 +1,5 @@
 ﻿using HospitalLibrary.Patients.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Feedbacks.Model
 {
@@ -15,14 +11,14 @@ namespace HospitalLibrary.Feedbacks.Model
     }
     public class Feedback
     {
-        public Guid Id { get; set; }
-        public string Text { get; set; }
-        public bool IsAnonimous { get; set; }
-        public bool IsDesiredPublic { get;  set; }
-        public Status Status { get; set; }
-        public Guid PatientId { get; set; }
-        public virtual Patient Patient { get; set; }
-        public DateTime Date { get; set; }
+        public Guid Id { get; private set; }
+        public string Text { get; private set; }
+        public bool IsAnonimous { get; private set; }
+        public bool IsDesiredPublic { get;  private set; }
+        public Status Status { get;  set; }
+        public Guid PatientId { get; private set; }
+        public virtual Patient Patient { get;  set; }
+        public DateTime Date { get;  set; }
 
         public void Update(Feedback feedback)
         {
@@ -33,16 +29,5 @@ namespace HospitalLibrary.Feedbacks.Model
             Patient = feedback.Patient;
             Date = feedback.Date;
         }
-
-        /*public Feedback Publish(Feedback feedback)
-        {
-            feedback.Status = Status.Published;
-            return feedback;
-        }
-        public Feedback Hide(Feedback feedback)
-        {
-            feedback.Status = Status.Hidden;
-            return feedback;
-        }*/
     }
 }

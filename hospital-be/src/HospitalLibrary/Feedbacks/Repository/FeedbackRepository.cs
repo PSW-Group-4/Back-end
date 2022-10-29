@@ -1,12 +1,10 @@
 ﻿using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.JsonPatch;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalLibrary.Feedbacks.Repository
 {
@@ -40,8 +38,7 @@ namespace HospitalLibrary.Feedbacks.Repository
 
         public IEnumerable<Feedback> GetAllPublished()
         {
-            //return _context.Feedbacks.FromSql("Select * from Feedbacks").ToList();
-            return _context.Feedbacks.FromSqlRaw("select * from \"Feedbacks\" where \"Status\" = 0").ToList();
+            return _context.Feedbacks.Where(f => f.Status == 0).ToList();
         }
 
         public Feedback GetById(Guid feedbackId)

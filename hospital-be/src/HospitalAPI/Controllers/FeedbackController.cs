@@ -1,11 +1,11 @@
 using AutoMapper;
-using HospitalLibrary;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using HospitalAPI.Dtos.Feedback;
+using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace HospitalAPI.Controllers
