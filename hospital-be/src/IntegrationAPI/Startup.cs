@@ -1,9 +1,12 @@
 using IntegrationAPI.Mappers;
+using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.Settings;
+using IntegrationLibrary.Utilities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,6 +41,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

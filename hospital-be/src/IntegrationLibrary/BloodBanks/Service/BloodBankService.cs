@@ -30,18 +30,16 @@ namespace IntegrationLibrary.BloodBanks.Service
 
         public BloodBank Create(BloodBank bloodBank)
         {
-            List<String> keys = _repository.GetApiKeys().ToList();
-            bloodBank.ApiKey = ApiKeyGeneration.generateKey(keys);
-            EmailSending.sendEmail(CreateEmailMessage(bloodBank));
+            bloodBank.ApiKey = ApiKeyGeneration.generateKey();
+            string generatedPassword = PasswordHandler.GeneratePassword();
+            //when we figure out how to do dependency injection in .Net, call:
+            //string hashedPassword = passwordHandler.HashPassword(generatedPassword);
+            //and set that as blood bank's password
+            bloodBank.Password = generatedPassword;
+            //Keep the .sendEmail commented no need to spam people or me
+            //EmailSending.sendEmail(EmailSending.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, Settings.EmailingResources.EmailSubjectBB, EmailSending.CreateEmailText(bloodBank)));
             return _repository.Create(bloodBank);
         }
-        private MimeMessage CreateEmailMessage(BloodBank bloodBank)
-        {
-            String emailBody = "API key:" + bloodBank.ApiKey + NewLineFormat.Unix +
-                                "Password:" + bloodBank.Password + NewLineFormat.Unix +
-                                "Link: links go here"; //TODO: Add link to public front app to settings and pass it here
-
-           return EmailSending.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, "PSW Integrations", emailBody);
-        }
+        
     }
 }

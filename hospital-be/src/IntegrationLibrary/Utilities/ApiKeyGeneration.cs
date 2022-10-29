@@ -9,32 +9,15 @@ namespace IntegrationLibrary.Utilities
 {
     public class ApiKeyGeneration
     {
-        public static String generateKey(List<String> keyList)
+        public static String generateKey()
         {
             String keyString;
-            do
-            {
-                var key = new byte[32];
-                using (var generator = RandomNumberGenerator.Create())
-                    generator.GetBytes(key);
-                keyString = Convert.ToBase64String(key);
-
-            } while (!isUnique(keyList, keyString));
+            var key = new byte[32];
+            using (var generator = RandomNumberGenerator.Create())
+                generator.GetBytes(key);
+            keyString = Convert.ToBase64String(key);
 
             return keyString;
-        }
-
-        private static Boolean isUnique(List<String> keyList, String newKey)
-        {
-            if(keyList == null || keyList.Count == 0)
-            {
-                return true;
-            }
-            else 
-            {
-                return keyList.Contains(newKey);
-            }
-
         }
     }
 }
