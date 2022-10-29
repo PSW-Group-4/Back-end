@@ -34,7 +34,7 @@ namespace HospitalLibrary.Feedbacks.Model
             Date = feedback.Date;
         }
 
-        public Feedback Publish(Feedback feedback)
+        /*public Feedback Publish(Feedback feedback)
         {
             feedback.Status = Status.Published;
             return feedback;
@@ -43,6 +43,6 @@ namespace HospitalLibrary.Feedbacks.Model
         {
             feedback.Status = Status.Hidden;
             return feedback;
-        }
+        }*/
     }
 }

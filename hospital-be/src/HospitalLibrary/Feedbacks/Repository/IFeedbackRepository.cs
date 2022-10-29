@@ -11,7 +11,7 @@ namespace HospitalLibrary.Feedbacks.Repository
 {
     public interface IFeedbackRepository : IRepositoryBase<Feedback>
     {
-        Feedback Publish(Feedback feedback, JsonPatchDocument feedbackModel);
-        Feedback Hide(Feedback feedback, JsonPatchDocument feedbackModel);
+        Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel);
+        IEnumerable<Feedback> GetAllPublished();
     }
 }

@@ -58,27 +58,16 @@ namespace HospitalLibrary.Feedbacks.Service
             return _feedbackRepository.Update(feedback);
         }
 
-        public Feedback Publish(Feedback feedback, JsonPatchDocument feedbackModel)
+        public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel)
         {
             //feedback.Publish(feedback);
             //return Update(feedback);
-            return _feedbackRepository.Publish(feedback, feedbackModel);
-        }
-        public Feedback Hide(Feedback feedback, JsonPatchDocument feedbackModel)
-        {
-            //feedback.Hide(feedback);
-            //return Update(feedback);
-            return _feedbackRepository.Hide(feedback, feedbackModel);
+            return _feedbackRepository.PublishHide(feedback, feedbackModel);
         }
 
         public IEnumerable<Feedback> GetAllPublished()
         {
-            List<Feedback> result = new List<Feedback>();
-            foreach (Feedback feedback in _feedbackRepository.GetAll())
-            {
-                if (feedback.Status.Equals(Status.Published)) result.Add(feedback);
-            }
-            return result;
+            return _feedbackRepository.GetAllPublished();
         }
     }
 }

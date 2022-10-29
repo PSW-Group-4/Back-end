@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,12 @@ namespace HospitalLibrary.Feedbacks.Repository
             return _context.Feedbacks.ToList();
         }
 
+        public IEnumerable<Feedback> GetAllPublished()
+        {
+            //return _context.Feedbacks.FromSql("Select * from Feedbacks").ToList();
+            return _context.Feedbacks.FromSqlRaw("select * from \"Feedbacks\" where \"Status\" = 0").ToList();
+        }
+
         public Feedback GetById(Guid feedbackId)
         {
             var result = _context.Feedbacks.Find(feedbackId);
@@ -47,14 +54,7 @@ namespace HospitalLibrary.Feedbacks.Repository
             return result;
         }
 
-        public Feedback Hide(Feedback feedback, JsonPatchDocument feedbackModel)
-        {
-            feedbackModel.ApplyTo(feedback);
-            _context.SaveChanges();
-            return feedback;
-        }
-
-        public Feedback Publish(Feedback feedback, JsonPatchDocument feedbackModel)
+        public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel)
         {
             feedbackModel.ApplyTo(feedback);
             _context.SaveChanges();

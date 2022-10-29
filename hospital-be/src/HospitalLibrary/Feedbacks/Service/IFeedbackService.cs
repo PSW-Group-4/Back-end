@@ -11,8 +11,7 @@ namespace HospitalLibrary.Feedbacks.Service
 {
     public interface IFeedbackService : IServiceBase<Feedback> 
     {
-        public Feedback Publish(Feedback feedback, JsonPatchDocument feedbackModel);
-        public Feedback Hide(Feedback feedback, JsonPatchDocument feedbackModel);
+        public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel);
         public IEnumerable<Feedback> GetAllPublished();
     }
 }
