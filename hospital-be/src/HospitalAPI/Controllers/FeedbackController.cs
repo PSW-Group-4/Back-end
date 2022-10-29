@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using HospitalAPI.Dtos.Feedback;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace HospitalAPI.Controllers
 {
@@ -29,6 +30,21 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_mapper.Map<IEnumerable<FeedbackManagerResponseDto>>(_feedbackService.GetAll()));
         }
+
+        //GET api/feedback/2
+        [HttpGet("{id}")]
+        public ActionResult GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                var feedback = _feedbackService.GetById(id);
+                return Ok(feedback);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
         
         //GET api/feedback/published
         //Goes only to patient
@@ -38,10 +54,10 @@ namespace HospitalAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<FeedbackPatientResponseDto>>(_feedbackService.GetAllPublished()));
         }
 
-        
+
         //TODO "Change to patch"
         //GET api/feedback/publish/2
-        [HttpGet("publish/{id}")]
+        /*[HttpGet("publish/{id}")]
         public ActionResult Publish([FromRoute]Guid id)
         {
             try
@@ -54,17 +70,33 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
-        }
+        }*/
 
-        //TODO "Change to patch"
-        //GET api/feedback/hide/2
-        [HttpGet("hide/{id}")]
-        public ActionResult Hide([FromRoute]Guid id)
+        //PATCH api/feedback/publish/2
+        [HttpPatch("publish/{id}")]
+        public ActionResult Publish([FromRoute] Guid id, [FromBody] JsonPatchDocument feedbackModel)
         {
             try
             {
                 var feedback = _feedbackService.GetById(id);
-                _feedbackService.Hide(feedback);
+                _feedbackService.Publish(feedback, feedbackModel);
+                return Ok(feedback);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        //TODO "Change to patch"
+        //GET api/feedback/hide/2
+        [HttpPatch("hide/{id}")]
+        public ActionResult Hide([FromRoute]Guid id, [FromBody] JsonPatchDocument feedbackModel)
+        {
+            try
+            {
+                var feedback = _feedbackService.GetById(id);
+                _feedbackService.Hide(feedback, feedbackModel);
                 return Ok(feedback);
             }
             catch(NotFoundException)
@@ -80,9 +112,8 @@ namespace HospitalAPI.Controllers
         {
             var feedback = _mapper.Map<Feedback>(feedbackDto);
             _feedbackService.Create(feedback);
-            //TODO
-            //return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
-            return Ok(_mapper.Map<FeedbackPatientResponseDto>(feedback));
+            //mora se implementirati GetById ovde da bi radilo
+            return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);
         }
     }
 }

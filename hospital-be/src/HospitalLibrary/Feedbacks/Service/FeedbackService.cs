@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Patients.Repository;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,15 +58,17 @@ namespace HospitalLibrary.Feedbacks.Service
             return _feedbackRepository.Update(feedback);
         }
 
-        public Feedback Publish(Feedback feedback)
+        public Feedback Publish(Feedback feedback, JsonPatchDocument feedbackModel)
         {
-            feedback.Publish(feedback);
-            return Update(feedback);
+            //feedback.Publish(feedback);
+            //return Update(feedback);
+            return _feedbackRepository.Publish(feedback, feedbackModel);
         }
-        public Feedback Hide(Feedback feedback)
+        public Feedback Hide(Feedback feedback, JsonPatchDocument feedbackModel)
         {
-            feedback.Hide(feedback);
-            return Update(feedback);
+            //feedback.Hide(feedback);
+            //return Update(feedback);
+            return _feedbackRepository.Hide(feedback, feedbackModel);
         }
 
         public IEnumerable<Feedback> GetAllPublished()

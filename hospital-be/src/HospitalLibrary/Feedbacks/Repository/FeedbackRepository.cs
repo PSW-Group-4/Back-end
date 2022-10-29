@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Settings;
+using Microsoft.AspNetCore.JsonPatch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,20 @@ namespace HospitalLibrary.Feedbacks.Repository
                 throw new NotFoundException();
             }
             return result;
+        }
+
+        public Feedback Hide(Feedback feedback, JsonPatchDocument feedbackModel)
+        {
+            feedbackModel.ApplyTo(feedback);
+            _context.SaveChanges();
+            return feedback;
+        }
+
+        public Feedback Publish(Feedback feedback, JsonPatchDocument feedbackModel)
+        {
+            feedbackModel.ApplyTo(feedback);
+            _context.SaveChanges();
+            return feedback;
         }
 
         public Feedback Update(Feedback feedback)

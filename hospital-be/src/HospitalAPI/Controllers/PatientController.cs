@@ -30,7 +30,7 @@ namespace HospitalAPI.Controllers
 
         // GET api/Patient/2
         [HttpGet("{id}")]
-        public ActionResult GetById([FromRoute]Guid id)
+        public ActionResult GetById([FromRoute] Guid id)
         {
             try
             {
