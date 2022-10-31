@@ -1,3 +1,4 @@
+using IntegrationAPI.Communications;
 using IntegrationAPI.Mappers;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
@@ -41,6 +42,7 @@ namespace IntegrationAPI
 
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IMailSender, MailSender>();
 
         }
 
