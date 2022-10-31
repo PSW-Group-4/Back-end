@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.SchedulingAppointment.Service
 {
-    public class SchedulingService
+    public class SchedulingService : ISchedulingService
     {
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IDoctorService _dctorService;

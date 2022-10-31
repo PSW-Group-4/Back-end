@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using HospitalLibrary;
 using HospitalLibrary.Doctors.Service;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -22,6 +24,21 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_doctorService.GetAll());
+        }
+
+        // GET api/Doctor/2
+        [HttpGet("{id}")]
+        public ActionResult GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                var doctor = _doctorService.GetById(id);
+                return Ok(doctor);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }
