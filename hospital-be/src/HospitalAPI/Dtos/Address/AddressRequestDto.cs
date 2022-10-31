@@ -1,4 +1,4 @@
-namespace HospitalAPI.Controllers.Dtos.Address
+namespace HospitalAPI.Dtos.Address
 {
     public class AddressRequestDto
     {

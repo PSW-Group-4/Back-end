@@ -188,7 +188,26 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Feedbacks.Model.Feedback", b => {
+                                b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsAnonimous")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDesiredPublic")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+              }
             modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
+
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -235,11 +254,17 @@ namespace HospitalLibrary.Migrations
 
                     b.HasKey("Id");
 
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Feedbacks");
+
                     b.HasIndex("AddressId");
 
                     b.HasIndex("RoomId");
 
                     b.ToTable("Doctors");
+
                 });
 
             modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
@@ -285,6 +310,17 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Patients");
                 });
 
+
+            modelBuilder.Entity("HospitalLibrary.Feedbacks.Model.Feedback", b =>
+                {
+                    b.HasOne("HospitalLibrary.Patients.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                }
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.Equipment", b =>
                 {
                     b.Property<Guid>("Id")

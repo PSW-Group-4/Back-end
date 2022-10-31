@@ -6,6 +6,8 @@ using HospitalLibrary.BuildingManagmentMap.Repository.Implementation;
 using HospitalLibrary.BuildingManagmentMap.Service.Implementation;
 using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Repository;
@@ -39,7 +41,7 @@ namespace HospitalAPI
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
@@ -51,6 +53,11 @@ namespace HospitalAPI
             //Patient
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IPatientService, PatientService>();
+
+            //TODO Feedback
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<IFeedbackService, FeedbackService>();
+
             //Doctor
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IDoctorService, DoctorService>();
@@ -70,6 +77,7 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomMapService, RoomMapService>();
             services.AddScoped<IRoomMapRepository, RoomMapRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

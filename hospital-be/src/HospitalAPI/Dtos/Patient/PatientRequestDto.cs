@@ -1,8 +1,8 @@
-using HospitalAPI.Controllers.Dtos.Person;
+using HospitalAPI.Dtos.Person;
 
-namespace HospitalAPI.Controllers.Dtos.Patient
+namespace HospitalAPI.Dtos.Patient
 {
-    public class PatientRequestDTO : PersonRequestDto
+    public class PatientRequestDto : PersonRequestDto
     {
         public string Lbo { get; set; }
         public bool Blocked { get; set; }

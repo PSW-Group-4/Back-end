@@ -1,3 +1,6 @@
+
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.Core.Model;
@@ -15,6 +18,9 @@ namespace HospitalLibrary.Settings
     {
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<Feedback> Feedbacks { get; set; }
+        
         
         // Building managment
         public DbSet<Floor> Floors {get; set; }
