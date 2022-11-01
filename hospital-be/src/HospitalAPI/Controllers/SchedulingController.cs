@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using HospitalLibrary;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.SchedulingAppointment.Service;
 using Microsoft.AspNetCore.Mvc;

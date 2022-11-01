@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using HospitalLibrary;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
