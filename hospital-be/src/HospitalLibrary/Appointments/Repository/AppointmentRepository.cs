@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.Appointments.Repository;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalLibrary.Patients.Repository
 {

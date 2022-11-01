@@ -5,6 +5,7 @@ using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalAPI.Controllers.MapItem
 {

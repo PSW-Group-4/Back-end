@@ -1,6 +1,6 @@
-﻿using HospitalAPI.Controllers.Dtos.Person;
+﻿using HospitalAPI.Dtos.Person;
 
-namespace HospitalAPI.Controllers.Dtos.Doctor
+namespace HospitalAPI.Dtos.Doctor
 {
     public class DoctorRequestDto : PersonRequestDto
     {

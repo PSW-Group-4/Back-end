@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.BuildingManagment.Repository.Intefaces;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.BuildingManagment.Repository.Implementation
