@@ -1,6 +1,8 @@
-﻿using HospitalAPI.Dtos.Person;
+using HospitalAPI.Controllers.Dtos.Rooms;
+using HospitalLibrary.RoomsAndEqipment.Model;
+using System;
 
-namespace HospitalAPI.Dtos.Doctor
+namespace HospitalAPI.Controllers.Dtos.Doctor
 {
     public class DoctorRequestDto : PersonRequestDto
     {
@@ -8,5 +10,6 @@ namespace HospitalAPI.Dtos.Doctor
         public string Speciality { get; set; }
         public string WorkingTimeStart { get; set; }
         public string WorkingTimeEnd { get; set; }
+        public Guid RoomId { get; set; }
     }
 }

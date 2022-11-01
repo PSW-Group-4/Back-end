@@ -7,10 +7,9 @@ namespace HospitalAPI.Dtos.Appointment
 {
     public class AppointmentRequestDto
     {
-        public DoctorRequestDto Doctor { get; set; }
-        public PatientRequestDto Patient { get; set; }
-        public RoomRequestDto Room { get; set; }
+        public Guid DoctorId { get; set; }
+        public Guid PatientId { get; set; }
+        public Guid RoomId { get; set; }
         public DateTime DateTime { get; set; }
-        public bool IsDone { get; set; }
     }
 }

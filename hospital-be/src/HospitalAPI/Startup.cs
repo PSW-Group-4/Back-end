@@ -23,6 +23,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using HospitalLibrary.SchedulingAppointment.Service;
 
 namespace HospitalAPI
 {
@@ -77,6 +78,8 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomMapService, RoomMapService>();
             services.AddScoped<IRoomMapRepository, RoomMapRepository>();
+
+            services.AddScoped<ISchedulingService, SchedulingService>();
 
         }
 
