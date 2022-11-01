@@ -4,6 +4,7 @@ using AutoMapper;
 using System.Collections.Generic;
 using IntegrationLibrary.BloodBanks.Model;
 using Microsoft.AspNetCore.Http;
+using IntegrationAPI.Communications;
 
 namespace IntegrationAPI.Controllers
 {
@@ -13,11 +14,13 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IBloodBankService _service;
         private readonly IMapper _mapper;
+        private readonly IMailSender _mailSender;
 
-        public BloodBankController(IBloodBankService service, IMapper mapper)
+        public BloodBankController(IBloodBankService service, IMapper mapper, IMailSender mailSender)
         {
             _service = service;
             _mapper = mapper;
+            _mailSender = mailSender;
         }
 
         [HttpGet]
@@ -31,6 +34,7 @@ namespace IntegrationAPI.Controllers
         {
             var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Create(bloodBank);
+            _mailSender.sendEmail(_mailSender.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, IntegrationLibrary.Settings.EmailingResources.EmailSubjectBB, _mailSender.CreateEmailText(bloodBank)));
             return Ok(bloodBank);
         }
     }
