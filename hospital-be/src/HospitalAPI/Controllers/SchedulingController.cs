@@ -22,12 +22,12 @@ namespace HospitalAPI.Controllers
 
         // GET api/Available/2
         [HttpGet("{date}")]
-        public ActionResult GetById([FromRoute]DateTime date)
+        public ActionResult GetAvailableTermins([FromRoute]DateTime date)
         {
             try
             {
-                var patient = _schedulingService.AvailableTerminsForDate(date);
-                return Ok(patient);
+                var termins = _schedulingService.AvailableTerminsForDate(date);
+                return Ok(termins);
             }
             catch (NotFoundException)
             {
