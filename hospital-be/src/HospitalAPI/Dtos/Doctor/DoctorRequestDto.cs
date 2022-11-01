@@ -1,8 +1,9 @@
-using HospitalAPI.Controllers.Dtos.Rooms;
+using HospitalAPI.Dtos.Person;
+using HospitalAPI.Dtos.Rooms;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using System;
 
-namespace HospitalAPI.Controllers.Dtos.Doctor
+namespace HospitalAPI.Dtos.Doctor
 {
     public class DoctorRequestDto : PersonRequestDto
     {
