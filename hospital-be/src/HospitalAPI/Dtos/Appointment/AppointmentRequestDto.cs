@@ -1,9 +1,9 @@
-using HospitalAPI.Controllers.Dtos.Doctor;
-using HospitalAPI.Controllers.Dtos.Patient;
-using HospitalAPI.Controllers.Dtos.Rooms;
 using System;
+using HospitalAPI.Dtos.Doctor;
+using HospitalAPI.Dtos.Patient;
+using HospitalAPI.Dtos.Rooms;
 
-namespace HospitalAPI.Controllers.Dtos.Appointment
+namespace HospitalAPI.Dtos.Appointment
 {
     public class AppointmentRequestDto
     {

@@ -22,7 +22,7 @@ namespace IntegrationLibrary.Settings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class EmailingResources {
+    public class EmailingResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace IntegrationLibrary.Settings {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("IntegrationLibrary.Settings.EmailingResources", typeof(EmailingResources).Assembly);
@@ -51,7 +51,7 @@ namespace IntegrationLibrary.Settings {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace IntegrationLibrary.Settings {
         /// <summary>
         ///   Looks up a localized string similar to BloodBank details.
         /// </summary>
-        internal static string EmailSubjectBB {
+        public static string EmailSubjectBB {
             get {
                 return ResourceManager.GetString("EmailSubjectBB", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace IntegrationLibrary.Settings {
         /// <summary>
         ///   Looks up a localized string similar to API key: {0}, Password:{1}, Link:{2}.
         /// </summary>
-        internal static string EmailTemplate {
+        public static string EmailTemplate {
             get {
                 return ResourceManager.GetString("EmailTemplate", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace IntegrationLibrary.Settings {
         /// <summary>
         ///   Looks up a localized string similar to psw.integrations.g4@gmail.com.
         /// </summary>
-        internal static string SenderEmail {
+        public static string SenderEmail {
             get {
                 return ResourceManager.GetString("SenderEmail", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace IntegrationLibrary.Settings {
         /// <summary>
         ///   Looks up a localized string similar to PSW Integrations.
         /// </summary>
-        internal static string SenderName {
+        public static string SenderName {
             get {
                 return ResourceManager.GetString("SenderName", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace IntegrationLibrary.Settings {
         /// <summary>
         ///   Looks up a localized string similar to mcezencvkdktyarh.
         /// </summary>
-        internal static string SenderPassword {
+        public static string SenderPassword {
             get {
                 return ResourceManager.GetString("SenderPassword", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace IntegrationLibrary.Settings {
         /// <summary>
         ///   Looks up a localized string similar to smtp.gmail.com.
         /// </summary>
-        internal static string SmtpAddress {
+        public static string SmtpAddress {
             get {
                 return ResourceManager.GetString("SmtpAddress", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace IntegrationLibrary.Settings {
         /// <summary>
         ///   Looks up a localized string similar to 587.
         /// </summary>
-        internal static string SmtpPort {
+        public static string SmtpPort {
             get {
                 return ResourceManager.GetString("SmtpPort", resourceCulture);
             }

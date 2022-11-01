@@ -3,8 +3,9 @@ using HospitalLibrary.Patients.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using AutoMapper;
-using HospitalAPI.Controllers.Dtos.Patient;
+using HospitalAPI.Dtos.Patient;
 using HospitalLibrary;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalAPI.Controllers
 {
@@ -30,7 +31,7 @@ namespace HospitalAPI.Controllers
 
         // GET api/Patient/2
         [HttpGet("{id}")]
-        public ActionResult GetById([FromRoute]Guid id)
+        public ActionResult GetById([FromRoute] Guid id)
         {
             try
             {
@@ -45,7 +46,7 @@ namespace HospitalAPI.Controllers
 
         // POST api/Patient
         [HttpPost]
-        public ActionResult Create([FromBody]PatientRequestDTO patientDto)
+        public ActionResult Create([FromBody]PatientRequestDto patientDto)
         {
             var patient = _mapper.Map<Patient>(patientDto);
             _patientService.Create(patient);
@@ -54,7 +55,7 @@ namespace HospitalAPI.Controllers
 
         // PUT api/Patient/2
         [HttpPut("{id}")]
-        public ActionResult Update([FromRoute]Guid id,[FromBody] PatientRequestDTO patientDto)
+        public ActionResult Update([FromRoute]Guid id,[FromBody] PatientRequestDto patientDto)
         {
             var patient = _mapper.Map<Patient>(patientDto);
             patient.Id = id;

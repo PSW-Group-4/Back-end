@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.RoomsAndEqipment.Repository.Interfaces;
 using HospitalLibrary.Settings;

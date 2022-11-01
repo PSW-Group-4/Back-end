@@ -1,4 +1,3 @@
-﻿using HospitalAPI.Controllers.Dtos.Person;
 using HospitalAPI.Controllers.Dtos.Rooms;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using System;

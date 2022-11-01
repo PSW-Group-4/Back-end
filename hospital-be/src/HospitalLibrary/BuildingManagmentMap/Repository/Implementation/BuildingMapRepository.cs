@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.BuildingManagmentMap.Repository.Implementation

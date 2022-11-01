@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HospitalAPI.Controllers.Dtos.Rooms
+namespace HospitalAPI.Dtos.Rooms
 {
     public class RoomRequestDto
     {

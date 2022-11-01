@@ -3,11 +3,12 @@ using HospitalLibrary.Appointments.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using AutoMapper;
-using HospitalAPI.Controllers.Dtos.Appointment;
 using HospitalLibrary;
 using HospitalLibrary.SchedulingAppointment.Service;
 using HospitalLibrary.Doctors.Service;
 using System.Collections.Generic;
+using HospitalAPI.Dtos.Appointment;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalAPI.Controllers
 {

@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using HospitalAPI.Dtos.MapItem;
-using HospitalLibrary;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
+using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
-namespace HospitalAPI.Controllers
+namespace HospitalAPI.Controllers.MapItem
 {
 
     [Route("api/[controller]")]

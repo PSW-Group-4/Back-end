@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.BuildingManagmentMap.Repository.Implementation

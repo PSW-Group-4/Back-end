@@ -4,6 +4,7 @@ using HospitalLibrary.Appointments.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalAPI.Controllers
 {

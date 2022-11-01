@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Repository;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
