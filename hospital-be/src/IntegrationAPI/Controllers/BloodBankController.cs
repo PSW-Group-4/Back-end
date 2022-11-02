@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using IntegrationLibrary.BloodBanks.Model;
 using Microsoft.AspNetCore.Http;
 using IntegrationAPI.Communications;
+using System;
+using IntegrationAPI.Dtos;
 
 namespace IntegrationAPI.Controllers
 {
@@ -35,6 +37,19 @@ namespace IntegrationAPI.Controllers
             var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Create(bloodBank);
             _mailSender.sendEmail(_mailSender.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, IntegrationLibrary.Settings.EmailingResources.EmailSubjectBB, _mailSender.CreateEmailText(bloodBank)));
+            return Ok(bloodBank);
+        }
+        [HttpGet("{ApiKey}")]
+        public ActionResult GetByApiKey(string ApiKey)
+        {
+            var bloodBank = _service.GetByApiKey(ApiKey);
+            return Ok(bloodBank);
+        }
+        [HttpPost ("{Id}")]
+        public ActionResult Update(String Id, BloodBankEditDto bloodBankDto)
+        {
+            var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
+            _service.Update(bloodBank);
             return Ok(bloodBank);
         }
     }

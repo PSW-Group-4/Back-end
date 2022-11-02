@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IntegrationAPI.Dtos;
 using IntegrationLibrary.BloodBanks.Model;
 
 namespace IntegrationAPI.Mappers
@@ -8,6 +9,7 @@ namespace IntegrationAPI.Mappers
         public MappingProfile()
         {
             CreateMap<BloodBankRegisterDto, BloodBank>();
+            CreateMap<BloodBankEditDto, BloodBank>();
         }
     }
 }
