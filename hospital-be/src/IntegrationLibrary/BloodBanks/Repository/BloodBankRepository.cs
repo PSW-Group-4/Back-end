@@ -1,6 +1,7 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.Exceptions;
 using IntegrationLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,36 @@ namespace IntegrationLibrary.BloodBanks.Repository
         public IEnumerable<String> GetApiKeys()
         {
             return _context.BloodBanks.Select(bank => bank.ApiKey);
+        }
+        public BloodBank GetByApiKey(String ApiKey)
+        {
+            BloodBank bloodBank = _context.BloodBanks.SingleOrDefault(e => e.ApiKey == ApiKey);
+            if (bloodBank == null)
+            {
+                throw new NotFoundException();
+            }
+            else
+            {
+                return bloodBank;
+            }
+        }
+        public BloodBank Update(BloodBank bloodBank) {
+            var local = _context.Set<BloodBank>()
+     .Local
+     .FirstOrDefault(entry => entry.Id.Equals(bloodBank.Id));
+
+            // check if local is not null 
+            if (local != null)
+            {
+                // detach
+                _context.Entry(local).State = EntityState.Detached;
+            }
+            // set Modified flag in your entry
+            _context.Entry(bloodBank).State = EntityState.Modified;
+
+            // save 
+            _context.SaveChanges();
+            return bloodBank;
         }
     }
 }

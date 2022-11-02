@@ -38,7 +38,18 @@ namespace IntegrationLibrary.BloodBanks.Service
             bloodBank.Password = generatedPassword;
             //Keep the .sendEmail commented no need to spam people or me
             //EmailSending.sendEmail(EmailSending.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, Settings.EmailingResources.EmailSubjectBB, EmailSending.CreateEmailText(bloodBank)));
+           
             return _repository.Create(bloodBank);
+        }
+        public BloodBank GetByApiKey(String ApiKey) {
+            return _repository.GetByApiKey(ApiKey);
+        }
+        public BloodBank Update(BloodBank bloodBank) {
+            BloodBank toUpdate = _repository.GetById(bloodBank.Id);
+            toUpdate.Name = bloodBank.Name;
+            toUpdate.Password = bloodBank.Password;
+            toUpdate.ServerAddress = bloodBank.ServerAddress;
+            return _repository.Update(bloodBank);
         }
         
     }

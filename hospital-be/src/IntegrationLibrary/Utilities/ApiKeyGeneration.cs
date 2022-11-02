@@ -16,6 +16,7 @@ namespace IntegrationLibrary.Utilities
             using (var generator = RandomNumberGenerator.Create())
                 generator.GetBytes(key);
             keyString = Convert.ToBase64String(key);
+            keyString = keyString.Replace('+', '-').Replace('/', '_').Replace('=', '8');
 
             return keyString;
         }
