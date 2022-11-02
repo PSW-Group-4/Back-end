@@ -1,45 +1,55 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace IntegrationLibrary.Utilities
 {
-    public class PasswordHandler : PasswordHasher<BloodBank>
+    public class PasswordHandler : IPasswordHandler
     {
-
+        private readonly IPasswordHasher<BloodBank> _passwordHasher;
         const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
         const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const string NUMBERS = "123456789";
         const string SPECIALS = @"!@£$%^&*()#€";
 
-        public static string GeneratePassword(bool useLowercase = true, bool useUppercase = true, bool useNumbers = true, bool useSpecial = true,
-                int passwordSize = 20)
+        public PasswordHandler(IPasswordHasher<BloodBank> passwordHasher)
         {
+            _passwordHasher = passwordHasher;
+        }
 
-            char[] _password = new char[passwordSize];
+        public string Generate()
+        {
+            char[] _password = new char[20];
             string charSet = "";
             System.Random _random = new Random();
             int counter;
 
-            if (useLowercase) charSet += LOWER_CASE;
+            charSet += LOWER_CASE;
 
-            if (useUppercase) charSet += UPPER_CASE;
+            charSet += UPPER_CASE;
 
-            if (useNumbers) charSet += NUMBERS;
+            charSet += NUMBERS;
 
-            if (useSpecial) charSet += SPECIALS;
+            charSet += SPECIALS;
 
-            for (counter = 0; counter < passwordSize; counter++)
+            for (counter = 0; counter < 20; counter++)
             {
                 _password[counter] = charSet[_random.Next(charSet.Length - 1)];
             }
 
             return String.Join(null, _password);
+        }
+
+        
+        public string Hash(BloodBank bloodBank, String password)
+        {
+            return _passwordHasher.HashPassword(bloodBank, password);
+        }
+
+        public PasswordVerificationResult Verify(BloodBank bloodBank, String providedPassword)
+        {
+            return _passwordHasher.VerifyHashedPassword(bloodBank, bloodBank.Password, providedPassword);
         }
     }
 

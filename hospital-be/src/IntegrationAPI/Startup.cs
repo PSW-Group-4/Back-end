@@ -40,6 +40,8 @@ namespace IntegrationAPI
 
             services.AddAutoMapper(typeof(MappingProfile));
 
+            services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
+            services.AddScoped<IPasswordHandler, PasswordHandler>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
             services.AddScoped<IMailSender, MailSender>();
