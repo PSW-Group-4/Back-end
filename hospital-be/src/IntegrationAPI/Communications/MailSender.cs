@@ -12,7 +12,7 @@ namespace IntegrationAPI.Communications
         public string CreateEmailText(BloodBank bloodBank)
         {
             //TODO when the public app is done change add the link to EmailingResources and put it here 
-            return String.Format(IntegrationLibrary.Settings.EmailingResources.EmailTemplate, bloodBank.ApiKey, bloodBank.Password, "Our public app URL goes here");
+            return String.Format(IntegrationLibrary.Settings.EmailingResources.EmailTemplate, bloodBank.ApiKey, bloodBank.Password, $"http://localhost:4200/bloodBanks/{bloodBank.ApiKey}");
         }
 
         public MimeMessage createTxtEmail(string recipientName, string recipientEmail, string subject, string emailText)
