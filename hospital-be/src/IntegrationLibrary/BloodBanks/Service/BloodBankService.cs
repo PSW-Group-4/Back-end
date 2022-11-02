@@ -47,7 +47,7 @@ namespace IntegrationLibrary.BloodBanks.Service
         public BloodBank Update(BloodBank bloodBank) {
             BloodBank toUpdate = _repository.GetById(bloodBank.Id);
             toUpdate.Name = bloodBank.Name;
-            toUpdate.Password = bloodBank.Password;
+            toUpdate.Password = _passwordHandler.Hash(toUpdate, toUpdate.Password);
             toUpdate.ServerAddress = bloodBank.ServerAddress;
             return _repository.Update(bloodBank);
         }
