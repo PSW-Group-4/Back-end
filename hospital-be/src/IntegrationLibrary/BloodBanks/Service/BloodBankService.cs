@@ -45,10 +45,7 @@ namespace IntegrationLibrary.BloodBanks.Service
             return _repository.GetByApiKey(ApiKey);
         }
         public BloodBank Update(BloodBank bloodBank) {
-            BloodBank toUpdate = _repository.GetById(bloodBank.Id);
-            toUpdate.Name = bloodBank.Name;
-            toUpdate.Password = _passwordHandler.Hash(toUpdate, toUpdate.Password);
-            toUpdate.ServerAddress = bloodBank.ServerAddress;
+            bloodBank.Password = _passwordHandler.Hash(bloodBank, bloodBank.Password);
             return _repository.Update(bloodBank);
         }
         

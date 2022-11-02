@@ -7,11 +7,16 @@ namespace IntegrationLibrary.Utilities
 {
     public class PasswordHandler : IPasswordHandler
     {
-        PasswordHasher<BloodBank> PasswordHasher { get; }
+        private readonly IPasswordHasher<BloodBank> _passwordHasher;
         const string LOWER_CASE = "abcdefghijklmnopqursuvwxyz";
         const string UPPER_CASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const string NUMBERS = "123456789";
         const string SPECIALS = @"!@£$%^&*()#€";
+
+        public PasswordHandler(IPasswordHasher<BloodBank> passwordHasher)
+        {
+            _passwordHasher = passwordHasher;
+        }
 
         public string Generate()
         {
@@ -39,12 +44,12 @@ namespace IntegrationLibrary.Utilities
         
         public string Hash(BloodBank bloodBank, String password)
         {
-            return PasswordHasher.HashPassword(bloodBank, password);
+            return _passwordHasher.HashPassword(bloodBank, password);
         }
 
         public PasswordVerificationResult Verify(BloodBank bloodBank, String providedPassword)
         {
-            return PasswordHasher.VerifyHashedPassword(bloodBank, bloodBank.Password, providedPassword);
+            return _passwordHasher.VerifyHashedPassword(bloodBank, bloodBank.Password, providedPassword);
         }
     }
 
