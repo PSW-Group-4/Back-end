@@ -9,5 +9,6 @@ namespace HospitalLibrary.BuildingManagmentMap.Service.Interfaces
 {
     public interface IFloorMapService : ICrudService<FloorMap>
     {
+        public IEnumerable<FloorMap> GetFloorMapsByBuildingId(Guid id);
     }
 }
