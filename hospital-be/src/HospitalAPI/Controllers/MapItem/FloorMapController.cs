@@ -80,5 +80,11 @@ namespace HospitalAPI.Controllers.MapItem
                 return NotFound();
             }
         }
+
+        [HttpGet("ByBuilding/{id}")]
+        public ActionResult Get([FromRoute] Guid id)
+        {
+            return Ok(_floorMapService.GetFloorMapsByBuildingId(id));
+        }
     }
 }

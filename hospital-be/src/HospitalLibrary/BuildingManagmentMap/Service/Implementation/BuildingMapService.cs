@@ -42,5 +42,6 @@ namespace HospitalLibrary.BuildingManagmentMap.Service.Implementation
         {
             return _buildingMapRepository.Update(entity);
         }
+        
     }
 }

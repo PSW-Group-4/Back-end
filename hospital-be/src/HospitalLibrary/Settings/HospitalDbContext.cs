@@ -3,7 +3,6 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BuildingManagment.Model;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
