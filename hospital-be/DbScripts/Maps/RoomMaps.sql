@@ -1,6 +1,45 @@
-INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width")
-	VALUES ('1dd897c6-56a0-4b9c-be76-c5cfd0ccfea0', '9ae3255d-261f-472f-a961-7f2e7d05d95c', 100, 100, 70, 70);
-INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width")
-	VALUES ('4c8b0af2-9936-46a3-9eaf-002840685f64', '8dd731ee-197f-40a8-a5e1-845662b0c0cd', 170, 100, 70, 70);
-INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width")
-	VALUES ('c2c47c06-4403-4f77-8c70-ed570e2a8812', 'd4857133-ef89-4e5e-865f-b49c83ecec23', 100, 170, 70, 70);
+INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width") VALUES ('1dd897c6-56a0-4b9c-be76-c5cfd0ccfea0', '9ae3255d-261f-472f-a961-7f2e7d05d95c', 0, 0, 50, 50);
+INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width") VALUES ('4c8b0af2-9936-46a3-9eaf-002840685f64', '8dd731ee-197f-40a8-a5e1-845662b0c0cd', 0, 50, 50, 50);
+INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width") VALUES ('c2c47c06-4403-4f77-8c70-ed570e2a8812', 'd4857133-ef89-4e5e-865f-b49c83ecec23', 50, 0, 50, 50),
+			('0f753a34-bf93-4e9a-ac80-5922a2394ae0', '424c4309-1154-4d52-9282-342601cef85c', 100, 0, 50, 50),
+			('af16141a-8ebc-4c84-a22e-0990d0c50efe', '6b046e88-546c-4071-9431-24511e1e2d28', 150, 0, 50, 50),
+			('79851b1a-d097-488d-a60c-1d3f49aab33c', 'a2c565f7-d61e-4302-a417-1ed48919bb8f', 10, 10, 70, 70),
+			('5c3ba31a-0a57-466f-a59d-e4cdd26c8adc', '3bf58a45-d903-4148-8b7b-3fb0018bda83', 80, 10, 70, 70),
+			('12776675-36e3-40a6-a4fe-d6f490cd9e00', 'cb4f5baf-0383-463c-b914-d4dc384012f3', 150, 10, 70, 50),
+			('9be28ba5-f383-4d6f-b54e-92633bc31cfb', 'd2c2c548-5590-436b-9463-3ba7b82ed690', 10, 110, 70, 70),
+			('e54eb688-cbc3-43ac-a2eb-35d28d641f44', 'fefd8331-bbbc-47ba-928d-abb0dedf3701', 80, 110, 70, 70),
+			('51865243-4cf1-4a0b-86d5-f5712360377f', '67b1877a-c89d-4bb3-ba17-5d44a6faab83', 150, 110, 40, 70),
+			('2eb93231-970d-4c15-93a0-dd3cb6a10db4', '7f0b673f-4d4f-4b52-a66e-be888c3627f3', 10, 10, 40, 70),
+			('b383b831-4e1a-46d6-aff3-c663f8580a78', '133962ea-c543-497b-81a6-6a2efb54212a', 80, 10, 40, 70),
+			('f8b3b550-93ee-423d-801d-f7482617dd8a', '2b9b4701-831d-4510-aa44-d4a940acff73', 150, 10, 40, 70),
+			('ce0d82bf-75b3-4148-96ab-c7c4c90090f2', 'f563b764-f837-4b70-ab6b-5c7be7f706b8', 10, 110, 70, 70),
+			('82e4bf09-01e1-4164-afa8-52fac8c2f3d8', 'e8c0f4e2-fa51-4691-a7ba-dbabb36e69b0', 80, 110, 70, 70),
+			('6d1c0f1a-a8bc-407c-8ed2-eeca6e065178', 'b64ea4ac-e015-4a31-8cb1-dd514b889fad', 150, 110, 70, 70),
+			('ead480a8-a7c6-4317-9e6d-2aa78250c1a6', '620472d5-85b1-4f2d-aafc-3c9d9a59904f', 10, 10, 70, 70),
+			('91f6cef2-7735-4a0d-86f4-cebf64eb12a2', '17612be9-8a0e-4fca-b937-134e053a916e', 10, 80, 70, 70),
+			('0a9a8a1e-4509-4696-94d5-e1d971a5a157', '0a675efc-9118-47e7-8701-392b2fce8f24', 10, 150, 70, 70),
+			('57071813-2346-48a2-b5cd-df2b79d6fe2a', '37bad4cf-c231-4be2-b6cb-e4cdf75217e9', 110, 10, 70, 70),
+			('f2d0261a-f74f-4d40-8def-3657ecb1adb7', 'ec0ff92c-9d64-4456-93a1-ca3d04be76b1', 110, 80, 70, 70),
+			('9b314b91-c97b-4b0b-a0f7-c03ff339f46e', '3c8bb35e-cc74-46db-8c3e-fe757b0643e7', 110, 150, 70, 70),
+			('9863e32d-9a9b-41e5-8d37-2f579521ab14', '79dfc8d1-2990-417d-8398-3227087b9d8f', 10, 10, 70, 90),
+			('4ee3dbac-2850-41b4-8b60-79eb8b1cef59', 'fda46699-49a4-49c8-83a0-9efb86db9079', 100, 10, 70, 100),
+			('da23f3bd-af84-4205-a3cc-2e5c3139ee08', 'a460539e-cf02-4691-a09e-f132ed9939ec', 200, 10, 70, 100),
+			('ea50801a-2a4e-4873-8566-163fb655c7ec', 'dc73d590-da16-4035-a25a-db400cdc9c53', 10, 80, 70, 70),
+			('eb62ca3d-98fa-46b7-ad82-c4742e301ef6', '546d4ea1-937f-4029-8005-6b188cb33090', 100, 170, 70, 70),
+			('da4d54e2-114a-46df-8a08-30bc17fa4608', 'bfd7238a-1157-47fd-97d4-ed61a3acc03b', 170, 170, 70, 70),
+			('3917b474-4c7b-4f6a-b875-ee2aded1a2e9', '7187bad6-1336-4835-a072-de7dbd44ed47', 10, 10, 70, 90),
+			('e6c0794d-15c2-4fcc-8d4b-615599179d12', '9460b027-03fb-4b07-89c7-25b5c22099a6', 100, 10, 70, 100),
+			('c68f7e99-3585-4c9a-9974-340874a850f9', '92c8ef07-03b3-47ac-a159-56cfa490d111', 200, 10, 70, 100),
+			('4609e026-1213-4f9d-95b1-b5f2692adfb8', 'ca404f3e-a95d-44f5-9fab-42719dbcdd21', 10, 80, 70, 70),
+			('8a650187-6121-42af-8113-fb274824c6f1', '3b310efb-a542-4838-ab2b-05faac495895', 100, 170, 70, 70),
+			('21cbedf3-fbf0-4bd2-baa3-bddd12511393', 'dde5590b-1bea-489e-a503-302a9b9fc0ca', 170, 170, 70, 70),
+			('538f6a4b-f58b-4f61-a5e2-30e71c80c5c3', '25d39e5f-26f4-4254-a6f8-82d5e1abb6f0', 240, 170, 70, 70),
+			('4b7631f6-73e9-40f3-9471-b835f9edf938', '54c6de76-bc71-4615-8c73-4ebf9546444f', 10, 20, 80, 80),
+			('e0d6dc3c-d7ac-493e-b373-42ac20071685', 'c9f57048-e05c-4cc7-926c-bdb48ef6a3dc', 90, 20, 80, 80),
+			('938befe5-68d5-40c5-8e64-6d11b3808f20', 'd6ef1785-b796-44b9-87b9-941f3684189d', 170, 20, 80, 80),
+			('ff0cdc47-e961-4da7-8f77-ea4a6cdf7164', 'f36eea9c-721a-40be-8cb0-12ac348c66bc', 250, 20, 80, 80),
+			('1203d09e-578a-47e8-95a8-58cadacb567b', 'd709d442-1dd4-4560-8072-c8cfcab5454f', 10, 120, 80, 80),
+			('309c86e4-3459-4756-8c32-da9bef5ca395', '537f4833-bd4b-45be-92a0-d82f29e7c352', 90, 120, 80, 80),
+			('56d875b8-c7f0-4c4e-acdf-99bdc4a979e8', '66b63e58-17a2-4a4a-9fa4-b5a26afd0fc6', 170, 120, 80, 80),
+			('a7120f41-2893-4041-88cb-55beb585583a', 'be5d6557-f0fa-42fb-bff0-823923d6dfd9', 250, 120, 80, 80)
+			;
