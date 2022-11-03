@@ -36,9 +36,6 @@ namespace IntegrationLibrary.BloodBanks.Service
             bloodBank.ApiKey = ApiKeyGeneration.generateKey();
             string generatedPassword = _passwordHandler.Generate();
             bloodBank.Password = generatedPassword;
-            //Keep the .sendEmail commented no need to spam people or me
-            //EmailSending.sendEmail(EmailSending.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, Settings.EmailingResources.EmailSubjectBB, EmailSending.CreateEmailText(bloodBank)));
-           
             return _repository.Create(bloodBank);
         }
         public BloodBank GetByApiKey(String ApiKey) {
