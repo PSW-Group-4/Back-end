@@ -11,7 +11,7 @@ namespace IntegrationLibrary.BloodBanks.Model
     public class ReportConfiguration
     {
         public Guid Id { get; set; }
-        public BloodBank BloodBank { get; set; }
+        public virtual BloodBank BloodBank { get; set; }
         public ReportFrequencyTitles RequestFrequency { get; set; }
         public Boolean ActiveStatus { get; set; }
     }

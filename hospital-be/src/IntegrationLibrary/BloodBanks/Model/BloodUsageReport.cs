@@ -11,8 +11,8 @@ namespace IntegrationLibrary.BloodBanks.Model
     public class BloodUsageReport
     {
         public Guid Id { get; set; }
-        public BloodBank BloodBank { get; set; }
-        public ReportConfiguration ReportConfiguration { get; set; }
-        public List<BloodUsage> BloodUsage { get; set; }
+        public virtual BloodBank BloodBank { get; set; }
+        public virtual ReportConfiguration ReportConfiguration { get; set; }
+        public virtual List<BloodUsage> BloodUsage { get; set; }
     }
 }
