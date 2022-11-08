@@ -1,8 +1,8 @@
 using HospitalAPI.Dtos.Person;
-using HospitalLibrary.Allergies;
 using HospitalLibrary.Patients.Model;
 using System.Collections.Generic;
 using System;
+using HospitalLibrary.Allergies.Model;
 
 namespace HospitalAPI.Dtos.Patient
 {

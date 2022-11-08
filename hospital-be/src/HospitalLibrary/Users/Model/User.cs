@@ -22,16 +22,16 @@ namespace HospitalLibrary.Users.Model
         public string Username { get; set; }
         public string Password { get; set; }
         public bool IsAccountActive { get; set; }
-        public bool Blocked { get; set; }
+        public bool IsBlocked { get; set; }
         public UserRole Role { get; set; }
-        public Guid ForeinId { get; set; }
+        public Guid PersonId { get; set; }
 
         internal void Update(User user)
         {
             Username = user.Username;
             Password = user.Password;
             Role = user.Role;
-            ForeinId = user.ForeinId;
+            PersonId = user.PersonId;
         }
     }
 }
