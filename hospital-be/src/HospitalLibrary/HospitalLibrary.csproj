@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Core\Service\" />
+    <Folder Include="Allergies\Service\" />
     <Folder Include="GraphicalEditor\Model\" />
     <Folder Include="GraphicalEditor\Service\" />
     <Folder Include="GraphicalEditor\Repository\" />
