@@ -14,6 +14,8 @@ using HospitalAPI.Dtos.MapItem;
 using HospitalAPI.Dtos.Rooms;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Appointments.Model;
+using HospitalAPI.Dtos.User;
+using HospitalLibrary.Users.Model;
 
 namespace HospitalAPI.Mapper
 {
@@ -52,6 +54,9 @@ namespace HospitalAPI.Mapper
 
             CreateMap<RoomRequestDto, Room>();
             CreateMap<AppointmentRequestDto, Appointment>();
+
+            CreateMap<PatientRegistrationDto, Patient>();
+            CreateMap<UserLoginDto, User>();
         }
 
         private static string ResolveFeedbackPatientFullName(Feedback src)
