@@ -1,0 +1,12 @@
+Addresses
+Allergies
+
+Buildings
+Floors
+Rooms
+
+Doctors
+Patients
+PatientAllergies
+
+Users
