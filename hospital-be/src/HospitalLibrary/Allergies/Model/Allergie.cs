@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Patients.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace HospitalLibrary.Allergies.Model
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+        public virtual List<Patient> Patients { get; set; }
 
         internal void Update(Allergie allergie)
         {
