@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace HospitalLibrary.Users.Repository
 {
     public interface IUserRepository {
-        public User GetById(string username);
+        public User GetByUsername(string username);
         public void Delete(string username);
         public User Create(User User);
         public User Update(User user);
