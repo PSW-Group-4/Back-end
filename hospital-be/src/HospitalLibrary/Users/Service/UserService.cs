@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Users.Model;
 using HospitalLibrary.Users.Repository;
+using IntegrationLibrary.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,9 @@ namespace HospitalLibrary.Users.Service
             return _userRepository.GetAll();
         }
 
-        public User GetById(string username)
+        public User GetByUsername(string username)
         {
-            return _userRepository.GetById(username);
+            return _userRepository.GetByUsername(username);
         }
 
         public User Create(User user)
@@ -40,6 +41,16 @@ namespace HospitalLibrary.Users.Service
             user.IsBlocked = false;
 
             return _userRepository.Create(user);
+        }
+
+        public User Authenticate(string username, string password)
+        {
+            User user = _userRepository.GetByUsername(username);
+            if(user.Password == password)
+            {
+                return user;
+            }
+            throw new NotFoundException();
         }
 
         public User Update(User user)

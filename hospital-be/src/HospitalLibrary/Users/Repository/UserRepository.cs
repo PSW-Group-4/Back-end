@@ -24,7 +24,7 @@ namespace HospitalLibrary.Users.Repository
             return _context.Users.ToList();
         }
 
-        public User GetById(string username)
+        public User GetByUsername(string username)
         {
             var result =  _context.Users.Find(username);
             if (result == null)
@@ -57,7 +57,7 @@ namespace HospitalLibrary.Users.Repository
 
         public void Delete(string username)
         {
-            var User = GetById(username);
+            var User = GetByUsername(username);
             _context.Users.Remove(User);
             _context.SaveChanges();
         }
