@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.RoomsAndEqipment.Model
 {
-    public abstract class Room
+    public class Room
     {
         public Guid Id {get; set;}
         public String Description {get; set;}
