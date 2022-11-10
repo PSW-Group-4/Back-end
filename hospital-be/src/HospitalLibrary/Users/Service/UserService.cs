@@ -1,11 +1,12 @@
 ﻿using HospitalLibrary.Users.Model;
 using HospitalLibrary.Users.Repository;
-using IntegrationLibrary.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Exceptions;
+using NotFoundException = IntegrationLibrary.Exceptions.NotFoundException;
 
 namespace HospitalLibrary.Users.Service
 {
@@ -36,7 +37,7 @@ namespace HospitalLibrary.Users.Service
         public User RegisterPatient(User user, Guid patientId)
         {
             user.PersonId = patientId;
-            user.Role = UserRole.PATIENT;
+            user.Role = UserRole.Patient;
             user.IsAccountActive = false;
             user.IsBlocked = false;
 
@@ -46,11 +47,17 @@ namespace HospitalLibrary.Users.Service
         public User Authenticate(string username, string password)
         {
             User user = _userRepository.GetByUsername(username);
-            if(user.Password == password)
+            if (user == null)
             {
-                return user;
+                throw new NotFoundException();
             }
-            throw new NotFoundException();
+            
+            if(user.Password != password)
+            {
+                throw new BadPasswordException();
+            }
+            
+            return user;
         }
 
         public User Update(User user)

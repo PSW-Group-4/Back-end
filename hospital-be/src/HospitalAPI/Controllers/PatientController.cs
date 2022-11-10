@@ -26,7 +26,7 @@ namespace HospitalAPI.Controllers
 
         // GET: api/Patient
         [HttpGet]
-        [Authorize(Roles = "PATIENT")]
+        [Authorize(Roles = "Patient")]
         public ActionResult GetAll()
         {
             return Ok(_patientService.GetAll());

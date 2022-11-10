@@ -30,7 +30,7 @@ namespace HospitalAPI.Controllers
         private readonly IAddressService _addressService;
         private readonly IPatientService _patientService;
         private readonly IMapper _mapper;
-        private IConfiguration _config;
+        private readonly IConfiguration _config;
 
         public UserController(IUserService userService, IAddressService addressService,
             IPatientService patientService, IMapper mapper, IConfiguration config)
@@ -53,8 +53,9 @@ namespace HospitalAPI.Controllers
                 var patient = _mapper.Map<Patient>(registrationDto);
                 var user = _mapper.Map<User>(registrationDto.UserLoginDto);
 
-                _addressService.Create(address);
-                _patientService.RegisterPatient(patient, address.Id, registrationDto.ChoosenDoctorId,
+                patient.Address = address;
+                patient.AddressId = address.Id;
+                _patientService.RegisterPatient(patient,  registrationDto.ChoosenDoctorId,
                     registrationDto.AllergieIds);
 
                 _userService.RegisterPatient(user, patient.Id);
@@ -76,13 +77,16 @@ namespace HospitalAPI.Controllers
             try
             {
                 var user = _userService.Authenticate(userLogin.Username, userLogin.Password);
-
                 var token = Generate(user);
                 return Ok(token);
             }
-            catch
+            catch(NotFoundException)
             {
                 return NotFound("User not found");
+            }
+            catch(BadPasswordException)
+            {
+                return Unauthorized("Bad password");
             }
         }
 
