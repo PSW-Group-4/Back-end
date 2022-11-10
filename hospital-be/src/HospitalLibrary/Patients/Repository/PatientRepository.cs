@@ -66,7 +66,7 @@ namespace HospitalLibrary.Patients.Repository
 
         public int GetPatientCountByAgeGroup(AgeGroup ageGroup)
         {
-            return _context.Patients.Where(p=> DateTime.Now.AddYears(-ageGroup.MaxAge) <= p.Birthdate && DateTime.Now.AddYears(-ageGroup.MinAge) >= p.Birthdate).Count();
+            return _context.Patients.ToList().Where(p=> p.IsInAgeGroup(ageGroup)==true).Count();
         }
 
         public int GetPatientCountByGender(Gender gender)
@@ -76,7 +76,7 @@ namespace HospitalLibrary.Patients.Repository
 
         public int GetDoctorsPatientCountByAgeGroup(AgeGroup ageGroup, Guid doctorId)
         {
-            return _context.Patients.Where(p => DateTime.Now.AddYears(-ageGroup.MaxAge) <= p.Birthdate && DateTime.Now.AddYears(-ageGroup.MinAge) >= p.Birthdate && p.ChoosenDoctorId==doctorId).Count();
+            return _context.Patients.ToList().Where(p => p.IsInAgeGroup(ageGroup)==true && p.ChoosenDoctorId==doctorId).Count();
         }
     }
 }

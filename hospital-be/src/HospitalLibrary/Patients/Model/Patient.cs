@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Allergies.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Utility;
 using System;
 using System.Collections.Generic;
 
@@ -32,6 +33,11 @@ namespace HospitalLibrary.Patients.Model
             Allergies = patient.Allergies;
             ChoosenDoctorId = patient.ChoosenDoctorId;
             ChoosenDoctor = patient.ChoosenDoctor;
+        }
+
+        public bool IsInAgeGroup(AgeGroup ageGroup)
+        {
+            return DateTime.Now.AddYears(-ageGroup.MaxAge) <= Birthdate && DateTime.Now.AddYears(-ageGroup.MinAge) >= Birthdate;
         }
     }
 }
