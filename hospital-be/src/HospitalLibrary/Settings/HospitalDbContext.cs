@@ -10,8 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Reflection;
 using HospitalLibrary.BuildingManagmentMap.Model;
-using HospitalLibrary.Users.Model;
-using HospitalLibrary.Allergies;
 
 namespace HospitalLibrary.Settings
 {
@@ -19,9 +17,8 @@ namespace HospitalLibrary.Settings
     {
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Patient> Patients { get; set; }
+
         public DbSet<Feedback> Feedbacks { get; set; }
-        public DbSet<User> Users { get; set; }
-        public DbSet<Allergie> Allergies { get; set; } 
         
         
         // Building managment
@@ -47,10 +44,6 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            modelBuilder.Entity<Patient>()
-            .HasMany(b => b.Allergies)
-            .WithOne();
         }
     }
 }
