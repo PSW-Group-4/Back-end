@@ -1,7 +1,11 @@
-﻿namespace HospitalLibrary.Utility
+﻿using System;
+
+namespace HospitalLibrary.Patients.Model
 {
     public class AgeGroup
     {
+
+        public Guid Id { get; set; }
         public string GropuName { get; set; }
 
         public int MinAge { get; set; }
@@ -13,6 +17,13 @@
             GropuName = gropuName;
             MinAge = minAge;
             MaxAge = maxAge;
+        }
+
+        public void Update(AgeGroup ageGroup)
+        {
+            GropuName = ageGroup.GropuName;
+            MinAge = ageGroup.MinAge;
+            MaxAge = ageGroup.MaxAge;
         }
     }
 }

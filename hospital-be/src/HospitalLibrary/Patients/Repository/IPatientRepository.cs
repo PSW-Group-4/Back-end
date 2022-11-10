@@ -1,7 +1,6 @@
-﻿using HospitalLibrary.Patients.Model;
+﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Utility;
-using HospitalLibrary.Core.Model;
+using HospitalLibrary.Patients.Model;
 using System;
 
 namespace HospitalLibrary.Patients.Repository

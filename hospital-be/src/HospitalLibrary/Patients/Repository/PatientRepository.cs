@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Exceptions;
-using HospitalLibrary.Utility;
 using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Patients.Repository

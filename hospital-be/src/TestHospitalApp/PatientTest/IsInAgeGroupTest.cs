@@ -1,11 +1,6 @@
 ﻿using HospitalLibrary.Patients.Model;
-using HospitalLibrary.Utility;
 using Shouldly;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace TestHospitalApp.PatientTest
@@ -18,10 +13,9 @@ namespace TestHospitalApp.PatientTest
         {
             Patient p = new Patient();
             p.Birthdate = new DateTime(2015, 1, 1);
-            AgeGroup ageGroup = new AgeGroup("TEST",0,20);
+            AgeGroup ageGroup = new AgeGroup("TEST", 0, 20);
 
             bool isInAgeGroup = p.IsInAgeGroup(ageGroup);
-
 
             isInAgeGroup.ShouldBe(true);
 
@@ -33,6 +27,7 @@ namespace TestHospitalApp.PatientTest
             Patient p = new Patient();
             p.Birthdate = new DateTime(1970, 1, 1);
             AgeGroup ageGroup = new AgeGroup("TEST", 0, 20);
+
             bool isInAgeGroup = p.IsInAgeGroup(ageGroup);
 
             isInAgeGroup.ShouldBe(false);
@@ -44,9 +39,9 @@ namespace TestHospitalApp.PatientTest
         {
             Patient p = new Patient();
             int age = 20;
-            p.Birthdate = new DateTime(DateTime.Now.Year- age, DateTime.Now.Month, DateTime.Now.Day);
-
+            p.Birthdate = new DateTime(DateTime.Now.Year - age, DateTime.Now.Month, DateTime.Now.Day);
             AgeGroup ageGroup = new AgeGroup("TEST", 0, age);
+
             bool isInAgeGroup = p.IsInAgeGroup(ageGroup);
 
             isInAgeGroup.ShouldBe(false);

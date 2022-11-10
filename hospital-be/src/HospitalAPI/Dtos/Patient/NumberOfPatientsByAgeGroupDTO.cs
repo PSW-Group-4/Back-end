@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Utility;
+﻿using HospitalLibrary.Patients.Model;
 
 namespace HospitalAPI.Dtos.Patient
 {
