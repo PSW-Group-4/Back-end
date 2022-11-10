@@ -2,7 +2,9 @@
 using HospitalLibrary.Users.Repository;
 using System;
 using System.Collections.Generic;
-using HospitalLibrary.Core.Service.Interfaces;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using HospitalLibrary.Exceptions;
 using NotFoundException = IntegrationLibrary.Exceptions.NotFoundException;
 
@@ -11,12 +13,10 @@ namespace HospitalLibrary.Users.Service
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IJwtService _jwtService;
 
-        public UserService(IUserRepository userRepository, IJwtService jwtService)
+        public UserService(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            _jwtService = jwtService;
         }
 
         public IEnumerable<User> GetAll()
@@ -44,7 +44,7 @@ namespace HospitalLibrary.Users.Service
             return _userRepository.Create(user);
         }
 
-        public string Authenticate(string username, string password)
+        public User Authenticate(string username, string password)
         {
             User user = _userRepository.GetByUsername(username);
             if (user == null)
@@ -57,7 +57,7 @@ namespace HospitalLibrary.Users.Service
                 throw new BadPasswordException();
             }
             
-            return _jwtService.GenerateToken(user);
+            return user;
         }
 
         public User Update(User user)
