@@ -16,6 +16,8 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalAPI.Dtos.User;
 using HospitalLibrary.Users.Model;
+using HospitalAPI.Dtos.Vacation;
+using HospitalLibrary.Vacations.Model;
 
 namespace HospitalAPI.Mapper
 {
@@ -54,6 +56,7 @@ namespace HospitalAPI.Mapper
 
             CreateMap<RoomRequestDto, Room>();
             CreateMap<AppointmentRequestDto, Appointment>();
+            CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<PatientRegistrationDto, Patient>();
             CreateMap<UserLoginDto, User>();
