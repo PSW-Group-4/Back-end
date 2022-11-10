@@ -11,7 +11,7 @@ using System;
 using System.Reflection;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Users.Model;
-using HospitalLibrary.Allergies.Model;
+using HospitalLibrary.Allergies;
 
 namespace HospitalLibrary.Settings
 {

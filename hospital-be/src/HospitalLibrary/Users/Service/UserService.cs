@@ -32,16 +32,6 @@ namespace HospitalLibrary.Users.Service
             return _userRepository.Create(user);
         }
 
-        public User RegisterPatient(User user, Guid patientId)
-        {
-            user.PersonId = patientId;
-            user.Role = UserRole.PATIENT;
-            user.IsAccountActive = false;
-            user.IsBlocked = false;
-
-            return _userRepository.Create(user);
-        }
-
         public User Update(User user)
         {
             return _userRepository.Update(user);

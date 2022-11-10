@@ -30,7 +30,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using HospitalLibrary.Users.Service;
 using HospitalLibrary.Users.Repository;
-using HospitalLibrary.Allergies.Repository;
 
 namespace HospitalAPI
 {
@@ -86,7 +85,7 @@ namespace HospitalAPI
             services.AddScoped<IUserService, UserService>();
 
             //Allergie
-            services.AddScoped<IAllergieRepository, AllergieRepository>();
+            //TODO:
 
             //TODO Feedback
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();

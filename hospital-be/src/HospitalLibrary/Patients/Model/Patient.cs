@@ -1,4 +1,4 @@
-﻿using HospitalLibrary.Allergies.Model;
+﻿using HospitalLibrary.Allergies;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using System;
