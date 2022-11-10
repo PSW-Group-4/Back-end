@@ -15,6 +15,8 @@ namespace IntegrationLibrary.Settings
     public class IntegrationDbContext : DbContext
     {
         public DbSet<BloodBank> BloodBanks { get; set; }
+        public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
+        public DbSet<BloodUsageReport> BloodUsageReports { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
