@@ -10,12 +10,10 @@ namespace HospitalLibrary.Users.Service
     public interface IUserService
     {
         IEnumerable<User> GetAll();
-        User GetByUsername(string username);
+        User GetById(string username);
         User Create(User user);
         User Update(User user);
         void Delete(string username);
         public User RegisterPatient(User user, Guid patientId);
-
-        public User Authenticate(string username, string password);
     }
 }

@@ -6,8 +6,6 @@ using AutoMapper;
 using HospitalAPI.Dtos.Patient;
 using HospitalLibrary;
 using HospitalLibrary.Exceptions;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 
 namespace HospitalAPI.Controllers
 {
@@ -26,7 +24,6 @@ namespace HospitalAPI.Controllers
 
         // GET: api/Patient
         [HttpGet]
-        [Authorize(Roles = "PATIENT")]
         public ActionResult GetAll()
         {
             return Ok(_patientService.GetAll());
