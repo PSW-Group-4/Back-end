@@ -1,3 +1,5 @@
+/* before running script, delete PK_Equipments constraint, public."Equipments"->Constraints->PK_Equipments->Right-click->Delete/Drop */
+
 ALTER TABLE public."Equipments" ADD CONSTRAINT "PK_Equipments" PRIMARY KEY ("Id", "DoctorRoomId")
 
 insert into public."Equipments" ("Id", "Name", "Amount", "DoctorRoomId") values ('c8da3993-1a84-46c0-97bd-187991b54b4a', 'Krevet', 3, '0a675efc-9118-47e7-8701-392b2fce8f24');
