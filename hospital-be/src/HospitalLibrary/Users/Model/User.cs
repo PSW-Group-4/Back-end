@@ -11,10 +11,10 @@ namespace HospitalLibrary.Users.Model
 {
     public enum UserRole
     {
-        PATIENT,
-        DOCTOR,
-        MANAGER,
-        CLERK
+        Patient,
+        Doctor,
+        Manager,
+        Clerk
     }
     public class User
     {

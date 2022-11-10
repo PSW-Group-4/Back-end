@@ -51,13 +51,11 @@ namespace HospitalLibrary.Patients.Service
             _patientRepository.Delete(patientId);
         }
 
-        public Patient RegisterPatient(Patient patient, Guid addressId, Guid choosenDoctorId, List<Guid> allergieIds)
+        //TODO "Hash password"
+        public Patient RegisterPatient(Patient patient,  Guid chosenDoctorId, List<Guid> allergieIds)
         {
-            patient.Address = _addressRepository.GetById(addressId);
-            patient.AddressId = addressId;
-
-            patient.ChoosenDoctor = _doctorRepository.GetById(choosenDoctorId);
-            patient.ChoosenDoctorId = choosenDoctorId;
+            patient.ChoosenDoctor = _doctorRepository.GetById(chosenDoctorId);
+            patient.ChoosenDoctorId = chosenDoctorId;
 
             patient.Allergies = _allergieRepository.GetAll().Where(a => allergieIds.Contains(a.Id)).ToList();
 
