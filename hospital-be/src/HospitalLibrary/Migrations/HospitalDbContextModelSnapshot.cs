@@ -19,21 +19,6 @@ namespace HospitalLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-            modelBuilder.Entity("AllergiePatient", b =>
-                {
-                    b.Property<Guid>("AllergiesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PatientsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("AllergiesId", "PatientsId");
-
-                    b.HasIndex("PatientsId");
-
-                    b.ToTable("PatientAllergies");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Allergies.Model.Allergie", b =>
                 {
                     b.Property<Guid>("Id")
@@ -43,7 +28,12 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
+                    b.Property<Guid?>("PatientId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Allergies");
                 });
@@ -449,19 +439,11 @@ namespace HospitalLibrary.Migrations
                     b.HasDiscriminator().HasValue("DoctorRoom");
                 });
 
-            modelBuilder.Entity("AllergiePatient", b =>
+            modelBuilder.Entity("HospitalLibrary.Allergies.Model.Allergie", b =>
                 {
-                    b.HasOne("HospitalLibrary.Allergies.Model.Allergie", null)
-                        .WithMany()
-                        .HasForeignKey("AllergiesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HospitalLibrary.Patients.Model.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Allergies")
+                        .HasForeignKey("PatientId");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Appointments.Model.Appointment", b =>
@@ -596,6 +578,11 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Floor", b =>
                 {
                     b.Navigation("RoomList");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
+                {
+                    b.Navigation("Allergies");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.DoctorRoom", b =>

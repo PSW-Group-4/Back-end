@@ -12,7 +12,6 @@ using System.Reflection;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Allergies.Model;
-using Microsoft.Extensions.Hosting;
 
 namespace HospitalLibrary.Settings
 {
@@ -49,11 +48,9 @@ namespace HospitalLibrary.Settings
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
-           modelBuilder
-            .Entity<Patient>()
-            .HasMany(p => p.Allergies)
-            .WithMany(a => a.Patients)
-            .UsingEntity(j => j.ToTable("PatientAllergies"));
+            modelBuilder.Entity<Patient>()
+            .HasMany(b => b.Allergies)
+            .WithOne();
         }
     }
 }
