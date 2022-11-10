@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221110125641_bloodRequestMigration")]
+    partial class bloodRequestMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -113,6 +115,38 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("blood_banks_config");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
+                {
+                    b.Property<Guid>("requestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("bloodAmountInMilliliters")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("bloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("doctorId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("isApproved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("managerId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("reasonsWhyBloodIsNeeded")
+                        .HasColumnType("text");
+
+                    b.Property<string>("rejectionComment")
+                        .HasColumnType("text");
+
+                    b.HasKey("requestId");
+
+                    b.ToTable("BloodRequests");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsage", b =>
                 {
                     b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", null)
@@ -148,38 +182,6 @@ namespace IntegrationLibrary.Migrations
                 {
                     b.Navigation("BloodUsage");
                 });
-
-            modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
-            {
-                b.Property<Guid>("requestId")
-                    .ValueGeneratedOnAdd()
-                    .HasColumnType("uuid");
-
-                b.Property<double>("bloodAmountInMilliliters")
-                    .HasColumnType("double precision");
-
-                b.Property<string>("bloodType")
-                    .HasColumnType("text");
-
-                b.Property<string>("doctorId")
-                    .HasColumnType("text");
-
-                b.Property<bool>("isApproved")
-                    .HasColumnType("boolean");
-
-                b.Property<string>("managerId")
-                    .HasColumnType("text");
-
-                b.Property<string>("reasonsWhyBloodIsNeeded")
-                    .HasColumnType("text");
-
-                b.Property<string>("rejectionComment")
-                    .HasColumnType("text");
-
-                b.HasKey("requestId");
-
-                b.ToTable("BloodRequests");
-            });
 #pragma warning restore 612, 618
         }
     }
