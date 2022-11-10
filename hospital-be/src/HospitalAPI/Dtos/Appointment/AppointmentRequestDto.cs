@@ -1,7 +1,4 @@
 using System;
-using HospitalAPI.Dtos.Doctor;
-using HospitalAPI.Dtos.Patient;
-using HospitalAPI.Dtos.Rooms;
 
 namespace HospitalAPI.Dtos.Appointment
 {

@@ -6,7 +6,7 @@ using System.Linq;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Exceptions;
 
-namespace HospitalLibrary.Patients.Repository
+namespace HospitalLibrary.Appointments.Repository
 {
     public class AppointmentRepository : IAppointmentRepository
     {

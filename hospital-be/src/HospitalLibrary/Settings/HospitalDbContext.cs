@@ -13,6 +13,7 @@ using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Allergies.Model;
 using Microsoft.Extensions.Hosting;
+using HospitalLibrary.BloodConsumptionRecords.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -37,6 +38,8 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
+
+        public DbSet<BloodConsumptionRecord> BloodConsumptionRecords { get; set; }
 
         public DbSet<BuildingMap> BuildingMaps { get; set; }
 

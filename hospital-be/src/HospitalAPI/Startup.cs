@@ -33,6 +33,8 @@ using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Allergies.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.BloodConsumptionRecords.Repository;
+using HospitalLibrary.BloodConsumptionRecords.Service;
 
 namespace HospitalAPI
 {
@@ -104,6 +106,11 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IDoctorAppointmentService, DoctorAppointmentService>();
+
+            //BloodConsumptionRecord
+            services.AddScoped<IBloodConsumptionRecordRepository, BloodConsumptionRecordRepository>();
+            services.AddScoped<IBloodConsumptionRecordService, BloodConsumptionRecordService>();
+
             //Room
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IRoomService, RoomService>();
