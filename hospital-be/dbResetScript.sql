@@ -12,6 +12,12 @@ delete from "Floors";
 delete from "Buildings";
 delete from "Allergies";
 delete from "Addresses";
+delete from "AgeGroups";
+insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
+	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
+	('113faa92-ea79-4bd7-9b9a-6413098f39ec','Young adults',17,30),
+	('e789e5f8-1780-4bee-aaaa-1059b22c7b6b','Middle-aged adults',31,50),
+	('f17018ae-b598-4063-9229-757ee3763f7c','Old Adults',51,999);
 INSERT INTO "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") VALUES ('1b9e69e2-283a-4e1b-999e-4f9997bbcfe5', 'Leskovac', 'Serbia', 'Old Gate', '1');
 INSERT INTO "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") VALUES ('c188c722-cfa9-47c4-8d84-bb56b9302870', 'Blobo', 'Serbia', 'Eastwood', '0');
 INSERT INTO "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") VALUES ('15fef027-3c08-4dd6-b8b9-5f416186c169', 'Celica', 'Serbia', 'Hudson', '48');
@@ -178,7 +184,7 @@ INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname",
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('59fd4e8a-0ed7-4c81-939d-fec17dffe9d0', 0, '631732d1-2be0-481f-b104-604efb32014d', 'Lenard', 'Brackenbury', '1959-11-26 00:37:27', 1, 'f8382ee5-c8f4-4267-92d2-41dc850e2492', '475-52-2958', 'lbrackenburyj@woothemes.com', '245-419-4722');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('666afc0c-1256-4752-8769-2c32769ff55e', 4, '5c036fba-1118-4f4b-b153-90d75e60625e', 'Hill', 'Gallop', '1942-02-14 19:40:14', 1, 'b102478f-fbd5-4d62-8889-8b0086d1f241', '854-14-7434', 'hgallopk@cloudflare.com', '356-605-6973');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('608d9eda-335f-42c9-aeee-942673984d2b', 4, 'd5113ad6-b893-47cd-ae99-2d6236fd8f93', 'Carrissa', 'Soro', '1919-09-21 23:55:54', 1, 'fc982639-c2bd-42f3-a9b2-b763d4871cbe', '846-03-8526', 'csorol@tripod.com', '601-681-0881');
-INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('be06968d-fa84-43db-8834-b1ae7b990f8e', 4, '7875c605-4989-465c-8cbc-2f93f2b1612e', 'Krystal', 'Neal', '1975-02-22 05:28:44', 1, '50ba78fd-ad55-45ba-b5b6-5e824dc69b16', '551-31-0449', 'konealm@smugmug.com', '614-790-5127');
+INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('be06968d-fa84-43db-8834-b1ae7b990f8e', 4, '7875c605-4989-465c-8cbc-2f93f2b1612e', 'Krystal', 'O\'Neal', '1975-02-22 05:28:44', 1, '50ba78fd-ad55-45ba-b5b6-5e824dc69b16', '551-31-0449', 'konealm@smugmug.com', '614-790-5127');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('2f965ffe-c645-4e43-bd34-f3c89c2d06ab', 3, 'd0e5743d-8718-432c-bc2c-53a5ea9bb3df', 'Kakalina', 'Osichev', '1995-02-17 23:20:11', 0, '6895c936-d304-4c80-be25-98bf58146b5a', '462-54-8523', 'kosichevn@digg.com', '466-641-4355');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('a401926d-2cc7-43d3-af2e-1361212b2298', 1, '5c036fba-1118-4f4b-b153-90d75e60625e', 'Mirabelle', 'Rowantree', '1909-06-18 05:36:17', 0, '33aaafa8-784b-4ade-9488-de310dd4ee49', '459-49-8621', 'mrowantreeo@parallels.com', '822-906-6458');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('c1db258b-3034-4ba5-98bd-4f68137bac94', 3, '02975cd9-be40-4f26-9d9a-d86a32e39d99', 'Marjorie', 'Atterbury', '2000-04-26 20:08:00', 0, '9b73d896-e323-41e6-ad56-c31363d601cc', '205-82-0210', 'matterburyp@huffingtonpost.com', '517-427-0580');
@@ -193,7 +199,7 @@ INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname",
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('1344543f-01e7-498d-a806-b4cd522331ce', 0, '6444dff2-fcd7-44b0-90cb-19326b7ad49d', 'Bernie', 'Brixey', '1963-11-05 08:44:33', 0, '74c3ce7d-47e1-4b13-9504-426f8ed186f3', '898-93-3064', 'bbrixeyy@issuu.com', '101-496-8919');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('b259d8ef-af8c-4faf-83e4-3c1022cadae0', 1, '57144fb5-20d6-4662-ae96-378aabfe93d3', 'Sheilah', 'Stenners', '1932-07-16 04:07:23', 1, '6d92bbec-2317-4bfe-8642-0047778afa35', '419-94-9384', 'sstennersz@paypal.com', '531-712-2092');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('e4e226d0-bb83-4536-aecf-2104e62187c4', 6, '631732d1-2be0-481f-b104-604efb32014d', 'Marabel', 'Cruces', '1916-05-08 02:53:11', 1, '15fef027-3c08-4dd6-b8b9-5f416186c169', '790-02-0683', 'mcruces10@upenn.edu', '763-345-6322');
-INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('58c0bccf-acef-43e9-9edc-2201ef6fd2c8', 3, '5ffed53e-8c78-432f-a603-8bce2f86c5e2', 'Carson', 'Hannigan', '1997-06-26 19:41:10', 0, 'dcd56603-454e-4003-8d06-76c04d59a6bf', '157-70-1967', 'cohannigan11@dmoz.org', '287-939-1443');
+INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('58c0bccf-acef-43e9-9edc-2201ef6fd2c8', 3, '5ffed53e-8c78-432f-a603-8bce2f86c5e2', 'Carson', 'O\'Hannigan', '1997-06-26 19:41:10', 0, 'dcd56603-454e-4003-8d06-76c04d59a6bf', '157-70-1967', 'cohannigan11@dmoz.org', '287-939-1443');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('53021651-422e-4ace-9398-59559e6ebeb8', 5, '023af84e-196e-4989-83b6-168ea2471a9f', 'Toddie', 'Hauck', '1997-04-07 13:20:09', 1, 'ab3bdc17-de85-4d61-8246-cdac9a0db304', '436-53-9442', 'thauck12@spiegel.de', '495-678-0707');
 INSERT INTO "Patients" ("Id", "BloodType", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "Email", "PhoneNumber") VALUES ('e6fbebce-dd68-45e4-9e38-c66b98cc8197', 0, '02975cd9-be40-4f26-9d9a-d86a32e39d99', 'Mandi', 'Leupold', '2014-08-09 16:50:05', 1, '73a404c1-6790-4ee2-8504-0fcc686a6f10', '782-12-2570', 'mleupold13@cnet.com', '884-638-8935');
 
@@ -265,7 +271,9 @@ INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Ro
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jmuffitt12', 'MZDWUH', true, false, 0, '53021651-422e-4ace-9398-59559e6ebeb8');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('mpryer13', 'Okpfoyk2Qk', true, false, 0, 'e6fbebce-dd68-45e4-9e38-c66b98cc8197');
 
-
+INSERT INTO public."Appointments" ("Id","DoctorId","RoomId","PatientId","DateTime","IsDone") VALUES
+	 ('1412c639-c5e1-47a1-b29b-1fe925536612','1412c639-c5e1-47a1-b29b-1fe935536612','9ae3255d-261f-472f-a961-7f2e7d05d95c','5a365cb2-d52a-4dc4-96a5-d37af79da08c','2022-11-04 00:00:00',true),
+	 ('15f4c4e0-08b2-44ef-9e1b-0f14164d59d2','1412c639-c5e1-47a1-b29b-1fe935536612','9ae3255d-261f-472f-a961-7f2e7d05d95c','5a365cb2-d52a-4dc4-96a5-d37af79da08c','2022-12-12 00:00:00',false);
 
 INSERT INTO public."BuildingMaps"(
 	"Id", "BuildingId", "CoordinateX", "CoordinateY", "Height", "Width")
@@ -279,7 +287,7 @@ INSERT INTO public."FloorMaps"(
 			('6605a870-8a45-4fc7-b281-039f91b48d3d', 'f775fba5-843e-4701-96e9-664530b18b3a', 10, 0, 48, 300),
 			('cb7de67a-3f3e-42ab-91da-335252bc533d', '1b7f1f98-8737-4c53-87e3-3399705be80d', 20, 100, 45, 300),
 			('220f2cf0-d0f9-47a8-bca5-86fb869e486f', '1b89ab52-d8ed-4a95-a436-4ecbe5404179', 20, 50, 45, 300),
-			('e3d38c92-01de-4d49-afb5-90de4dad2a42', 'f65545be-c944-453d-9d41-d6463553279a', 20, 0, 45, 300),
+			('e3d38c92-01de-4d49-afb5-90de4dad2a42', 'f65545be-c944-453d-9d41-d6463553279a', 20, 0, 45, 300)
 	
 	;
 INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width") VALUES ('1dd897c6-56a0-4b9c-be76-c5cfd0ccfea0', '9ae3255d-261f-472f-a961-7f2e7d05d95c', 0, 0, 50, 50);
