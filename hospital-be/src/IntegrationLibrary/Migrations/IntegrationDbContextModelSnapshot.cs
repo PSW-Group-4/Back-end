@@ -46,36 +46,36 @@ namespace IntegrationLibrary.Migrations
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
-                {
-                    b.Property<Guid>("requestId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+            {
+                b.Property<Guid>("requestId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
 
-                    b.Property<double>("bloodAmountInLiters")
-                        .HasColumnType("double precision");
+                b.Property<double>("bloodAmountInLiiters")
+                    .HasColumnType("double precision");
 
-                    b.Property<string>("bloodType")
-                        .HasColumnType("text");
+                b.Property<string>("bloodType")
+                    .HasColumnType("text");
 
-                    b.Property<string>("doctorId")
-                        .HasColumnType("text");
+                b.Property<string>("doctorId")
+                    .HasColumnType("text");
 
-                    b.Property<bool>("isApproved")
-                        .HasColumnType("boolean");
+                b.Property<bool>("isApproved")
+                    .HasColumnType("boolean");
 
-                    b.Property<string>("managerId")
-                        .HasColumnType("text");
+                b.Property<string>("managerId")
+                    .HasColumnType("text");
 
-                    b.Property<string>("reasonsWhyBloodIsNeeded")
-                        .HasColumnType("text");
+                b.Property<string>("reasonsWhyBloodIsNeeded")
+                    .HasColumnType("text");
 
-                    b.Property<string>("rejectionComment")
-                        .HasColumnType("text");
+                b.Property<string>("rejectionComment")
+                    .HasColumnType("text");
 
-                    b.HasKey("requestId");
+                b.HasKey("requestId");
 
-                    b.ToTable("BloodRequests");
-                });
+                b.ToTable("BloodRequests");
+            });
 #pragma warning restore 612, 618
         }
     }

@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Migrations
                     doctorId = table.Column<string>(type: "text", nullable: true),
                     bloodType = table.Column<string>(type: "text", nullable: true),
                     reasonsWhyBloodIsNeeded = table.Column<string>(type: "text", nullable: true),
-                    bloodAmountInLiters = table.Column<double>(type: "double precision", nullable: false),
+                    bloodAmountInLiiters = table.Column<double>(type: "double precision", nullable: false),
                     isApproved = table.Column<bool>(type: "boolean", nullable: false),
                     rejectionComment = table.Column<string>(type: "text", nullable: true),
                     managerId = table.Column<string>(type: "text", nullable: true)
