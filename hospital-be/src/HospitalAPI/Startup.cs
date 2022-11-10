@@ -31,7 +31,6 @@ using System.Text;
 using HospitalLibrary.Users.Service;
 using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Allergies.Repository;
-using HospitalLibrary.Core.Service;
 
 namespace HospitalAPI
 {
@@ -77,7 +76,6 @@ namespace HospitalAPI
 
             //Addeess
             services.AddScoped<IAddressRepository, AddressRepository>();
-            services.AddScoped<IAddressService, AddressService>();
 
             //Patient
             services.AddScoped<IPatientRepository, PatientRepository>();

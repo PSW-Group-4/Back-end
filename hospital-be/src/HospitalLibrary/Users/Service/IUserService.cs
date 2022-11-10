@@ -14,6 +14,5 @@ namespace HospitalLibrary.Users.Service
         User Create(User user);
         User Update(User user);
         void Delete(string username);
-        public User RegisterPatient(User user, Guid patientId);
     }
 }

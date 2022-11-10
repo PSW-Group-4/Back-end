@@ -46,7 +46,7 @@ namespace HospitalAPI.Controllers
                 _patientService.RegisterPatient(patient, address.Id, registrationDto.ChoosenDoctorId,
                     registrationDto.AllergieIds);
 
-                _userService.RegisterPatient(user, patient.Id);
+                _userService.Create(user);
                 //slanje maila (pozivanje servia koji salje mail)
                 return Ok();
             }
