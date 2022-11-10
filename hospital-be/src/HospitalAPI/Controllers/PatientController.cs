@@ -88,5 +88,29 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+
+        // GET api/Patient/patientsByAgeGroup
+        [HttpGet("patientsByAgeGroup")]
+        public ActionResult PatientsByAgeGroup()
+        {
+            return Ok(_patientService.PatientsByAgeGroup());
+        }
+
+
+        // GET api/Patient/patientsByGender
+        [HttpGet("patientsByGender")]
+        public ActionResult PatientsByGender()
+        {
+            return Ok(_patientService.PatientsByGender());
+        }
+
+        // GET api/Patient/doctorsPatientsByAgeGroup/2
+        [HttpGet("doctorsPatientsByAgeGroup/{DoctorId}")]
+        public ActionResult DoctorsPatientsByAgeGroup([FromRoute] Guid DoctorId)
+        {
+            return Ok(_patientService.DoctorsPatientsByAgeGroup(DoctorId));
+        }
+
     }
 }

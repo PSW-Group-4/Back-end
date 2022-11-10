@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Exceptions;
+using HospitalLibrary.Utility;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Patients.Repository
 {
@@ -61,5 +63,23 @@ namespace HospitalLibrary.Patients.Repository
             _context.Patients.Remove(patient);
             _context.SaveChanges();
         }
+
+        public int GetPatientCountByAgeGroup(AgeGroup ageGroup)
+        {
+            return _context.Patients.Where(p=> DateTime.Now.AddYears(-ageGroup.MaxAge) <= p.Birthdate && DateTime.Now.AddYears(-ageGroup.MinAge) >= p.Birthdate).Count();
+        }
+
+        public int GetPatientCountByGender(Gender gender)
+        {
+            return _context.Patients.Where(p => p.Gender == gender).Count();
+        }
+
+        public int GetDoctorsPatientCountByAgeGroup(AgeGroup ageGroup, Guid doctorId)
+        {
+            return _context.Patients.Where(p => DateTime.Now.AddYears(-ageGroup.MaxAge) <= p.Birthdate && DateTime.Now.AddYears(-ageGroup.MinAge) >= p.Birthdate && p.ChoosenDoctorId==doctorId).Count();
+        }
     }
 }
+
+
+
