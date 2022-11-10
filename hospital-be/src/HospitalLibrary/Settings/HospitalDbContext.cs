@@ -5,6 +5,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -13,6 +14,7 @@ using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Allergies.Model;
 using Microsoft.Extensions.Hosting;
+using HospitalLibrary.Vacations.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -43,6 +45,9 @@ namespace HospitalLibrary.Settings
         public DbSet<FloorMap> FloorMaps { get; set; }
 
         public DbSet<RoomMap> RoomMaps { get; set; }
+
+        // Doctor vacations
+        public DbSet<Vacation> Vacations { get; set; }
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
