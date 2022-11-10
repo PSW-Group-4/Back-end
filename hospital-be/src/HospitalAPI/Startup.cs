@@ -32,6 +32,7 @@ using HospitalLibrary.Users.Service;
 using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Allergies.Repository;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Interfaces;
 
 namespace HospitalAPI
 {
@@ -86,6 +87,7 @@ namespace HospitalAPI
             //User
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJwtService, JwtService>();
 
             //Allergie
             services.AddScoped<IAllergieRepository, AllergieRepository>();
