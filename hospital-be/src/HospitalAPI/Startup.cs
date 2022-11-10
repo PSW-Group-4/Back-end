@@ -33,6 +33,8 @@ using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Allergies.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Vacations.Repository;
+using HospitalLibrary.Vacations.Service;
 
 namespace HospitalAPI
 {
@@ -118,6 +120,10 @@ namespace HospitalAPI
             services.AddScoped<IRoomMapRepository, RoomMapRepository>();
 
             services.AddScoped<ISchedulingService, SchedulingService>();
+
+            //Doctor Vacations
+            services.AddScoped<IVacationRepository, VacationRepository>();
+            services.AddScoped<IVacationService, VacationService>();
 
         }
 
