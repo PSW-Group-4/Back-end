@@ -94,5 +94,12 @@ namespace HospitalLibrary.Patients.Service
             }
             return DoctorsPatientsByAgeGroup;
         }
+
+   
+
+        public int NumberOfPatientsDoctorHas(Guid doctorId)
+        {
+            return _patientRepository.NumberOfPatientsDoctorHas(doctorId);
+        }
     }
 }

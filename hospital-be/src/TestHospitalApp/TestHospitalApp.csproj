@@ -26,4 +26,8 @@
     <ProjectReference Include="..\HospitalLibrary\HospitalLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IntegrationTesting\" />
+  </ItemGroup>
+
 </Project>

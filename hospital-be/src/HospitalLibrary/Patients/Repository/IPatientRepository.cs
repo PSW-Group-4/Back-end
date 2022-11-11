@@ -10,6 +10,8 @@ namespace HospitalLibrary.Patients.Repository
         int GetPatientCountByAgeGroup(AgeGroup ageGroup);
         int GetPatientCountByGender(Gender gender);
         int GetDoctorsPatientCountByAgeGroup(AgeGroup ageGroup, Guid doctorId);
+        int NumberOfAllPatients();
+        int NumberOfPatientsDoctorHas(Guid doctorId);
     }
 
 }
