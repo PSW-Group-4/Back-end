@@ -6,6 +6,8 @@ using AutoMapper;
 using HospitalAPI.Dtos.Patient;
 using HospitalLibrary;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HospitalAPI.Controllers
 {
@@ -24,6 +26,7 @@ namespace HospitalAPI.Controllers
 
         // GET: api/Patient
         [HttpGet]
+        [Authorize(Roles = "Patient")]
         public ActionResult GetAll()
         {
             return Ok(_patientService.GetAll());
@@ -85,5 +88,29 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+
+        // GET api/Patient/patientsByAgeGroup
+        [HttpGet("patientsByAgeGroup")]
+        public ActionResult PatientsByAgeGroup()
+        {
+            return Ok(_patientService.PatientsByAgeGroup());
+        }
+
+
+        // GET api/Patient/patientsByGender
+        [HttpGet("patientsByGender")]
+        public ActionResult PatientsByGender()
+        {
+            return Ok(_patientService.PatientsByGender());
+        }
+
+        // GET api/Patient/doctorsPatientsByAgeGroup/2
+        [HttpGet("doctorsPatientsByAgeGroup/{DoctorId}")]
+        public ActionResult DoctorsPatientsByAgeGroup([FromRoute] Guid DoctorId)
+        {
+            return Ok(_patientService.DoctorsPatientsByAgeGroup(DoctorId));
+        }
+
     }
 }

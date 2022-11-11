@@ -1,10 +1,14 @@
 using HospitalAPI.Dtos.Person;
+using HospitalLibrary.Patients.Model;
+using System.Collections.Generic;
+using System;
+using HospitalLibrary.Allergies.Model;
 
 namespace HospitalAPI.Dtos.Patient
 {
     public class PatientRequestDto : PersonRequestDto
     {
-        public string Lbo { get; set; }
-        public bool Blocked { get; set; }
+        public BloodType BloodType { get; set; }
+        public List<Allergie> Allergies { get; set; }
     }
 }

@@ -31,5 +31,8 @@ namespace HospitalLibrary.Core.Model
             Email = person.Email;
             PhoneNumber = person.PhoneNumber;
         }
+
+
+
     }
 }

@@ -2,17 +2,17 @@ import os
 
 destFile = open('dbResetScript.sql', 'w')
 
-#Clears all tables
-for fileName in os.listdir("DbScripts"):
-    print('delete from "' + fileName[:len(fileName)-4] +'";', file=destFile)
+# Pay attention to order
+tables = ["AgeGroups","Addresses", "Allergies", "Buildings", "Floors", "Rooms",
+ "Doctors", "Patients", "PatientAllergies", "Feedbacks", "Users",
+  "Appointments", "BuildingMaps", "FloorMaps", "RoomMaps"]
+
+
+# Clear all tables
+for table in reversed(tables):
+    print('delete from "' + table + '";', file=destFile)
 
 #Merges scripts
-#Bitno je da dodas prvo skripte od kojih zavise strani kljucevi
-with open('DbScripts/Addresses.sql', 'r') as f:
-    print(f.read(), file=destFile)
-
-with open('DbScripts/Patients.sql', 'r') as f:
-    print(f.read(), file=destFile)
-
-with open('DbScripts/Feedbacks.sql', 'r') as f:
-    print(f.read(), file=destFile)
+for table in tables:
+    with open('DbScripts/' + table + '.sql', 'r', encoding='utf-8-sig') as f:
+        print(f.read(), file=destFile)
