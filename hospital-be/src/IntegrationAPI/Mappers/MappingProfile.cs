@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using IntegrationAPI.Dtos;
+using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
 
 namespace IntegrationAPI.Mappers
