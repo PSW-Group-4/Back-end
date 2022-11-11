@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalAPI.Dtos.Auth;
 using HospitalAPI.Dtos.User;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
@@ -10,6 +11,8 @@ using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Service.Interfaces;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HospitalAPI.Controllers
 {
@@ -55,24 +58,28 @@ namespace HospitalAPI.Controllers
             }
         }
 
-        //POST api/user/loginUser
+        //POST api/user/loginUser/patient
         [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
-        public ActionResult Login([FromBody] UserLoginDto userLogin)
+        public ActionResult LoginPatient([FromBody] UserLoginDto userLogin)
         {
             try
             {
-                var token = _userService.Authenticate(userLogin.Username, userLogin.Password);
-                return Ok(token);
+                var token = _userService.AuthenticatePatient(userLogin.Username, userLogin.Password);
+                return Ok(new JwtDto(token));
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return NotFound("User not found");
             }
-            catch(BadPasswordException)
+            catch (BadPasswordException)
             {
                 return Unauthorized("Bad password");
+            }
+            catch (UnauthorizedException)
+            {
+                return Unauthorized("Only patients can login from public app");
             }
         }
     }
