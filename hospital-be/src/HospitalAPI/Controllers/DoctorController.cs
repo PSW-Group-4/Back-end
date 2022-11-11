@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HospitalLibrary;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +23,7 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+
             return Ok(_doctorService.GetAll());
         }
 
@@ -41,5 +41,14 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+
+        // GET api/Doctor/doctorsWithLeastPatients
+        [HttpGet("doctorsWithLeastPatients")]
+        public ActionResult DoctorsWithLeastPatients()
+        {
+            return Ok(_doctorService.DoctorsWithLeastPatients());
+        }
+
     }
 }

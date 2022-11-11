@@ -26,7 +26,9 @@ namespace HospitalAPI.Mapper
         public MappingProfile()
         {
             CreateMap<AddressRequestDto, Address>();
+
             CreateMap<PersonRequestDto, Person>();
+            CreateMap< Person , PersonRequestDto>();
 
             CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
@@ -53,6 +55,9 @@ namespace HospitalAPI.Mapper
 
             CreateMap<DoctorRequestDto, Doctor>()
                 .IncludeBase<PersonRequestDto, Person>();
+
+            CreateMap<Doctor , DoctorRequestDto> ()
+                .IncludeBase<Person , PersonRequestDto>();
 
             CreateMap<RoomRequestDto, Room>();
             CreateMap<AppointmentRequestDto, Appointment>();

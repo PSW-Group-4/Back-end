@@ -26,4 +26,9 @@
     <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IntegrationTesting\" />
+    <Folder Include="UnitTesting\" />
+  </ItemGroup>
+
 </Project>
