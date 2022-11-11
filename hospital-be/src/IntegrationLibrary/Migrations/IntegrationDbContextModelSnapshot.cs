@@ -44,6 +44,110 @@ namespace IntegrationLibrary.Migrations
 
                     b.ToTable("blood_banks");
                 });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("BloodUsageReportId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("milliliters")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("rHFactor")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodUsageReportId");
+
+                    b.ToTable("BloodUsage");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("ReportConfigurationId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId");
+
+                    b.HasIndex("ReportConfigurationId");
+
+                    b.ToTable("blood_usage_report");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.ReportConfiguration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("ActiveStatus")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid?>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("RequestFrequency")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId");
+
+                    b.ToTable("blood_banks_config");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsage", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", null)
+                        .WithMany("BloodUsage")
+                        .HasForeignKey("BloodUsageReportId");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId");
+
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.ReportConfiguration", "ReportConfiguration")
+                        .WithMany()
+                        .HasForeignKey("ReportConfigurationId");
+
+                    b.Navigation("BloodBank");
+
+                    b.Navigation("ReportConfiguration");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.ReportConfiguration", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId");
+
+                    b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
+                {
+                    b.Navigation("BloodUsage");
+                });
 #pragma warning restore 612, 618
         }
     }

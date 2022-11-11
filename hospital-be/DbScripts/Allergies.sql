@@ -1,0 +1,14 @@
+﻿INSERT INTO "Allergies" ("Id", "Name") VALUES ('a6739c08-1939-4a6e-8ca9-e58b087bc9a5', 'Nonea Medik.');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('04eee618-5b2c-481b-8e52-4e32f7ab6ce8', 'Arctostaphylos viscida Parry ssp. pulchella (Howell) P.V. Wells');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('d281b879-f344-461a-ada7-a8ef826f1155', 'Acarospora caesiofusca (Müll. Arg.) H. Magn.');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('e4cb7241-82ff-44fd-880d-60fb1b42079b', 'Pellaea bridgesii Hook.');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('6868ae25-ab9b-4549-931f-8b39c0117026', 'Trillium pusillum Michx.');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('01f0d06f-e4e4-4a35-94d1-8e34547a548d', 'Nicolletia edwardsii A. Gray');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('b9b6aca0-887c-4499-a0f2-71c9300447dd', 'Pomaria Cav.');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('456f9b57-e49b-4b62-8404-ac789ad84faa', 'Solanum xanti A. Gray var. obispoense (Eastw.) Wiggins');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('d19f3c22-eb67-4c21-9868-d196294b3dd5', 'Arabis fendleri (S. Watson) Greene');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('5535fcea-0711-4c48-9642-89b79ce57d31', 'Rubus plicatifolius Blanch.');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('266bcf0a-3bd2-4f6b-a1a8-604a992b9d6b', 'Phacelia scopulina (A. Nelson) J.T. Howell var. scopulina');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('5fddd29f-4781-4031-884b-cd9f951f51d4', 'Claytonia parviflora Douglas ex Hook. ssp. utahensis (Rydb.) John M. Mill. & K.L. Chambers');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('6ab34a29-916f-4fee-9f53-ae5e199039d8', 'Sisyrinchium farwellii E.P. Bicknell');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('00e47bc5-874f-4550-a3ec-fed94591250d', 'Erigeron pumilus Nutt. ssp. intermedius Cronquist var. intermedius (Cronquist) Cronquist');

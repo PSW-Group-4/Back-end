@@ -1,29 +1,39 @@
 using HospitalAPI.Mapper;
+using HospitalLibrary.Allergies.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Appointments.Service;
-using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
 using HospitalLibrary.BuildingManagmentMap.Repository.Implementation;
+using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
 using HospitalLibrary.BuildingManagmentMap.Service.Implementation;
 using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Feedbacks.Repository;
-using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.RoomsAndEqipment.Repository;
 using HospitalLibrary.RoomsAndEqipment.Service.Implementation;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+using HospitalLibrary.SchedulingAppointment.Service;
 using HospitalLibrary.Settings;
+using HospitalLibrary.Users.Repository;
+using HospitalLibrary.Users.Service;
+using HospitalLibrary.Vacations.Repository;
+using HospitalLibrary.Vacations.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using HospitalLibrary.SchedulingAppointment.Service;
+using System.Text;
 
 namespace HospitalAPI
 {
@@ -42,7 +52,7 @@ namespace HospitalAPI
             services.AddDbContext<HospitalDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("HospitalDb")).UseLazyLoadingProxies());
 
-            services.AddControllers().AddNewtonsoftJson();
+            services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
@@ -50,10 +60,44 @@ namespace HospitalAPI
 
             services.AddAutoMapper(typeof(MappingProfile));
 
+            //JWT
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
+            services.AddMvc();
+            services.AddControllers();
+
+
+            //AgeGroups
+            services.AddScoped<IAgeGroupRepository, AgeGroupRepository>();
+            services.AddScoped<IAgeGroupService, AgeGroupService>();
+
+            //Addeess
             services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IAddressService, AddressService>();
+
             //Patient
             services.AddScoped<IPatientRepository, PatientRepository>();
             services.AddScoped<IPatientService, PatientService>();
+
+            //User
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IJwtService, JwtService>();
+
+            //Allergie
+            services.AddScoped<IAllergieRepository, AllergieRepository>();
 
             //TODO Feedback
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
@@ -62,6 +106,7 @@ namespace HospitalAPI
             //Doctor
             services.AddScoped<IDoctorRepository, DoctorRepository>();
             services.AddScoped<IDoctorService, DoctorService>();
+
             //Appointment
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
@@ -70,8 +115,8 @@ namespace HospitalAPI
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IRoomService, RoomService>();
             //MapItems
-            services.AddScoped<IBuildingMapService,BuildingMapService>();
-            services.AddScoped<IBuildingMapRepository,BuildingMapRepository>();
+            services.AddScoped<IBuildingMapService, BuildingMapService>();
+            services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();
 
             services.AddScoped<IFloorMapService, FloorMapService>();
             services.AddScoped<IFloorMapRepository, FloorMapRepository>();
@@ -80,6 +125,10 @@ namespace HospitalAPI
             services.AddScoped<IRoomMapRepository, RoomMapRepository>();
 
             services.AddScoped<ISchedulingService, SchedulingService>();
+
+            //Doctor Vacations
+            services.AddScoped<IVacationRepository, VacationRepository>();
+            services.AddScoped<IVacationService, VacationService>();
 
         }
 
@@ -103,10 +152,13 @@ namespace HospitalAPI
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllers();
                 endpoints.MapControllers();
             });
         }
