@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationLibrary.BloodBanks.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace IntegrationLibrary.BloodRequests.Model
         [Key]
         public Guid requestId { get; set; }
         public String doctorId { get; set; }
-        public String bloodType { get; set; }
+        public BloodType bloodType { get; set; }
         public String reasonsWhyBloodIsNeeded { get; set; }
         public double bloodAmountInMilliliters { get; set; }
         public Boolean isApproved { get; set; }
