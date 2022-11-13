@@ -13,12 +13,19 @@ using HospitalLibrary.Vacations.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 
+using HospitalLibrary.BuildingManagmentMap.Model;
+using HospitalLibrary.Admissions.Model;
+
+
 namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
     {
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Patient> Patients { get; set; }
+
+        public DbSet<Admission> Admissions { get; set; }
+
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Allergie> Allergies { get; set; }
@@ -44,8 +51,10 @@ namespace HospitalLibrary.Settings
 
         public DbSet<RoomMap> RoomMaps { get; set; }
 
+
         // Doctor vacations
         public DbSet<Vacation> Vacations { get; set; }
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

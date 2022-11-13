@@ -14,5 +14,6 @@ namespace IntegrationLibrary.BloodBanks.Model
         public virtual BloodBank BloodBank { get; set; }
         public virtual ReportConfiguration ReportConfiguration { get; set; }
         public virtual List<BloodUsage> BloodUsage { get; set; }
+        public DateTime timeOfCreation { get; set; }
     }
 }
