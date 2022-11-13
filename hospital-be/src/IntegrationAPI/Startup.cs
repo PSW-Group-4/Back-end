@@ -49,6 +49,8 @@ namespace IntegrationAPI
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
+            services.AddSingleton<IHostedService, NewsConsumer>();
+            services.AddControllers();
 
         }
 
