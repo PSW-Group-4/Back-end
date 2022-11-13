@@ -82,6 +82,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid?>("ReportConfigurationId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("timeOfCreation")
+                        .HasColumnType("timestamp without time zone");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BloodBankId");

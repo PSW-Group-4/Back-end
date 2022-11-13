@@ -3,5 +3,9 @@ using HospitalLibrary.Doctors.Model;
 
 namespace HospitalLibrary.Doctors.Repository
 {
-    public interface IDoctorRepository : IRepositoryBase<Doctor> { }
+    public interface IDoctorRepository : IRepositoryBase<Doctor>
+    {
+        public int NumberOfPatientsTheDoctorWithLeastPatientsHas();
+    }
+
 }
