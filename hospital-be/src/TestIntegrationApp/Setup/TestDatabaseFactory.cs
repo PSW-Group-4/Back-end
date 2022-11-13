@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.BloodBanks.Model;
 
 namespace TestIntegrationApp.Setup
 {
@@ -40,8 +41,12 @@ namespace TestIntegrationApp.Setup
 
         private static void InitializeDatabase(IntegrationDbContext context)
         {
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"News\"");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_banks\"");
+            context.BloodBanks.Add(new BloodBank(new Guid(), "idk", "http://localhost:8080/", "isaproject202223@gmail.com", "password", "apikey"));
+
             context.SaveChanges();
         }
     }

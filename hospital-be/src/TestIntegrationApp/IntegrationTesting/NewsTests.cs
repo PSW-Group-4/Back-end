@@ -1,9 +1,13 @@
 ﻿using IntegrationAPI;
+using IntegrationAPI.Communications;
 using IntegrationAPI.Controllers;
+using IntegrationAPI.Dtos;
 using IntegrationLibrary.BloodBankNews.Model;
+using IntegrationLibrary.BloodBankNews.Repository;
 using IntegrationLibrary.BloodBankNews.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +26,12 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             return new NewsController(scope.ServiceProvider.GetRequiredService<INewsService>());
         }
+
+        private static NewsService SetupService(IServiceScope scope)
+        {
+            return new NewsService(scope.ServiceProvider.GetRequiredService<INewsRepository>());
+        }
+
 
         [Fact]
         public void Retrieves_all_news()

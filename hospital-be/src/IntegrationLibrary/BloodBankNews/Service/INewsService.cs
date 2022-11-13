@@ -13,5 +13,7 @@ namespace IntegrationLibrary.BloodBankNews.Service
         public IEnumerable<News> GetAll();
         public IEnumerable<News> GetAllByBloodBank(BloodBank bloodBank);
         public void Save(IEnumerable<News> news);
+
+        public void Save(News news);
     }
 }

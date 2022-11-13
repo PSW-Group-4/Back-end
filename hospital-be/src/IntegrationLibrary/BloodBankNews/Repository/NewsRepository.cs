@@ -34,5 +34,11 @@ namespace IntegrationLibrary.BloodBankNews.Repository
             _context.News.AddRange(news);
             _context.SaveChangesAsync();
         }
+
+        public void Save(News news)
+        {
+            _context.News.Add(news);
+            _context.SaveChangesAsync();
+        }
     }
 }

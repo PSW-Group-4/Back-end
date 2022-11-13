@@ -31,5 +31,11 @@ namespace IntegrationLibrary.BloodBankNews.Service
         {
             _repository.Save(news);
         }
+
+        public void Save(News news)
+        {
+            _repository.Save(news);
+        }
+        
     }
 }

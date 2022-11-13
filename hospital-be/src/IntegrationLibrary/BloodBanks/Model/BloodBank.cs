@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Castle.Components.DictionaryAdapter;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -16,5 +17,16 @@ namespace IntegrationLibrary.BloodBanks.Model
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public string ApiKey { get; set; }
+
+        public BloodBank(Guid id, string name, string serverAddress, string emailAddress, string password, string apiKey)
+        {
+            Id = id;
+            Name = name;
+            ServerAddress = serverAddress;
+            EmailAddress = emailAddress;
+            Password = password;
+            ApiKey = apiKey;
+        }
+
     }
 }

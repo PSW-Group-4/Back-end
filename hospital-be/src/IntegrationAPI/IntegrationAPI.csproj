@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <Folder Include="Mappers\" />
+    <Folder Include="Converter\" />
   </ItemGroup>
 
   <ItemGroup>
