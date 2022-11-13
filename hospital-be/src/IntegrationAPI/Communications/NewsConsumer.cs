@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using IntegrationAPI.Dtos;
+using IntegrationLibrary.BloodBankNews.Model;
 
 namespace IntegrationAPI.Communications
 {
@@ -37,8 +38,8 @@ namespace IntegrationAPI.Communications
                         while (true)
                         {
                             var consumer = consumerBuilder.Consume(cancelToken.Token);
-                            var news = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value);
-                            Console.WriteLine("Consumed: " + news);
+                            NewsDto newsDto = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value);
+                            Console.WriteLine("Consumed: " + newsDto);
                         }
                     }
                     catch (OperationCanceledException)
