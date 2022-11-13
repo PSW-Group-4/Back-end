@@ -5,6 +5,8 @@ using IntegrationLibrary.BloodBankNews.Service;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodBanks.Service;
+using IntegrationLibrary.BloodRequests.Repository;
+using IntegrationLibrary.BloodRequests.Service;
 using IntegrationLibrary.Settings;
 using IntegrationLibrary.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -46,6 +48,8 @@ namespace IntegrationAPI
             services.AddScoped<IPasswordHandler, PasswordHandler>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
