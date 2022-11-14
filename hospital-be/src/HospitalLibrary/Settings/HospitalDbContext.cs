@@ -49,6 +49,8 @@ namespace HospitalLibrary.Settings
 
         public DbSet<RoomMap> RoomMaps { get; set; }
 
+        public DbSet<RoomsEquipment> RoomsEquipment { get; set; }
+
 
         // Doctor vacations
         public DbSet<Vacation> Vacations { get; set; }
