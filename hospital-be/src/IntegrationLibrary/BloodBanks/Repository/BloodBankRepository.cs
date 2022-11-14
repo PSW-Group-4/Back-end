@@ -43,6 +43,11 @@ namespace IntegrationLibrary.BloodBanks.Repository
             }
         }
 
+        public BloodBank GetByName(String name)
+        {
+            return _context.BloodBanks.Where(bloodBank => bloodBank.Name == name).FirstOrDefault();
+        }
+
         public IEnumerable<String> GetApiKeys()
         {
             return _context.BloodBanks.Select(bank => bank.ApiKey);

@@ -15,6 +15,7 @@ namespace IntegrationLibrary.BloodBanks.Repository
         public IEnumerable<String> GetApiKeys();
         public BloodBank GetByApiKey(String ApiKey);
         public BloodBank Update(BloodBank bloodBank);
+        public BloodBank GetByName(String name);
 
 
 

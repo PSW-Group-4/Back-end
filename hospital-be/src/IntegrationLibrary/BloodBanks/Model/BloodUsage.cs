@@ -11,8 +11,8 @@ namespace IntegrationLibrary.BloodBanks.Model
     public class BloodUsage
     {
         public Guid Id { get; set; }
-        public BloodType type { get; set; }
-        public RHFactor rHFactor { get; set; }
-        public double milliliters { get; set; }
+        public BloodType Type { get; set; }
+        public RHFactor RHFactor { get; set; }
+        public double Milliliters { get; set; }
     }
 }

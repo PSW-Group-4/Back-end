@@ -1,7 +1,7 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using System;
 
-namespace IntegrationAPI
+namespace IntegrationAPI.Dtos.BloodBank
 {
 
     public class BloodBankRegisterDto

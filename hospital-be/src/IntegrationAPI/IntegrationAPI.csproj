@@ -20,7 +20,10 @@
 
   <ItemGroup>
     <Folder Include="Mappers\" />
-    <Folder Include="Converter\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Dtos\BloodBankNews\NewsConverter.cs~RFc89cf6d.TMP" />
   </ItemGroup>
 
   <ItemGroup>

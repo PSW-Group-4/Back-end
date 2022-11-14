@@ -14,5 +14,6 @@ namespace IntegrationLibrary.BloodBanks.Service
         public BloodBank Create(BloodBank bloodBank);
         public BloodBank GetByApiKey(String ApiKey);
         public BloodBank Update(BloodBank bloodBank);
+        public BloodBank GetByName(String name);
     }
 }
