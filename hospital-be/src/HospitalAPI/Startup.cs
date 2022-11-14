@@ -16,6 +16,8 @@ using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.RoomsAndEqipment.Repository;
+using HospitalLibrary.RoomsAndEqipment.Repository.Implementation;
+using HospitalLibrary.RoomsAndEqipment.Repository.Interfaces;
 using HospitalLibrary.RoomsAndEqipment.Service.Implementation;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
 using HospitalLibrary.SchedulingAppointment.Service;
@@ -57,7 +59,6 @@ namespace HospitalAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
-
             services.AddAutoMapper(typeof(MappingProfile));
 
             //JWT
@@ -114,6 +115,9 @@ namespace HospitalAPI
             //Room
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IRoomService, RoomService>();
+
+            services.AddScoped<IDoctorRoomService, DoctorRoomService>();
+            services.AddScoped<IDoctorRoomRepository, DoctorRoomRepository>();
             //MapItems
             services.AddScoped<IBuildingMapService, BuildingMapService>();
             services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();
