@@ -2,6 +2,7 @@
 using IntegrationAPI.Communications;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos;
+using IntegrationAPI.Dtos.BloodBankNews;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBankNews.Repository;
 using IntegrationLibrary.BloodBankNews.Service;
@@ -42,6 +43,26 @@ namespace TestIntegrationApp.IntegrationTesting
             var result = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<News>;
 
             Assert.NotNull(result);
+        }
+
+        [Fact]
+        public void Saves_News()
+        {
+            News news = new()
+            {
+                Id = Guid.NewGuid(),
+                Title = "It's me, hi",
+                Body = "I'm the news, it's me",
+                Timestamp = DateTime.Now,
+                BloodBank = null
+            };
+            using var scope = Factory.Services.CreateScope();
+            var service = SetupService(scope);
+            service.Save(news);
+
+            var result = service.GetAll();
+            Assert.NotEmpty(result);
+
         }
     }
 }

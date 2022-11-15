@@ -43,10 +43,7 @@ namespace TestIntegrationApp.Setup
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"News\"");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_banks\"");
-            context.BloodBanks.Add(new BloodBank(new Guid(), "idk", "http://localhost:8080/", "isaproject202223@gmail.com", "password", "apikey"));
-
+            context.Database.ExecuteSqlRaw("DELETE FROM \"blood_bank_news\"");
             context.SaveChanges();
         }
     }
