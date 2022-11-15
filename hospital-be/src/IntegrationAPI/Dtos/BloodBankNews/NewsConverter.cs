@@ -21,7 +21,7 @@ namespace IntegrationAPI.Dtos.BloodBankNews
                 title = entity.Title,
                 body = entity.Body,
                 bloodBank = entity.BloodBank.Name,
-                milliseconds = (long)(entity.Timestamp - new DateTime(1970, 1, 1)).TotalMilliseconds
+                milliseconds = (long)(entity.Timestamp - new DateTime(1970, 1, 1)).TotalMilliseconds,
                 id = entity.Id
             };
             return newsDto;

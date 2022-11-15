@@ -53,7 +53,6 @@ namespace IntegrationAPI.Communications
                             {
                                 var consumer = consumerBuilder.Consume(cancelToken.Token);
                                 NewsDto newsDto = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value);
-                                newsDto.timestamp = new DateTime().ToString();
                                 newsService.Save(newsConverter.Convert(newsDto));
                                 Console.WriteLine("Consumed: " + newsDto);
                             }
