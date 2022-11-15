@@ -31,4 +31,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="BloodReport\Service\" />
+  </ItemGroup>
+
 </Project>
