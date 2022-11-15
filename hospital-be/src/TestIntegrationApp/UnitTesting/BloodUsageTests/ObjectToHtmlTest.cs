@@ -2,6 +2,7 @@
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +21,8 @@ namespace TestIntegrationApp.UnitTesting.BloodUsageTests
 
             String html = bloodUsageReport.GenerateHtml();
 
-            string testHtml = System.IO.File.ReadAllText(@"/UnitTesting/BloodUsageTests/BRHtmlTest.txt");
-            bool htmlsAreEqual = (html == testHtml);
+            string testHtml = System.IO.File.ReadAllText(Directory.GetCurrentDirectory().ToString() + @"./UnitTesting/BloodUsageTests/BRHtmlTest.txt");
+            bool htmlsAreEqual = html.Equals(testHtml);
             htmlsAreEqual.ShouldBe(true);
         }
 
