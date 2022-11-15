@@ -17,7 +17,7 @@ namespace IntegrationAPI.Communications
     {
         private readonly string topic = "news.topic";
         private readonly string groupId = "news";
-        private readonly string bootstrapServers = "localhost:9092";
+        private readonly string bootstrapServers = "localhost:9094";
         public IServiceScopeFactory _serviceScopeFactory;
 
         public NewsConsumer(IServiceScopeFactory serviceScopeFactory)

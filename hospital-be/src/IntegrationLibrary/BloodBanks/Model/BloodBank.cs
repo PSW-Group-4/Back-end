@@ -28,5 +28,7 @@ namespace IntegrationLibrary.BloodBanks.Model
             ApiKey = apiKey;
         }
 
+        public BloodBank() { }
+
     }
 }
