@@ -8,6 +8,6 @@ namespace IntegrationAPI.Dtos.BloodBankNews
         public string bloodBank { get; set; }
         public string title { get; set; }
         public string body { get; set; }
-        public string timestamp { get; set; }
+        public long milliseconds { get; set; }
     }
 }

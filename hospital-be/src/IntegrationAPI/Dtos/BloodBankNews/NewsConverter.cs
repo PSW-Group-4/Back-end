@@ -21,7 +21,7 @@ namespace IntegrationAPI.Dtos.BloodBankNews
                 title = entity.Title,
                 body = entity.Body,
                 bloodBank = entity.BloodBank.Name,
-                timestamp = entity.Timestamp.ToString(),
+                milliseconds = (long)(entity.Timestamp - new DateTime(1970, 1, 1)).TotalMilliseconds
                 id = entity.Id
             };
             return newsDto;
@@ -34,15 +34,18 @@ namespace IntegrationAPI.Dtos.BloodBankNews
             if(bloodBank == null)
             {
                 throw new NotFoundException();
-            }
-            News news = new()
+            } else
             {
-                Title = dto.title,
-                Body = dto.body,
-                BloodBank = _bloodBankService.GetByName(dto.bloodBank),
-                Timestamp = DateTime.Parse(dto.timestamp)
-            };
-            return news;
+
+                News news = new()
+                {
+                    Title = dto.title,
+                    Body = dto.body,
+                    BloodBank = _bloodBankService.GetByName(dto.bloodBank),
+                    Timestamp = new DateTime(1970, 1, 1).AddMilliseconds(dto.milliseconds)
+                };
+                return news;
+            }
         }
     }
 }
