@@ -16,8 +16,8 @@ namespace TestIntegrationApp.UnitTesting.BloodUsageTests
         public void Checks_if_pdf_exists()
         {
             string testHtml = System.IO.File.ReadAllText(Directory.GetCurrentDirectory().ToString() + @"./UnitTesting/BloodUsageTests/BRHtmlTest.txt");
-           
-            string pdfPath = HtmlToPdfConvertor.Convert(testHtml);
+            string path = Directory.GetParent(Directory.GetCurrentDirectory()).ToString() + Path.DirectorySeparatorChar + "Reports" + Path.DirectorySeparatorChar;
+            string pdfPath = HtmlToPdfConvertor.Convert(testHtml, path,"TestBank");
 
             bool exists = System.IO.File.Exists(pdfPath);
             exists.ShouldBe(true);

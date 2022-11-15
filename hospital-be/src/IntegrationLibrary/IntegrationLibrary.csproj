@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+    <PackageReference Include="IronPdf" Version="2022.11.10347" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
       <PrivateAssets>all</PrivateAssets>
@@ -33,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="BloodReport\Service\" />
+    <Folder Include="Reports\" />
   </ItemGroup>
 
 </Project>
