@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Service;
+using IntegrationLibrary.Exceptions;
 using System;
 
 namespace IntegrationAPI.Dtos.BloodBankNews
@@ -29,6 +30,11 @@ namespace IntegrationAPI.Dtos.BloodBankNews
 
         public News Convert(NewsDto dto)
         {
+            var bloodBank = _bloodBankService.GetByName(dto.bloodBank);
+            if(bloodBank == null)
+            {
+                throw new NotFoundException();
+            }
             News news = new()
             {
                 Title = dto.title,
