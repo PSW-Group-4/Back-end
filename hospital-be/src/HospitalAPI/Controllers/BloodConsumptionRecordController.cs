@@ -50,8 +50,7 @@ namespace HospitalAPI.Controllers
         public ActionResult Create([FromBody] BloodConsumptionRecordRequestDto bloodConsumptionRecordRequestDto)
         {
             var bloodConsumptionRecord = _mapper.Map<BloodConsumptionRecord>(bloodConsumptionRecordRequestDto);
-            _bloodConsumptionRecordService.Create(bloodConsumptionRecord);
-            return CreatedAtAction("GetById", new { id = bloodConsumptionRecord.Id }, bloodConsumptionRecord);
+            return Ok(_bloodConsumptionRecordService.Create(bloodConsumptionRecord));
         }
 
         // PUT api/BloodConsumptionRecord/1

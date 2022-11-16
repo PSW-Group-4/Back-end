@@ -43,6 +43,8 @@ using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.BloodConsumptionRecords.Repository;
 using HospitalLibrary.BloodConsumptionRecords.Service;
+using HospitalLibrary.BloodSupplies.Repository;
+using HospitalLibrary.BloodSupplies.Service;
 
 namespace HospitalAPI
 {
@@ -123,6 +125,10 @@ namespace HospitalAPI
             //BloodConsumptionRecord
             services.AddScoped<IBloodConsumptionRecordRepository, BloodConsumptionRecordRepository>();
             services.AddScoped<IBloodConsumptionRecordService, BloodConsumptionRecordService>();
+
+            //BloodSupply
+            services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
+            services.AddScoped<IBloodSupplyService, BloodSupplyService>();
 
             //Room
             services.AddScoped<IRoomRepository, RoomRepository>();

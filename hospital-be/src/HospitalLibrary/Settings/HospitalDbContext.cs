@@ -12,6 +12,7 @@ using HospitalLibrary.Users.Model;
 using HospitalLibrary.Allergies.Model;
 using Microsoft.Extensions.Hosting;
 using HospitalLibrary.BloodConsumptionRecords.Model;
+using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.Vacations.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -58,6 +59,8 @@ namespace HospitalLibrary.Settings
 
         // Doctor vacations
         public DbSet<Vacation> Vacations { get; set; }
+
+        public DbSet<BloodSupply> BloodSupply { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }

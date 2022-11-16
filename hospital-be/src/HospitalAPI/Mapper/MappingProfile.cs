@@ -20,6 +20,8 @@ using HospitalAPI.Dtos.BloodConsumptionRecord;
 using HospitalLibrary.BloodConsumptionRecords.Model;
 using HospitalAPI.Dtos.Vacation;
 using HospitalLibrary.Vacations.Model;
+using HospitalAPI.Dtos.BloodSupply;
+using HospitalLibrary.BloodSupplies.Model;
 
 namespace HospitalAPI.Mapper
 {
@@ -66,6 +68,7 @@ namespace HospitalAPI.Mapper
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
+            CreateMap<BloodSupplyDto, BloodSupply>();
 
             CreateMap<PatientRegistrationDto, Patient>();
             CreateMap<UserLoginDto, User>();
