@@ -14,5 +14,6 @@ namespace IntegrationLibrary.BloodBanks.Model
         public BloodType Type { get; set; }
         public RHFactor RHFactor { get; set; }
         public double Milliliters { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }
