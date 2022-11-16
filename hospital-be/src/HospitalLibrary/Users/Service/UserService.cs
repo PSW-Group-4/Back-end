@@ -44,7 +44,7 @@ namespace HospitalLibrary.Users.Service
             return _userRepository.Create(user);
         }
 
-        public string Authenticate(string username, string password)
+        public string AuthenticatePatient(string username, string password)
         {
             User user = _userRepository.GetByUsername(username);
             if (user == null)
@@ -55,6 +55,11 @@ namespace HospitalLibrary.Users.Service
             if(user.Password != password)
             {
                 throw new BadPasswordException();
+            }
+
+            if (user.Role != UserRole.Patient)
+            {
+                throw new UnauthorizedException();
             }
             
             return _jwtService.GenerateToken(user);

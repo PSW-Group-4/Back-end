@@ -11,5 +11,8 @@ namespace HospitalLibrary.Doctors.Service
         Doctor Create(Doctor doctor);
         Doctor Update(Doctor doctor);
         void Delete(Guid doctorId);
+
+        IEnumerable<ChooseDoctorDTO> DoctorsWithLeastPatients();
+
     }
 }

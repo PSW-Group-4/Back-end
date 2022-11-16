@@ -9,7 +9,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
 {
     public class DoctorRoom : Room
     {
-        public virtual ICollection<Equipment> EquipmentList { get; set; }
+        public virtual ICollection<RoomsEquipment> RoomsEquipment { get; set; }
         public void Update(DoctorRoom room)
         {
             base.Update(room);            

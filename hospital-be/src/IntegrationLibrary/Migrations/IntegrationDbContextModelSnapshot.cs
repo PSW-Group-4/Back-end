@@ -82,6 +82,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid?>("ReportConfigurationId")
                         .HasColumnType("uuid");
 
+                    b.Property<DateTime>("timeOfCreation")
+                        .HasColumnType("timestamp without time zone");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BloodBankId");
@@ -148,6 +151,38 @@ namespace IntegrationLibrary.Migrations
                 {
                     b.Navigation("BloodUsage");
                 });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
+            {
+                b.Property<Guid>("requestId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("uuid");
+
+                b.Property<double>("bloodAmountInMilliliters")
+                    .HasColumnType("double precision");
+
+                b.Property<string>("bloodType")
+                    .HasColumnType("text");
+
+                b.Property<string>("doctorId")
+                    .HasColumnType("text");
+
+                b.Property<bool>("isApproved")
+                    .HasColumnType("boolean");
+
+                b.Property<string>("managerId")
+                    .HasColumnType("text");
+
+                b.Property<string>("reasonsWhyBloodIsNeeded")
+                    .HasColumnType("text");
+
+                b.Property<string>("rejectionComment")
+                    .HasColumnType("text");
+
+                b.HasKey("requestId");
+
+                b.ToTable("BloodRequests");
+            });
 #pragma warning restore 612, 618
         }
     }
