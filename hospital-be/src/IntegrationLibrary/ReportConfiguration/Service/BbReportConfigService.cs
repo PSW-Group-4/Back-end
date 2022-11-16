@@ -1,0 +1,43 @@
+﻿using IntegrationLibrary.BloodBanks.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace IntegrationLibrary.ReportConfigurations.Service
+{
+    public class BbReportConfigService : IBbReportConfigService
+    {
+        private readonly IBbReportConfigService _repository;
+
+        public BbReportConfigService(IBbReportConfigService repository)
+        {
+            _repository = repository;
+        }
+        public ReportConfiguration Create(ReportConfiguration config)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<ReportConfiguration> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public ReportConfiguration GetByBloodBank(Guid bloodBankId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ReportConfiguration GetById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ReportConfiguration Update(ReportConfiguration config)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -22,6 +22,8 @@ using IntegrationAPI.Dtos.BloodBankNews;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodReport.Service;
 using IntegrationLibrary.BloodReport.Repository;
+using IntegrationLibrary.BloodUsages.Service;
+using IntegrationLibrary.ReportConfigurations.Service;
 
 namespace IntegrationAPI
 {
@@ -61,7 +63,8 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
             services.AddScoped<IBbReportConfigRepository, BbReportConfigRepository>();
-
+            services.AddScoped<IBloodUsageService, BloodUsageService>();
+            services.AddScoped<IBbReportConfigService, BbReportConfigService>();
 
             services.AddControllers();
 
