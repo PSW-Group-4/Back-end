@@ -2,26 +2,24 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Exceptions;
-using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalLibrary.RoomsAndEqipment.Repository.Interfaces;
 using HospitalLibrary.Settings;
-using Microsoft.EntityFrameworkCore;
 
-namespace HospitalLibrary.RoomsAndEqipment.Repository
+namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
 {
-    public class RoomRepository : IRoomRepository
+    public class RoomsEquipmentRepository : IRoomsEquipment
     {
         private readonly HospitalDbContext _context;       
 
-        public RoomRepository(HospitalDbContext context)
+        public RoomsEquipmentRepository(HospitalDbContext context)
         {
             _context = context;            
         }
-        public Room Create(Room entity)
+        public RoomsEquipment Create(RoomsEquipment entity)
         {
-            _context.Rooms.Add(entity);
+            _context.RoomsEquipment.Add(entity);
             _context.SaveChanges();
             return entity;
         }
@@ -29,18 +27,18 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository
         public void Delete(Guid roomId)
         {
             var room = GetById(roomId);
-            _context.Rooms.Remove(room);
+            _context.RoomsEquipment.Remove(room);
             _context.SaveChanges();
         }
 
-        public IEnumerable<Room> GetAll()
+        public IEnumerable<RoomsEquipment> GetAll()
         {
-            return _context.Rooms.ToList();
+            return _context.RoomsEquipment.ToList();
         }
 
-        public Room GetById(Guid id)
+        public RoomsEquipment GetById(Guid id)
         {
-            var result = _context.Rooms.Find(id);
+            var result = _context.RoomsEquipment.Find(id);
             if (result == null)
             {
                 throw new NotFoundException();
@@ -48,9 +46,9 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository
             return result;
         }
 
-        public Room Update(Room room)
+        public RoomsEquipment Update(RoomsEquipment room)
         {
-            var updatingRoom = _context.Rooms.SingleOrDefault(p => p.Id == room.Id);
+            var updatingRoom = _context.RoomsEquipment.SingleOrDefault(p => p.DoctorRoomId == room.DoctorRoomId);
             if (updatingRoom == null)
             {
                 throw new NotFoundException();

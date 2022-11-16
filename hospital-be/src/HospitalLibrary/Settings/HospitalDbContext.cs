@@ -12,8 +12,6 @@ using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-
-using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Admissions.Model;
 
 
@@ -51,6 +49,8 @@ namespace HospitalLibrary.Settings
 
         public DbSet<RoomMap> RoomMaps { get; set; }
 
+        public DbSet<RoomsEquipment> RoomsEquipment { get; set; }
+
 
         // Doctor vacations
         public DbSet<Vacation> Vacations { get; set; }
@@ -60,6 +60,20 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder
+                .Entity<RoomsEquipment>()
+                .HasKey(re => new {re.DoctorRoomId, re.EquipmentId});
+                
+            modelBuilder.Entity<RoomsEquipment>()
+                .HasOne<Equipment>(re => re.Equipment)
+                .WithMany(e => e.RoomsEquipment)
+                .HasForeignKey(re => re.EquipmentId);
+            
+            modelBuilder.Entity<RoomsEquipment>()
+                .HasOne<DoctorRoom>(dc => dc.DoctorRoom)
+                .WithMany(dr => dr.RoomsEquipment)
+                .HasForeignKey(re => re.DoctorRoomId);
 
             modelBuilder
              .Entity<Patient>()
