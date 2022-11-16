@@ -20,6 +20,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.Dtos.BloodBankNews;
 using IntegrationLibrary.BloodBankNews.Model;
+using IntegrationLibrary.BloodReport.Service;
+using IntegrationLibrary.BloodReport.Repository;
 
 namespace IntegrationAPI
 {
@@ -55,6 +57,10 @@ namespace IntegrationAPI
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IMailSender, MailSender>();
+            services.AddScoped<IBbReportService, BbReportService>();
+            services.AddScoped<IBbReportRepository, BbReportRepository>();
+            services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
+            services.AddScoped<IBbReportConfigRepository, BbReportConfigRepository>();
 
 
             services.AddControllers();
