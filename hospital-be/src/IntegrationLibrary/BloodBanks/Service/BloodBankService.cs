@@ -45,6 +45,11 @@ namespace IntegrationLibrary.BloodBanks.Service
             bloodBank.Password = _passwordHandler.Hash(bloodBank, bloodBank.Password);
             return _repository.Update(bloodBank);
         }
-        
+        public BloodBank GetByName(String name)
+        {
+            return _repository.GetByName(name);
+        }
+
+
     }
 }
