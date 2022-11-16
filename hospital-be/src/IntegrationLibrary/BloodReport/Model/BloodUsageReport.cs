@@ -34,9 +34,9 @@ namespace IntegrationLibrary.BloodBanks.Model
             foreach (BloodUsage bloodUsage in BloodUsage)
             {
                 html += Environment.NewLine + "\t<tr>" +
-                        Environment.NewLine + "\t\t<td>" + bloodUsage.type.ToString() + "</td>" +
-                        Environment.NewLine + "\t\t<td>" + bloodUsage.rHFactor.ToString() + "</td>" +
-                        Environment.NewLine + "\t\t<td>" + bloodUsage.milliliters.ToString() + "</td>" +
+                        Environment.NewLine + "\t\t<td>" + bloodUsage.Type.ToString() + "</td>" +
+                        Environment.NewLine + "\t\t<td>" + bloodUsage.RHFactor.ToString() + "</td>" +
+                        Environment.NewLine + "\t\t<td>" + bloodUsage.Milliliters.ToString() + "</td>" +
                         Environment.NewLine + "\t</tr>";
             }
 
