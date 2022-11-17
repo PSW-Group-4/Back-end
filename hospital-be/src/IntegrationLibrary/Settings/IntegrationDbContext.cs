@@ -19,7 +19,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<ReportConfiguration> ReportConfigurations { get; set; }
         public DbSet<BloodUsageReport> BloodUsageReports { get; set; }
         public DbSet<News> News { get; set; }
-        public DbSet<BloodRequest> BloodRequests { get; set; }
+        public DbSet<BloodRequestDto> BloodRequests { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

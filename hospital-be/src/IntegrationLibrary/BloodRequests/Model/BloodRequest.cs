@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace IntegrationLibrary.BloodRequests.Model
 {
     [Table("blood_requests")]
-    public class BloodRequest
+    public class BloodRequestDto
     {
         [Key]
         public Guid requestId { get; set; }
@@ -21,6 +21,6 @@ namespace IntegrationLibrary.BloodRequests.Model
         public Boolean isApproved { get; set; }
         public String rejectionComment { get; set; }
         public String managerId { get; set; }
-
+        public DateTime DateTime { get; set; }
     }
 }

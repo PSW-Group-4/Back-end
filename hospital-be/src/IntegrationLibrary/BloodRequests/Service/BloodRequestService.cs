@@ -15,14 +15,19 @@ namespace IntegrationLibrary.BloodRequests.Service
         {
             _repository = repository;
         }
-        public IEnumerable<BloodRequest> GetAll()
+        public IEnumerable<BloodRequestDto> GetAll()
         {
             return _repository.GetAll();
         }
 
-        public BloodRequest GetByBloodRequestId(Guid id)
+        public BloodRequestDto GetByBloodRequestId(Guid id)
         {
             throw new NotImplementedException();
+        }
+
+        public BloodRequestDto Create(BloodRequestDto bloodRequest)
+        {
+            return _repository.Create(bloodRequest);
         }
     }
 }

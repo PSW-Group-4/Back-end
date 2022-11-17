@@ -9,7 +9,8 @@ namespace IntegrationLibrary.BloodRequests.Service
 {
     public interface IBloodRequestService
     {
-        public IEnumerable<BloodRequest> GetAll();
-        public BloodRequest GetByBloodRequestId(Guid id);
+        public IEnumerable<BloodRequestDto> GetAll();
+        public BloodRequestDto GetByBloodRequestId(Guid id);
+        public BloodRequestDto Create(BloodRequestDto bloodRequest);
     }
 }

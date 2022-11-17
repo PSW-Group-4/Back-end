@@ -26,7 +26,7 @@ namespace TestIntegrationApp.Setup
             });
         }
 
-        private static IServiceProvider BuildServiceProvider(IServiceCollection services)
+        private static ServiceProvider BuildServiceProvider(IServiceCollection services)
         {
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<IntegrationDbContext>));
             services.Remove(descriptor);
@@ -41,7 +41,7 @@ namespace TestIntegrationApp.Setup
 
         private static void InitializeDatabase(IntegrationDbContext context)
         {
-            context.Database.EnsureDeleted();
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_bank_news\"");
             context.SaveChanges();

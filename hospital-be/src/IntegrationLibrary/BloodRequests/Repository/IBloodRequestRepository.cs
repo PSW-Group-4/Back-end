@@ -9,7 +9,8 @@ namespace IntegrationLibrary.BloodRequests.Repository
 {
    public interface IBloodRequestRepository
     {
-        public IEnumerable<BloodRequest> GetAll();
-        public BloodRequest GetByBloodRequestId();
+        public IEnumerable<BloodRequestDto> GetAll();
+        public BloodRequestDto GetByBloodRequestId();
+        public BloodRequestDto Create(BloodRequestDto bloodRequest);
     }
 }
