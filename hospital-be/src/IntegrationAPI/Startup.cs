@@ -61,10 +61,10 @@ namespace IntegrationAPI
             services.AddScoped<IMailSender, MailSender>();
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
-            services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
             services.AddScoped<IBbReportConfigRepository, BbReportConfigRepository>();
-            services.AddScoped<IBloodUsageService, BloodUsageService>();
             services.AddScoped<IBbReportConfigService, BbReportConfigService>();
+            services.AddScoped<IBloodUsageService, BloodUsageService>();
+            services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
 
             services.AddControllers();
 

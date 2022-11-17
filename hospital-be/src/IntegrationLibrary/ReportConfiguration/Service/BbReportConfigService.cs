@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.BloodBanks.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,9 @@ namespace IntegrationLibrary.ReportConfigurations.Service
 {
     public class BbReportConfigService : IBbReportConfigService
     {
-        private readonly IBbReportConfigService _repository;
+        private readonly IBbReportConfigRepository _repository;
 
-        public BbReportConfigService(IBbReportConfigService repository)
+        public BbReportConfigService(IBbReportConfigRepository repository)
         {
             _repository = repository;
         }
