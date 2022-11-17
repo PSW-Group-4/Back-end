@@ -265,7 +265,22 @@ INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Ro
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jmuffitt12', 'MZDWUH', true, false, 0, '53021651-422e-4ace-9398-59559e6ebeb8');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('mpryer13', 'Okpfoyk2Qk', true, false, 0, 'e6fbebce-dd68-45e4-9e38-c66b98cc8197');
 
+INSERT INTO public."BloodConsumptionRecords" ("Id","DoctorId","Amount","BloodType", "Reason","DateTime") VALUES
+	 ('182e18fe-747a-49be-9c30-921eac0e5c71','5c036fba-1118-4f4b-b153-90d75e60625e',200.00,'A+','Reason 1','2022-11-07 00:00:00'),
+	 ('28a1a0e7-47cb-49e6-af40-3f36981c0b9d','5c036fba-1118-4f4b-b153-90d75e60625e',450.00,'AB-','Reason 2','2022-10-27 00:00:00');
+INSERT INTO public."BloodSupply" ("Id","Type","Amount") VALUES
+	 ('b14fb18a-e0d9-460c-8dd5-043b0b87dfa4','A+',200.00),
+	 ('a6ac6cbf-4d30-4c4c-9b7a-fc110433257c','A-',450.00),
+	 ('4996bada-9081-41e9-9fac-79c484237b3f','B+',0.00),
+	 ('986f00ae-4a94-46a8-b34b-c2a2a572ee50','B-',875.00),
+	 ('91b65daf-f81b-47d4-bf15-7da65beb3eab','AB+',380.00),
+	 ('5c5a9b38-0d4a-4106-9e28-c9f26dbe37f4','AB-',0.00),
+	 ('90341a02-a1e2-4622-8955-5bb8baef12b8','O+',1150.00),
+	 ('52d280df-3c9f-46e7-8be2-69da3235ad26','O-',700.00);
 
+INSERT INTO public."Appointments" ("Id","DoctorId","RoomId","PatientId","DateTime","IsDone") VALUES
+	 ('1412c639-c5e1-47a1-b29b-1fe925536612','5c036fba-1118-4f4b-b153-90d75e60625e','9ae3255d-261f-472f-a961-7f2e7d05d95c','123a835d-0998-4e5e-b55f-d1ec6f8f1ad2','2022-11-04 00:00:00',true),
+	 ('15f4c4e0-08b2-44ef-9e1b-0f14164d59d2','5c036fba-1118-4f4b-b153-90d75e60625e','9ae3255d-261f-472f-a961-7f2e7d05d95c','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17','2022-12-12 00:00:00',false);
 
 INSERT INTO public."BuildingMaps"(
 	"Id", "BuildingId", "CoordinateX", "CoordinateY", "Height", "Width")
@@ -279,9 +294,7 @@ INSERT INTO public."FloorMaps"(
 			('6605a870-8a45-4fc7-b281-039f91b48d3d', 'f775fba5-843e-4701-96e9-664530b18b3a', 10, 0, 48, 300),
 			('cb7de67a-3f3e-42ab-91da-335252bc533d', '1b7f1f98-8737-4c53-87e3-3399705be80d', 20, 100, 45, 300),
 			('220f2cf0-d0f9-47a8-bca5-86fb869e486f', '1b89ab52-d8ed-4a95-a436-4ecbe5404179', 20, 50, 45, 300),
-			('e3d38c92-01de-4d49-afb5-90de4dad2a42', 'f65545be-c944-453d-9d41-d6463553279a', 20, 0, 45, 300),
-	
-	;
+			('e3d38c92-01de-4d49-afb5-90de4dad2a42', 'f65545be-c944-453d-9d41-d6463553279a', 20, 0, 45, 300);
 INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width") VALUES ('1dd897c6-56a0-4b9c-be76-c5cfd0ccfea0', '9ae3255d-261f-472f-a961-7f2e7d05d95c', 0, 0, 50, 50);
 INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width") VALUES ('4c8b0af2-9936-46a3-9eaf-002840685f64', '8dd731ee-197f-40a8-a5e1-845662b0c0cd', 0, 50, 50, 50);
 INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Height", "Width") VALUES ('c2c47c06-4403-4f77-8c70-ed570e2a8812', 'd4857133-ef89-4e5e-865f-b49c83ecec23', 50, 0, 50, 50),
