@@ -3,7 +3,7 @@ import os
 destFile = open('dbResetScript.sql', 'w')
 
 # Pay attention to order
-tables = ["Addresses", "Allergies", "Buildings", "Floors", "Rooms",
+tables = ["AgeGroups","Addresses", "Allergies", "Buildings", "Floors", "Rooms",
  "Doctors", "Patients", "PatientAllergies", "Feedbacks", "Users",
   "Appointments", "BuildingMaps", "FloorMaps", "RoomMaps"]
 

@@ -1,40 +1,50 @@
 using HospitalAPI.Mapper;
+using HospitalLibrary.Allergies.Repository;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Appointments.Service;
-using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
 using HospitalLibrary.BuildingManagmentMap.Repository.Implementation;
+using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
 using HospitalLibrary.BuildingManagmentMap.Service.Implementation;
 using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Feedbacks.Repository;
-using HospitalLibrary.Feedbacks.Service;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Feedbacks.Repository;
+using HospitalLibrary.Feedbacks.Service;
 using HospitalLibrary.Patients.Repository;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.RoomsAndEqipment.Repository;
+using HospitalLibrary.RoomsAndEqipment.Repository.Implementation;
+using HospitalLibrary.RoomsAndEqipment.Repository.Interfaces;
 using HospitalLibrary.RoomsAndEqipment.Service.Implementation;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+using HospitalLibrary.SchedulingAppointment.Service;
 using HospitalLibrary.Settings;
+using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Users.Service;
+using HospitalLibrary.Vacations.Repository;
+using HospitalLibrary.Vacations.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using HospitalLibrary.SchedulingAppointment.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 using HospitalLibrary.Users.Service;
 using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Allergies.Repository;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Interfaces;
-using HospitalLibrary.Vacations.Repository;
-using HospitalLibrary.Vacations.Service;
+using HospitalLibrary.BloodConsumptionRecords.Repository;
+using HospitalLibrary.BloodConsumptionRecords.Service;
+using HospitalLibrary.BloodSupplies.Repository;
+using HospitalLibrary.BloodSupplies.Service;
 
 namespace HospitalAPI
 {
@@ -58,12 +68,12 @@ namespace HospitalAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
             });
-
             services.AddAutoMapper(typeof(MappingProfile));
 
             //JWT
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => {
+                .AddJwtBearer(options =>
+                {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
@@ -77,6 +87,11 @@ namespace HospitalAPI
                 });
             services.AddMvc();
             services.AddControllers();
+
+
+            //AgeGroups
+            services.AddScoped<IAgeGroupRepository, AgeGroupRepository>();
+            services.AddScoped<IAgeGroupService, AgeGroupService>();
 
             //Addeess
             services.AddScoped<IAddressRepository, AddressRepository>();
@@ -106,12 +121,24 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IDoctorAppointmentService, DoctorAppointmentService>();
+
+            //BloodConsumptionRecord
+            services.AddScoped<IBloodConsumptionRecordRepository, BloodConsumptionRecordRepository>();
+            services.AddScoped<IBloodConsumptionRecordService, BloodConsumptionRecordService>();
+
+            //BloodSupply
+            services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
+            services.AddScoped<IBloodSupplyService, BloodSupplyService>();
+
             //Room
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IRoomService, RoomService>();
+
+            services.AddScoped<IDoctorRoomService, DoctorRoomService>();
+            services.AddScoped<IDoctorRoomRepository, DoctorRoomRepository>();
             //MapItems
-            services.AddScoped<IBuildingMapService,BuildingMapService>();
-            services.AddScoped<IBuildingMapRepository,BuildingMapRepository>();
+            services.AddScoped<IBuildingMapService, BuildingMapService>();
+            services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();
 
             services.AddScoped<IFloorMapService, FloorMapService>();
             services.AddScoped<IFloorMapRepository, FloorMapRepository>();

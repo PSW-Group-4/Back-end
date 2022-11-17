@@ -6,7 +6,7 @@ using IntegrationLibrary.BloodBanks.Model;
 using Microsoft.AspNetCore.Http;
 using IntegrationAPI.Communications;
 using System;
-using IntegrationAPI.Dtos;
+using IntegrationAPI.Dtos.BloodBank;
 
 namespace IntegrationAPI.Controllers
 {
@@ -45,7 +45,7 @@ namespace IntegrationAPI.Controllers
             var bloodBank = _service.GetByApiKey(ApiKey);
             return Ok(bloodBank);
         }
-        [HttpPost ("{Id}")]
+        [HttpPost ("{id}")]
         public ActionResult Update(String Id, BloodBankEditDto bloodBankDto)
         {
             var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);

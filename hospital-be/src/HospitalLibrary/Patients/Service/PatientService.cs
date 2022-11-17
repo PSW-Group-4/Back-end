@@ -17,14 +17,16 @@ namespace HospitalLibrary.Patients.Service
         private readonly IAddressRepository _addressRepository;
         private readonly IDoctorRepository _doctorRepository;
         private readonly IAllergieRepository _allergieRepository;
+        private readonly IAgeGroupService _ageGroupRepository;
 
         public PatientService(IPatientRepository patientRepository, IAddressRepository addressRepository,
-            IDoctorRepository doctorRepository, IAllergieRepository allergieRepository)
+            IDoctorRepository doctorRepository, IAllergieRepository allergieRepository, IAgeGroupService ageGroupRepository)
         {
             _patientRepository = patientRepository;
             _addressRepository = addressRepository;
             _doctorRepository = doctorRepository;
             _allergieRepository = allergieRepository;
+            _ageGroupRepository = ageGroupRepository;
         }
 
         public IEnumerable<Patient> GetAll()
@@ -66,7 +68,7 @@ namespace HospitalLibrary.Patients.Service
         public List<NumberOfPatientsByAgeGroup> PatientsByAgeGroup()
         {
             var PatientsByAgeGroup = new List<NumberOfPatientsByAgeGroup>();
-            foreach (var ageGroup in Constants.AgeGroupsConstants.AgeGroups)
+            foreach (var ageGroup in _ageGroupRepository.GetAll())
             {
                 PatientsByAgeGroup.Add(new NumberOfPatientsByAgeGroup(ageGroup, _patientRepository.GetPatientCountByAgeGroup(ageGroup)));
             }
@@ -86,11 +88,18 @@ namespace HospitalLibrary.Patients.Service
         public List<NumberOfPatientsByAgeGroup> DoctorsPatientsByAgeGroup(Guid DoctorId)
         {
             var DoctorsPatientsByAgeGroup = new List<NumberOfPatientsByAgeGroup>();
-            foreach (var ageGroup in Constants.AgeGroupsConstants.AgeGroups)
+            foreach (var ageGroup in _ageGroupRepository.GetAll())
             {
                 DoctorsPatientsByAgeGroup.Add(new NumberOfPatientsByAgeGroup(ageGroup, _patientRepository.GetDoctorsPatientCountByAgeGroup(ageGroup, DoctorId)));
             }
             return DoctorsPatientsByAgeGroup;
+        }
+
+   
+
+        public int NumberOfPatientsDoctorHas(Guid doctorId)
+        {
+            return _patientRepository.NumberOfPatientsDoctorHas(doctorId);
         }
     }
 }

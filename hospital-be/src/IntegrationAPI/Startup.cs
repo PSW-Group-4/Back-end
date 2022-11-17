@@ -1,8 +1,13 @@
 using IntegrationAPI.Communications;
 using IntegrationAPI.Mappers;
+using IntegrationAPI.Dtos;
+using IntegrationLibrary.BloodBankNews.Repository;
+using IntegrationLibrary.BloodBankNews.Service;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodBanks.Service;
+using IntegrationLibrary.BloodRequests.Repository;
+using IntegrationLibrary.BloodRequests.Service;
 using IntegrationLibrary.Settings;
 using IntegrationLibrary.Utilities;
 using Microsoft.AspNetCore.Builder;
@@ -13,7 +18,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-
+using IntegrationAPI.Dtos.BloodBankNews;
+using IntegrationLibrary.BloodBankNews.Model;
 
 namespace IntegrationAPI
 {
@@ -39,12 +45,19 @@ namespace IntegrationAPI
             });
 
             services.AddAutoMapper(typeof(MappingProfile));
-
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
+            services.AddScoped<IConverter<News, NewsDto>, NewsConverter>();
             services.AddScoped<IPasswordHandler, PasswordHandler>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();
+            services.AddScoped<IBloodRequestRepository, BloodRequestRepository>();
+            services.AddScoped<IBloodRequestService, BloodRequestService>();
+            services.AddScoped<INewsRepository, NewsRepository>();
+            services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IMailSender, MailSender>();
+
+
+            services.AddControllers();
 
         }
 

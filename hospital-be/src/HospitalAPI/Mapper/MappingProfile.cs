@@ -16,8 +16,12 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalAPI.Dtos.User;
 using HospitalLibrary.Users.Model;
+using HospitalAPI.Dtos.BloodConsumptionRecord;
+using HospitalLibrary.BloodConsumptionRecords.Model;
 using HospitalAPI.Dtos.Vacation;
 using HospitalLibrary.Vacations.Model;
+using HospitalAPI.Dtos.BloodSupply;
+using HospitalLibrary.BloodSupplies.Model;
 
 namespace HospitalAPI.Mapper
 {
@@ -26,7 +30,9 @@ namespace HospitalAPI.Mapper
         public MappingProfile()
         {
             CreateMap<AddressRequestDto, Address>();
+
             CreateMap<PersonRequestDto, Person>();
+            CreateMap< Person , PersonRequestDto>();
 
             CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
@@ -54,9 +60,15 @@ namespace HospitalAPI.Mapper
             CreateMap<DoctorRequestDto, Doctor>()
                 .IncludeBase<PersonRequestDto, Person>();
 
+            CreateMap<Doctor , DoctorRequestDto> ()
+                .IncludeBase<Person , PersonRequestDto>();
+
             CreateMap<RoomRequestDto, Room>();
             CreateMap<AppointmentRequestDto, Appointment>();
             CreateMap<VacationRequestDto, Vacation>();
+
+            CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
+            CreateMap<BloodSupplyDto, BloodSupply>();
 
             CreateMap<PatientRegistrationDto, Patient>();
             CreateMap<UserLoginDto, User>();

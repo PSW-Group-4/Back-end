@@ -1,7 +1,7 @@
 ﻿using HospitalLibrary.Allergies.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Utility;
+using HospitalLibrary.Patients.Model;
 using System;
 using System.Collections.Generic;
 

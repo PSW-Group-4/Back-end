@@ -1,7 +1,6 @@
-﻿using HospitalLibrary.Patients.Model;
+﻿using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
-using HospitalLibrary.Utility;
-using HospitalLibrary.Core.Model;
+using HospitalLibrary.Patients.Model;
 using System;
 
 namespace HospitalLibrary.Patients.Repository
@@ -11,6 +10,8 @@ namespace HospitalLibrary.Patients.Repository
         int GetPatientCountByAgeGroup(AgeGroup ageGroup);
         int GetPatientCountByGender(Gender gender);
         int GetDoctorsPatientCountByAgeGroup(AgeGroup ageGroup, Guid doctorId);
+        int NumberOfAllPatients();
+        int NumberOfPatientsDoctorHas(Guid doctorId);
     }
 
 }

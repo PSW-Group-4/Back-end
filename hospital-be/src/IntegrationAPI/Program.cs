@@ -1,4 +1,6 @@
+using IntegrationAPI.Communications;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace IntegrationAPI
@@ -15,6 +17,10 @@ namespace IntegrationAPI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<NewsConsumer>();
                 });
     }
 }
