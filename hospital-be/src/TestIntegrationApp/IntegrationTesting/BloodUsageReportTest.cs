@@ -1,6 +1,8 @@
 ﻿using IntegrationAPI;
+using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodReport.Service;
+using IntegrationLibrary.BloodUsages.Service;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -16,21 +18,50 @@ namespace TestIntegrationApp.IntegrationTesting
     {
         public BloodUsageReportTest(TestDatabaseFactory<Startup> factory) : base(factory) {}
 
-        private static BbReportService SetupService(IServiceScope scope)
+        private static BbReportService SetupReportService(IServiceScope scope)
         {
-            return new BbReportService(scope.ServiceProvider.GetRequiredService<IBbReportRepository>());
+            return new BbReportService(scope.ServiceProvider.GetRequiredService<IBbReportRepository>(), scope.ServiceProvider.GetRequiredService<IBloodUsageService>());
         }
 
         [Fact]
         public void Checks_propper_data_retrieval()
         {
+            using var scope = Factory.Services.CreateScope();
+            BbReportService reportService = SetupReportService(scope);
 
+            var result = reportService.GetAll();
+
+            Assert.NotNull(result);
         }
         [Fact]
         public void Checks_propper_data_send()
         {
+            using var scope = Factory.Services.CreateScope();
+            BbReportService reportService = SetupReportService(scope);
 
+            BloodBank bloodBankTest = new BloodBank();
+            bloodBankTest.Id = new Guid("32db7839-f8a4-4c8b-9486-80f783ed6746");
+            BloodUsageReport bloodUsageReportTest = new BloodUsageReport();
+            bloodUsageReportTest.BloodBank = bloodBankTest;
+            bloodUsageReportTest.timeOfCreation = DateTime.Now;
+            var result = reportService.Create(bloodUsageReportTest);
+
+            Assert.NotNull(result);
         }
+        [Fact]
+        public void Checks_inpropper_data_send()
+        {
+            using var scope = Factory.Services.CreateScope();
+            BbReportService reportService = SetupReportService(scope);
 
+            BloodBank bloodBankTest = new BloodBank();
+            bloodBankTest.Id = new Guid("42db7839-f8a4-4c8b-9486-80f783ed6746"); //this Guid does not exist in db
+            BloodUsageReport bloodUsageReportTest = new BloodUsageReport();
+            bloodUsageReportTest.BloodBank = bloodBankTest;
+            bloodUsageReportTest.timeOfCreation = DateTime.Now;
+            var result = reportService.Create(bloodUsageReportTest);
+
+            Assert.Null(result);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
+using IntegrationLibrary.BloodUsages.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,11 @@ namespace IntegrationLibrary.BloodReport.Service
     public class BbReportService : IBbReportService
     {
         private readonly IBbReportRepository _repository;
-
-        public BbReportService(IBbReportRepository repository)
+        private readonly IBloodUsageService _usageService;
+        public BbReportService(IBbReportRepository repository, IBloodUsageService usageService)
         {
             _repository = repository;
+            _usageService = usageService;
         }
         public BloodUsageReport Create(BloodUsageReport bloodUsageReport)
         {
