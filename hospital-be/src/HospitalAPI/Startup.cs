@@ -45,6 +45,8 @@ using HospitalLibrary.BloodConsumptionRecords.Repository;
 using HospitalLibrary.BloodConsumptionRecords.Service;
 using HospitalLibrary.BloodSupplies.Repository;
 using HospitalLibrary.BloodSupplies.Service;
+using HospitalLibrary.Admissions.Repository;
+using HospitalLibrary.Admissions.Service;
 
 namespace HospitalAPI
 {
@@ -151,6 +153,9 @@ namespace HospitalAPI
             //Doctor Vacations
             services.AddScoped<IVacationRepository, VacationRepository>();
             services.AddScoped<IVacationService, VacationService>();
+
+            services.AddScoped<IAdmissionRepository, AdmissionRepository>();
+            services.AddScoped<IAdmissionService, AdmissionService>();
 
         }
 

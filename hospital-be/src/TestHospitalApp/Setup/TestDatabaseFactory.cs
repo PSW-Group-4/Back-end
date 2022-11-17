@@ -12,6 +12,8 @@ using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Admissions.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -54,7 +56,7 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Floors\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Buildings\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Addresses\" RESTART IDENTITY CASCADE;");
-
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
 
             context.Database.ExecuteSqlRaw("INSERT INTO \"Addresses\" (\"Id\", \"City\", \"Country\", \"Street\", \"StreetNumber\") VALUES ('9b75b261-e305-4f6f-9990-97cb2d06d774', 'Kibonsod', 'Serbia', 'Comanche', '8');");
             
@@ -94,6 +96,28 @@ namespace TestHospitalApp.Setup
                 Type = "B+",
                 Amount = 0.00
             });
+            context.Patients.Add(new Patient
+            {
+                Id = new Guid("4994cada-9081-41e9-9fac-79c484237b3f"),
+                BloodType = BloodType.A_POS,
+                ChoosenDoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                Name = "Petar",
+                Surname = "Popovic",
+                Birthdate = DateTime.Now,
+                Gender = Gender.Male,
+                AddressId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d774"),
+                Jmbg = "12312313",
+                Email = "mail@gmail.krompir",
+                PhoneNumber = "066413242"
+            }) ;
+            context.Admissions.Add(new Admission
+            {
+                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d174"),
+                PatientId = new Guid("4994cada-9081-41e9-9fac-79c484237b3f"),
+                Reason = "Razlog za otpust",
+                RoomId = new Guid("9ae3255d-261f-472f-a961-7f2e7d05d95c"),
+                arrivalDate = DateTime.Now
+            }) ;
 
             context.SaveChanges();
         }
