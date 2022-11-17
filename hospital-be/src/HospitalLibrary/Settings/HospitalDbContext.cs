@@ -9,7 +9,6 @@ using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Users.Model;
-using HospitalLibrary.Allergies.Model;
 using Microsoft.Extensions.Hosting;
 using HospitalLibrary.BloodConsumptionRecords.Model;
 using HospitalLibrary.BloodSupplies.Model;

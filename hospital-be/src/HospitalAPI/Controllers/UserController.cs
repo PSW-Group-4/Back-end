@@ -13,6 +13,10 @@ using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Service.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Security.Claims;
+using System.Net.Mail;
+using System.Net;
+using System.Linq;
 
 namespace HospitalAPI.Controllers
 {
@@ -45,11 +49,13 @@ namespace HospitalAPI.Controllers
 
                 patient.Address = address;
                 patient.AddressId = address.Id;
-                _patientService.RegisterPatient(patient,  registrationDto.ChoosenDoctorId,
+                _patientService.RegisterPatient(patient, registrationDto.ChoosenDoctorId,
                     registrationDto.AllergieIds);
 
-                _userService.RegisterPatient(user, patient.Id);
+                user = _userService.RegisterPatient(user, patient.Id);
                 //slanje maila (pozivanje servia koji salje mail)
+                _userService.SendVerificationLinkEmail(user);
+
                 return Ok();
             }
             catch (NotFoundException)
@@ -81,6 +87,34 @@ namespace HospitalAPI.Controllers
             {
                 return Unauthorized("Only patients can login from public app");
             }
+        }
+
+        //TODO slucaj kada vise puta osvezim stranicu
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult ActivateAccount([FromBody] AccountActivationDto activationInformation)
+        {
+            if (activationInformation == null)
+            {
+                return BadRequest();
+            }
+
+            var patient = _patientService.GetById(activationInformation.Id);
+            
+            if (patient == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var user = _userService.GetAll().FirstOrDefault(r => r.PersonId == patient.Id);
+            if (activationInformation.Token == user.VerificationToken)
+            {
+                user.IsAccountActive = true;
+                _userService.Update(user);
+                return Ok();
+            }
+
+            return Unauthorized("Tokens do not match");
         }
     }
 }
