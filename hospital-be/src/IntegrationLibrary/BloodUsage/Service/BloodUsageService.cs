@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodReport.Repository;
+using IntegrationLibrary.BloodUsages.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,9 @@ namespace IntegrationLibrary.BloodUsages.Service
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BloodUsage> GetAllBetweenDates(DateTime start, DateTime end)
+        public IEnumerable<BloodUsageDto> GetAllBetweenDates(DateTime start, DateTime end)
         {
-            throw new NotImplementedException();
+            return _repository.GetAllBetweenDates(start, end);
         }
 
         public BloodUsage GetById(Guid id)

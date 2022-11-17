@@ -49,6 +49,12 @@ namespace IntegrationLibrary.BloodBanks.Repository
             }
         }
 
+        public BloodUsageReport GetLastByBbId(Guid id)
+        {
+            return _context.BloodUsageReports.Where(report => report.BloodBank.Id == id)
+                .OrderByDescending(report => report.timeOfCreation).FirstOrDefault();
+        }
+
         public BloodUsageReport Update(BloodUsageReport bloodUsageReport)
         {
             throw new NotImplementedException();

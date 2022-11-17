@@ -10,6 +10,7 @@ namespace IntegrationLibrary.Utilities
 {
     public class HtmlToPdfConvertor
     {
+        public static string defaultPath = Directory.GetParent(Directory.GetCurrentDirectory()).ToString() + Path.DirectorySeparatorChar + "Reports" + Path.DirectorySeparatorChar;
         public static String Convert(String html, String path, String BloodBankTitle)
         {
             var Renderer = new IronPdf.ChromePdfRenderer();

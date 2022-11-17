@@ -1,8 +1,10 @@
 ﻿using IntegrationAPI;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
+using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.BloodReport.Service;
 using IntegrationLibrary.BloodUsages.Service;
+using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -20,7 +22,8 @@ namespace TestIntegrationApp.IntegrationTesting
 
         private static BbReportService SetupReportService(IServiceScope scope)
         {
-            return new BbReportService(scope.ServiceProvider.GetRequiredService<IBbReportRepository>(), scope.ServiceProvider.GetRequiredService<IBloodUsageService>());
+            return new BbReportService(scope.ServiceProvider.GetRequiredService<IBbReportRepository>(), scope.ServiceProvider.GetRequiredService<IBloodUsageService>(),
+                scope.ServiceProvider.GetRequiredService<IBloodBankService>(), scope.ServiceProvider.GetRequiredService<IBbReportConfigService>());
         }
 
         [Fact]
