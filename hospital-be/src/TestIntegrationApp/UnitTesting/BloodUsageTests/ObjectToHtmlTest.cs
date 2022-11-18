@@ -62,15 +62,15 @@ namespace TestIntegrationApp.UnitTesting.BloodUsageTests
         {
             BloodUsage usageApos = new BloodUsage();
             usageApos.Id = Guid.NewGuid();
-            usageApos.type = BloodType.A;
-            usageApos.rHFactor = RHFactor.POSITIVE;
-            usageApos.milliliters = 650;
+            usageApos.Type = BloodType.A;
+            usageApos.RHFactor = RHFactor.POSITIVE;
+            usageApos.Milliliters = 650;
 
             BloodUsage usage0neg = new BloodUsage();
             usage0neg.Id = Guid.NewGuid();
-            usage0neg.type = BloodType.O;
-            usage0neg.rHFactor = RHFactor.NEGATIVE;
-            usage0neg.milliliters = 350;
+            usage0neg.Type = BloodType.O;
+            usage0neg.RHFactor = RHFactor.NEGATIVE;
+            usage0neg.Milliliters = 350;
 
             List<BloodUsage> retVal = new List<BloodUsage>();
             retVal.Add(usageApos);
