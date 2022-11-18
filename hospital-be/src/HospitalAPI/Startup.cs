@@ -48,6 +48,7 @@ using HospitalLibrary.BloodSupplies.Service;
 using HospitalLibrary.Admissions.Repository;
 using HospitalLibrary.Admissions.Service;
 using System;
+using HospitalLibrary.Allergies.Service;
 
 namespace HospitalAPI
 {
@@ -138,6 +139,7 @@ namespace HospitalAPI
 
             //Allergie
             services.AddScoped<IAllergieRepository, AllergieRepository>();
+            services.AddScoped<IAllergieService, AllergieService>();
 
             //TODO Feedback
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
