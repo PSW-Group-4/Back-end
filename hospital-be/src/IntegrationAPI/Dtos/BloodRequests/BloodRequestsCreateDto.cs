@@ -5,10 +5,11 @@ namespace IntegrationAPI.Dtos.BloodRequests
 {
     public class BloodRequestsCreateDto
     {
-        public String doctorId { get; set; }
-        public BloodType bloodType { get; set; }
-        public String reasonsWhyBloodIsNeeded { get; set; }
-        public double bloodAmountInMilliliters { get; set; }
+        public String DoctorId { get; set; }
+        public BloodType BloodType { get; set; }
+        public RHFactor RHFactor { get; set; }
+        public String ReasonsWhyBloodIsNeeded { get; set; }
+        public double BloodAmountInMilliliters { get; set; }
         public DateTime DateTime { get; set; }
     }
 }
