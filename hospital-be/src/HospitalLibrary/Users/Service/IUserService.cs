@@ -16,6 +16,7 @@ namespace HospitalLibrary.Users.Service
         void Delete(string username);
         public User RegisterPatient(User user, Guid patientId);
 
-        public string AuthenticatePatient(string username, string password);
+        public string AuthenticatePublic(string username, string password);
+        string AuthenticatePrivate(string userLoginUsername, string userLoginPassword);
     }
 }

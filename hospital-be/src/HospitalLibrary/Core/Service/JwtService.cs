@@ -1,9 +1,12 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Users.Model;
+using HospitalLibrary.Users.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
