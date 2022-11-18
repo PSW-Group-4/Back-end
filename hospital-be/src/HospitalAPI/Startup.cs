@@ -47,6 +47,7 @@ using HospitalLibrary.BloodSupplies.Repository;
 using HospitalLibrary.BloodSupplies.Service;
 using HospitalLibrary.Admissions.Repository;
 using HospitalLibrary.Admissions.Service;
+using System;
 
 namespace HospitalAPI
 {
@@ -68,7 +69,32 @@ namespace HospitalAPI
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name="Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Here Enter JWT Token with bearer format like 'Bearer [space] token'"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference
+                             = new OpenApiReference
+                             {
+                                 Type = ReferenceType.SecurityScheme,
+                                 Id = "Bearer"
+                             }
+                        },
+                        new string[] {}
+                    }
+                });
+
             });
             services.AddAutoMapper(typeof(MappingProfile));
 
@@ -89,6 +115,8 @@ namespace HospitalAPI
                 });
             services.AddMvc();
             services.AddControllers();
+
+
 
 
             //AgeGroups

@@ -30,6 +30,7 @@ namespace HospitalAPI.Mapper
         public MappingProfile()
         {
             CreateMap<AddressRequestDto, Address>();
+            CreateMap<Address, AddressRequestDto>();
 
             CreateMap<PersonRequestDto, Person>();
             CreateMap< Person , PersonRequestDto>();
