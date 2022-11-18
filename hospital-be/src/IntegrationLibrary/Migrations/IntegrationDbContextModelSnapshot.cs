@@ -19,6 +19,31 @@ namespace IntegrationLibrary.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+            modelBuilder.Entity("IntegrationLibrary.BloodBankNews.Model.News", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Body")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId");
+
+                    b.ToTable("blood_bank_news");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodBank", b =>
                 {
                     b.Property<Guid>("Id")
@@ -67,7 +92,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("BloodUsageReportId");
 
-                    b.ToTable("BloodUsage");
+                    b.ToTable("blood_usage");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
@@ -114,6 +139,47 @@ namespace IntegrationLibrary.Migrations
                     b.HasIndex("BloodBankId");
 
                     b.ToTable("blood_banks_config");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
+                {
+                    b.Property<Guid>("requestId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("bloodAmountInMilliliters")
+                        .HasColumnType("double precision");
+
+                    b.Property<int>("bloodType")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("doctorId")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("isApproved")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("managerId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("reasonsWhyBloodIsNeeded")
+                        .HasColumnType("text");
+
+                    b.Property<string>("rejectionComment")
+                        .HasColumnType("text");
+
+                    b.HasKey("requestId");
+
+                    b.ToTable("blood_requests");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBankNews.Model.News", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId");
+
+                    b.Navigation("BloodBank");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsage", b =>

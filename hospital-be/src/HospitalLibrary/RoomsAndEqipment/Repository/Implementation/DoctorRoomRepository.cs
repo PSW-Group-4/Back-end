@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
 {

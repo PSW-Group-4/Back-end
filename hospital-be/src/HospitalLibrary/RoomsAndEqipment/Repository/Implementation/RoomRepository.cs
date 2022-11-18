@@ -7,7 +7,7 @@ using HospitalLibrary.Exceptions;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.RoomsAndEqipment.Repository
 {

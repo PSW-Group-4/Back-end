@@ -29,8 +29,6 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         { 
-            //sc.IsAvailavle(new DateTime(2022, 12, 12, 12, 12, 0));
-            //List<DateTime> av = sc.AvailableTerminsForDate(new DateTime(2022, 12, 12, 9, 0, 0));
             return Ok(_appointmentService.GetAll());
         }
 

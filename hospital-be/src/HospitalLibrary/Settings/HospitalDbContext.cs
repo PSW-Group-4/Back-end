@@ -9,13 +9,14 @@ using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Users.Model;
+using HospitalLibrary.Allergies.Model;
+using Microsoft.Extensions.Hosting;
+using HospitalLibrary.BloodConsumptionRecords.Model;
+using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.Vacations.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-
-using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Admissions.Model;
-
 
 namespace HospitalLibrary.Settings
 {
@@ -45,21 +46,41 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
+        public DbSet<BloodConsumptionRecord> BloodConsumptionRecords { get; set; }
+
         public DbSet<BuildingMap> BuildingMaps { get; set; }
 
         public DbSet<FloorMap> FloorMaps { get; set; }
 
         public DbSet<RoomMap> RoomMaps { get; set; }
 
+        public DbSet<RoomsEquipment> RoomsEquipment { get; set; }
+
 
         // Doctor vacations
         public DbSet<Vacation> Vacations { get; set; }
+
+        public DbSet<BloodSupply> BloodSupply { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder
+                .Entity<RoomsEquipment>()
+                .HasKey(re => new {re.DoctorRoomId, re.EquipmentId});
+                
+            modelBuilder.Entity<RoomsEquipment>()
+                .HasOne<Equipment>(re => re.Equipment)
+                .WithMany(e => e.RoomsEquipment)
+                .HasForeignKey(re => re.EquipmentId);
+            
+            modelBuilder.Entity<RoomsEquipment>()
+                .HasOne<DoctorRoom>(dc => dc.DoctorRoom)
+                .WithMany(dr => dr.RoomsEquipment)
+                .HasForeignKey(re => re.DoctorRoomId);
 
             modelBuilder
              .Entity<Patient>()
