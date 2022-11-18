@@ -11,7 +11,7 @@ namespace IntegrationLibrary.BloodReport.Service
     {
         public IEnumerable<BloodUsageReport> GetAll();
         public BloodUsageReport GetById(Guid id);
-        public BloodUsageReport Create(BloodUsageReport bloodUsageReport);
+        public BloodUsageReport Create(string bloodBankId);
         public BloodUsageReport Update(BloodUsageReport bloodUsageReport);
         public IEnumerable<BloodUsageReport> GetByBbId(Guid id);
     }

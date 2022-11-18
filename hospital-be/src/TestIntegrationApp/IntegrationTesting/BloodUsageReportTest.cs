@@ -42,12 +42,7 @@ namespace TestIntegrationApp.IntegrationTesting
             using var scope = Factory.Services.CreateScope();
             BbReportService reportService = SetupReportService(scope);
 
-            BloodBank bloodBankTest = new BloodBank();
-            bloodBankTest.Id = new Guid("32db7839-f8a4-4c8b-9486-80f783ed6746");
-            BloodUsageReport bloodUsageReportTest = new BloodUsageReport();
-            bloodUsageReportTest.BloodBank = bloodBankTest;
-            bloodUsageReportTest.timeOfCreation = DateTime.Now;
-            var result = reportService.Create(bloodUsageReportTest);
+            var result = reportService.Create("32db7839-f8a4-4c8b-9486-80f783ed6746");
 
             Assert.NotNull(result);
         }
@@ -57,12 +52,7 @@ namespace TestIntegrationApp.IntegrationTesting
             using var scope = Factory.Services.CreateScope();
             BbReportService reportService = SetupReportService(scope);
 
-            BloodBank bloodBankTest = new BloodBank();
-            bloodBankTest.Id = new Guid("42db7839-f8a4-4c8b-9486-80f783ed6746"); //this Guid does not exist in db
-            BloodUsageReport bloodUsageReportTest = new BloodUsageReport();
-            bloodUsageReportTest.BloodBank = bloodBankTest;
-            bloodUsageReportTest.timeOfCreation = DateTime.Now;
-            var result = reportService.Create(bloodUsageReportTest);
+            var result = reportService.Create("42db7839-f8a4-4c8b-9486-80f783ed6746");//this Guid does not exist in db
 
             Assert.Null(result);
         }

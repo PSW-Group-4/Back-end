@@ -28,7 +28,7 @@ namespace IntegrationLibrary.ReportConfigurations.Service
 
         public ReportConfiguration GetByBloodBank(Guid bloodBankId)
         {
-            throw new NotImplementedException();
+           return _repository.GetByBloodBank(bloodBankId);
         }
 
         public ReportConfiguration GetById(Guid id)

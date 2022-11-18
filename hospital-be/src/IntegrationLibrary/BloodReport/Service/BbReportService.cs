@@ -26,25 +26,25 @@ namespace IntegrationLibrary.BloodReport.Service
             _bankService = bankService;
             _configService = configService;
         }
-        public BloodUsageReport Create(BloodUsageReport bloodUsageReport)
+        public BloodUsageReport Create(string bloodBankId)
         {
-            bloodUsageReport.BloodBank = _bankService.GetById(bloodUsageReport.Id);
+            BloodUsageReport bloodUsageReport = new BloodUsageReport();
+            bloodUsageReport.BloodBank = _bankService.GetById(new Guid(bloodBankId));
             if(bloodUsageReport.BloodBank == null)
             {
                 return null;
             }
 
-            bloodUsageReport.ReportConfiguration = _configService.GetByBloodBank(bloodUsageReport.Id);
-            if(bloodUsageReport == null)
+            bloodUsageReport.ReportConfiguration = _configService.GetByBloodBank(bloodUsageReport.BloodBank.Id);
+            if(bloodUsageReport.ReportConfiguration == null)
             {
                 return null;
             }
-
+            bloodUsageReport.timeOfCreation = DateTime.Now;
             bloodUsageReport.BloodUsage = getUsageSinceLast(bloodUsageReport);
 
             saveAsPdf(bloodUsageReport);
-
-            return bloodUsageReport;
+            return _repository.Create(bloodUsageReport);
         }
         private String saveAsPdf(BloodUsageReport bloodUsageReport)
         {
@@ -53,7 +53,17 @@ namespace IntegrationLibrary.BloodReport.Service
         }
         private List<BloodUsageDto> getUsageSinceLast(BloodUsageReport bloodUsageReport)
         {
-            DateTime start = _repository.GetLastByBbId(bloodUsageReport.Id).timeOfCreation;
+            var lastReport = _repository.GetLastByBbId(bloodUsageReport.Id);
+            DateTime start;
+            if (lastReport == null)
+            {
+                start = new DateTime(1970, 1, 1);
+            }
+            else
+            {
+                start = lastReport.timeOfCreation;
+            }
+             
             return _usageService.GetAllBetweenDates(start, bloodUsageReport.timeOfCreation).ToList();
         }
         public IEnumerable<BloodUsageReport> GetAll()

@@ -59,12 +59,13 @@ namespace IntegrationAPI
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IMailSender, MailSender>();
-            services.AddScoped<IBbReportService, BbReportService>();
-            services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IBbReportConfigRepository, BbReportConfigRepository>();
             services.AddScoped<IBbReportConfigService, BbReportConfigService>();
             services.AddScoped<IBloodUsageService, BloodUsageService>();
             services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
+            services.AddScoped<IBbReportService, BbReportService>();
+            services.AddScoped<IBbReportRepository, BbReportRepository>();
+           
 
             services.AddControllers();
 
