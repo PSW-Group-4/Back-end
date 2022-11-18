@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <Folder Include="Allergies\Service\" />
-    <Folder Include="Constants\" />
     <Folder Include="GraphicalEditor\Model\" />
     <Folder Include="GraphicalEditor\Service\" />
     <Folder Include="GraphicalEditor\Repository\" />
