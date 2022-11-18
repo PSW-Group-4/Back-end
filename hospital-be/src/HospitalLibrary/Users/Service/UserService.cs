@@ -84,7 +84,9 @@ namespace HospitalLibrary.Users.Service
                 IsBodyHtml = true
             })
                 smtp.Send(message);*/;
-            var varifyUrl = "http://localhost:57197/loginPage?token=" + user.VerificationToken + "&id=" + user.PersonId;
+
+            //TODO smisliti kako link da bude dinamican, a ne da zakucam port na kome trci localhost
+            var varifyUrl = "http://localhost:4200/loginPage?token=" + user.VerificationToken + "&id=" + user.PersonId;
             Patient patient = _patientService.GetById(user.PersonId);
             String recipientName = patient.Name + " " + patient.Surname;
             String recipientEmail = "shadowhuntet@gmail.com";

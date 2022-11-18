@@ -107,9 +107,16 @@ namespace HospitalAPI.Controllers
             }
 
             var user = _userService.GetAll().FirstOrDefault(r => r.PersonId == patient.Id);
+
+            if (user.VerificationToken == System.Guid.Empty)
+            {
+                return BadRequest("Your account has already been activated");
+            }
+
             if (activationInformation.Token == user.VerificationToken)
             {
                 user.IsAccountActive = true;
+                user.VerificationToken = System.Guid.Empty;
                 _userService.Update(user);
                 return Ok();
             }
