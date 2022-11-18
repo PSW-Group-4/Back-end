@@ -4,8 +4,15 @@ using HospitalLibrary.Feedbacks.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Security.Claims;
 using HospitalAPI.Dtos.Feedback;
+using HospitalAPI.Dtos.User;
 using HospitalLibrary.Exceptions;
+using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Users.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 
 namespace HospitalAPI.Controllers
@@ -16,10 +23,12 @@ namespace HospitalAPI.Controllers
     {
         private readonly IFeedbackService _feedbackService;
         private readonly IMapper _mapper;
+        private readonly IUserService _userService;
 
-        public FeedbackController(IFeedbackService feedbackService, IMapper mapper)
+        public FeedbackController(IFeedbackService feedbackService, IMapper mapper, IUserService userService)
         {
             _feedbackService = feedbackService;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -87,11 +96,22 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
-
+        private Guid  GetPersonId()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var userClaims = identity.Claims;
+            var username =  userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value;
+            return _userService.GetByUsername(username).PersonId;
+        }
+        
         //POST api/feedback
         [HttpPost]
+        [Authorize(Roles = "Patient")]
         public ActionResult Create([FromBody]FeedbackRequestDto feedbackDto)
         {
+            Guid patientId = GetPersonId();
+            feedbackDto.PatientId = patientId;
+            //Refctor upper ocode
             var feedback = _mapper.Map<Feedback>(feedbackDto);
             _feedbackService.Create(feedback);
             return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);

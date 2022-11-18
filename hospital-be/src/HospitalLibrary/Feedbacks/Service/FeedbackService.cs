@@ -22,9 +22,7 @@ namespace HospitalLibrary.Feedbacks.Service
         {
             feedback.Date = DateTime.Now;
 
-            //TODO "Uncomment when Login is implemented"
-            //  feedback.Patient = _patientRepository.GetById(feedback.PatientId);
-            feedback.Patient = _patientRepository.GetAll().FirstOrDefault();
+            feedback.Patient = _patientRepository.GetById(feedback.PatientId);
             if (feedback.IsDesiredPublic)
             {
                 feedback.Status = Status.Pending;
