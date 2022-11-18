@@ -1,4 +1,5 @@
 using HospitalLibrary.Users.Model;
+using Microsoft.AspNetCore.Http;
 
 namespace HospitalLibrary.Core.Service.Interfaces
 {
@@ -6,5 +7,6 @@ namespace HospitalLibrary.Core.Service.Interfaces
     {
 
         public string GenerateToken(User user);
+        public User GetCurrentUser(System.Security.Principal.IPrincipal httpContextUser);
     }
 }
