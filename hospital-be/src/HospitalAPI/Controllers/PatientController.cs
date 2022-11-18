@@ -42,7 +42,7 @@ namespace HospitalAPI.Controllers
         {
             User user = _jwtService.GetCurrentUser(HttpContext.User);
             Patient patient = _patientService.GetById(user.PersonId);
-            return Ok(patient);
+            return Ok(_mapper.Map<PatientInfoDto>(patient));
         }
 
         // GET api/Patient/2
