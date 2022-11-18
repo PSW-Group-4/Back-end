@@ -4,7 +4,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Exceptions;
+using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Users.Model;
+using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -16,9 +19,12 @@ namespace HospitalLibrary.Core.Service
     {
         private readonly IConfiguration _config;
 
-        public JwtService(IConfiguration config)
+        private readonly IUserRepository _userRepository;
+
+        public JwtService(IConfiguration config, IUserRepository userRepository)
         {
             _config = config;
+            _userRepository = userRepository;
         }
         public string GenerateToken(User user)
         {
@@ -28,7 +34,8 @@ namespace HospitalLibrary.Core.Service
             var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Username),
-                new Claim(ClaimTypes.Role, user.Role.ToString())
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim("personId", user.PersonId.ToString())
             };
 
             var token = new JwtSecurityToken(_config["Jwt:Issuer"],
@@ -41,21 +48,25 @@ namespace HospitalLibrary.Core.Service
         }
         
         //Otprilike ovako nekako mozes iz tokena da izvuces claims npr username
-        /*private UserLoginDto GetCurrentUser()
+        public User GetCurrentUser(System.Security.Principal.IPrincipal httpContextUser)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var identity = httpContextUser.Identity as ClaimsIdentity;
 
             if (identity != null)
             {
                 var userClaims = identity.Claims;
+                string username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value;
+                User user = _userRepository.GetByUsername(username);
 
-                return new UserLoginDto
+                if (user != null)
                 {
-                    Username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value,
-                    //Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value
-                };
+                    return user;
+                }
+                //Username = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value;
+                //Role = userClaims.FirstOrDefault(o => o.Type == ClaimTypes.Role)?.Value*/
+                throw new InvalidJwtException();
             }
-            return null;
-        }*/
+            throw new InvalidJwtException();
+        }
     }
 }

@@ -14,6 +14,7 @@ using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
+using HospitalLibrary.Core.Service.Interfaces;
 
 namespace HospitalAPI.Controllers
 {
@@ -24,12 +25,15 @@ namespace HospitalAPI.Controllers
         private readonly IFeedbackService _feedbackService;
         private readonly IMapper _mapper;
         private readonly IUserService _userService;
+        private readonly IJwtService _jwtService;
 
-        public FeedbackController(IFeedbackService feedbackService, IMapper mapper, IUserService userService)
+        public FeedbackController(IFeedbackService feedbackService, IMapper mapper,
+            IUserService userService, IJwtService jwtService)
         {
             _feedbackService = feedbackService;
             _userService = userService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         //GET: api/feedback
@@ -96,21 +100,13 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
-        private Guid  GetPersonId()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var userClaims = identity.Claims;
-            var username =  userClaims.FirstOrDefault(o => o.Type == ClaimTypes.NameIdentifier)?.Value;
-            return _userService.GetByUsername(username).PersonId;
-        }
         
         //POST api/feedback
         [HttpPost]
         [Authorize(Roles = "Patient")]
         public ActionResult Create([FromBody]FeedbackRequestDto feedbackDto)
         {
-            Guid patientId = GetPersonId();
-            feedbackDto.PatientId = patientId;
+            feedbackDto.PatientId = _jwtService.GetCurrentUser(HttpContext.User).PersonId;
             //Refctor upper ocode
             var feedback = _mapper.Map<Feedback>(feedbackDto);
             _feedbackService.Create(feedback);
