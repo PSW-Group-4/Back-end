@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using HospitalAPI.Dtos.Feedback;
+using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +28,12 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_roomService.GetAll());
+        }
+
+        [HttpGet("beds")]
+        public ActionResult FindRoomsWithFreeBed()
+        {
+            return Ok(_mapper.Map<IEnumerable<DoctorRoom>>(_roomService.FindRoomsWithFreeBed()));
         }
 
 

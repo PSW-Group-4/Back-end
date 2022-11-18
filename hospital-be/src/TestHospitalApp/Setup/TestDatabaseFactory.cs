@@ -14,6 +14,8 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Admissions.Model;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace TestHospitalApp.Setup
 {
@@ -57,14 +59,17 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Buildings\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Addresses\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Equipments\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomsEquipment\" RESTART IDENTITY CASCADE;");
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"DoctorRooms\" RESTART IDENTITY CASCADE;");?
 
             context.Database.ExecuteSqlRaw("INSERT INTO \"Addresses\" (\"Id\", \"City\", \"Country\", \"Street\", \"StreetNumber\") VALUES ('9b75b261-e305-4f6f-9990-97cb2d06d774', 'Kibonsod', 'Serbia', 'Comanche', '8');");
-            
+
             context.Database.ExecuteSqlRaw("INSERT INTO \"Buildings\" (\"Id\", \"Name\") VALUES ('4c08ff1f-0227-4a3c-93db-dcd865a1069b', 'Zgrada A')");
 
             context.Database.ExecuteSqlRaw("INSERT INTO \"Floors\" (\"Id\", \"Name\", \"Number\", \"BuildingId\") VALUES ('9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'Sprat 1', '5', '4c08ff1f-0227-4a3c-93db-dcd865a1069b')");
 
-            context.Database.ExecuteSqlRaw("INSERT INTO \"Rooms\" (\"Id\", \"Description\",\"Name\", \"Number\", \"Discriminator\", \"FloorId\", \"Workhours\") VALUES ('9ae3255d-261f-472f-a961-7f2e7d05d95c', 'diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien', 'nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus', '2', 'DoctorRoom', '9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum');");
+            //context.Database.ExecuteSqlRaw("INSERT INTO \"Rooms\" (\"Id\", \"Description\",\"Name\", \"Number\", \"Discriminator\", \"FloorId\", \"Workhours\") VALUES ('9ae3255d-261f-472f-a961-7f2e7d05d95c', 'diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien', 'nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus', '2', 'DoctorRoom', '9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum');");
 
             context.Doctors.Add(new Doctor
             {
@@ -80,7 +85,7 @@ namespace TestHospitalApp.Setup
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
                 LicenceNum = "12345",
-                RoomId = new Guid("9ae3255d-261f-472f-a961-7f2e7d05d95c"),
+                RoomId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d199"),
                 AddressId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d774")
             });
 
@@ -109,15 +114,44 @@ namespace TestHospitalApp.Setup
                 Jmbg = "12312313",
                 Email = "mail@gmail.krompir",
                 PhoneNumber = "066413242"
-            }) ;
+            });
             context.Admissions.Add(new Admission
             {
                 Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d174"),
                 PatientId = new Guid("4994cada-9081-41e9-9fac-79c484237b3f"),
                 Reason = "Razlog za otpust",
-                RoomId = new Guid("9ae3255d-261f-472f-a961-7f2e7d05d95c"),
+                RoomId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d199"),
                 arrivalDate = DateTime.Now
-            }) ;
+            });
+
+            context.Equipments.Add(new Equipment
+            {
+                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d174"),
+                Name = "Bed"
+            });
+
+            //context.RoomsEquipment.Add(new RoomsEquipment
+            //{
+            //    EquipmentId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d174"),
+            //    DoctorRoomId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d199"),
+            //    Amount = 0
+            //});
+
+
+            context.Rooms.Add(new DoctorRoom
+            {
+                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d199"),
+                Description = "Soba za lecenje",
+                Name = "Soba",
+                Number = 12,
+                RoomsEquipment = new List<RoomsEquipment> { new RoomsEquipment
+                {
+                    EquipmentId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d174"),
+                    DoctorRoomId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d199"),
+                    Amount = 3
+                }
+            }
+            });
 
             context.SaveChanges();
         }

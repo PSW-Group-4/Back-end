@@ -42,5 +42,10 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
         {
             _doctorRoomRepository.Delete(roomId);
         }
+
+        public IEnumerable<DoctorRoom> FindRoomsWithFreeBed()
+        {
+            return _doctorRoomRepository.FindRoomsWithFreeBed();
+        }
     }
 }

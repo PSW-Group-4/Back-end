@@ -14,5 +14,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Interfaces
         DoctorRoom Create(DoctorRoom room);
         DoctorRoom Update(DoctorRoom room);
         void Delete(Guid roomId);
+
+        IEnumerable<DoctorRoom> FindRoomsWithFreeBed();
     }
 }

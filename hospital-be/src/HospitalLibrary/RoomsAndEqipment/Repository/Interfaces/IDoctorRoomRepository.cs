@@ -10,5 +10,6 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Interfaces
 {
     public interface IDoctorRoomRepository : IRepositoryBase<DoctorRoom>
     {
+        IEnumerable<DoctorRoom> FindRoomsWithFreeBed();
     }
 }

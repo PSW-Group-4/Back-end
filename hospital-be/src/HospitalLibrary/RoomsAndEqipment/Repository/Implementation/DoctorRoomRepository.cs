@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Collections;
 
 namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
 {
@@ -60,6 +61,31 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
 
             _context.SaveChanges();
             return updatingRoom;
+        }
+
+        public IEnumerable<DoctorRoom> FindRoomsWithFreeBed()
+        {
+            IEnumerable<DoctorRoom> doctorRooms = GetAll();
+            List<DoctorRoom> res = new List<DoctorRoom>();
+            foreach(DoctorRoom room in doctorRooms)
+            {
+                if(room.RoomsEquipment != null)
+                {
+                    foreach (RoomsEquipment re in room.RoomsEquipment)
+                    {
+                        if (re.Amount > 0)
+                        {
+                            res.Add(room);
+                        }
+                    }
+                } else
+                {
+                    return null;
+                }
+                
+            }
+            
+            return (IEnumerable<DoctorRoom>)(IEnumerable)res;
         }
     }
 }
