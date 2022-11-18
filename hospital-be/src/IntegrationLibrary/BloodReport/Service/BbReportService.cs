@@ -53,7 +53,7 @@ namespace IntegrationLibrary.BloodReport.Service
         }
         private List<BloodUsageDto> getUsageSinceLast(BloodUsageReport bloodUsageReport)
         {
-            var lastReport = _repository.GetLastByBbId(bloodUsageReport.Id);
+            var lastReport = _repository.GetLastByBbId(bloodUsageReport.BloodBank.Id);
             DateTime start;
             if (lastReport == null)
             {
