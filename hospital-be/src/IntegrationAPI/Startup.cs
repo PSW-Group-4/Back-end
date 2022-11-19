@@ -1,3 +1,5 @@
+using System;
+using Autofac;
 using IntegrationAPI.Communications;
 using IntegrationAPI.Mappers;
 using IntegrationAPI.Dtos;
@@ -24,6 +26,7 @@ using IntegrationLibrary.BloodReport.Service;
 using IntegrationLibrary.BloodReport.Repository;
 using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationAPI
 {
@@ -45,8 +48,34 @@ namespace IntegrationAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Integration Project", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name="Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Here Enter JWT Token with bearer format like 'Bearer [space] token'"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference
+                             = new OpenApiReference
+                             {
+                                 Type = ReferenceType.SecurityScheme,
+                                 Id = "Bearer"
+                             }
+                        },
+                        new string[] {}
+                    }
+                });
+
             });
+           
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();

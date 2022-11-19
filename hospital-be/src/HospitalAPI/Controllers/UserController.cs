@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using HospitalAPI.Dtos.Auth;
 using HospitalAPI.Dtos.User;
 using HospitalLibrary.Core.Model;
@@ -154,6 +155,12 @@ namespace HospitalAPI.Controllers
                     {
                         return Unauthorized("Only managers and doctors can login from public app");
                     }
+                }
+
+                [AllowAnonymous]
+                public ActionResult AuthorizeIntegrationApi()
+                {
+                    throw new NotImplementedException();
                 }
     }
 }
