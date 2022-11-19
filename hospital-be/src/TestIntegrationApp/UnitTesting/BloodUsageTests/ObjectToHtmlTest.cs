@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.BloodUsages.Model;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -58,21 +59,19 @@ namespace TestIntegrationApp.UnitTesting.BloodUsageTests
             bloodBank.ApiKey = "takll0fr5iKieWBYIwwIYcD_xeAKF_D9yguE5PyPPLI8";
             return bloodBank;
         }
-        private List<BloodUsage> generateTestBloodUsage()
+        private List<BloodUsageDto> generateTestBloodUsage()
         {
-            BloodUsage usageApos = new BloodUsage();
-            usageApos.Id = Guid.NewGuid();
+            BloodUsageDto usageApos = new BloodUsageDto();
             usageApos.Type = BloodType.A;
             usageApos.RHFactor = RHFactor.POSITIVE;
             usageApos.Milliliters = 650;
 
-            BloodUsage usage0neg = new BloodUsage();
-            usage0neg.Id = Guid.NewGuid();
+            BloodUsageDto usage0neg = new BloodUsageDto();
             usage0neg.Type = BloodType.O;
             usage0neg.RHFactor = RHFactor.NEGATIVE;
             usage0neg.Milliliters = 350;
 
-            List<BloodUsage> retVal = new List<BloodUsage>();
+            List<BloodUsageDto> retVal = new List<BloodUsageDto>();
             retVal.Add(usageApos);
             retVal.Add(usage0neg);
             return retVal;
