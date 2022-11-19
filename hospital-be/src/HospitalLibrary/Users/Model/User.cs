@@ -26,6 +26,9 @@ namespace HospitalLibrary.Users.Model
         public UserRole Role { get; set; }
         public Guid PersonId { get; set; }
 
+        //DODAO
+        public Guid VerificationToken { get; set; }
+
         internal void Update(User user)
         {
             Username = user.Username;

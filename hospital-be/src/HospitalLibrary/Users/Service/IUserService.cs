@@ -15,6 +15,7 @@ namespace HospitalLibrary.Users.Service
         User Update(User user);
         void Delete(string username);
         public User RegisterPatient(User user, Guid patientId);
+        public void SendVerificationLinkEmail(User user);
 
         public string AuthenticatePublic(string username, string password);
         string AuthenticatePrivate(string userLoginUsername, string userLoginPassword);
