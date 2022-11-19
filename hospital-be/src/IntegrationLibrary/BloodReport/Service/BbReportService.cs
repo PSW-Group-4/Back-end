@@ -46,6 +46,10 @@ namespace IntegrationLibrary.BloodReport.Service
             saveAsPdf(bloodUsageReport);
             return _repository.Create(bloodUsageReport);
         }
+        public List<BloodUsageReport> CreateMultiple(List<string> bloodBankIds)
+        {
+            throw new NotImplementedException();
+        }
         private String saveAsPdf(BloodUsageReport bloodUsageReport)
         {
             string html = bloodUsageReport.GenerateHtml();
