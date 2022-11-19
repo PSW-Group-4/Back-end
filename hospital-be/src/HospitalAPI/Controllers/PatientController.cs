@@ -9,6 +9,8 @@ using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Linq;
+using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Users.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -18,19 +20,30 @@ namespace HospitalAPI.Controllers
     {
         private readonly IPatientService _patientService;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public PatientController(IPatientService patientService, IMapper mapper)
+        public PatientController(IPatientService patientService, IMapper mapper, IJwtService jwtService)
         {
             _patientService = patientService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         // GET: api/Patient
         [HttpGet]
-        [Authorize(Roles = "Patient")]
         public ActionResult GetAll()
         {
             return Ok(_patientService.GetAll());
+        }
+
+        // GET: api/Patient/info
+        [HttpGet("info")]
+        [Authorize(Roles = "Patient")]
+        public ActionResult GetInfoForLoggedinPatient()
+        {
+            User user = _jwtService.GetCurrentUser(HttpContext.User);
+            Patient patient = _patientService.GetById(user.PersonId);
+            return Ok(_mapper.Map<PatientInfoDto>(patient));
         }
 
         // GET api/Patient/2

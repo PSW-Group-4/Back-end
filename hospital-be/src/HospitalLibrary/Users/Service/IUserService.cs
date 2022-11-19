@@ -17,6 +17,7 @@ namespace HospitalLibrary.Users.Service
         public User RegisterPatient(User user, Guid patientId);
         public void SendVerificationLinkEmail(User user);
 
-        public string AuthenticatePatient(string username, string password);
+        public string AuthenticatePublic(string username, string password);
+        string AuthenticatePrivate(string userLoginUsername, string userLoginPassword);
     }
 }

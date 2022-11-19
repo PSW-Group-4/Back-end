@@ -97,7 +97,8 @@ namespace HospitalLibrary.Users.Service
             EmailSending.sendEmail(emailMessage);
         }
 
-        public string AuthenticatePatient(string username, string password)
+        public string AuthenticatePublic(string username, string password)
+
         {
             User user = _userRepository.GetByUsername(username);
             if (user == null)
@@ -118,6 +119,26 @@ namespace HospitalLibrary.Users.Service
             return _jwtService.GenerateToken(user);
         }
 
+        public string AuthenticatePrivate(string username, string password)
+        {
+            User user = _userRepository.GetByUsername(username);
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
+            
+            if(user.Password != password)
+            {
+                throw new BadPasswordException();
+            }
+
+            if (user.Role == UserRole.Patient)
+            {
+                throw new UnauthorizedException();
+            }
+            
+            return _jwtService.GenerateToken(user);
+        }
         public User Update(User user)
         {
             return _userRepository.Update(user);

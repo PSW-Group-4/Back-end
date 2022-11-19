@@ -68,11 +68,11 @@ namespace HospitalAPI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
-        public ActionResult LoginPatient([FromBody] UserLoginDto userLogin)
+        public ActionResult LoginPublic([FromBody] UserLoginDto userLogin)
         {
             try
             {
-                var token = _userService.AuthenticatePatient(userLogin.Username, userLogin.Password);
+                var token = _userService.AuthenticatePublic(userLogin.Username, userLogin.Password);
                 return Ok(new JwtDto(token));
             }
             catch (NotFoundException)
@@ -88,7 +88,7 @@ namespace HospitalAPI.Controllers
                 return Unauthorized("Only patients can login from public app");
             }
         }
-
+        
         //TODO slucaj kada vise puta osvezim stranicu
         [HttpPost]
         [Route("[action]")]
@@ -123,5 +123,29 @@ namespace HospitalAPI.Controllers
 
             return Unauthorized("Tokens do not match");
         }
+
+                [AllowAnonymous]
+                [HttpPost]
+                [Route("[action]")]
+                public ActionResult LoginPrivate([FromBody] UserLoginDto userLogin)
+                {
+                    try
+                    {
+                        var token = _userService.AuthenticatePrivate(userLogin.Username, userLogin.Password);
+                        return Ok(new JwtDto(token));
+                    }
+                    catch (NotFoundException)
+                    {
+                        return NotFound("User not found");
+                    }
+                    catch (BadPasswordException)
+                    {
+                        return Unauthorized("Bad password");
+                    }
+                    catch (UnauthorizedException)
+                    {
+                        return Unauthorized("Only managers and doctors can login from public app");
+                    }
+                }
     }
 }
