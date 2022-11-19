@@ -36,6 +36,19 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using HospitalLibrary.Users.Service;
+using HospitalLibrary.Users.Repository;
+using HospitalLibrary.Allergies.Repository;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.BloodConsumptionRecords.Repository;
+using HospitalLibrary.BloodConsumptionRecords.Service;
+using HospitalLibrary.BloodSupplies.Repository;
+using HospitalLibrary.BloodSupplies.Service;
+using HospitalLibrary.Admissions.Repository;
+using HospitalLibrary.Admissions.Service;
+using System;
+using HospitalLibrary.Allergies.Service;
 
 namespace HospitalAPI
 {
@@ -57,7 +70,32 @@ namespace HospitalAPI
             services.AddControllers().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphicalEditor", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name="Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Here Enter JWT Token with bearer format like 'Bearer [space] token'"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference
+                             = new OpenApiReference
+                             {
+                                 Type = ReferenceType.SecurityScheme,
+                                 Id = "Bearer"
+                             }
+                        },
+                        new string[] {}
+                    }
+                });
+
             });
             services.AddAutoMapper(typeof(MappingProfile));
 
@@ -80,6 +118,8 @@ namespace HospitalAPI
             services.AddControllers();
 
 
+
+
             //AgeGroups
             services.AddScoped<IAgeGroupRepository, AgeGroupRepository>();
             services.AddScoped<IAgeGroupService, AgeGroupService>();
@@ -99,6 +139,7 @@ namespace HospitalAPI
 
             //Allergie
             services.AddScoped<IAllergieRepository, AllergieRepository>();
+            services.AddScoped<IAllergieService, AllergieService>();
 
             //TODO Feedback
             services.AddScoped<IFeedbackRepository, FeedbackRepository>();
@@ -112,6 +153,15 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
             services.AddScoped<IDoctorAppointmentService, DoctorAppointmentService>();
+
+            //BloodConsumptionRecord
+            services.AddScoped<IBloodConsumptionRecordRepository, BloodConsumptionRecordRepository>();
+            services.AddScoped<IBloodConsumptionRecordService, BloodConsumptionRecordService>();
+
+            //BloodSupply
+            services.AddScoped<IBloodSupplyRepository, BloodSupplyRepository>();
+            services.AddScoped<IBloodSupplyService, BloodSupplyService>();
+
             //Room
             services.AddScoped<IRoomRepository, RoomRepository>();
             services.AddScoped<IRoomService, RoomService>();
@@ -133,6 +183,9 @@ namespace HospitalAPI
             //Doctor Vacations
             services.AddScoped<IVacationRepository, VacationRepository>();
             services.AddScoped<IVacationService, VacationService>();
+
+            services.AddScoped<IAdmissionRepository, AdmissionRepository>();
+            services.AddScoped<IAdmissionService, AdmissionService>();
 
         }
 

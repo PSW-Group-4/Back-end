@@ -9,11 +9,14 @@ using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Users.Model;
+using HospitalLibrary.Allergies.Model;
+using Microsoft.Extensions.Hosting;
+using HospitalLibrary.BloodConsumptionRecords.Model;
+using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.Vacations.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using HospitalLibrary.Admissions.Model;
-
 
 namespace HospitalLibrary.Settings
 {
@@ -43,6 +46,8 @@ namespace HospitalLibrary.Settings
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
+        public DbSet<BloodConsumptionRecord> BloodConsumptionRecords { get; set; }
+
         public DbSet<BuildingMap> BuildingMaps { get; set; }
 
         public DbSet<FloorMap> FloorMaps { get; set; }
@@ -54,6 +59,8 @@ namespace HospitalLibrary.Settings
 
         // Doctor vacations
         public DbSet<Vacation> Vacations { get; set; }
+
+        public DbSet<BloodSupply> BloodSupply { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }

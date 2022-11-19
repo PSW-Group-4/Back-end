@@ -107,6 +107,51 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Appointments");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.BloodConsumptionRecords.Model.BloodConsumptionRecord", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("BloodType")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("BloodConsumptionRecords");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.BloodSupplies.Model.BloodSupply", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Amount")
+                        .HasColumnType("double precision");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodSupply");
+                });
+
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Building", b =>
                 {
                     b.Property<Guid>("Id")
@@ -599,6 +644,17 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Patient");
 
                     b.Navigation("Room");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.BloodConsumptionRecords.Model.BloodConsumptionRecord", b =>
+                {
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Floor", b =>

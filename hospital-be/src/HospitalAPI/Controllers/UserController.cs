@@ -11,8 +11,6 @@ using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Service.Interfaces;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HospitalAPI.Controllers
 {
@@ -62,11 +60,11 @@ namespace HospitalAPI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
-        public ActionResult LoginPatient([FromBody] UserLoginDto userLogin)
+        public ActionResult LoginPublic([FromBody] UserLoginDto userLogin)
         {
             try
             {
-                var token = _userService.AuthenticatePatient(userLogin.Username, userLogin.Password);
+                var token = _userService.AuthenticatePublic(userLogin.Username, userLogin.Password);
                 return Ok(new JwtDto(token));
             }
             catch (NotFoundException)
@@ -82,5 +80,30 @@ namespace HospitalAPI.Controllers
                 return Unauthorized("Only patients can login from public app");
             }
         }
+        
+                [AllowAnonymous]
+                [HttpPost]
+                [Route("[action]")]
+                public ActionResult LoginPrivate([FromBody] UserLoginDto userLogin)
+                {
+                    try
+                    {
+                        var token = _userService.AuthenticatePrivate(userLogin.Username, userLogin.Password);
+                        return Ok(new JwtDto(token));
+                    }
+                    catch (NotFoundException)
+                    {
+                        return NotFound("User not found");
+                    }
+                    catch (BadPasswordException)
+                    {
+                        return Unauthorized("Bad password");
+                    }
+                    catch (UnauthorizedException)
+                    {
+                        return Unauthorized("Only managers and doctors can login from public app");
+                    }
+                }
+
     }
 }

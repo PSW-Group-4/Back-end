@@ -27,6 +27,21 @@ namespace IntegrationLibrary.BloodBankNews.Service
             return _repository.GetAllByBloodBank(bloodBank);
         }
 
+        public IEnumerable<News> GetArchived()
+        {
+            return _repository.GetArchived();
+        }
+
+        public IEnumerable<News> GetPending()
+        {
+            return _repository.GetPending();
+        }
+
+        public IEnumerable<News> GetPublished()
+        {
+            return _repository.GetPublished();
+        }
+
         public void Save(IEnumerable<News> news)
         {
             _repository.Save(news);
@@ -36,6 +51,13 @@ namespace IntegrationLibrary.BloodBankNews.Service
         {
             _repository.Save(news);
         }
-        
+
+        public News Update(News news)
+        {
+            return _repository.Update(news);
+        }
+        public News GetById(Guid id) {
+            return _repository.GetById(id);
+        }
     }
 }

@@ -1,22 +1,28 @@
 using AutoMapper;
 using HospitalAPI.Dtos.Address;
+using HospitalAPI.Dtos.Allergies;
+using HospitalAPI.Dtos.Appointment;
+using HospitalAPI.Dtos.BloodConsumptionRecord;
+using HospitalAPI.Dtos.BloodSupply;
+using HospitalAPI.Dtos.Doctor;
 using HospitalAPI.Dtos.Feedback;
+using HospitalAPI.Dtos.MapItem;
 using HospitalAPI.Dtos.Patient;
 using HospitalAPI.Dtos.Person;
+using HospitalAPI.Dtos.Rooms;
+using HospitalAPI.Dtos.User;
+using HospitalAPI.Dtos.Vacation;
+using HospitalLibrary.Allergies.Model;
+using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.BloodConsumptionRecords.Model;
+using HospitalLibrary.BloodSupplies.Model;
+using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
-using HospitalAPI.Dtos.Appointment;
-using HospitalAPI.Dtos.Doctor;
-using HospitalAPI.Dtos.MapItem;
-using HospitalAPI.Dtos.Rooms;
-using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Appointments.Model;
-using HospitalAPI.Dtos.User;
 using HospitalLibrary.Users.Model;
-using HospitalAPI.Dtos.Vacation;
 using HospitalLibrary.Vacations.Model;
 
 namespace HospitalAPI.Mapper
@@ -26,9 +32,10 @@ namespace HospitalAPI.Mapper
         public MappingProfile()
         {
             CreateMap<AddressRequestDto, Address>();
+            CreateMap<Address, AddressRequestDto>();
 
             CreateMap<PersonRequestDto, Person>();
-            CreateMap< Person , PersonRequestDto>();
+            CreateMap<Person, PersonRequestDto>();
 
             CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
@@ -56,24 +63,34 @@ namespace HospitalAPI.Mapper
             CreateMap<DoctorRequestDto, Doctor>()
                 .IncludeBase<PersonRequestDto, Person>();
 
-            CreateMap<Doctor , DoctorRequestDto> ()
-                .IncludeBase<Person , PersonRequestDto>();
+            CreateMap<Doctor, DoctorRequestDto>().IncludeBase<Person, PersonRequestDto>();
 
             CreateMap<RoomRequestDto, Room>();
             CreateMap<AppointmentRequestDto, Appointment>();
             CreateMap<VacationRequestDto, Vacation>();
 
+            CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
+            CreateMap<BloodSupplyDto, BloodSupply>();
+
             CreateMap<PatientRegistrationDto, Patient>();
             CreateMap<UserLoginDto, User>();
+
+            CreateMap<Patient, PatientInfoDto>().IncludeBase<Person, PersonRequestDto>();
+            CreateMap<PatientInfoDto, Patient>().IncludeBase<PersonRequestDto, Person>();
+
+            CreateMap<AllergieInfoDto, Allergie>();
+            CreateMap<Allergie, AllergieInfoDto>();
+
+
         }
 
         private static string ResolveFeedbackPatientFullName(Feedback src)
         {
-                    if (src.IsAnonimous)
-                    {
-                        return "Anonymous";
-                    }
-                    return src.Patient.Name + " " + src.Patient.Surname;
-        }
+            if (src.IsAnonimous)
+            {
+                return "Anonymous";
+            }
+            return src.Patient.Name + " " + src.Patient.Surname;
         }
     }
+}

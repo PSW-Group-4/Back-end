@@ -31,6 +31,12 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("text");
 
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp without time zone");
 
@@ -75,7 +81,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
+                        
                     b.Property<double>("Milliliters")
                         .HasColumnType("double precision");
 
@@ -84,7 +90,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("timestamp without time zone");
-
+                        
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
