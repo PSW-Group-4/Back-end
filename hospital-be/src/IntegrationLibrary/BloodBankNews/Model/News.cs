@@ -16,15 +16,17 @@ namespace IntegrationLibrary.BloodBankNews.Model
         public String Title { get; set; }
         public String Body { get; set; }
         public DateTime Timestamp { get; set; }
-
+        public Boolean IsArchived { get; set; }
+        public Boolean IsPublished { get; set; }
         public News() { }
-        public News(Guid id, BloodBank bloodBank, string title, string body, DateTime timestamp)
+        public News(Guid id, BloodBank bloodBank, string title, string body, DateTime timestamp, Boolean isArchived)
         {
             Id = id;
             BloodBank = bloodBank;
             Title = title;
             Body = body;
             Timestamp = timestamp;
+            IsArchived = isArchived;
         }
 
     }
