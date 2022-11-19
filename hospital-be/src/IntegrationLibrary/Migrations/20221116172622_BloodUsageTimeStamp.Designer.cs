@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221116172622_BloodUsageTimeStamp")]
+    partial class BloodUsageTimeStamp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,12 +32,6 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<string>("Body")
                         .HasColumnType("text");
-
-                    b.Property<bool>("IsArchived")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsPublished")
-                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp without time zone");
@@ -81,7 +77,10 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-                        
+
+                    b.Property<Guid?>("BloodUsageReportId")
+                        .HasColumnType("uuid");
+
                     b.Property<double>("Milliliters")
                         .HasColumnType("double precision");
 
@@ -90,11 +89,13 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("timestamp without time zone");
-                        
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BloodUsageReportId");
 
                     b.ToTable("blood_usage");
                 });
@@ -186,6 +187,13 @@ namespace IntegrationLibrary.Migrations
                     b.Navigation("BloodBank");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsage", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", null)
+                        .WithMany("BloodUsage")
+                        .HasForeignKey("BloodUsageReportId");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
                 {
                     b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
@@ -208,6 +216,11 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("BloodBankId");
 
                     b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
+                {
+                    b.Navigation("BloodUsage");
                 });
 #pragma warning restore 612, 618
         }

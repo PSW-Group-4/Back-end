@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationLibrary.BloodUsages.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace IntegrationLibrary.BloodBanks.Model
         public Guid Id { get; set; }
         public virtual BloodBank BloodBank { get; set; }
         public virtual ReportConfiguration ReportConfiguration { get; set; }
-        public virtual List<BloodUsage> BloodUsage { get; set; }
+        [NotMapped]
+        public List<BloodUsageDto> BloodUsage { get; set; }
         public DateTime timeOfCreation { get; set; }
 
         public String GenerateHtml()
@@ -31,7 +33,7 @@ namespace IntegrationLibrary.BloodBanks.Model
                 Environment.NewLine + "\t</tr>";
             html = String.Format(html,this.BloodBank.Name,this.timeOfCreation.ToString(),this.ReportConfiguration.RequestFrequency.ToString());
 
-            foreach (BloodUsage bloodUsage in BloodUsage)
+            foreach (BloodUsageDto bloodUsage in BloodUsage)
             {
                 html += Environment.NewLine + "\t<tr>" +
                         Environment.NewLine + "\t\t<td>" + bloodUsage.Type.ToString() + "</td>" +
