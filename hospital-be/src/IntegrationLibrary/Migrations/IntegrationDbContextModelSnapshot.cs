@@ -81,7 +81,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-                        
+
                     b.Property<double>("Milliliters")
                         .HasColumnType("double precision");
 
@@ -90,7 +90,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("timestamp without time zone");
-                        
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 

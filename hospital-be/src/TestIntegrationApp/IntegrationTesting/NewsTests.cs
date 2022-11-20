@@ -54,7 +54,9 @@ namespace TestIntegrationApp.IntegrationTesting
                 Title = "It's me, hi",
                 Body = "I'm the news, it's me",
                 Timestamp = DateTime.Now,
-                BloodBank = null
+                BloodBank = null,
+                IsArchived = false,
+                IsPublished = false
             };
             using var scope = Factory.Services.CreateScope();
             var service = SetupService(scope);
