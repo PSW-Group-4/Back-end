@@ -44,6 +44,8 @@ using HospitalLibrary.Admissions.Repository;
 using HospitalLibrary.Admissions.Service;
 using System;
 using HospitalLibrary.Allergies.Service;
+using HospitalLibrary.AcountActivation.Repository;
+using HospitalLibrary.AcountActivation.Service;
 
 namespace HospitalAPI
 {
@@ -131,6 +133,10 @@ namespace HospitalAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtService, JwtService>();
+
+            //Acount Activation
+            services.AddScoped<IAcountActivationRepository, AcountActivationRepository>();
+            services.AddScoped<IAcountActivationService, AcountActivationService>();
 
             //Allergie
             services.AddScoped<IAllergieRepository, AllergieRepository>();

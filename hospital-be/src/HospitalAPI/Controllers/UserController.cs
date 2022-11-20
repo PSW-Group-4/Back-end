@@ -17,6 +17,8 @@ using System.Security.Claims;
 using System.Net.Mail;
 using System.Net;
 using System.Linq;
+using HospitalLibrary.AcountActivation.Service;
+using HospitalLibrary.AcountActivation.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -26,13 +28,15 @@ namespace HospitalAPI.Controllers
     {
         private readonly IUserService _userService;
         private readonly IPatientService _patientService;
+        private readonly IAcountActivationService _acountActivationService;
         private readonly IMapper _mapper;
 
         public UserController(IUserService userService, IAddressService addressService,
-            IPatientService patientService, IMapper mapper, IJwtService jwtService)
+            IPatientService patientService, IAcountActivationService acountActivationService, IMapper mapper, IJwtService jwtService)
         {
             _userService = userService;
             _patientService = patientService;
+            _acountActivationService = acountActivationService;
             _mapper = mapper;
         }
 
@@ -52,9 +56,9 @@ namespace HospitalAPI.Controllers
                 _patientService.RegisterPatient(patient, registrationDto.ChoosenDoctorId,
                     registrationDto.AllergieIds);
 
-                user = _userService.RegisterPatient(user, patient.Id);
+                AcountActivationInfo info = _userService.RegisterPatient(user, patient.Id);
                 //slanje maila (pozivanje servia koji salje mail)
-                _userService.SendVerificationLinkEmail(user);
+                _acountActivationService.SendVerificationLinkEmail(info);
 
                 return Ok();
             }
@@ -89,7 +93,7 @@ namespace HospitalAPI.Controllers
             }
         }
         
-        //TODO slucaj kada vise puta osvezim stranicu
+        //TODO slucaj kada vise puta osvezim stranicu, refaktorisi
         [HttpPost]
         [Route("[action]")]
         public ActionResult ActivateAccount([FromBody] AccountActivationDto activationInformation)
@@ -103,21 +107,25 @@ namespace HospitalAPI.Controllers
             
             if (patient == null)
             {
-                return NotFound("User not found");
+                return NotFound("Patient not found");
             }
 
-            var user = _userService.GetAll().FirstOrDefault(r => r.PersonId == patient.Id);
+            var acountActivationInfo = _acountActivationService.GetAll().FirstOrDefault(r => r.PersonId == patient.Id);
 
-            if (user.VerificationToken == System.Guid.Empty)
+            if (acountActivationInfo.ActivationToken == System.Guid.Empty)
             {
                 return BadRequest("Your account has already been activated");
             }
 
-            if (activationInformation.Token == user.VerificationToken)
+            if (activationInformation.Token == acountActivationInfo.ActivationToken)
             {
+                var user = _userService.GetAll().FirstOrDefault(r => r.PersonId == patient.Id);
                 user.IsAccountActive = true;
-                user.VerificationToken = System.Guid.Empty;
                 _userService.Update(user);
+
+                acountActivationInfo.ActivationToken = System.Guid.Empty;
+                _acountActivationService.Update(acountActivationInfo);
+
                 return Ok();
             }
 
