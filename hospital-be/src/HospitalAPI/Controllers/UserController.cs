@@ -31,6 +31,7 @@ namespace HospitalAPI.Controllers
         private readonly IPatientService _patientService;
         private readonly IAcountActivationService _acountActivationService;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
         public UserController(IUserService userService, IAddressService addressService,
             IPatientService patientService, IAcountActivationService acountActivationService, IMapper mapper, IJwtService jwtService)
@@ -39,6 +40,7 @@ namespace HospitalAPI.Controllers
             _patientService = patientService;
             _acountActivationService = acountActivationService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         //POST api/user/registerPatient
@@ -158,9 +160,15 @@ namespace HospitalAPI.Controllers
                 }
 
                 [AllowAnonymous]
-                public ActionResult AuthorizeIntegrationApi()
+                [HttpPost]
+                [Route("[action]")]
+                public ActionResult AuthorizeIntegrationApi([FromBody] IntegrationAuthorizationDto dto)
                 {
-                    throw new NotImplementedException();
+                    if(_jwtService.HasMatchingRoles(dto.ExpectedRoles, HttpContext.User))
+                    {
+                        return Ok();
+                    }
+                    return Unauthorized();
                 }
     }
 }

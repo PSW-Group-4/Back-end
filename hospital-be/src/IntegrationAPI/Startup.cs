@@ -1,5 +1,5 @@
 using System;
-using Autofac;
+using IntegrationAPI.Authorization;
 using IntegrationAPI.Communications;
 using IntegrationAPI.Mappers;
 using IntegrationAPI.Dtos;
@@ -75,8 +75,9 @@ namespace IntegrationAPI
                 });
 
             });
-           
 
+
+            services.AddScoped<ExternalAuthorizationFilter>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
             services.AddScoped<IConverter<News, NewsDto>, NewsConverter>();

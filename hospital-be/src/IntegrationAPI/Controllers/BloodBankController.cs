@@ -3,9 +3,9 @@ using IntegrationLibrary.BloodBanks.Service;
 using AutoMapper;
 using System.Collections.Generic;
 using IntegrationLibrary.BloodBanks.Model;
-using Microsoft.AspNetCore.Http;
 using IntegrationAPI.Communications;
 using System;
+using IntegrationAPI.Authorization;
 using IntegrationAPI.Dtos.BloodBank;
 
 namespace IntegrationAPI.Controllers
@@ -26,6 +26,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult GetAll()
         {
             IEnumerable<BloodBank> bloodBanks = _service.GetAll();
