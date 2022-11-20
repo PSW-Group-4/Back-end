@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.BloodReport.Service;
+﻿using IntegrationAPI.Communications;
+using IntegrationLibrary.BloodReport.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationAPI.Controllers
@@ -18,7 +19,12 @@ namespace IntegrationAPI.Controllers
         public ActionResult Create(string bloodBankId)
         {
             var retVal =  _service.Create(bloodBankId);
+            sendPdf(retVal.ReportPath);
             return Ok(retVal);
+        }
+        private string sendPdf(string path)
+        {
+            return PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, path);
         }
     }
 }

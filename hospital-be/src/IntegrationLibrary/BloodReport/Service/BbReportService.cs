@@ -1,6 +1,7 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodBanks.Service;
+using IntegrationLibrary.BloodReport.Model;
 using IntegrationLibrary.BloodUsages.Model;
 using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
@@ -26,7 +27,7 @@ namespace IntegrationLibrary.BloodReport.Service
             _bankService = bankService;
             _configService = configService;
         }
-        public BloodUsageReport Create(string bloodBankId)
+        public ReportPathTransporter Create(string bloodBankId)
         {
             BloodUsageReport bloodUsageReport = new BloodUsageReport();
             bloodUsageReport.BloodBank = _bankService.GetById(new Guid(bloodBankId));
@@ -43,12 +44,22 @@ namespace IntegrationLibrary.BloodReport.Service
             bloodUsageReport.timeOfCreation = DateTime.Now;
             bloodUsageReport.BloodUsage = getUsageSinceLast(bloodUsageReport);
 
-            saveAsPdf(bloodUsageReport);
-            return _repository.Create(bloodUsageReport);
+            var path = saveAsPdf(bloodUsageReport);
+            var createdReport = _repository.Create(bloodUsageReport);
+            var dto = new ReportPathTransporter();
+            dto.ReportPath = path;
+            dto.Report = createdReport;
+            return dto;
         }
-        public List<BloodUsageReport> CreateMultiple(List<string> bloodBankIds)
+        public List<ReportPathTransporter> CreateMultiple(List<string> bloodBankIds)
         {
-            throw new NotImplementedException();
+            List<ReportPathTransporter> retVal = new List<ReportPathTransporter>();
+            foreach (string bloodBankId in bloodBankIds)
+            {
+                retVal.Add(this.Create(bloodBankId));
+            }
+            return retVal;
+
         }
         private String saveAsPdf(BloodUsageReport bloodUsageReport)
         {
