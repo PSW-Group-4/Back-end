@@ -12,12 +12,21 @@ namespace IntegrationLibrary.Migrations
                 type: "boolean",
                 nullable: false,
                 defaultValue: false);
+            migrationBuilder.AddColumn<bool>(
+                name: "IsArchived",
+                table: "blood_bank_news",
+                type: "boolean",
+                nullable: false,
+                defaultValue: false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
                 name: "IsPublished",
+                table: "blood_bank_news");
+            migrationBuilder.DropColumn(
+                name: "IsArchived",
                 table: "blood_bank_news");
         }
     }

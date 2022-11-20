@@ -2,18 +2,17 @@
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 using System;
-using Microsoft.AspNetCore.TestHost;
 using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Admissions.Model;
+using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace TestHospitalApp.Setup
 {

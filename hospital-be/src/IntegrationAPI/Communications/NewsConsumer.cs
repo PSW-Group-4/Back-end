@@ -49,7 +49,7 @@ namespace IntegrationAPI.Communications
 
                         try
                         {
-                            while (true)
+                            while (false)
                             {
                                 var consumer = consumerBuilder.Consume(cancelToken.Token);
                                 NewsDto newsDto = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value);
