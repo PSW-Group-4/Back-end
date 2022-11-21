@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -47,7 +49,6 @@ namespace HospitalLibrary.Core.Service
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
         
-        //Otprilike ovako nekako mozes iz tokena da izvuces claims npr username
         public User GetCurrentUser(System.Security.Principal.IPrincipal httpContextUser)
         {
             var identity = httpContextUser.Identity as ClaimsIdentity;
@@ -67,6 +68,25 @@ namespace HospitalLibrary.Core.Service
                 throw new InvalidJwtException();
             }
             throw new InvalidJwtException();
+        }
+
+        public bool HasMatchingRoles(string expectedRoles, System.Security.Principal.IPrincipal httpContextUser)
+        {
+            if (httpContextUser.Identity is not ClaimsIdentity identity) return false;
+            
+            var userClaims = identity.Claims;
+            var roles = userClaims.Where(o => o.Type == ClaimTypes.Role).Select(r => r.Value).ToList();
+                
+            var expectedRolesSeparate = expectedRoles.Split(",").ToList();
+                
+            return AreIdenticalLists(roles, expectedRolesSeparate);
+        }
+
+        private static bool AreIdenticalLists(List<string> list1, List<string> list2)
+        {
+            var firstNotSecond = list1.Except(list2).ToList();
+            var secondNotFirst = list2.Except(list1).ToList();
+            return !firstNotSecond.Any() && !secondNotFirst.Any();
         }
     }
 }
