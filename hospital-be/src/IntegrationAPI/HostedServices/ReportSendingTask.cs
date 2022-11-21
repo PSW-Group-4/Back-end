@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.BloodReport.Service;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,9 +9,9 @@ namespace IntegrationAPI.HostedServices
     public class ReportSendingTask : BaseTaskScheduler
     {
         private readonly IBbReportService _reportService;
-        public ReportSendingTask(IBbReportService reportService,ITaskSettings<ReportSendingTask> config) : base(config.CronExpression, config.TimeZoneInfo)
+        public ReportSendingTask(IServiceScopeFactory factory, ITaskSettings<ReportSendingTask> config) : base(config.CronExpression, config.TimeZoneInfo)
         {
-            _reportService = reportService;
+            _reportService = factory.CreateScope().ServiceProvider.GetService<IBbReportService>();
         }
         public override Task StartAsync(CancellationToken cancellationToken)
         {
