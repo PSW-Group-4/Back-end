@@ -14,6 +14,7 @@ using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Admissions.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using HospitalLibrary.Vacations.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -119,6 +120,18 @@ namespace TestHospitalApp.Setup
                 arrivalDate = DateTime.Now
             };
             context.Admissions.Add(admission);
+
+            Vacation vacation = new Vacation
+            {
+                DoctorId = doctor.Id,
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now.AddDays(30),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = false,
+                VacationStatus = VacationStatus.Waiting_For_Approval,
+                DeniedRequestReason = ""
+            };
+            context.Vacations.Add(vacation);
 
             context.SaveChanges();
 

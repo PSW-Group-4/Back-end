@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Vacations.Model;
+﻿using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,10 +12,12 @@ namespace HospitalLibrary.Vacations.Service
     public class VacationService : IVacationService
     {
         private readonly IVacationRepository _vacationRepository;
+        private readonly IDoctorAppointmentService _doctorAppointmentService;
 
-        public VacationService(IVacationRepository vacationRepository)
+        public VacationService(IVacationRepository vacationRepository, IDoctorAppointmentService doctorAppointmentService)
         {
             _vacationRepository = vacationRepository;
+            _doctorAppointmentService = doctorAppointmentService;
         }
 
         public IEnumerable<Vacation> GetAll()
@@ -40,5 +43,17 @@ namespace HospitalLibrary.Vacations.Service
         {
             return _vacationRepository.Update(vacation);
         }
+
+
+        public bool CheckDoctorAvailability(Guid doctorId, DateTime start, DateTime end)
+        {
+            
+            throw new NotImplementedException();
+        }
+
+
+
+
+
     }
 }

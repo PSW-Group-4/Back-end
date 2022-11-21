@@ -84,5 +84,26 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        // GET api/DoctorVacation/CurrentRequests/doctorID
+        [HttpGet("CurrentRequests/{id}")]
+        public ActionResult GetCurrentRequests([FromRoute] Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        // GET api/DoctorVacation/DeniedRequests/doctorID
+        [HttpGet("DeniedRequests/{id}")]
+        public ActionResult GetDeniedRequests([FromRoute] Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        // GET api/DoctorVacation/PastRequests/doctorID
+        [HttpGet("PastRequests/{id}")]
+        public ActionResult GetPastRequests([FromRoute] Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
