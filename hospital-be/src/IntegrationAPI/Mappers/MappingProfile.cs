@@ -14,6 +14,7 @@ namespace IntegrationAPI.Mappers
             CreateMap<BloodBankRegisterDto, BloodBank>();
             CreateMap<BloodBankEditDto, BloodBank>();
             CreateMap<BloodRequestEditDto, BloodRequest>();
+            CreateMap<BloodRequestsCreateDto, BloodRequest>();
         }
     }
 }

@@ -17,12 +17,14 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IBloodRequestService _service;
         private readonly IMapper _mapper;
+
         public BloodRequestController(IBloodRequestService service, IMapper mapper) 
         {
 
              _service = service;
              _mapper = mapper;
         }
+
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -40,5 +42,11 @@ namespace IntegrationAPI.Controllers
             return Ok(_service.Update(bloodRequest));
         }
 
+        [HttpPost]
+        public ActionResult Create([FromBody] BloodRequestsCreateDto bloodRequestDto)
+        {
+            var bloodRequest = _mapper.Map<BloodRequest>(bloodRequestDto);
+            return Ok(_service.Create(bloodRequest));
+        }
     }
 }
