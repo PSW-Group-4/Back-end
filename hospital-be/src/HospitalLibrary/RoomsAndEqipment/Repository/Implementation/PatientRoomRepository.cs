@@ -60,6 +60,50 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
             return updatingRoom;
         }
 
-        
+       public List<Bed> GetBedsFromPatientRoom(PatientRoom patientRoom)
+        {
+            List<Bed> result = new List<Bed>();
+            if(patientRoom.BedIds != null)
+            {
+                foreach (var bId in patientRoom.BedIds)
+                {
+                    foreach (var bed in _context.Beds.ToList())
+                    {
+                        if (bed.Id == bId)
+                        {
+                            result.Add(bed);
+                        }
+                    }
+                }
+                return result;
+            }
+            return null;
+            
+            
+        }
+
+        public List<PatientRoom> GetRoomsWithFreeBeds()
+        {
+            List<PatientRoom> result = new List<PatientRoom>();
+            foreach(var pRoom in _context.PatientRooms.ToList())
+            {
+                if(GetBedsFromPatientRoom(pRoom) != null)
+                {
+                    foreach (var bed in GetBedsFromPatientRoom(pRoom))
+                    {
+                        if (bed.IsFree)
+                        {
+                            if (!result.Contains(pRoom))
+                            {
+                                result.Add(pRoom);
+                            }
+                           
+                        }
+                    }
+                }
+                
+            }
+            return result;
+        }
     }
 }

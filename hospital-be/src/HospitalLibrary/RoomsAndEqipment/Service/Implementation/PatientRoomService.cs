@@ -40,5 +40,12 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
         {
             _patientRoomRepository.Delete(roomId);
         }
+        public List<PatientRoom> GetRoomsWithFreeBeds()
+        {
+            if (_patientRoomRepository.GetRoomsWithFreeBeds() != null)
+                return _patientRoomRepository.GetRoomsWithFreeBeds();
+            else
+                return null;
+        }
     }
 }

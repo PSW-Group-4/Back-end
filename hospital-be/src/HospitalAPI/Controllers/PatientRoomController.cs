@@ -31,6 +31,11 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_patientRoomService.GetAll());
         }
+        [HttpGet("/RoomsWithFreeBeds")]
+        public ActionResult GetRoomsWithFreeBeds()
+        {
+            return Ok(_patientRoomService.GetRoomsWithFreeBeds());
+        }
 
         //POST: api/PatientRoom
         [HttpPost]
