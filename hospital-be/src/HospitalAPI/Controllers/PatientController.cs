@@ -42,8 +42,13 @@ namespace HospitalAPI.Controllers
         public ActionResult GetInfoForLoggedinPatient()
         {
             User user = _jwtService.GetCurrentUser(HttpContext.User);
-            Patient patient = _patientService.GetById(user.PersonId);
-            return Ok(_mapper.Map<PatientInfoDto>(patient));
+            if (user.PersonId != null)
+            {
+                Patient patient = _patientService.GetById((Guid)user.PersonId);
+                return Ok(_mapper.Map<PatientInfoDto>(patient));
+            }
+
+            return BadRequest("This user is not a patient");
         }
 
         // GET api/Patient/2
