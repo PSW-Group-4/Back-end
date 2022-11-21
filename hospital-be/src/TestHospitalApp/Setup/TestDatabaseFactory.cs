@@ -121,8 +121,9 @@ namespace TestHospitalApp.Setup
             };
             context.Admissions.Add(admission);
 
-            Vacation vacation = new Vacation
+            Vacation vacationWFA = new Vacation
             {
+                Id = new Guid("5c036fba-1128-4f4b-b153-90d75e60625e"),
                 DoctorId = doctor.Id,
                 DateStart = DateTime.Now,
                 DateEnd = DateTime.Now.AddDays(30),
@@ -131,7 +132,19 @@ namespace TestHospitalApp.Setup
                 VacationStatus = VacationStatus.Waiting_For_Approval,
                 DeniedRequestReason = ""
             };
-            context.Vacations.Add(vacation);
+            Vacation vacationA = new Vacation
+            {
+                Id = new Guid("5c036fba-1138-4f4b-b153-90d75e60625e"),
+                DoctorId = doctor.Id,
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now.AddDays(30),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = false,
+                VacationStatus = VacationStatus.Approved,
+                DeniedRequestReason = ""
+            };
+            context.Vacations.Add(vacationWFA);
+            context.Vacations.Add(vacationA);
 
             context.SaveChanges();
 

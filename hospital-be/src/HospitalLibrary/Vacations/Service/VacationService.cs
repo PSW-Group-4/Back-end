@@ -36,7 +36,11 @@ namespace HospitalLibrary.Vacations.Service
 
         public void Delete(Guid vacationId)
         {
-            _vacationRepository.Delete(vacationId);
+            var vacation = GetById(vacationId);
+            if (vacation.VacationStatus.Equals(VacationStatus.Waiting_For_Approval))
+            {
+                _vacationRepository.Delete(vacationId);
+            }
         }
 
         public Vacation Update(Vacation vacation)

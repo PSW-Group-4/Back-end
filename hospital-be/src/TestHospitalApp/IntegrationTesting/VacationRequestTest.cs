@@ -40,5 +40,31 @@ namespace TestHospitalApp.IntegrationTesting
             result.First().Reason.ShouldNotMatch("");
         }
 
+        [Fact]
+        public void Delete_vacation()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var vacationController = SetupVacationController(scope);
+
+            var delete = ((NoContentResult)vacationController.Delete(new Guid("5c036fba-1128-4f4b-b153-90d75e60625e")));
+
+            List<Vacation> result = ((OkObjectResult)vacationController.GetAll())?.Value as List<Vacation>;
+
+            result.Count().ShouldBe(1);
+        }
+
+        [Fact]
+        public void Dont_delete_wrong_vacation()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var vacationController = SetupVacationController(scope);
+
+            var delete = ((NoContentResult)vacationController.Delete(new Guid("5c036fba-1138-4f4b-b153-90d75e60625e")));
+
+            List<Vacation> result = ((OkObjectResult)vacationController.GetAll())?.Value as List<Vacation>;
+
+            result.Count().ShouldBe(2);
+        }
+
     }
 }

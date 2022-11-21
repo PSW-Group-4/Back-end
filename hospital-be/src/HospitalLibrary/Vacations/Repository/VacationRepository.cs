@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Settings;
+﻿using HospitalLibrary.Exceptions;
+using HospitalLibrary.Settings;
 using HospitalLibrary.Vacations.Model;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,12 @@ namespace HospitalLibrary.Vacations.Repository
 
         public Vacation GetById(Guid id)
         {
-            throw new NotImplementedException();
+            var result = _context.Vacations.Find(id);
+            if (result == null)
+            {
+                throw new NotFoundException();
+            }
+            return result;
         }
 
         public Vacation Update(Vacation entity)
@@ -33,12 +39,15 @@ namespace HospitalLibrary.Vacations.Repository
         }
         public Vacation Create(Vacation entity)
         {
-            throw new NotImplementedException();
+            _context.Vacations.Add(entity);
+            _context.SaveChanges();
+            return entity;
         }
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _context.Vacations.Remove(GetById(id));
+            _context.SaveChanges();
         }
     }
 }
