@@ -13,6 +13,7 @@ using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Admissions.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 
 namespace TestHospitalApp.Setup
 {

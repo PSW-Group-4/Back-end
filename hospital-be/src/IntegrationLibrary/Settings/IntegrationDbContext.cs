@@ -20,7 +20,6 @@ namespace IntegrationLibrary.Settings
         public DbSet<BloodUsageReport> BloodUsageReports { get; set; }
         public DbSet<News> News { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
-        
         public DbSet<BloodUsage> bloodUsages { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
