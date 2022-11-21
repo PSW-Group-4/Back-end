@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Exceptions;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Vacations.Model;
 using System;
@@ -36,14 +37,13 @@ namespace HospitalLibrary.Vacations.Repository
 
         public Vacation Update(Vacation vacation)
         {
-            var updatingVacation = _context.Vacations.SingleOrDefault(p => p.Id == vacation.Id);
+            var updatingVacation = _context.Vacations.FirstOrDefault(p => p.Id == vacation.Id);
             if (updatingVacation == null)
             {
                 throw new NotFoundException();
             }
 
             updatingVacation.Update(vacation);
-
             _context.SaveChanges();
             return updatingVacation;
         }
@@ -56,7 +56,9 @@ namespace HospitalLibrary.Vacations.Repository
 
         public void Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var vacation = GetById(id);
+            _context.Vacations.Remove(vacation);
+            _context.SaveChanges();
         }
     }
 }
