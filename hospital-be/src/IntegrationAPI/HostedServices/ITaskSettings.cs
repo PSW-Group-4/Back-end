@@ -4,7 +4,7 @@ namespace IntegrationAPI.HostedServices
 {
     public class ITaskSettings <T>
     {
-        string CronExpression { get; set; }
-        TimeZoneInfo TimeZoneInfo { get; set; }
+        public string CronExpression { get; set; }
+        public TimeZoneInfo TimeZoneInfo { get; set; }
     }
 }

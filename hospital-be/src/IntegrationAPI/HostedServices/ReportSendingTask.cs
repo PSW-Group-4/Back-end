@@ -8,11 +8,10 @@ namespace IntegrationAPI.HostedServices
     public class ReportSendingTask : BaseTaskScheduler
     {
         private readonly IBbReportService _reportService;
-        public ReportSendingTask(IBbReportService reportService, string cronExpression, TimeZoneInfo timeZoneInfo) : base(cronExpression, timeZoneInfo)
+        public ReportSendingTask(IBbReportService reportService,ITaskSettings<ReportSendingTask> config) : base(config.CronExpression, config.TimeZoneInfo)
         {
             _reportService = reportService;
         }
-
         public override Task StartAsync(CancellationToken cancellationToken)
         {
             return base.StartAsync(cancellationToken);

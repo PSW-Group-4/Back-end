@@ -98,13 +98,14 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportRepository, BbReportRepository>();
            
 
+
+
             services.AddControllers();
 
-            //services.AddSingleton<IHostedService>(serviceProvider => new ReportSendingTask(serviceProvider.GetService<IBbReportService>(), @"*/20 * * * * *", TimeZoneInfo.Local));
-            //@"0 4 * * *"
-            //services.AddSingleton<IHostedService,ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@"*/20 * * * * *", TimeZoneInfo.Local));
-            //services.AddHostedService<ReportSendingTask>();
-            services.AddSingleton<IHostedService, ReportSendingTask>();
+     
+            services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@"0 4 * * *", TimeZoneInfo.Local));
+            services.AddHostedService<ReportSendingTask>();
+
 
         }
 

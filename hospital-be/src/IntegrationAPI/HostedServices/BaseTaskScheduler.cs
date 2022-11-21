@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace IntegrationAPI.HostedServices
 {
-    public class BaseTaskScheduler : IHostedService, IDisposable
+    public class BaseTaskScheduler : IBaseTaskScheduler
     {
         private System.Timers.Timer _timer;
         private readonly CronExpression _expression;
         private readonly TimeZoneInfo _timeZoneInfo;
-        protected BaseTaskScheduler(string cronExpression, TimeZoneInfo timeZoneInfo)
+        public BaseTaskScheduler(string cronExpression, TimeZoneInfo timeZoneInfo)
         {
             _expression = CronExpression.Parse(cronExpression);
+            _timeZoneInfo = timeZoneInfo;
         }
-        protected virtual async Task ScheduleJob(CancellationToken cancellationToken)
+        public virtual async Task ScheduleJob(CancellationToken cancellationToken)
         {
             var next = _expression.GetNextOccurrence(DateTimeOffset.Now, _timeZoneInfo);
             if (next.HasValue)
