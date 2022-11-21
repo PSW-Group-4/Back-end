@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.BloodReport.Service;
+﻿using IntegrationAPI.Communications;
+using IntegrationLibrary.BloodReport.Service;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
@@ -21,7 +22,9 @@ namespace IntegrationAPI.HostedServices
         public override Task DoWork(CancellationToken cancellationToken)
         {
             //TODO Implement some funcitonality
-            Console.WriteLine(DateTime.Now);
+            //Console.WriteLine(DateTime.Now.ToString());
+            //var retVal = _reportService.Create("32db7839-f8a4-4c8b-9486-80f783ed6746");
+            //PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, retVal.ReportPath);
             return Task.CompletedTask;
         }
 
