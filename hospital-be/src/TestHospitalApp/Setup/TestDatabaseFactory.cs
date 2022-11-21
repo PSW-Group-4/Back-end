@@ -124,7 +124,7 @@ namespace TestHospitalApp.Setup
             Vacation vacationWFA = new Vacation
             {
                 Id = new Guid("5c036fba-1128-4f4b-b153-90d75e60625e"),
-                DoctorId = doctor.Id,
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
                 DateStart = DateTime.Now,
                 DateEnd = DateTime.Now.AddDays(30),
                 Reason = "Zato sto mi je dodijalo",
@@ -135,7 +135,7 @@ namespace TestHospitalApp.Setup
             Vacation vacationA = new Vacation
             {
                 Id = new Guid("5c036fba-1138-4f4b-b153-90d75e60625e"),
-                DoctorId = doctor.Id,
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
                 DateStart = DateTime.Now,
                 DateEnd = DateTime.Now.AddDays(30),
                 Reason = "Zato sto mi je dodijalo",

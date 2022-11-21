@@ -55,9 +55,21 @@ namespace HospitalLibrary.Vacations.Service
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Vacation> GetDoctorVacationsFromSpecificStatus(VacationStatus vacationStatus ,Guid DoctorId)
+        {
+            IEnumerable<Vacation> vacations = GetAll();
+            List<Vacation> doctorVacations = new List<Vacation>();
+
+            foreach (Vacation vacation in vacations)
+            {
+                if (vacation.DoctorId.Equals(DoctorId) && vacation.VacationStatus.Equals(vacationStatus))
+                {
+                    doctorVacations.Add(vacation);
+                }
+            }
 
 
-
-
+            return doctorVacations;
+        }
     }
 }

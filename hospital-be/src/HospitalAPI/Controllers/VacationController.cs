@@ -86,24 +86,18 @@ namespace HospitalAPI.Controllers
         }
 
         // GET api/DoctorVacation/CurrentRequests/doctorID
-        [HttpGet("CurrentRequests/{id}")]
-        public ActionResult GetCurrentRequests([FromRoute] Guid id)
+        [HttpGet("{vacationStatus}/{id}")]
+        public ActionResult GetDoctorVacationsFromSpecificStatus([FromRoute] VacationStatus vacationStatus, [FromRoute] Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        // GET api/DoctorVacation/DeniedRequests/doctorID
-        [HttpGet("DeniedRequests/{id}")]
-        public ActionResult GetDeniedRequests([FromRoute] Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        // GET api/DoctorVacation/PastRequests/doctorID
-        [HttpGet("PastRequests/{id}")]
-        public ActionResult GetPastRequests([FromRoute] Guid id)
-        {
-            throw new NotImplementedException();
+            try
+            {
+                var vacation = _vacationtService.GetDoctorVacationsFromSpecificStatus(vacationStatus,id);
+                return Ok(vacation);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }
