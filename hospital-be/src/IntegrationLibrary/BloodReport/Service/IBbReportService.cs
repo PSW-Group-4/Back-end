@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.BloodReport.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,8 @@ namespace IntegrationLibrary.BloodReport.Service
     {
         public IEnumerable<BloodUsageReport> GetAll();
         public BloodUsageReport GetById(Guid id);
-        public BloodUsageReport Create(string bloodBankId);
+        public ReportPathTransporter Create(string bloodBankId);
+        public List<ReportPathTransporter> CreateMultiple(List<string> bloodBankIds);
         public BloodUsageReport Update(BloodUsageReport bloodUsageReport);
         public IEnumerable<BloodUsageReport> GetByBbId(Guid id);
     }

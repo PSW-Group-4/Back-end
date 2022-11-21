@@ -23,12 +23,21 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>EmailingResources.resx</DependentUpon>
     </Compile>
+    <Compile Update="Settings\PdfSenderResources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PdfSenderResources.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Update="Settings\EmailingResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>EmailingResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Settings\PdfSenderResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>PdfSenderResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

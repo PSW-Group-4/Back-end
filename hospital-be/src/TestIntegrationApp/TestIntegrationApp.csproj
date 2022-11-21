@@ -35,7 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="IntegrationTesting\" />
     <Folder Include="UnitTesting\" />
   </ItemGroup>
 
