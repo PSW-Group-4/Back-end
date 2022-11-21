@@ -44,6 +44,8 @@ namespace HospitalLibrary.Settings
         public DbSet<DoctorRoom> DoctorRooms { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
 
+        public DbSet<PatientRoom> PatientRooms { get; set; }
+
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 

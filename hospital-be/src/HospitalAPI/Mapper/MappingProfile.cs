@@ -67,6 +67,11 @@ namespace HospitalAPI.Mapper
             CreateMap<Doctor, DoctorRequestDto>().IncludeBase<Person, PersonRequestDto>();
 
             CreateMap<RoomRequestDto, Room>();
+            CreateMap<Room, RoomRequestDto>();
+
+            //CreateMap<PatientRoom, PatientRoomRequestDto>().IncludeBase<Room, RoomRequestDto>();
+            CreateMap<PatientRoomRequestDto, PatientRoom>().IncludeBase<RoomRequestDto, Room>();
+
             CreateMap<AppointmentRequestDto, Appointment>();
             CreateMap<VacationRequestDto, Vacation>();
 
@@ -84,6 +89,8 @@ namespace HospitalAPI.Mapper
 
             CreateMap<BedDto, Bed>();
             CreateMap<Bed, BedDto>();
+
+
 
 
         }
