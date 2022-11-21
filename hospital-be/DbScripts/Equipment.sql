@@ -5,3 +5,5 @@ insert into public."Equipments" ("Id", "Name") values ('2d6e94c6-775a-499f-861f-
 insert into public."Equipments" ("Id", "Name") values ('a00e71fd-7d8f-427e-afb7-ff1b45749fd8','EKG monitor');
 insert into public."Equipments" ("Id", "Name") values ('fef16a98-f2e5-4d12-9346-ddd6b8840d74','Sto');
 insert into public."Equipments" ("Id", "Name") values ('4de7e93f-95d9-4d49-8856-d3d6a8af8442','Ormaric');
+
+

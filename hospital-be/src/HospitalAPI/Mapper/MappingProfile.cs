@@ -2,6 +2,7 @@ using AutoMapper;
 using HospitalAPI.Dtos.Address;
 using HospitalAPI.Dtos.Allergies;
 using HospitalAPI.Dtos.Appointment;
+using HospitalAPI.Dtos.Bed;
 using HospitalAPI.Dtos.BloodConsumptionRecord;
 using HospitalAPI.Dtos.BloodSupply;
 using HospitalAPI.Dtos.Doctor;
@@ -80,6 +81,9 @@ namespace HospitalAPI.Mapper
 
             CreateMap<AllergieInfoDto, Allergie>();
             CreateMap<Allergie, AllergieInfoDto>();
+
+            CreateMap<BedDto, Bed>();
+            CreateMap<Bed, BedDto>();
 
 
         }
