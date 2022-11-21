@@ -1,3 +1,5 @@
+using System;
+using IntegrationAPI.Authorization;
 using IntegrationAPI.Communications;
 using IntegrationAPI.Mappers;
 using IntegrationAPI.Dtos;
@@ -20,6 +22,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using IntegrationAPI.Dtos.BloodBankNews;
 using IntegrationLibrary.BloodBankNews.Model;
+using IntegrationLibrary.BloodReport.Service;
+using IntegrationLibrary.BloodReport.Repository;
+using IntegrationLibrary.BloodUsages.Service;
+using IntegrationLibrary.ReportConfigurations.Service;
+using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationAPI
 {
@@ -41,9 +48,36 @@ namespace IntegrationAPI
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Integration Project", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Hospital", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name="Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Here Enter JWT Token with bearer format like 'Bearer [space] token'"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference
+                             = new OpenApiReference
+                             {
+                                 Type = ReferenceType.SecurityScheme,
+                                 Id = "Bearer"
+                             }
+                        },
+                        new string[] {}
+                    }
+                });
+
             });
 
+
+            services.AddScoped<ExternalAuthorizationFilter>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
             services.AddScoped<IConverter<News, NewsDto>, NewsConverter>();
@@ -55,7 +89,13 @@ namespace IntegrationAPI
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IMailSender, MailSender>();
-
+            services.AddScoped<IBbReportConfigRepository, BbReportConfigRepository>();
+            services.AddScoped<IBbReportConfigService, BbReportConfigService>();
+            services.AddScoped<IBloodUsageService, BloodUsageService>();
+            services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
+            services.AddScoped<IBbReportService, BbReportService>();
+            services.AddScoped<IBbReportRepository, BbReportRepository>();
+           
 
             services.AddControllers();
 

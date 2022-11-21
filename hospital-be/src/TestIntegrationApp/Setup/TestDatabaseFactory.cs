@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.BloodBanks.Model;
+using Microsoft.AspNetCore.TestHost;
 
 namespace TestIntegrationApp.Setup
 {
@@ -17,11 +18,14 @@ namespace TestIntegrationApp.Setup
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            builder.UseSolutionRelativeContentRoot("");
+
             builder.ConfigureServices(services =>
             {
                 using var scope = BuildServiceProvider(services).CreateScope();
                 var scopedServices = scope.ServiceProvider;
                 var db = scopedServices.GetRequiredService<IntegrationDbContext>();
+
                 InitializeDatabase(db);
             });
         }
@@ -30,21 +34,24 @@ namespace TestIntegrationApp.Setup
         {
             var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<IntegrationDbContext>));
             services.Remove(descriptor);
+
             services.AddDbContext<IntegrationDbContext>(opt => opt.UseNpgsql(CreateConnectionStringForTest()));
             return services.BuildServiceProvider();
         }
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost; Database=IntegrationTestDb;Username=postgres;Password=password;";
+            return "Host=localhost;Database=IntegrationTestDb;Username=postgres;Password=password;";
         }
 
         private static void InitializeDatabase(IntegrationDbContext context)
         {
             //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_bank_news\"");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_bank_news\";");
+
             context.SaveChanges();
         }
     }
 }
+

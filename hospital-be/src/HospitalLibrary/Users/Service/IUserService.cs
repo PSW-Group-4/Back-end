@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Users.Model;
+﻿using HospitalLibrary.AcountActivation.Model;
+using HospitalLibrary.Users.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,8 +15,7 @@ namespace HospitalLibrary.Users.Service
         User Create(User user);
         User Update(User user);
         void Delete(string username);
-        public User RegisterPatient(User user, Guid patientId);
-
+        public AcountActivationInfo RegisterPatient(User user, Guid patientId);
         public string AuthenticatePublic(string username, string password);
         string AuthenticatePrivate(string userLoginUsername, string userLoginPassword);
     }

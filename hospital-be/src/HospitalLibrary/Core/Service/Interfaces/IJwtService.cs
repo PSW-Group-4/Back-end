@@ -8,5 +8,6 @@ namespace HospitalLibrary.Core.Service.Interfaces
 
         public string GenerateToken(User user);
         public User GetCurrentUser(System.Security.Principal.IPrincipal httpContextUser);
+        public bool HasMatchingRoles(string expectedRoles, System.Security.Principal.IPrincipal httpContextUser);
     }
 }

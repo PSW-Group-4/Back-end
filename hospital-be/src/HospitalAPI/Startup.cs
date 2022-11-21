@@ -36,11 +36,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using HospitalLibrary.Users.Service;
-using HospitalLibrary.Users.Repository;
-using HospitalLibrary.Allergies.Repository;
-using HospitalLibrary.Core.Service;
-using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.BloodConsumptionRecords.Repository;
 using HospitalLibrary.BloodConsumptionRecords.Service;
 using HospitalLibrary.BloodSupplies.Repository;
@@ -49,6 +44,8 @@ using HospitalLibrary.Admissions.Repository;
 using HospitalLibrary.Admissions.Service;
 using System;
 using HospitalLibrary.Allergies.Service;
+using HospitalLibrary.AcountActivation.Repository;
+using HospitalLibrary.AcountActivation.Service;
 
 namespace HospitalAPI
 {
@@ -136,6 +133,10 @@ namespace HospitalAPI
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJwtService, JwtService>();
+
+            //Acount Activation
+            services.AddScoped<IAcountActivationRepository, AcountActivationRepository>();
+            services.AddScoped<IAcountActivationService, AcountActivationService>();
 
             //Allergie
             services.AddScoped<IAllergieRepository, AllergieRepository>();

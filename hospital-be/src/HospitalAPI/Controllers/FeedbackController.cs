@@ -107,7 +107,6 @@ namespace HospitalAPI.Controllers
         public ActionResult Create([FromBody]FeedbackRequestDto feedbackDto)
         {
             feedbackDto.PatientId = _jwtService.GetCurrentUser(HttpContext.User).PersonId;
-            //Refctor upper ocode
             var feedback = _mapper.Map<Feedback>(feedbackDto);
             _feedbackService.Create(feedback);
             return CreatedAtAction("GetById", new { id = feedback.Id }, feedback);

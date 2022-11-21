@@ -31,6 +31,16 @@ namespace IntegrationAPI.Controllers
             IEnumerable<BloodRequest> bloodRequests = _service.GetAll();
             return Ok(bloodRequests);
         }
+        [Route("unapproved"), HttpGet]
+        public ActionResult GetUnapproved() {
+            IEnumerable<BloodRequest> bloodRequests = _service.GetUnapproved();
+            return Ok(bloodRequests);
+        }
+        [Route("update"), HttpPost]
+        public ActionResult Update(BloodRequestEditDto bloodRequestDto) {
+           var bloodRequest = _mapper.Map<BloodRequest>(bloodRequestDto);
+            return Ok(_service.Update(bloodRequest));
+        }
 
         [HttpPost]
         public ActionResult Create([FromBody] BloodRequestsCreateDto bloodRequestDto)

@@ -49,7 +49,7 @@ namespace HospitalLibrary.Doctors.Service
 
         public IEnumerable<ChooseDoctorDTO> DoctorsWithLeastPatients()
         {
-            return (from doc in _doctorRepository.GetAll() where _patientService.NumberOfPatientsDoctorHas(doc.Id) <= 2 + _doctorRepository.NumberOfPatientsTheDoctorWithLeastPatientsHas() select new ChooseDoctorDTO(doc.Id, doc.Name, doc.Surname, _patientService.NumberOfPatientsDoctorHas(doc.Id))).ToList();
+            return (from doc in _doctorRepository.GetAllBySpecialization(Constants.Constants.GeneralPractitioner) where _patientService.NumberOfPatientsDoctorHas(doc.Id) <= 2 + _doctorRepository.NumberOfPatientsTheDoctorWithLeastPatientsHas() select new ChooseDoctorDTO(doc.Id, doc.Name, doc.Surname, _patientService.NumberOfPatientsDoctorHas(doc.Id))).ToList();
         }
     }
 }

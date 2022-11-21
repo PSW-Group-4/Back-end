@@ -24,9 +24,20 @@ namespace IntegrationLibrary.BloodRequests.Service
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<BloodRequest> GetUnapproved()
+        {
+            return _repository.GetUnapproved();
+        }
+        
         public BloodRequest Create(BloodRequest bloodRequest)
         {
             return _repository.Create(bloodRequest);
+        }
+        
+        public BloodRequest Update(BloodRequest bloodRequest)
+        {
+            return _repository.Update(bloodRequest);
         }
     }
 }

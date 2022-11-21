@@ -11,6 +11,8 @@ namespace IntegrationLibrary.BloodRequests.Service
     {
         public IEnumerable<BloodRequest> GetAll();
         public BloodRequest GetByBloodRequestId(Guid id);
+        public IEnumerable<BloodRequest> GetUnapproved();
         public BloodRequest Create(BloodRequest bloodRequest);
+        public BloodRequest Update(BloodRequest bloodRequest);
     }
 }

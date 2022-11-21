@@ -14,5 +14,6 @@ namespace IntegrationLibrary.BloodBanks.Repository
         public BloodUsageReport Create(BloodUsageReport bloodUsageReport);
         public BloodUsageReport Update(BloodUsageReport bloodUsageReport);
         public IEnumerable<BloodUsageReport> GetByBbId(Guid id);
+        public BloodUsageReport GetLastByBbId(Guid id);
     }
 }

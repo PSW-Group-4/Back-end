@@ -9,7 +9,6 @@ using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Users.Model;
-using HospitalLibrary.Allergies.Model;
 using Microsoft.Extensions.Hosting;
 using HospitalLibrary.BloodConsumptionRecords.Model;
 using HospitalLibrary.BloodSupplies.Model;
@@ -17,6 +16,7 @@ using HospitalLibrary.Vacations.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using HospitalLibrary.Admissions.Model;
+using HospitalLibrary.AcountActivation.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -29,6 +29,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<AcountActivationInfo> AcountActivationInfos { get; set; }
         public DbSet<Allergie> Allergies { get; set; }
         public DbSet<AgeGroup> AgeGroups { get; set; }
 

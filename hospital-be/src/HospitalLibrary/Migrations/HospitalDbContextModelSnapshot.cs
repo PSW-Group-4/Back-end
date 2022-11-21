@@ -34,6 +34,20 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("PatientAllergies");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.AcountActivation.Model.AcountActivationInfo", b =>
+                {
+                    b.Property<Guid>("PersonId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ActivationToken")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("PersonId");
+
+                    b.ToTable("AcountActivationInfos");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Admissions.Model.Admission", b =>
                 {
                     b.Property<Guid>("Id")

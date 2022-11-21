@@ -8,6 +8,7 @@ using HospitalLibrary;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using System.Linq;
 using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Users.Model;
 
@@ -125,5 +126,20 @@ namespace HospitalAPI.Controllers
             return Ok(_patientService.DoctorsPatientsByAgeGroup(DoctorId));
         }
 
+        //TODO staviti da se zapravo dobavlja ulogovan pacijent
+        // GET api/Patient/loggedInPatient
+        [HttpGet("loggedInPatient")]
+        public ActionResult GetLoggedInPatient()
+        {
+            try
+            {
+                var patient = _patientService.GetAll().FirstOrDefault();
+                return Ok(patient);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

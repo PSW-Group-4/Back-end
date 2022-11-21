@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using IntegrationAPI.Dtos.BloodBank;
+using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
-using IntegrationAPI.Dtos.BloodRequests;
 
 namespace IntegrationAPI.Mappers
 {
@@ -12,6 +13,7 @@ namespace IntegrationAPI.Mappers
         {
             CreateMap<BloodBankRegisterDto, BloodBank>();
             CreateMap<BloodBankEditDto, BloodBank>();
+            CreateMap<BloodRequestEditDto, BloodRequest>();
             CreateMap<BloodRequestsCreateDto, BloodRequest>();
         }
     }
