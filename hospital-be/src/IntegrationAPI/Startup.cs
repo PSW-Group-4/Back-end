@@ -27,6 +27,7 @@ using IntegrationLibrary.BloodReport.Repository;
 using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.AspNetCore.Mvc;
+using IntegrationAPI.HostedServices;
 
 namespace IntegrationAPI
 {
@@ -98,6 +99,12 @@ namespace IntegrationAPI
            
 
             services.AddControllers();
+
+            //services.AddSingleton<IHostedService>(serviceProvider => new ReportSendingTask(serviceProvider.GetService<IBbReportService>(), @"*/20 * * * * *", TimeZoneInfo.Local));
+            //@"0 4 * * *"
+            //services.AddSingleton<IHostedService,ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@"*/20 * * * * *", TimeZoneInfo.Local));
+            //services.AddHostedService<ReportSendingTask>();
+            services.AddSingleton<IHostedService, ReportSendingTask>();
 
         }
 
