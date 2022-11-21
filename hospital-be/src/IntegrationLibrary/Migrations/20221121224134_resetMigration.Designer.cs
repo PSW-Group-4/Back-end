@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221116172622_BloodUsageTimeStamp")]
-    partial class BloodUsageTimeStamp
+    [Migration("20221121224134_resetMigration")]
+    partial class resetMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,12 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<string>("Body")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsArchived")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
 
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp without time zone");
@@ -78,9 +84,6 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("BloodUsageReportId")
-                        .HasColumnType("uuid");
-
                     b.Property<double>("Milliliters")
                         .HasColumnType("double precision");
 
@@ -94,8 +97,6 @@ namespace IntegrationLibrary.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BloodUsageReportId");
 
                     b.ToTable("blood_usage");
                 });
@@ -148,32 +149,38 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
                 {
-                    b.Property<Guid>("requestId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<double>("bloodAmountInMilliliters")
+                    b.Property<double>("BloodAmountInMilliliters")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("bloodType")
+                    b.Property<int>("BloodType")
                         .HasColumnType("integer");
 
-                    b.Property<string>("doctorId")
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("DoctorId")
                         .HasColumnType("text");
 
-                    b.Property<bool>("isApproved")
+                    b.Property<bool>("IsApproved")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("managerId")
+                    b.Property<string>("ManagerId")
                         .HasColumnType("text");
 
-                    b.Property<string>("reasonsWhyBloodIsNeeded")
+                    b.Property<int>("RHFactor")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ReasonsWhyBloodIsNeeded")
                         .HasColumnType("text");
 
-                    b.Property<string>("rejectionComment")
+                    b.Property<string>("RejectionComment")
                         .HasColumnType("text");
 
-                    b.HasKey("requestId");
+                    b.HasKey("Id");
 
                     b.ToTable("blood_requests");
                 });
@@ -185,13 +192,6 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("BloodBankId");
 
                     b.Navigation("BloodBank");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsage", b =>
-                {
-                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", null)
-                        .WithMany("BloodUsage")
-                        .HasForeignKey("BloodUsageReportId");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
@@ -216,11 +216,6 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("BloodBankId");
 
                     b.Navigation("BloodBank");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
-                {
-                    b.Navigation("BloodUsage");
                 });
 #pragma warning restore 612, 618
         }

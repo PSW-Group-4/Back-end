@@ -29,7 +29,7 @@ namespace IntegrationLibrary.BloodReport.Repository
 
         public IEnumerable<BloodUsageDto> GetAllBetweenDates(DateTime start, DateTime end)
         {
-            return _context.bloodUsages
+            return _context.BloodUsages
                 .Where(where => where.TimeStamp > start && where.TimeStamp < end)
                 .GroupBy(group => new
                 {
