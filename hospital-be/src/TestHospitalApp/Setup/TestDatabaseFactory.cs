@@ -14,11 +14,14 @@ using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Admissions.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using HospitalLibrary.Vacations.Model;
+using HospitalLibrary.Appointments.Model;
 
 namespace TestHospitalApp.Setup
 {
     public class TestDatabaseFactory<TStartup> : WebApplicationFactory<Startup>
     {
+        private static bool isDbCreated = false;
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
             builder.UseSolutionRelativeContentRoot("");
@@ -30,6 +33,7 @@ namespace TestHospitalApp.Setup
                 var db = scopedServices.GetRequiredService<HospitalDbContext>();
 
                 InitializeDatabase(db);
+                while (isDbCreated) {}
             });
         }
 
@@ -49,24 +53,29 @@ namespace TestHospitalApp.Setup
 
         private static void InitializeDatabase(HospitalDbContext context)
         {
+            if (isDbCreated) return;
+            isDbCreated = true;
+
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodSupply\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Doctors\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Floors\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Buildings\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Addresses\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
 
-            context.Database.ExecuteSqlRaw("INSERT INTO \"Addresses\" (\"Id\", \"City\", \"Country\", \"Street\", \"StreetNumber\") VALUES ('9b75b261-e305-4f6f-9990-97cb2d06d774', 'Kibonsod', 'Serbia', 'Comanche', '8');");
-            
-            context.Database.ExecuteSqlRaw("INSERT INTO \"Buildings\" (\"Id\", \"Name\") VALUES ('4c08ff1f-0227-4a3c-93db-dcd865a1069b', 'Zgrada A')");
+            Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
+            context.Addresses.Add(address);
 
-            context.Database.ExecuteSqlRaw("INSERT INTO \"Floors\" (\"Id\", \"Name\", \"Number\", \"BuildingId\") VALUES ('9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'Sprat 1', '5', '4c08ff1f-0227-4a3c-93db-dcd865a1069b')");
+            Building building = new Building { Id = new Guid(), Name = "Zgrada" };
+            context.Buildings.Add(building);
 
-            context.Database.ExecuteSqlRaw("INSERT INTO \"Rooms\" (\"Id\", \"Description\",\"Name\", \"Number\", \"Discriminator\", \"FloorId\", \"Workhours\") VALUES ('9ae3255d-261f-472f-a961-7f2e7d05d95c', 'diam id ornare imperdiet sapien urna pretium nisl ut volutpat sapien', 'nec dui luctus rutrum nulla tellus in sagittis dui vel nisl duis ac nibh fusce lacus purus', '2', 'DoctorRoom', '9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'mauris lacinia sapien quis libero nullam sit amet turpis elementum ligula vehicula consequat morbi a ipsum');");
+            Room room = new Room { Id = new Guid(), Name = "Soba", Number = 10, Description = "Opis sobe" };
+            context.Rooms.Add(room);
 
-            context.Doctors.Add(new Doctor
+            Doctor doctor = new Doctor
             {
                 Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
                 Name = "Test Doctor",
@@ -80,46 +89,71 @@ namespace TestHospitalApp.Setup
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
                 LicenceNum = "12345",
-                RoomId = new Guid("9ae3255d-261f-472f-a961-7f2e7d05d95c"),
-                AddressId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d774")
-            });
+                RoomId = room.Id,
+                AddressId = address.Id
+            };
+            context.Doctors.Add(doctor);
 
-            context.BloodSupply.Add(new BloodSupply
+            BloodSupply bloodSupply1 = new BloodSupply { Type = "A+", Amount = 200.00 };
+            context.BloodSupply.Add(bloodSupply1);
+
+            BloodSupply bloodSupply2 = new BloodSupply { Type = "B+", Amount = 0.00 };
+            context.BloodSupply.Add(bloodSupply2);
+
+            Patient patient = new Patient
             {
-                Id = new Guid("b14fb18a-e0d9-460c-8dd5-043b0b87dfa4"),
-                Type = "A+",
-                Amount = 200.00
-            });
-            context.BloodSupply.Add(new BloodSupply
-            {
-                Id = new Guid("4996bada-9081-41e9-9fac-79c484237b3f"),
-                Type = "B+",
-                Amount = 0.00
-            });
-            context.Patients.Add(new Patient
-            {
-                Id = new Guid("4994cada-9081-41e9-9fac-79c484237b3f"),
                 BloodType = BloodType.A_POS,
-                ChoosenDoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                ChoosenDoctorId = doctor.Id,
                 Name = "Petar",
                 Surname = "Popovic",
                 Birthdate = DateTime.Now,
                 Gender = Gender.Male,
-                AddressId = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d774"),
+                AddressId = address.Id,
                 Jmbg = "12312313",
                 Email = "mail@gmail.krompir",
                 PhoneNumber = "066413242"
-            }) ;
-            context.Admissions.Add(new Admission
+            };
+            context.Patients.Add(patient);
+
+            Admission admission = new Admission
             {
-                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174"),
-                PatientId = new Guid("4994cada-9081-41e9-9fac-79c484237b3f"),
+                PatientId = patient.Id,
                 Reason = "Razlog za otpust",
-                RoomId = new Guid("9ae3255d-261f-472f-a961-7f2e7d05d95c"),
+                RoomId = room.Id,
                 arrivalDate = DateTime.Now
-            }) ;
+            };
+            context.Admissions.Add(admission);
+
+            Vacation vacationWFA = new Vacation
+            {
+                Id = new Guid("5c036fba-1128-4f4b-b153-90d75e60625e"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now.AddDays(30),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = false,
+                VacationStatus = VacationStatus.Waiting_For_Approval,
+                DeniedRequestReason = ""
+            };
+            Vacation vacationA = new Vacation
+            {
+                Id = new Guid("5c036fba-1138-4f4b-b153-90d75e60625e"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now.AddDays(30),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = false,
+                VacationStatus = VacationStatus.Approved,
+                DeniedRequestReason = ""
+            };
+            
+            context.Vacations.Add(vacationWFA);
+            context.Vacations.Add(vacationA);
+
 
             context.SaveChanges();
+
+            isDbCreated = false;
         }
     }
 }

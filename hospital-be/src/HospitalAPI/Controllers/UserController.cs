@@ -20,6 +20,8 @@ using System.Net;
 using System.Linq;
 using HospitalLibrary.AcountActivation.Service;
 using HospitalLibrary.AcountActivation.Model;
+using HospitalAPI.Dtos.Vacation;
+using HospitalLibrary.Vacations.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -170,5 +172,23 @@ namespace HospitalAPI.Controllers
                     }
                     return Unauthorized();
                 }
+
+        // PUT api/User/1
+        [HttpPut("{username}")]
+        public ActionResult Update([FromRoute] string username, [FromBody] UserDto userDto)
+        {
+            var user = _mapper.Map<User>(userDto);
+            user.Username = username;
+
+            try
+            {
+                var result = _userService.Update(user);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

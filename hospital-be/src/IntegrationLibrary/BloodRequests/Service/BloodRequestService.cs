@@ -29,7 +29,12 @@ namespace IntegrationLibrary.BloodRequests.Service
         {
             return _repository.GetUnapproved();
         }
-
+        
+        public BloodRequest Create(BloodRequest bloodRequest)
+        {
+            return _repository.Create(bloodRequest);
+        }
+        
         public BloodRequest Update(BloodRequest bloodRequest)
         {
             return _repository.Update(bloodRequest);

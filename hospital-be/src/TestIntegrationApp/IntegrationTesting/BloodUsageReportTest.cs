@@ -4,6 +4,7 @@ using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.BloodReport.Service;
 using IntegrationLibrary.BloodUsages.Service;
+using IntegrationLibrary.Exceptions;
 using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -52,9 +53,9 @@ namespace TestIntegrationApp.IntegrationTesting
             using var scope = Factory.Services.CreateScope();
             BbReportService reportService = SetupReportService(scope);
 
-            var result = reportService.Create("42db7839-f8a4-4c8b-9486-80f783ed6746");//this Guid does not exist in db
+            //this Guid does not exist in db
 
-            Assert.Null(result);
+            Assert.Throws<NotFoundException>(() => reportService.Create("42db7839-f8a4-4c8b-9486-80f783ed6746"));
         }
     }
 }

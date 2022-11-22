@@ -76,6 +76,7 @@ namespace HospitalAPI.Mapper
 
             CreateMap<PatientRegistrationDto, Patient>();
             CreateMap<UserLoginDto, User>();
+            CreateMap<UserDto, User>();
 
             CreateMap<Patient, PatientInfoDto>().IncludeBase<Person, PersonRequestDto>();
             CreateMap<PatientInfoDto, Patient>().IncludeBase<PersonRequestDto, Person>();
@@ -84,6 +85,7 @@ namespace HospitalAPI.Mapper
             CreateMap<Allergie, AllergieInfoDto>();
 
             CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
+
         }
 
         private static string ResolveFeedbackPatientFullName(Feedback src)

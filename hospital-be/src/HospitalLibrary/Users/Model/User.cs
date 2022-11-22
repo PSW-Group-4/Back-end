@@ -24,7 +24,8 @@ namespace HospitalLibrary.Users.Model
         public bool IsAccountActive { get; set; }
         public bool IsBlocked { get; set; }
         public UserRole Role { get; set; }
-        public Guid PersonId { get; set; }
+        //In managers case it can be null
+        public Guid? PersonId { get; set; }
 
         internal void Update(User user)
         {
