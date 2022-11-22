@@ -14,5 +14,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Interfaces
         Bed Create(Bed bed);
         Bed Update(Bed bed);
         void Delete(Guid bedId);
+        public Bed FreeBed(Bed bed);
+        public Bed CaptureBed(Bed bed);
     }
 }

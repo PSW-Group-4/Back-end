@@ -47,5 +47,14 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
             else
                 return null;
         }
+
+        public PatientRoom CaptureBed(PatientRoom patientRoom)
+        {
+            return _patientRoomRepository.CaptureBed(patientRoom);
+        }
+        public PatientRoom FreeBed(PatientRoom patientRoom)
+        {
+            return _patientRoomRepository.FreeBed(patientRoom);
+        }
     }
 }

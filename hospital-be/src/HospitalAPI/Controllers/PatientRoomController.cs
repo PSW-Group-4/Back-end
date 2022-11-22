@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using HospitalAPI.Dtos.Bed;
 using HospitalAPI.Dtos.MapItem;
 using HospitalAPI.Dtos.Rooms;
 using HospitalLibrary.BuildingManagmentMap.Model;
@@ -44,6 +45,40 @@ namespace HospitalAPI.Controllers
             var room = _mapper.Map<PatientRoom>(patientRoomRequestDto);
             _patientRoomService.Create(room);
             return CreatedAtAction("GetById", new { id = room.Id }, room);
+        }
+        //PUT: api/PatientRoom/Capture
+        [HttpPut("/Capture")]
+        public ActionResult CaptureBed([FromBody] PatientRoomRequestDto patientRoomRequestDto)
+        {
+            var patientRoom = _mapper.Map<PatientRoom>(patientRoomRequestDto);
+            
+
+            try
+            {
+                var result = _patientRoomService.CaptureBed(patientRoom);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+        //PUT: api/PatientRoom/Free
+        [HttpPut("/Free")]
+        public ActionResult FreeBed([FromBody] PatientRoomRequestDto patientRoomRequestDto)
+        {
+            var patientRoom = _mapper.Map<PatientRoom>(patientRoomRequestDto);
+
+
+            try
+            {
+                var result = _patientRoomService.FreeBed(patientRoom);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         //DELETE: api/PatientRoom/222

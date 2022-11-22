@@ -41,5 +41,13 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
         {
             _bedRepository.Delete(bedId);
         }
+        public Bed FreeBed(Bed bed)
+        {
+            return _bedRepository.FreeBed(bed);
+        }
+        public Bed CaptureBed(Bed bed)
+        {
+            return _bedRepository.CaptureBed(bed);
+        }
     }
 }

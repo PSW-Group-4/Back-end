@@ -10,5 +10,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Interfaces
 {
     public interface IBedRepository : IRepositoryBase<Bed>
     {
+        public Bed FreeBed(Bed bed);
+        public Bed CaptureBed(Bed bed);
     }
 }

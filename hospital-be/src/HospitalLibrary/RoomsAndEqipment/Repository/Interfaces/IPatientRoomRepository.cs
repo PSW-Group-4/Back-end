@@ -12,6 +12,8 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Interfaces
     {
         public List<Bed> GetBedsFromPatientRoom(PatientRoom patientRoom);
         public List<PatientRoom> GetRoomsWithFreeBeds();
+        public PatientRoom CaptureBed(PatientRoom patientRoom);
+        public PatientRoom FreeBed(PatientRoom patientRoom);
 
     }
 }

@@ -19,5 +19,14 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             equipmentId = bed.equipmentId;
             IsFree = bed.IsFree;
         }
+
+        public void FreeBed(Bed bed)
+        {
+            IsFree = true;
+        }
+        public void CaptureBed(Bed bed)
+        {
+            IsFree = false;
+        }
     }
 }

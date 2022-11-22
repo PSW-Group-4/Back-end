@@ -59,5 +59,32 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository
             _context.SaveChanges();
             return updatingBed;
         }
+
+        public Bed FreeBed(Bed bed)
+        {
+            var updatingBed = _context.Beds.SingleOrDefault(p => p.Id == bed.Id);
+            if (updatingBed == null)
+            {
+                throw new NotFoundException();
+            }
+
+            updatingBed.FreeBed(bed);
+
+            _context.SaveChanges();
+            return updatingBed;
+        }
+        public Bed CaptureBed(Bed bed)
+        {
+            var updatingBed = _context.Beds.SingleOrDefault(p => p.Id == bed.Id);
+            if (updatingBed == null)
+            {
+                throw new NotFoundException();
+            }
+
+            updatingBed.CaptureBed(bed);
+
+            _context.SaveChanges();
+            return updatingBed;
+        }
     }
 }

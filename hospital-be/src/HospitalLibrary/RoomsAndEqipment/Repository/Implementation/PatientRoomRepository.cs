@@ -13,9 +13,11 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
     public class PatientRoomRepository : IPatientRoomRepository
     {
         private readonly HospitalDbContext _context;
-        public PatientRoomRepository(HospitalDbContext context)
+        private readonly IBedRepository _bedRepository;
+        public PatientRoomRepository(HospitalDbContext context, IBedRepository bedRepository)
         {
             _context = context;
+            _bedRepository = bedRepository;
         }
         public PatientRoom Create(PatientRoom entity)
         {
@@ -104,6 +106,35 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
                 
             }
             return result;
+        }
+
+        public PatientRoom CaptureBed(PatientRoom patientRoom)
+        {
+            List<Bed> beds = GetBedsFromPatientRoom(patientRoom);
+            foreach(var bed in beds)
+            {
+                if(bed.IsFree == true)
+                {
+                    _bedRepository.CaptureBed(bed);
+                    break;
+                }
+            }
+            return patientRoom;
+            
+        }
+        public PatientRoom FreeBed(PatientRoom patientRoom)
+        {
+            List<Bed> beds = GetBedsFromPatientRoom(patientRoom);
+            foreach (var bed in beds)
+            {
+                if (bed.IsFree == false)
+                {
+                    _bedRepository.FreeBed(bed);
+                    break;
+                }
+            }
+            return patientRoom;
+
         }
     }
 }
