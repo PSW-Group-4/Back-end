@@ -46,6 +46,10 @@ using System;
 using HospitalLibrary.Allergies.Service;
 using HospitalLibrary.AcountActivation.Repository;
 using HospitalLibrary.AcountActivation.Service;
+using HospitalLibrary.MoveEquipment.Repository.Implementation;
+using HospitalLibrary.MoveEquipment.Repository.Interfaces;
+using HospitalLibrary.MoveEquipment.Service.Implementation;
+using HospitalLibrary.MoveEquipment.Service.Interfaces;
 
 namespace HospitalAPI
 {
@@ -190,6 +194,12 @@ namespace HospitalAPI
 
             services.AddScoped<IRoomScheduleRepository, RoomScheduleRepository>();
             services.AddScoped<IRoomScheduleService, RoomScheduleService>();
+
+            services.AddScoped<IMoveEquipmentTaskRepository, MoveEquipmentTaskRepository>();
+            services.AddScoped<IMoveEquipmentTaskService, MoveEquipmentTaskService>();
+
+            services.AddScoped<IEquipmentToMoveRepository, EquipmentToMoveRepository>();
+            services.AddScoped<IEquipmentToMoveService, EquipmentToMoveService>();
 
         }
 

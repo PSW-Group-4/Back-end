@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.AcountActivation.Model;
+using HospitalLibrary.MoveEquipment.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -64,6 +65,9 @@ namespace HospitalLibrary.Settings
         public DbSet<BloodSupply> BloodSupply { get; set; }
 
         public DbSet<RoomSchedule> RoomSchedules {get; set;}
+        public DbSet<MoveEquipmentTask> MoveEquipmentTasks {get; set;}
+        public DbSet<EquipmentToMove> EquipmentToMoves {get; set;}
+        
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
