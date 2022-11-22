@@ -14,5 +14,6 @@ namespace IntegrationLibrary.BloodBanks.Repository
         public ReportConfiguration Create(ReportConfiguration config);
         public ReportConfiguration Update(ReportConfiguration config);
         public ReportConfiguration GetByBloodBank(Guid bloodBankId);
+        public IEnumerable<ReportConfiguration> GetAllActive();
     }
 }

@@ -20,6 +20,8 @@ using System.Net;
 using System.Linq;
 using HospitalLibrary.AcountActivation.Service;
 using HospitalLibrary.AcountActivation.Model;
+using HospitalAPI.Dtos.Vacation;
+using HospitalLibrary.Vacations.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -96,7 +98,6 @@ namespace HospitalAPI.Controllers
             }
         }
         
-        //TODO slucaj kada vise puta osvezim stranicu, refaktorisi
         [HttpPost]
         [Route("[action]")]
         public ActionResult ActivateAccount([FromBody] AccountActivationDto activationInformation)
@@ -106,33 +107,24 @@ namespace HospitalAPI.Controllers
                 return BadRequest();
             }
 
-            var patient = _patientService.GetById(activationInformation.Id);
-            
-            if (patient == null)
+            try
             {
-                return NotFound("Patient not found");
-            }
-
-            var acountActivationInfo = _acountActivationService.GetAll().FirstOrDefault(r => r.PersonId == patient.Id);
-
-            if (acountActivationInfo.ActivationToken == System.Guid.Empty)
-            {
-                return BadRequest("Your account has already been activated");
-            }
-
-            if (activationInformation.Token == acountActivationInfo.ActivationToken)
-            {
-                var user = _userService.GetAll().FirstOrDefault(r => r.PersonId == patient.Id);
-                user.IsAccountActive = true;
-                _userService.Update(user);
-
-                acountActivationInfo.ActivationToken = System.Guid.Empty;
-                _acountActivationService.Update(acountActivationInfo);
-
+                _userService.ActivateAccount(activationInformation.Token, activationInformation.Id);
                 return Ok();
             }
+            catch (NotFoundException e)
+            {
+                return NotFound("User not found");
+            }
+            catch(AcountAlreadyActivatedException e)
+            {
+                return BadRequest("Your acount is already activated");
+            }
+            catch (TokensDoNotMatchException e)
+            {
+                return Unauthorized("Tokens do not match");
+            }
 
-            return Unauthorized("Tokens do not match");
         }
 
                 [AllowAnonymous]
@@ -170,5 +162,23 @@ namespace HospitalAPI.Controllers
                     }
                     return Unauthorized();
                 }
+
+        // PUT api/User/1
+        [HttpPut("{username}")]
+        public ActionResult Update([FromRoute] string username, [FromBody] UserDto userDto)
+        {
+            var user = _mapper.Map<User>(userDto);
+            user.Username = username;
+
+            try
+            {
+                var result = _userService.Update(user);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }

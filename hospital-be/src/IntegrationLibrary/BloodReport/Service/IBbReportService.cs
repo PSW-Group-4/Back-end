@@ -16,5 +16,7 @@ namespace IntegrationLibrary.BloodReport.Service
         public List<ReportPathTransporter> CreateMultiple(List<string> bloodBankIds);
         public BloodUsageReport Update(BloodUsageReport bloodUsageReport);
         public IEnumerable<BloodUsageReport> GetByBbId(Guid id);
+        public IEnumerable<ReportConfiguration> GetAllActiveConfigs();
+        public List<ReportPathTransporter> CreateAllTimeElapsed();
     }
 }

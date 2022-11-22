@@ -14,6 +14,7 @@ using MimeKit;
 using IntegrationLibrary.Utilities;
 using HospitalLibrary.AcountActivation.Service;
 using HospitalLibrary.AcountActivation.Model;
+using System.Linq;
 
 namespace HospitalLibrary.Users.Service
 {
@@ -22,12 +23,15 @@ namespace HospitalLibrary.Users.Service
         private readonly IUserRepository _userRepository;
         private readonly IAcountActivationService _acountActivationService;
         private readonly IJwtService _jwtService;
+        private readonly IPatientRepository _patientRepository;
 
-        public UserService(IUserRepository userRepository, IAcountActivationService acountActivationService, IJwtService jwtService)
+        public UserService(IUserRepository userRepository, IAcountActivationService acountActivationService, IJwtService jwtService,
+            IPatientRepository patientRepository)
         {
             _userRepository = userRepository;
             _acountActivationService = acountActivationService;
             _jwtService = jwtService;
+            _patientRepository = patientRepository;
         }
 
         public IEnumerable<User> GetAll()
@@ -54,11 +58,54 @@ namespace HospitalLibrary.Users.Service
             _userRepository.Create(user);
 
             //DODAO
-            //user.VerificationToken = Guid.NewGuid();
             AcountActivationInfo info = new AcountActivationInfo();
             info.PersonId = patientId;
             info.ActivationToken = Guid.NewGuid();    
             return _acountActivationService.Create(info);
+        }
+
+        public void ActivateAccount(Guid activationToken, Guid userId) 
+        {
+
+            var accountActivationInfo = _acountActivationService.GetAll().FirstOrDefault(r => r.PersonId == userId);
+            if (accountActivationInfo == null)
+            {
+                throw new NotFoundException();
+            }
+
+            if (IsAlreadyActivated(accountActivationInfo))
+            {
+                throw new AcountAlreadyActivatedException();
+            }
+
+            if (TokensMatch(activationToken, accountActivationInfo))
+            {
+                var user = _userRepository.GetAll().FirstOrDefault(r => r.PersonId == userId);
+                if (user == null) 
+                { 
+                    throw new NotFoundException(); 
+                }
+
+                user.IsAccountActive = true;
+                _userRepository.Update(user);
+
+                accountActivationInfo.ActivationToken = Guid.Empty;
+                _acountActivationService.Update(accountActivationInfo);
+            }
+            else
+            {
+                throw new TokensDoNotMatchException();
+            }
+        }
+
+        private bool IsAlreadyActivated(AcountActivationInfo info)
+        {
+            return info.ActivationToken == Guid.Empty;
+        }
+
+        private bool TokensMatch(Guid activationToken, AcountActivationInfo info)
+        {
+            return activationToken == info.ActivationToken;
         }
 
         public string AuthenticatePublic(string username, string password)

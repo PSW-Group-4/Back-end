@@ -42,8 +42,29 @@ namespace HospitalAPI.Controllers
         public ActionResult GetInfoForLoggedinPatient()
         {
             User user = _jwtService.GetCurrentUser(HttpContext.User);
-            Patient patient = _patientService.GetById(user.PersonId);
-            return Ok(_mapper.Map<PatientInfoDto>(patient));
+            if (user.PersonId != null)
+            {
+                Patient patient = _patientService.GetById((Guid)user.PersonId);
+                return Ok(_mapper.Map<PatientInfoDto>(patient));
+            }
+
+            return BadRequest("This user is not a patient");
+        }
+
+        //TODO staviti da se zapravo dobavlja ulogovan pacijent
+        // GET api/Patient/loggedInPatient
+        [HttpGet("loggedInPatient")]
+        public ActionResult GetLoggedInPatient()
+        {
+            try
+            {
+                var patient = _patientService.GetAll().FirstOrDefault();
+                return Ok(patient);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         // GET api/Patient/2
@@ -124,22 +145,6 @@ namespace HospitalAPI.Controllers
         public ActionResult DoctorsPatientsByAgeGroup([FromRoute] Guid DoctorId)
         {
             return Ok(_patientService.DoctorsPatientsByAgeGroup(DoctorId));
-        }
-
-        //TODO staviti da se zapravo dobavlja ulogovan pacijent
-        // GET api/Patient/loggedInPatient
-        [HttpGet("loggedInPatient")]
-        public ActionResult GetLoggedInPatient()
-        {
-            try
-            {
-                var patient = _patientService.GetAll().FirstOrDefault();
-                return Ok(patient);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }
+        }   
     }
 }
