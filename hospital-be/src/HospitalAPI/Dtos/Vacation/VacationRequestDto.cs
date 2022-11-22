@@ -5,6 +5,7 @@ namespace HospitalAPI.Dtos.Vacation
 {
     public class VacationRequestDto
     {
+        public Guid Id { get; set; }
         public Guid DoctorId { get; set; }
         public DateTime DateStart { get; set; }
         public DateTime DateEnd { get; set; }

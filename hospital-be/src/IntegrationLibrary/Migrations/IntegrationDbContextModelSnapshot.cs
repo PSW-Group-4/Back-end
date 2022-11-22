@@ -147,7 +147,7 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
                 {
-                    b.Property<Guid>("RequestId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
@@ -178,7 +178,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("RejectionComment")
                         .HasColumnType("text");
 
-                    b.HasKey("RequestId");
+                    b.HasKey("Id");
 
                     b.ToTable("blood_requests");
                 });
