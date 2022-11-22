@@ -31,12 +31,18 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             doctorAppointments.Add(new Appointment
             {
                 DoctorId = DoctorId,
-                DateTime = new DateTime(2022, 12, 25, 0, 0, 0)
+                Schedule = new RoomSchedule{
+                    DateTime = new DateTime(2022, 12, 25, 0, 0, 0)
+                }
+                
             });
             doctorAppointments.Add(new Appointment
             {
                 DoctorId = DoctorId,
-                DateTime = new DateTime(2022, 11, 25, 0, 0, 0)
+                Schedule = new RoomSchedule{
+                    DateTime = new DateTime(2022, 11, 25, 0, 0, 0)
+                }
+               
             });
             Vacation vacationTrue = new Vacation()
             {
