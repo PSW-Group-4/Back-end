@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Repository;
 using HospitalLibrary.Vacations.Service;
@@ -24,8 +25,8 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             
             var doctorAppointmentService = new Mock<IDoctorAppointmentService>();
             var vacationRepo = new Mock<IVacationRepository>();
-
-            VacationService vc = new VacationService(vacationRepo.Object, doctorAppointmentService.Object);
+            var doctorService = new Mock<IDoctorService>();
+            VacationService vc = new VacationService(vacationRepo.Object, doctorAppointmentService.Object, doctorService.Object);
             List<Appointment> doctorAppointments = new List<Appointment>();
 
             doctorAppointments.Add(new Appointment
@@ -70,5 +71,21 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             result1.ShouldBeFalse();
 
         }
+
+        [Fact]
+        public void Check_if_date_is_valid()
+        {
+            var doctorAppointmentService = new Mock<IDoctorAppointmentService>();
+            var vacationRepo = new Mock<IVacationRepository>();
+            var doctorService = new Mock<IDoctorService>();
+            VacationService vc = new VacationService(vacationRepo.Object, doctorAppointmentService.Object, doctorService.Object);
+
+            var resultTrue = vc.isDateValid(DateTime.Now.AddDays(6));
+            resultTrue.ShouldBeTrue();
+
+            var resultFalse = vc.isDateValid(DateTime.Now.AddDays(5));
+            resultFalse.ShouldBeFalse();
+        }
+
     }
 }

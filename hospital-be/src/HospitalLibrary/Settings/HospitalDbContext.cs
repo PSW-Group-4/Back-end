@@ -18,6 +18,7 @@ using System.Reflection;
 using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.AcountActivation.Model;
 using HospitalLibrary.MoveEquipment.Model;
+using HospitalLibrary.AdmissionHistories.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -27,7 +28,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Admission> Admissions { get; set; }
-
+        public DbSet<AdmissionHistory> AdmissionHistories { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AcountActivationInfo> AcountActivationInfos { get; set; }
@@ -45,6 +46,8 @@ namespace HospitalLibrary.Settings
         public DbSet<DoctorRoom> DoctorRooms { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
 
+        public DbSet<PatientRoom> PatientRooms { get; set; }
+
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
@@ -57,6 +60,8 @@ namespace HospitalLibrary.Settings
         public DbSet<RoomMap> RoomMaps { get; set; }
 
         public DbSet<RoomsEquipment> RoomsEquipment { get; set; }
+
+        public DbSet<Bed> Beds { get; set; }
 
 
         // Doctor vacations

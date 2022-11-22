@@ -21,10 +21,14 @@ namespace IntegrationAPI.HostedServices
 
         public override Task DoWork(CancellationToken cancellationToken)
         {
-            //TODO Implement some funcitonality
-            //Console.WriteLine(DateTime.Now.ToString());
+
             //var retVal = _reportService.Create("32db7839-f8a4-4c8b-9486-80f783ed6746");
             //PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, retVal.ReportPath);
+            var retVal = _reportService.CreateAllTimeElapsed();
+            foreach(var report in retVal)
+            {
+                PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, report.ReportPath);
+            }
             return Task.CompletedTask;
         }
 

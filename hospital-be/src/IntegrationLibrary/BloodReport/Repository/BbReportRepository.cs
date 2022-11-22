@@ -30,6 +30,11 @@ namespace IntegrationLibrary.BloodBanks.Repository
             return _context.BloodUsageReports.ToList();
         }
 
+        public List<string> GetAllIdsForReports()
+        {
+            throw new NotImplementedException();    
+        }
+
         public IEnumerable<BloodUsageReport> GetByBbId(Guid id)
         {
             return _context.BloodUsageReports.Where(report => report.BloodBank.Id == id).ToList();

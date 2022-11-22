@@ -18,5 +18,6 @@ namespace HospitalLibrary.Users.Service
         public AcountActivationInfo RegisterPatient(User user, Guid patientId);
         public string AuthenticatePublic(string username, string password);
         string AuthenticatePrivate(string userLoginUsername, string userLoginPassword);
+        void ActivateAccount(Guid activationToken, Guid userId);
     }
 }

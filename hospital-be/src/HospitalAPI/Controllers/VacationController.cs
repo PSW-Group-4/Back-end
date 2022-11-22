@@ -111,6 +111,7 @@ namespace HospitalAPI.Controllers
             }
         }
 
+        /*
         // POST api/Vacation/Urgent
         [HttpPost("Urgent")]
         public ActionResult CreateUrgent([FromBody] VacationRequestDto vacationDto)
@@ -141,7 +142,7 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
-        }
+        }*/
 
     }
 }
