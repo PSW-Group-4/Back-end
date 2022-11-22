@@ -17,6 +17,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.AcountActivation.Model;
+using HospitalLibrary.AdmissionHistories.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -26,7 +27,7 @@ namespace HospitalLibrary.Settings
         public DbSet<Patient> Patients { get; set; }
 
         public DbSet<Admission> Admissions { get; set; }
-
+        public DbSet<AdmissionHistory> AdmissionHistories { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<AcountActivationInfo> AcountActivationInfos { get; set; }

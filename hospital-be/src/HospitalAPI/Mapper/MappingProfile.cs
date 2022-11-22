@@ -1,5 +1,6 @@
 using AutoMapper;
 using HospitalAPI.Dtos.Address;
+using HospitalAPI.Dtos.AdmissionHistory;
 using HospitalAPI.Dtos.Allergies;
 using HospitalAPI.Dtos.Appointment;
 using HospitalAPI.Dtos.BloodConsumptionRecord;
@@ -12,6 +13,7 @@ using HospitalAPI.Dtos.Person;
 using HospitalAPI.Dtos.Rooms;
 using HospitalAPI.Dtos.User;
 using HospitalAPI.Dtos.Vacation;
+using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.Allergies.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptionRecords.Model;
@@ -81,7 +83,7 @@ namespace HospitalAPI.Mapper
             CreateMap<AllergieInfoDto, Allergie>();
             CreateMap<Allergie, AllergieInfoDto>();
 
-
+            CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
         }
 
         private static string ResolveFeedbackPatientFullName(Feedback src)

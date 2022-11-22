@@ -13,6 +13,7 @@ using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Admissions.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
 
 namespace TestHospitalApp.Setup
 {
@@ -111,7 +112,7 @@ namespace TestHospitalApp.Setup
             }) ;
             context.Admissions.Add(new Admission
             {
-                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d06d174"),
+                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174"),
                 PatientId = new Guid("4994cada-9081-41e9-9fac-79c484237b3f"),
                 Reason = "Razlog za otpust",
                 RoomId = new Guid("9ae3255d-261f-472f-a961-7f2e7d05d95c"),
