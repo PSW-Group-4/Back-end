@@ -32,6 +32,10 @@ namespace HospitalLibrary.Vacations.Service
         }
         public Vacation Create(Vacation vacation)
         {
+            if (!(isDateValid(vacation.DateStart)))
+            {
+                return null;
+            }
             if (CheckDoctorAvailability(vacation))
             {
                 return _vacationRepository.Create(vacation);
@@ -82,6 +86,16 @@ namespace HospitalLibrary.Vacations.Service
 
         }
 
+        public bool isDateValid(DateTime vacationStart)
+        {
+           if (DateTime.Today.AddDays(6) < vacationStart)
+            {
+                return true;
+            }
+            return false;
+
+        }
+
         public IEnumerable<Vacation> GetDoctorVacationsFromSpecificStatus(VacationStatus vacationStatus ,Guid DoctorId)
         {
             IEnumerable<Vacation> vacations = GetAll();
@@ -94,8 +108,6 @@ namespace HospitalLibrary.Vacations.Service
                     doctorVacations.Add(vacation);
                 }
             }
-
-
             return doctorVacations;
         }
     }

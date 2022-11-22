@@ -64,5 +64,20 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             result1.ShouldBeFalse();
 
         }
+
+        [Fact]
+        public void Check_if_date_is_valid()
+        {
+            var doctorAppointmentService = new Mock<IDoctorAppointmentService>();
+            var vacationRepo = new Mock<IVacationRepository>();
+            VacationService vc = new VacationService(vacationRepo.Object, doctorAppointmentService.Object);
+
+            var resultTrue = vc.isDateValid(DateTime.Now.AddDays(6));
+            resultTrue.ShouldBeTrue();
+
+            var resultFalse = vc.isDateValid(DateTime.Now.AddDays(5));
+            resultFalse.ShouldBeFalse();
+        }
+
     }
 }
