@@ -66,5 +66,53 @@ namespace TestIntegrationApp.IntegrationTesting
             Assert.NotEmpty(result);
 
         }
+        [Fact]
+        public void Update_News() 
+        {
+           /* News news = new()
+            {
+                Id = Guid.NewGuid(),
+                Title = "It's me, hi",
+                Body = "I'm the news, it's me",
+                Timestamp = DateTime.Now,
+                BloodBank = null,
+                IsArchived = false,
+                IsPublished = false
+            };*/
+            
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            // service.Save(news);
+            var allNews = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<News>;
+            News updatedNews = allNews.First();
+            var result = controller.ArchiveNews(updatedNews.Id.ToString());
+            Assert.True((((OkObjectResult)result)?.Value as News).IsArchived);
+        }
+        [Fact]
+        public void Get_Archived()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            bool success = true;
+            var result = ((OkObjectResult)controller.GetArchived())?.Value as IEnumerable<News>;
+            foreach( News news in result)
+            {
+                success = success && news.IsArchived;
+            }
+            Assert.True(success);
+        }
+        [Fact]
+        public void Get_Published()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            bool success = true;
+            var result = ((OkObjectResult)controller.GetArchived())?.Value as IEnumerable<News>;
+            foreach (News news in result)
+            {
+                success = success && news.IsPublished;
+            }
+            Assert.True(success);
+        }
     }
 }
