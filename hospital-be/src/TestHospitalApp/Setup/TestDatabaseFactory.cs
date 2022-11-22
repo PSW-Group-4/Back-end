@@ -15,6 +15,7 @@ using HospitalLibrary.Admissions.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using HospitalLibrary.Vacations.Model;
+using HospitalLibrary.Appointments.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -62,6 +63,8 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Buildings\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Addresses\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -143,8 +146,10 @@ namespace TestHospitalApp.Setup
                 VacationStatus = VacationStatus.Approved,
                 DeniedRequestReason = ""
             };
+            
             context.Vacations.Add(vacationWFA);
             context.Vacations.Add(vacationA);
+
 
             context.SaveChanges();
 

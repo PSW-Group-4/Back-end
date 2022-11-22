@@ -48,8 +48,19 @@ namespace HospitalAPI.Controllers
         public ActionResult Create([FromBody] VacationRequestDto vacationDto)
         {
             var vacation = _mapper.Map<Vacation>(vacationDto);
+            try
+            {
+                _vacationtService.Create(vacation);
+                return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            /*
+            var vacation = _mapper.Map<Vacation>(vacationDto);
             _vacationtService.Create(vacation);
-            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);*/
         }
 
         // PUT api/Vacation/1
@@ -105,8 +116,15 @@ namespace HospitalAPI.Controllers
         public ActionResult CreateUrgent([FromBody] VacationRequestDto vacationDto)
         {
             var vacation = _mapper.Map<Vacation>(vacationDto);
-            _vacationtService.Create(vacation);
-            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            try
+            {
+                _vacationtService.Create(vacation);
+                return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }  
         }
 
         // POST api/VacationNonUrgent
@@ -114,8 +132,15 @@ namespace HospitalAPI.Controllers
         public ActionResult CreateNonUrgent([FromBody] VacationRequestDto vacationDto)
         {
             var vacation = _mapper.Map<Vacation>(vacationDto);
-            _vacationtService.Create(vacation);
-            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            try
+            {
+                _vacationtService.Create(vacation);
+                return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
         }
 
     }

@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using HospitalAPI;
 using HospitalAPI.Controllers;
+using HospitalAPI.Dtos.Vacation;
 using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -75,6 +77,34 @@ namespace TestHospitalApp.IntegrationTesting
             List<Vacation> result = ((OkObjectResult)vacationController.GetAll())?.Value as List<Vacation>;
 
             result.Count().ShouldBe(2);
+        }
+
+        // ovo bi trebalo da nij eimplementirano, ali fejluje zato sto nisu dodati apojntmenti
+        [Fact]
+        public void Create_urgent_vacation()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var vacationController = SetupVacationController(scope);
+
+            VacationRequestDto vacationU = new VacationRequestDto()
+            {
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DateStart = new DateTime(2022, 12, 5, 0, 0, 0),
+                DateEnd = new DateTime(2022, 12, 30, 0, 0, 0),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = true,
+                VacationStatus = VacationStatus.Waiting_For_Approval,
+                DeniedRequestReason = ""
+            };
+
+            Vacation newVacation = ((CreatedAtActionResult)vacationController.Create(vacationU))?.Value as Vacation;
+
+            newVacation.Urgent.ShouldBeTrue();
+
+            List<Vacation> result = ((OkObjectResult)vacationController.GetAll())?.Value as List<Vacation>;
+
+            result.Count().ShouldBe(3);
+
         }
 
     }

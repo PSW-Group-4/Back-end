@@ -32,8 +32,20 @@ namespace HospitalLibrary.Vacations.Service
         }
         public Vacation Create(Vacation vacation)
         {
-            // should be complicated :D
-            return _vacationRepository.Create(vacation);
+            if (CheckDoctorAvailability(vacation))
+            {
+                return _vacationRepository.Create(vacation);
+            }
+            if (vacation.Urgent == true)
+            {
+                return CreateUrgentVacation(vacation);
+            }
+            return null;
+        }
+
+        public Vacation CreateUrgentVacation(Vacation vacation)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(Guid vacationId)
@@ -51,15 +63,15 @@ namespace HospitalLibrary.Vacations.Service
         }
 
 
-        public bool CheckDoctorAvailability(Guid doctorId, DateTime start, DateTime end)
+        public bool CheckDoctorAvailability(Vacation vacation)
         {
             bool canCreateVacation = true;
-            IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(doctorId);
+            IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(vacation.DoctorId);
 
             foreach (Appointment doctorAppointment in doctorAppointments)
             {
-                if (!((doctorAppointment.DateTime<start && doctorAppointment.DateTime < start)
-                    || doctorAppointment.DateTime.AddMinutes(30)>start && doctorAppointment.DateTime.AddMinutes(30)>end))
+                if (!((doctorAppointment.DateTime<vacation.DateStart && doctorAppointment.DateTime < vacation.DateEnd)
+                    || doctorAppointment.DateTime.AddMinutes(30)>vacation.DateStart && doctorAppointment.DateTime.AddMinutes(30)>vacation.DateEnd))
                 {
                     canCreateVacation = false;
                     break;

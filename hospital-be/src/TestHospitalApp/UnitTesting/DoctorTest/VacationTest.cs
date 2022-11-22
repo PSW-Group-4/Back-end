@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Repository;
 using HospitalLibrary.Vacations.Service;
 using Moq;
@@ -20,6 +21,7 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
         public void Check_if_doctor_has_appointments_during_vacation()
         {
             Guid DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e");
+            
             var doctorAppointmentService = new Mock<IDoctorAppointmentService>();
             var vacationRepo = new Mock<IVacationRepository>();
 
@@ -36,20 +38,31 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
                 DoctorId = DoctorId,
                 DateTime = new DateTime(2022, 11, 25, 0, 0, 0)
             });
+            Vacation vacationTrue = new Vacation()
+            {
+                DoctorId = DoctorId,
+                DateStart = new DateTime(2022, 12, 5, 0, 0, 0),
+                DateEnd = new DateTime(2022, 12, 15, 0, 0, 0)
+            };
+            Vacation vacationFalse = new Vacation()
+            {
+                DoctorId = DoctorId,
+                DateStart = new DateTime(2022, 12, 5, 0, 0, 0),
+                DateEnd = new DateTime(2022, 12, 30, 0, 0, 0)
+            };
+
 
 
 
             doctorAppointmentService.Setup(x => x.GetDoctorAppointments(DoctorId)).Returns(doctorAppointments);
 
 
-            var result = vc.CheckDoctorAvailability(DoctorId, new DateTime(2022, 12, 5, 0, 0, 0), new DateTime(2022, 12, 15, 0, 0, 0));
+            var result = vc.CheckDoctorAvailability(vacationTrue);
             result.ShouldBeTrue();
 
-            var result1 = vc.CheckDoctorAvailability(DoctorId, new DateTime(2022, 12, 5, 0, 0, 0), new DateTime(2022, 12, 26, 0, 0, 0));
+            var result1 = vc.CheckDoctorAvailability(vacationFalse);
             result1.ShouldBeFalse();
 
         }
-
-
     }
 }
