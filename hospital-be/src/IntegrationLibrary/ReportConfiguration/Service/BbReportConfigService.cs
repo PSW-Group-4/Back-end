@@ -43,7 +43,7 @@ namespace IntegrationLibrary.ReportConfigurations.Service
 
         public ReportConfiguration Update(ReportConfiguration config)
         {
-            throw new NotImplementedException();
+            return _repository.Update(config);
         }
     }
 }

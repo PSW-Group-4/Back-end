@@ -25,11 +25,17 @@ namespace IntegrationAPI.Controllers
         {
             var retVal = new List<ReportConfigurationDto>();
             var reportConfigurations = _service.GetAll();
-            foreach(var reportConfiguration in reportConfigurations)
+            foreach (var reportConfiguration in reportConfigurations)
             {
                 retVal.Add(_converter.Convert(reportConfiguration));
             }
             return Ok(retVal);
+        }
+        [HttpPost]
+        public ActionResult Update(ReportConfigurationDto dto)
+        {
+            var config = _converter.Convert(dto);
+            return Ok(_service.Update(config));
         }
     }
 }
