@@ -74,13 +74,13 @@ namespace HospitalAPI.Mapper
 
             CreateMap<PatientRegistrationDto, Patient>();
             CreateMap<UserLoginDto, User>();
+            CreateMap<UserDto, User>();
 
             CreateMap<Patient, PatientInfoDto>().IncludeBase<Person, PersonRequestDto>();
             CreateMap<PatientInfoDto, Patient>().IncludeBase<PersonRequestDto, Person>();
 
             CreateMap<AllergieInfoDto, Allergie>();
             CreateMap<Allergie, AllergieInfoDto>();
-
 
         }
 
