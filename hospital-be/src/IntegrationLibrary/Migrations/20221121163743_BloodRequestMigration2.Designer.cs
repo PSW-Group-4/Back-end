@@ -10,13 +10,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-<<<<<<<< HEAD:hospital-be/src/IntegrationLibrary/Migrations/20221121163743_BloodRequestMigration2.Designer.cs
-    [Migration("20221121163743_BloodRequestMigration2")]
-    partial class BloodRequestMigration2
-========
+
     [Migration("20221121224134_resetMigration")]
     partial class resetMigration
->>>>>>>> develop:hospital-be/src/IntegrationLibrary/Migrations/20221121224134_resetMigration.Designer.cs
+    hospital-be/src/IntegrationLibrary/Migrations/20221121224134_resetMigration.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
