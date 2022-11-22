@@ -31,11 +31,17 @@ namespace IntegrationAPI.Controllers
             }
             return Ok(retVal);
         }
-        [HttpPost]
+        [HttpPut]
         public ActionResult Update(ReportConfigurationDto dto)
         {
             var config = _converter.Convert(dto);
             return Ok(_service.Update(config));
+        }
+        [HttpPost]
+        public ActionResult Create(ReportConfigurationDto dto)
+        {
+            var config = _converter.Convert(dto);
+            return Ok(_service.Create(config));
         }
     }
 }

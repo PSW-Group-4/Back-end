@@ -28,7 +28,14 @@ namespace IntegrationAPI.Dtos.ReportsConfiguration
             var retVal = new ReportConfiguration();
             retVal.ActiveStatus = dto.ActiveStatus;
             retVal.RequestFrequency = dto.RequestFrequency;
-            retVal.Id = new Guid(dto.Id);
+            if (dto.Id.Equals(""))
+            {
+               retVal.Id = new Guid();
+            }
+            else
+            {
+                retVal.Id = new Guid(dto.Id);
+            }
             retVal.BloodBank = _service.GetById(new Guid(dto.BloodBankId));
             return retVal;
         }
