@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.AdmissionHistories.Model;
+using HospitalLibrary.AdmissionHistories.Repository;
 using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.Admissions.Repository;
 using HospitalLibrary.RoomsAndEqipment.Model;
@@ -12,14 +14,32 @@ namespace HospitalLibrary.Admissions.Service
     public class AdmissionService : IAdmissionService
     {
         private readonly IAdmissionRepository _admissionRepository;
+        private readonly IAdmissionHistoryRepository _admissionHistoryRepository;
 
-        public AdmissionService(IAdmissionRepository admissionRepository)
+        public AdmissionService(IAdmissionRepository admissionRepository, IAdmissionHistoryRepository admissionHistoryRepository)
         {
             _admissionRepository = admissionRepository;
+            _admissionHistoryRepository = admissionHistoryRepository;
         }
         public IEnumerable<Admission> GetAll()
         {
-            return _admissionRepository.GetAll();
+            List<Admission> fineAdmissions = new List<Admission>();
+            List<Admission> admissions = (List<Admission>)_admissionRepository.GetAll();
+            List<AdmissionHistory> admissionHistories = (List<AdmissionHistory>)_admissionHistoryRepository.GetAll();
+            foreach(Admission admission in admissions)
+            {
+                Boolean isExist = false;
+                foreach(AdmissionHistory admissionHistory in admissionHistories)
+                {
+                    if (admission.Id.Equals(admissionHistory.Admission.Id))
+                    {
+                        isExist = true;
+                    }
+                }
+                if (!isExist)
+                    fineAdmissions.Add(admission);
+            }
+            return fineAdmissions;
         }
 
         public Admission GetById(Guid id)
