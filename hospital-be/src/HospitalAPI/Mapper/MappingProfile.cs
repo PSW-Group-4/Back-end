@@ -1,5 +1,6 @@
 using AutoMapper;
 using HospitalAPI.Dtos.Address;
+using HospitalAPI.Dtos.AdmissionHistory;
 using HospitalAPI.Dtos.Allergies;
 using HospitalAPI.Dtos.Appointment;
 using HospitalAPI.Dtos.Bed;
@@ -13,6 +14,7 @@ using HospitalAPI.Dtos.Person;
 using HospitalAPI.Dtos.Rooms;
 using HospitalAPI.Dtos.User;
 using HospitalAPI.Dtos.Vacation;
+using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.Allergies.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptionRecords.Model;
@@ -80,6 +82,7 @@ namespace HospitalAPI.Mapper
 
             CreateMap<PatientRegistrationDto, Patient>();
             CreateMap<UserLoginDto, User>();
+            CreateMap<UserDto, User>();
 
             CreateMap<Patient, PatientInfoDto>().IncludeBase<Person, PersonRequestDto>();
             CreateMap<PatientInfoDto, Patient>().IncludeBase<PersonRequestDto, Person>();
@@ -87,10 +90,14 @@ namespace HospitalAPI.Mapper
             CreateMap<AllergieInfoDto, Allergie>();
             CreateMap<Allergie, AllergieInfoDto>();
 
+
             CreateMap<BedDto, Bed>();
             CreateMap<Bed, BedDto>();
 
 
+
+
+            CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
 
 
         }

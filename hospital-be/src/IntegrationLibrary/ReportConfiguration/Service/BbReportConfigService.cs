@@ -26,6 +26,11 @@ namespace IntegrationLibrary.ReportConfigurations.Service
             throw new NotImplementedException();
         }
 
+        public IEnumerable<ReportConfiguration> GetAllActive()
+        {
+            return _repository.GetAllActive();
+        }
+
         public ReportConfiguration GetByBloodBank(Guid bloodBankId)
         {
            return _repository.GetByBloodBank(bloodBankId);

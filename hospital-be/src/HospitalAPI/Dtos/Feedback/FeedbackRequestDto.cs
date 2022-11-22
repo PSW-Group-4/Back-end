@@ -8,6 +8,6 @@ namespace HospitalAPI.Dtos.Feedback
         public bool IsAnonimous { get; set; }
         public bool IsDesiredPublic { get; set; }
         //Verovatno nece trebati jer ce se citati iz tokena
-        public Guid PatientId { get; set; }
+        public Guid? PatientId { get; set; }
     }
 }

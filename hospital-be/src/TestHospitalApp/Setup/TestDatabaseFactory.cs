@@ -14,6 +14,8 @@ using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Admissions.Model;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using HospitalLibrary.Vacations.Model;
+using HospitalLibrary.Appointments.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -61,6 +63,8 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Buildings\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Addresses\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -119,6 +123,33 @@ namespace TestHospitalApp.Setup
                 arrivalDate = DateTime.Now
             };
             context.Admissions.Add(admission);
+
+            Vacation vacationWFA = new Vacation
+            {
+                Id = new Guid("5c036fba-1128-4f4b-b153-90d75e60625e"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now.AddDays(30),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = false,
+                VacationStatus = VacationStatus.Waiting_For_Approval,
+                DeniedRequestReason = ""
+            };
+            Vacation vacationA = new Vacation
+            {
+                Id = new Guid("5c036fba-1138-4f4b-b153-90d75e60625e"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DateStart = DateTime.Now,
+                DateEnd = DateTime.Now.AddDays(30),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = false,
+                VacationStatus = VacationStatus.Approved,
+                DeniedRequestReason = ""
+            };
+            
+            context.Vacations.Add(vacationWFA);
+            context.Vacations.Add(vacationA);
+
 
             context.SaveChanges();
 
