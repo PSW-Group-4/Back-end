@@ -46,6 +46,9 @@ using System;
 using HospitalLibrary.Allergies.Service;
 using HospitalLibrary.AcountActivation.Repository;
 using HospitalLibrary.AcountActivation.Service;
+using HospitalLibrary.AdmissionHistories.Model;
+using HospitalLibrary.AdmissionHistories.Repository;
+using HospitalLibrary.AdmissionHistories.Service;
 
 namespace HospitalAPI
 {
@@ -169,6 +172,14 @@ namespace HospitalAPI
 
             services.AddScoped<IDoctorRoomService, DoctorRoomService>();
             services.AddScoped<IDoctorRoomRepository, DoctorRoomRepository>();
+
+            services.AddScoped<IPatientRoomService, PatientRoomService>();
+            services.AddScoped<IPatientRoomRepository, PatientRoomRepository>();
+
+            //Bed
+            services.AddScoped<IBedService, BedService>();
+            services.AddScoped<IBedRepository, BedRepository>();
+
             //MapItems
             services.AddScoped<IBuildingMapService, BuildingMapService>();
             services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();
@@ -187,6 +198,9 @@ namespace HospitalAPI
 
             services.AddScoped<IAdmissionRepository, AdmissionRepository>();
             services.AddScoped<IAdmissionService, AdmissionService>();
+
+            services.AddScoped<IAdmissionHistoryRepository, AdmissionHistoryRepository>();
+            services.AddScoped<IAdmissionHistoryService, AdmissionHistoryService>();
 
         }
 

@@ -12,8 +12,7 @@ namespace IntegrationLibrary.BloodRequests.Model
     [Table("blood_requests")]
     public class BloodRequest
     {
-        [Key]
-        public Guid RequestId { get; set; }
+        public Guid Id { get; set; }
         public String DoctorId { get; set; }
         public BloodType BloodType { get; set; }
         public RHFactor RHFactor { get; set; }

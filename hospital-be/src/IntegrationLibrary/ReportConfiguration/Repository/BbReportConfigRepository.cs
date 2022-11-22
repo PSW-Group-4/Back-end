@@ -31,6 +31,11 @@ namespace IntegrationLibrary.BloodReport.Repository
            return _context.ReportConfigurations.ToList();
         }
 
+        public IEnumerable<ReportConfiguration> GetAllActive()
+        {
+            return _context.ReportConfigurations.Where(where => where.ActiveStatus.Equals(true)).ToList();
+        }
+
         public ReportConfiguration GetByBloodBank(Guid bloodBankId)
         {
             return _context.ReportConfigurations.Where(config => config.BloodBank.Id == bloodBankId).FirstOrDefault();

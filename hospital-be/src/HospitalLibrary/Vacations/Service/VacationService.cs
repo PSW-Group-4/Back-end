@@ -1,5 +1,7 @@
 ﻿using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Repository;
 using System;
@@ -14,11 +16,13 @@ namespace HospitalLibrary.Vacations.Service
     {
         private readonly IVacationRepository _vacationRepository;
         private readonly IDoctorAppointmentService _doctorAppointmentService;
+        private readonly IDoctorService _doctorService;
 
-        public VacationService(IVacationRepository vacationRepository, IDoctorAppointmentService doctorAppointmentService)
+        public VacationService(IVacationRepository vacationRepository, IDoctorAppointmentService doctorAppointmentService, IDoctorService doctorService)
         {
             _vacationRepository = vacationRepository;
             _doctorAppointmentService = doctorAppointmentService;
+            _doctorService = doctorService;
         }
 
         public IEnumerable<Vacation> GetAll()
@@ -30,24 +34,6 @@ namespace HospitalLibrary.Vacations.Service
         {
             return _vacationRepository.GetById(id);
         }
-        public Vacation Create(Vacation vacation)
-        {
-            if (CheckDoctorAvailability(vacation))
-            {
-                return _vacationRepository.Create(vacation);
-            }
-            if (vacation.Urgent == true)
-            {
-                return CreateUrgentVacation(vacation);
-            }
-            return null;
-        }
-
-        public Vacation CreateUrgentVacation(Vacation vacation)
-        {
-            throw new NotImplementedException();
-        }
-
         public void Delete(Guid vacationId)
         {
             var vacation = GetById(vacationId);
@@ -62,6 +48,31 @@ namespace HospitalLibrary.Vacations.Service
             return _vacationRepository.Update(vacation);
         }
 
+        public Vacation Create(Vacation vacation)
+        {
+            if (!(isDateValid(vacation.DateStart)))
+            {
+                return null;
+            }
+            if (CheckDoctorAvailability(vacation))
+            {
+                return _vacationRepository.Create(vacation);
+            }
+            if (vacation.Urgent == true)
+            {
+                return CreateUrgentVacation(vacation);
+            }
+            return null;
+        }
+
+        public bool isDateValid(DateTime vacationStart)
+        {
+            if (DateTime.Today.AddDays(6) < vacationStart)
+            {
+                return true;
+            }
+            return false;
+        }
 
         public bool CheckDoctorAvailability(Vacation vacation)
         {
@@ -82,6 +93,69 @@ namespace HospitalLibrary.Vacations.Service
 
         }
 
+        public Vacation CreateUrgentVacation(Vacation vacation)
+        {
+            bool doctorChanged = CheckAvailableDoctorsToSwitchAppointments(vacation);
+            if (doctorChanged)
+            {
+                return _vacationRepository.Create(vacation);
+            }
+            return null;
+        }
+
+        public bool CheckAvailableDoctorsToSwitchAppointments(Vacation vacation)
+        {
+            bool doctorChanged = false;
+
+            if(SwitchDoctorFound(vacation))
+            {
+                doctorChanged = true;
+            }
+
+            return doctorChanged;
+        }
+
+        public bool SwitchDoctorFound(Vacation vacation)
+        {
+            Doctor currentDoctor = _doctorService.GetById(vacation.DoctorId);
+            IEnumerable<Doctor> doctors = _doctorService.GetAll();
+            
+
+            foreach(Doctor doctor in doctors)
+            {
+                bool doctorFound = true;
+                IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(doctor.Id);
+                foreach(Appointment appointment in doctorAppointments)
+                {
+                    if(appointment.DateTime.Date > vacation.DateStart && appointment.DateTime.Date < vacation.DateEnd)
+                    {
+                        doctorFound = false;
+                        break;
+                    }
+                }
+                if (doctorFound)
+                {
+                    SwitchAppointmentsToAnotherDoctor(doctor.Id, vacation);
+                    return true;
+                }
+            }
+            return false;
+            
+        }
+
+        public void SwitchAppointmentsToAnotherDoctor(Guid doctorId, Vacation vacation)
+        {
+            Doctor availableSwitchDoctor = _doctorService.GetById(doctorId);
+            Doctor currentDoctor = _doctorService.GetById(vacation.DoctorId);
+            IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(vacation.DoctorId);
+
+            foreach (Appointment appointment in doctorAppointments)
+            {
+                appointment.DoctorId = availableSwitchDoctor.Id;
+                appointment.RoomId = availableSwitchDoctor.RoomId;
+            }
+        }
+
         public IEnumerable<Vacation> GetDoctorVacationsFromSpecificStatus(VacationStatus vacationStatus ,Guid DoctorId)
         {
             IEnumerable<Vacation> vacations = GetAll();
@@ -94,8 +168,6 @@ namespace HospitalLibrary.Vacations.Service
                     doctorVacations.Add(vacation);
                 }
             }
-
-
             return doctorVacations;
         }
     }

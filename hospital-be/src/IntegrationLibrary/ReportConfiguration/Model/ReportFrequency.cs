@@ -8,12 +8,12 @@ namespace IntegrationLibrary.BloodBanks.Model
 {
     public enum ReportFrequencyTitles
     {
-        DAILY,
-        WEEKLY,
-        BI_MONTHLY,
-        MONTHLY,
-        BI_ANNUALY,
-        ANNUALY
+        DAILY = 1,
+        WEEKLY = 7,
+        BI_MONTHLY = 15,
+        MONTHLY = 30,
+        BI_ANNUALY = 183,
+        ANNUALY = 365
     }
 
 }
