@@ -28,7 +28,7 @@ namespace IntegrationLibrary.BloodRequests.Repository
 
         public IEnumerable<BloodRequest> GetUnapproved()
         {
-            return _context.BloodRequests.Where(b => b.isApproved == false);
+            return _context.BloodRequests.Where(b => b.IsApproved == false);
         }
         
         public BloodRequest Create(BloodRequest bloodRequest)
@@ -41,7 +41,7 @@ namespace IntegrationLibrary.BloodRequests.Repository
         public BloodRequest Update(BloodRequest bloodRequest) {
             var local = _context.Set<BloodRequest>()
          .Local
-         .FirstOrDefault(entry => entry.requestId.Equals(bloodRequest.requestId));
+         .FirstOrDefault(entry => entry.RequestId.Equals(bloodRequest.RequestId));
 
             // check if local is not null 
             if (local != null)
