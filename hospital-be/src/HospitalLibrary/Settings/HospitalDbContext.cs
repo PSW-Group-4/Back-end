@@ -63,6 +63,8 @@ namespace HospitalLibrary.Settings
 
         public DbSet<BloodSupply> BloodSupply { get; set; }
 
+        public DbSet<RoomSchedule> RoomSchedules {get; set;}
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

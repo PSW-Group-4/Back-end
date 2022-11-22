@@ -25,7 +25,7 @@ namespace HospitalLibrary.SchedulingAppointment.Service
             List<Appointment> appointments = getAll();
             foreach(Appointment appointment in appointments)
             {
-                if (appointment.DateTime.Equals(time))
+                if (appointment.Schedule.DateTime.Equals(time))
                     return false;
             }
             return IsDoctorWorkTimeAvailable(time);
@@ -65,9 +65,9 @@ namespace HospitalLibrary.SchedulingAppointment.Service
         {
             List<Appointment> appointments = getAll();
             foreach (Appointment appointment in appointments)
-                if (!appointment.IsDone && (DateTime.Compare(appointment.DateTime, DateTime.Now) < 0))
+                if (!appointment.Schedule.IsDone && (DateTime.Compare(appointment.Schedule.DateTime, DateTime.Now) < 0))
                 {
-                    appointment.IsDone = true;
+                    appointment.Schedule.IsDone = true;
                     _appointmentRepository.Update(appointment);
                 }
         }

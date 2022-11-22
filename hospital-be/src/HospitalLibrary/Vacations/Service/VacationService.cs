@@ -70,8 +70,8 @@ namespace HospitalLibrary.Vacations.Service
 
             foreach (Appointment doctorAppointment in doctorAppointments)
             {
-                if (!((doctorAppointment.DateTime<vacation.DateStart && doctorAppointment.DateTime < vacation.DateEnd)
-                    || doctorAppointment.DateTime.AddMinutes(30)>vacation.DateStart && doctorAppointment.DateTime.AddMinutes(30)>vacation.DateEnd))
+                if (!((doctorAppointment.Schedule.DateTime<vacation.DateStart && doctorAppointment.Schedule.DateTime < vacation.DateEnd)
+                    || doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateStart && doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateEnd))
                 {
                     canCreateVacation = false;
                     break;
