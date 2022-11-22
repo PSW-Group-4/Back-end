@@ -61,6 +61,10 @@ namespace IntegrationLibrary.BloodReport.Service
             return retVal;
 
         }
+        public List<String> GetIdsForReports()
+        {
+            throw new NotImplementedException();
+        }
         private String saveAsPdf(BloodUsageReport bloodUsageReport)
         {
             string html = bloodUsageReport.GenerateHtml();
