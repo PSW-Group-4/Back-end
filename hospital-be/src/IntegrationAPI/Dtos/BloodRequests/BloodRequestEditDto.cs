@@ -8,13 +8,15 @@ namespace IntegrationAPI.Dtos.BloodRequests
 {
     public class BloodRequestEditDto
     {
-        public Guid requestId { get; set; }
-        public String doctorId { get; set; }
-        public BloodType bloodType { get; set; }
-        public String reasonsWhyBloodIsNeeded { get; set; }
-        public double bloodAmountInMilliliters { get; set; }
-        public Boolean isApproved { get; set; }
-        public String rejectionComment { get; set; }
-        public String managerId { get; set; }
+        public Guid Id { get; set; }
+        public String DoctorId { get; set; }
+        public BloodType BloodType { get; set; }
+        public RHFactor RHFactor { get; set; }
+        public String ReasonsWhyBloodIsNeeded { get; set; }
+        public double BloodAmountInMilliliters { get; set; }
+        public Boolean IsApproved { get; set; }
+        public String RejectionComment { get; set; }
+        public String ManagerId { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }
