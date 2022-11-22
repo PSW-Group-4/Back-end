@@ -27,6 +27,7 @@ using IntegrationLibrary.BloodReport.Repository;
 using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.AspNetCore.Mvc;
+using IntegrationAPI.HostedServices;
 
 namespace IntegrationAPI
 {
@@ -97,8 +98,15 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportRepository, BbReportRepository>();
            
 
+
+
             services.AddControllers();
 
+     
+            services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */1 * * * *", TimeZoneInfo.Local));
+            services.AddHostedService<ReportSendingTask>();
+           
+                //@"* 0 4 * * *"
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
