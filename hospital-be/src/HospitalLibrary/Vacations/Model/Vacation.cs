@@ -22,6 +22,7 @@ namespace HospitalLibrary.Vacations.Model
 
         public void Update(Vacation vacation)
         {
+            Reason = vacation.Reason;
             VacationStatus = vacation.VacationStatus;
             DeniedRequestReason = vacation.DeniedRequestReason;
         }
