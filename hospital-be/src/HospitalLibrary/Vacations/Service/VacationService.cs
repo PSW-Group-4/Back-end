@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Appointments.Service;
+﻿using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Repository;
 using System;
@@ -31,6 +32,7 @@ namespace HospitalLibrary.Vacations.Service
         }
         public Vacation Create(Vacation vacation)
         {
+            // should be complicated :D
             return _vacationRepository.Create(vacation);
         }
 
@@ -51,8 +53,21 @@ namespace HospitalLibrary.Vacations.Service
 
         public bool CheckDoctorAvailability(Guid doctorId, DateTime start, DateTime end)
         {
-            
-            throw new NotImplementedException();
+            bool canCreateVacation = true;
+            IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(doctorId);
+
+            foreach (Appointment doctorAppointment in doctorAppointments)
+            {
+                if (!((doctorAppointment.DateTime<start && doctorAppointment.DateTime < start)
+                    || doctorAppointment.DateTime.AddMinutes(30)>start && doctorAppointment.DateTime.AddMinutes(30)>end))
+                {
+                    canCreateVacation = false;
+                    break;
+                }
+            }
+
+            return canCreateVacation;
+
         }
 
         public IEnumerable<Vacation> GetDoctorVacationsFromSpecificStatus(VacationStatus vacationStatus ,Guid DoctorId)

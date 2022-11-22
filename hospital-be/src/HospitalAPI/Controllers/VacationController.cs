@@ -99,5 +99,24 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        // POST api/Vacation/Urgent
+        [HttpPost("Urgent")]
+        public ActionResult CreateUrgent([FromBody] VacationRequestDto vacationDto)
+        {
+            var vacation = _mapper.Map<Vacation>(vacationDto);
+            _vacationtService.Create(vacation);
+            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+        }
+
+        // POST api/VacationNonUrgent
+        [HttpPost("NonUrgent")]
+        public ActionResult CreateNonUrgent([FromBody] VacationRequestDto vacationDto)
+        {
+            var vacation = _mapper.Map<Vacation>(vacationDto);
+            _vacationtService.Create(vacation);
+            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+        }
+
     }
 }
