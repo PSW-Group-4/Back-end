@@ -9,10 +9,10 @@ namespace HospitalLibrary.MoveEquipment.Model
     public class MoveEquipmentTask
     {
         public Guid Id {get; set;}
-        public ICollection<EquipmentToMove> EquipmentToGet {get; set;}
-        public ICollection<EquipmentToMove> EquipmentToGive {get; set;}
+        public virtual ICollection<EquipmentToMove> EquipmentToGet {get; set;}
+        public virtual ICollection<EquipmentToMove> EquipmentToGive {get; set;}
         public virtual RoomSchedule RoomSchedule {get; set;}
-        public virtual Guid RoomScheduleId {get; set;}
+        public Guid RoomScheduleId {get; set;}
         public void Update(MoveEquipmentTask task) {
             EquipmentToGet = task.EquipmentToGet;
             EquipmentToGive = task.EquipmentToGive;
