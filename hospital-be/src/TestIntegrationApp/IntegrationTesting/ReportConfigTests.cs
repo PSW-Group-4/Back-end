@@ -1,4 +1,5 @@
 ﻿using IntegrationAPI;
+using IntegrationAPI.Communications;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.BloodReport.Service;
@@ -32,8 +33,12 @@ namespace TestIntegrationApp.IntegrationTesting
             using var scope = Factory.Services.CreateScope();
             var service = SetupService(scope);
 
-            var result = service.GetIdsForReports();
-            
+            var result = service.CreateAllTimeElapsed();
+            foreach(var report in result)
+            {
+                PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, report.ReportPath);
+            }
+           
             Assert.NotNull(result);
         }
     }

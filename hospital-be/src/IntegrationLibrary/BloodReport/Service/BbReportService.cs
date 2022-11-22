@@ -61,9 +61,36 @@ namespace IntegrationLibrary.BloodReport.Service
             return retVal;
 
         }
-        public List<String> GetIdsForReports()
+        public IEnumerable<ReportConfiguration> GetAllActiveConfigs()
         {
-            throw new NotImplementedException();
+            return _configService.GetAllActive();
+        }
+        public List<ReportPathTransporter> CreateAllTimeElapsed()
+        {
+            var configs = this.GetAllActiveConfigs().ToList();
+            List <ReportPathTransporter> retVal = new List<ReportPathTransporter>();
+            if(configs == null)
+            {
+                return null;
+            }
+            foreach (var config in configs)
+            {
+                var lastReport = _repository.GetLastByBbId(config.BloodBank.Id);
+                DateTime start;
+                if (lastReport == null)
+                {
+                    start = new DateTime(1970, 1, 1);
+                }
+                else
+                {
+                    start = lastReport.timeOfCreation;
+                }
+                if (start.AddDays((int)config.RequestFrequency) <= DateTime.Now)
+                {
+                    retVal.Add(this.Create(config.BloodBank.Id.ToString()));
+                }
+            }
+            return retVal;
         }
         private String saveAsPdf(BloodUsageReport bloodUsageReport)
         {
@@ -101,6 +128,11 @@ namespace IntegrationLibrary.BloodReport.Service
         }
 
         public BloodUsageReport Update(BloodUsageReport bloodUsageReport)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> GetAllIdsForReports()
         {
             throw new NotImplementedException();
         }
