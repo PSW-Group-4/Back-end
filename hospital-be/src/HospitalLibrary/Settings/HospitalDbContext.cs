@@ -45,6 +45,8 @@ namespace HospitalLibrary.Settings
         public DbSet<DoctorRoom> DoctorRooms { get; set; }
         public DbSet<Equipment> Equipments { get; set; }
 
+        public DbSet<PatientRoom> PatientRooms { get; set; }
+
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
 
@@ -57,6 +59,8 @@ namespace HospitalLibrary.Settings
         public DbSet<RoomMap> RoomMaps { get; set; }
 
         public DbSet<RoomsEquipment> RoomsEquipment { get; set; }
+
+        public DbSet<Bed> Beds { get; set; }
 
 
         // Doctor vacations

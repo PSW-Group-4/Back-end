@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221121211953_AddedPatientRooms2")]
+    partial class AddedPatientRooms2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,28 +49,6 @@ namespace HospitalLibrary.Migrations
                     b.HasKey("PersonId");
 
                     b.ToTable("AcountActivationInfos");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.AdmissionHistories.Model.AdmissionHistory", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("AdmissionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("DischargeDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("DischargeReason")
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdmissionId");
-
-                    b.ToTable("AdmissionHistories");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Admissions.Model.Admission", b =>
@@ -584,7 +564,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("Password")
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("PersonId")
+                    b.Property<Guid>("PersonId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Role")
@@ -669,17 +649,6 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("PatientsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("HospitalLibrary.AdmissionHistories.Model.AdmissionHistory", b =>
-                {
-                    b.HasOne("HospitalLibrary.Admissions.Model.Admission", "Admission")
-                        .WithMany()
-                        .HasForeignKey("AdmissionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Admission");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Admissions.Model.Admission", b =>

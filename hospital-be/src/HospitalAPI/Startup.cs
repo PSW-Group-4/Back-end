@@ -172,6 +172,14 @@ namespace HospitalAPI
 
             services.AddScoped<IDoctorRoomService, DoctorRoomService>();
             services.AddScoped<IDoctorRoomRepository, DoctorRoomRepository>();
+
+            services.AddScoped<IPatientRoomService, PatientRoomService>();
+            services.AddScoped<IPatientRoomRepository, PatientRoomRepository>();
+
+            //Bed
+            services.AddScoped<IBedService, BedService>();
+            services.AddScoped<IBedRepository, BedRepository>();
+
             //MapItems
             services.AddScoped<IBuildingMapService, BuildingMapService>();
             services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();
