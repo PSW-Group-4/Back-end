@@ -28,6 +28,7 @@ using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationAPI.HostedServices;
+using IntegrationAPI.Dtos.ReportsConfiguration;
 
 namespace IntegrationAPI
 {
@@ -96,8 +97,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
-           
-
+            services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
+            
 
 
             services.AddControllers();
