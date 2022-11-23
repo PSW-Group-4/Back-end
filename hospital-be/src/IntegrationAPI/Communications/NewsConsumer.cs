@@ -1,77 +1,34 @@
-using Confluent.Kafka;
-using Microsoft.Extensions.Hosting;
+﻿using Confluent.Kafka;
+using IntegrationAPI.Dtos;
+using IntegrationAPI.Dtos.BloodBankNews;
+using IntegrationLibrary.BloodBankNews.Model;
+using IntegrationLibrary.BloodBankNews.Service;
 using System;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using IntegrationAPI.Dtos;
-using IntegrationLibrary.BloodBankNews.Model;
-using IntegrationAPI.Dtos.BloodBankNews;
-using Microsoft.Extensions.DependencyInjection;
-using IntegrationLibrary.BloodBankNews.Service;
 
 namespace IntegrationAPI.Communications
 {
-    public class NewsConsumer : IHostedService
+    public class NewsConsumer : IConsumer<News>
     {
-        private readonly string topic = "news.topic";
-        private readonly string groupId = "news";
-        private readonly string bootstrapServers = "localhost:9094";
-        public IServiceScopeFactory _serviceScopeFactory;
+        private readonly IConsumer<Ignore, string> _consumerBuilder;
+        private readonly CancellationTokenSource _cancellationToken;
+        private readonly IConverter<News, NewsDto> _newsConverter;
+        public NewsConsumer() { }
 
-        public NewsConsumer(IServiceScopeFactory serviceScopeFactory)
+        public NewsConsumer(IConsumer<Ignore, string> consumerBuilder, CancellationTokenSource cancellationToken, IConverter<News, NewsDto> newsConverter)
         {
-            _serviceScopeFactory = serviceScopeFactory;
+            _consumerBuilder = consumerBuilder;
+            _cancellationToken = cancellationToken;
+            _newsConverter = newsConverter;
         }
 
-
-        public Task StartAsync(CancellationToken cancellationToken)
+        public News Consume()
         {
-            var config = new ConsumerConfig
-            {
-                GroupId = groupId,
-                BootstrapServers = bootstrapServers,
-                AutoOffsetReset = AutoOffsetReset.Earliest
-            };
-
-            try
-            {
-                using(var scope = _serviceScopeFactory.CreateScope())
-                {
-                    INewsService newsService = scope.ServiceProvider.GetRequiredService<INewsService>();
-                    var newsConverter = scope.ServiceProvider.GetRequiredService<IConverter<News, NewsDto>>();
-                    IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder
-                <Ignore, string>(config).Build();
-                    {
-                        consumerBuilder.Subscribe(topic);
-                        CancellationTokenSource cancelToken = new CancellationTokenSource();
-                        MyHumbleObject myHumbleObject = new MyHumbleObject(consumerBuilder, cancelToken, newsService, newsConverter);
-
-                        try
-                        {
-                            while (true)
-                            {
-                                myHumbleObject.DoStuff();
-                            }
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            consumerBuilder.Close();
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-
-            return Task.CompletedTask;
-        }
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
+            var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
+            NewsDto newsDto = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value);
+            News news = _newsConverter.Convert(newsDto);
+            return news;
         }
     }
 }

@@ -96,6 +96,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
+            services.AddScoped<IConsumer<News>, NewsConsumer>();
 
 
             services.AddControllers();

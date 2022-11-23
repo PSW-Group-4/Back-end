@@ -33,7 +33,6 @@ namespace TestIntegrationApp.IntegrationTesting
             return new NewsService(scope.ServiceProvider.GetRequiredService<INewsRepository>());
         }
 
-
         [Fact]
         public void Retrieves_all_news()
         {
@@ -65,6 +64,30 @@ namespace TestIntegrationApp.IntegrationTesting
             var result = service.GetAll();
             Assert.NotEmpty(result);
 
+        }
+
+        [Fact]
+        public void Consumes_News()
+        {
+            News news = new()
+            {
+                Id = Guid.NewGuid(),
+                Title = "It's me, hi",
+                Body = "I'm the news, it's me",
+                Timestamp = DateTime.Now,
+                BloodBank = null,
+                IsArchived = false,
+                IsPublished = false
+            };
+            var consumerMock = new Mock<IConsumer<News>>();
+            consumerMock.Setup(consumer => consumer.Consume()).Returns(news);
+
+            using var scope = Factory.Services.CreateScope();
+            var service = SetupService(scope);
+            service.Save(news);
+
+            var result = service.GetAll();
+            Assert.Contains(result, expectedNews => expectedNews.Id == news.Id);
         }
     }
 }
