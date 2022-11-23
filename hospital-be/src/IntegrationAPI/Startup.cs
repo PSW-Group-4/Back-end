@@ -27,6 +27,7 @@ using IntegrationLibrary.BloodReport.Repository;
 using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.AspNetCore.Mvc;
+using Confluent.Kafka;
 
 namespace IntegrationAPI
 {
@@ -95,7 +96,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
-           
+
 
             services.AddControllers();
 

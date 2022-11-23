@@ -39,22 +39,20 @@ namespace IntegrationAPI.Communications
             {
                 using(var scope = _serviceScopeFactory.CreateScope())
                 {
-                    var newsService = scope.ServiceProvider.GetRequiredService<INewsService>();
+                    INewsService newsService = scope.ServiceProvider.GetRequiredService<INewsService>();
                     var newsConverter = scope.ServiceProvider.GetRequiredService<IConverter<News, NewsDto>>();
-                    using (var consumerBuilder = new ConsumerBuilder
-                <Ignore, string>(config).Build())
+                    IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder
+                <Ignore, string>(config).Build();
                     {
                         consumerBuilder.Subscribe(topic);
-                        var cancelToken = new CancellationTokenSource();
+                        CancellationTokenSource cancelToken = new CancellationTokenSource();
+                        MyHumbleObject myHumbleObject = new MyHumbleObject(consumerBuilder, cancelToken, newsService, newsConverter);
 
                         try
                         {
-                            while (false)
+                            while (true)
                             {
-                                var consumer = consumerBuilder.Consume(cancelToken.Token);
-                                NewsDto newsDto = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value);
-                                newsService.Save(newsConverter.Convert(newsDto));
-                                Console.WriteLine("Consumed: " + newsDto);
+                                myHumbleObject.DoStuff();
                             }
                         }
                         catch (OperationCanceledException)
