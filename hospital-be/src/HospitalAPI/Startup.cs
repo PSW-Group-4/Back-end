@@ -46,6 +46,10 @@ using System;
 using HospitalLibrary.Allergies.Service;
 using HospitalLibrary.AcountActivation.Repository;
 using HospitalLibrary.AcountActivation.Service;
+using HospitalLibrary.MoveEquipment.Repository.Implementation;
+using HospitalLibrary.MoveEquipment.Repository.Interfaces;
+using HospitalLibrary.MoveEquipment.Service.Implementation;
+using HospitalLibrary.MoveEquipment.Service.Interfaces;
 using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.AdmissionHistories.Repository;
 using HospitalLibrary.AdmissionHistories.Service;
@@ -199,6 +203,15 @@ namespace HospitalAPI
             services.AddScoped<IAdmissionRepository, AdmissionRepository>();
             services.AddScoped<IAdmissionService, AdmissionService>();
 
+            services.AddScoped<IRoomScheduleRepository, RoomScheduleRepository>();
+            services.AddScoped<IRoomScheduleService, RoomScheduleService>();
+
+            services.AddScoped<IMoveEquipmentTaskRepository, MoveEquipmentTaskRepository>();
+            services.AddScoped<IMoveEquipmentTaskService, MoveEquipmentTaskService>();
+
+            services.AddScoped<IEquipmentToMoveRepository, EquipmentToMoveRepository>();
+            services.AddScoped<IEquipmentToMoveService, EquipmentToMoveService>();
+            
             services.AddScoped<IAdmissionHistoryRepository, AdmissionHistoryRepository>();
             services.AddScoped<IAdmissionHistoryService, AdmissionHistoryService>();
 

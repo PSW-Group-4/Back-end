@@ -170,10 +170,13 @@ namespace TestHospitalApp.Setup
 
             Appointment appointment = new Appointment
             {
-                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
-                DateTime = new DateTime(2022, 12, 10, 0, 0, 0),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),   
                 PatientId = patient.Id,
-                RoomId = room.Id,
+                Schedule = new RoomSchedule{
+                    DateTime = new DateTime(2022, 12, 10, 0, 0, 0),
+                    RoomId = room.Id,
+                }
+                
             };
 
             context.Appointments.Add(appointment);

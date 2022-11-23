@@ -81,8 +81,8 @@ namespace HospitalLibrary.Vacations.Service
 
             foreach (Appointment doctorAppointment in doctorAppointments)
             {
-                if (!((doctorAppointment.DateTime<vacation.DateStart && doctorAppointment.DateTime < vacation.DateEnd)
-                    || doctorAppointment.DateTime.AddMinutes(30)>vacation.DateStart && doctorAppointment.DateTime.AddMinutes(30)>vacation.DateEnd))
+                if (!((doctorAppointment.Schedule.DateTime<vacation.DateStart && doctorAppointment.Schedule.DateTime < vacation.DateEnd)
+                    || doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateStart && doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateEnd))
                 {
                     canCreateVacation = false;
                     break;
@@ -127,7 +127,7 @@ namespace HospitalLibrary.Vacations.Service
                 IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(doctor.Id);
                 foreach(Appointment appointment in doctorAppointments)
                 {
-                    if(appointment.DateTime.Date > vacation.DateStart && appointment.DateTime.Date < vacation.DateEnd)
+                    if(appointment.Schedule.DateTime.Date > vacation.DateStart && appointment.Schedule.DateTime.Date < vacation.DateEnd)
                     {
                         doctorFound = false;
                         break;
@@ -152,7 +152,7 @@ namespace HospitalLibrary.Vacations.Service
             foreach (Appointment appointment in doctorAppointments)
             {
                 appointment.DoctorId = availableSwitchDoctor.Id;
-                appointment.RoomId = availableSwitchDoctor.RoomId;
+                appointment.Schedule.RoomId = availableSwitchDoctor.RoomId;
             }
         }
 
