@@ -84,7 +84,8 @@ namespace TestIntegrationApp.IntegrationTesting
 
             using var scope = Factory.Services.CreateScope();
             var service = SetupService(scope);
-            service.Save(news);
+            IConsumer<News> consumer = consumerMock.Object;
+            service.Save(consumer.Consume());
 
             var result = service.GetAll();
             Assert.Contains(result, expectedNews => expectedNews.Id == news.Id);
