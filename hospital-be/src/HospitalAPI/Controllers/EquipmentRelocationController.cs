@@ -24,13 +24,14 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
 
-        // GET api/Available/2
-        [HttpGet()]
-        public ActionResult GetAll()
+        
+        [HttpGet("Recommend/{relocationStart}/{duration}/{sourceId}/{targetId}")]
+        public ActionResult Recommend([FromRoute] String relocationStart, [FromRoute] int duration, [FromRoute] String sourceId, [FromRoute] String targetId)
         {
             try
             {
-                EquipmentRelocation equipmentRelocation = new EquipmentRelocation(new DateTime(2022, 12, 11, 23,0, 0), 30, Guid.Parse("133962ea-c543-497b-81a6-6a2efb54212a"), Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"));
+                DateTime dateTime= DateTime.Parse(relocationStart);
+                EquipmentRelocation equipmentRelocation = new EquipmentRelocation(dateTime, duration, Guid.Parse(sourceId), Guid.Parse(targetId));
 
                 List<DateTime> termins = _equipmentRelocationService.RecommendRelocationStart(equipmentRelocation);
                 return Ok(termins);
