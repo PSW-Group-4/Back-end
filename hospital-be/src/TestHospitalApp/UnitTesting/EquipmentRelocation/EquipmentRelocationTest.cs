@@ -24,11 +24,11 @@ namespace TestHospitalApp.UnitTesting.EquipmentRelocation
         {
             HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocation equipmentRelocation = new HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocation(new DateTime(2022, 12, 11, 23, 0, 0), 37, Guid.Parse("133962ea-c543-497b-81a6-6a2efb54212a"), Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"));
             List<DateTime> result = new List<DateTime>();
-            var appointmentService = new Mock<IAppointmentService>();
+            var appointmentService = new Mock<IRoomScheduleService>();
             EquipmentRelocationService service = new EquipmentRelocationService( appointmentService.Object);
-            List<Appointment> appointments = new List<Appointment>();
-            appointments.Add(new Appointment { DateTime = new DateTime(2022, 12, 25, 1, 0, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
-            appointments.Add(new Appointment { DateTime = new DateTime(2022, 12, 25, 1, 30, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
+            List<RoomSchedule> appointments = new List<RoomSchedule>();
+            appointments.Add(new RoomSchedule { DateTime = new DateTime(2022, 12, 25, 1, 0, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
+            appointments.Add(new RoomSchedule { DateTime = new DateTime(2022, 12, 25, 1, 30, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
 
             appointmentService.Setup(x => x.GetAll()).Returns(appointments);
 

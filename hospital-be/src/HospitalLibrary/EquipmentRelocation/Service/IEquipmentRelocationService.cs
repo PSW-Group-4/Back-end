@@ -11,6 +11,6 @@ namespace HospitalLibrary.EquipmentRelocation.Service
     {
         public List<DateTime> RecommendRelocationStart(EquipmentRelocation.DTO.EquipmentRelocation dto);
 
-        public List<DateTime> GetAvailableDates(List<Appointment> appointments, DTO.EquipmentRelocation dto);
+        public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocation dto);
     }
 }
