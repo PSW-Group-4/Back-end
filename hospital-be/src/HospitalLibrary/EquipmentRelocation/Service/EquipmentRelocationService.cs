@@ -14,18 +14,22 @@ namespace HospitalLibrary.EquipmentRelocation.Service
 {
     public class EquipmentRelocationService : IEquipmentRelocationService
     {
+
         private readonly IRoomScheduleService _appointemntService;
 
 
         public EquipmentRelocationService( IRoomScheduleService appointemntService)
+
         {
             _appointemntService = appointemntService;
         }
 
         public List<DateTime> RecommendRelocationStart(EquipmentRelocation.DTO.EquipmentRelocation dto)
         {
+
             List<RoomSchedule> appointments = (List<RoomSchedule>)_appointemntService.GetAll();
             appointments.Add(new RoomSchedule { DateTime = new DateTime(9999, 12, 12, 3, 30, 0), RoomId = dto.targetId });
+
 
             dto.relocationStart = CheckDate(dto.relocationStart);
             dto.duration = CheckDuration(dto.duration);
@@ -33,12 +37,16 @@ namespace HospitalLibrary.EquipmentRelocation.Service
             return GetAvailableDates(appointments, dto);
         }
 
+
         public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocation dto)
+
         {
             List<DateTime> result = new List<DateTime>();
             do
             {
+
                 foreach (RoomSchedule appointment in appointments)
+
                 {
                     if (appointment.DateTime.AddMinutes(30) > dto.relocationStart && (appointment.RoomId.Equals(dto.targetId) || appointment.RoomId.Equals(dto.sourceId)))
                     {

@@ -24,6 +24,7 @@ namespace HospitalAPI.Controllers
             _mapper = mapper;
         }
 
+
         
         [HttpGet("Recommend/{relocationStart}/{duration}/{sourceId}/{targetId}")]
         public ActionResult Recommend([FromRoute] String relocationStart, [FromRoute] int duration, [FromRoute] String sourceId, [FromRoute] String targetId)

@@ -30,6 +30,7 @@ namespace TestHospitalApp.UnitTesting.EquipmentRelocation
             appointments.Add(new RoomSchedule { DateTime = new DateTime(2022, 12, 25, 1, 0, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
             appointments.Add(new RoomSchedule { DateTime = new DateTime(2022, 12, 25, 1, 30, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
 
+
             appointmentService.Setup(x => x.GetAll()).Returns(appointments);
 
             result = service.RecommendRelocationStart(equipmentRelocation);
