@@ -56,6 +56,7 @@ namespace TestHospitalApp.Setup
             if (isDbCreated) return;
             isDbCreated = true;
 
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodSupply\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Doctors\" RESTART IDENTITY CASCADE;");
@@ -135,6 +136,7 @@ namespace TestHospitalApp.Setup
 
             Admission admission = new Admission
             {
+                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174"),
                 PatientId = patient.Id,
                 Reason = "Razlog za otpust",
                 RoomId = room.Id,

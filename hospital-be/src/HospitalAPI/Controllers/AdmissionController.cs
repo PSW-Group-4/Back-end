@@ -51,9 +51,15 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] AdmissionRequestDto admissionDto)
         {
+            try { 
             var admission = _mapper.Map<Admission>(admissionDto);
             _admissionService.Create(admission);
             return CreatedAtAction("GetById", new { id = admission.Id }, admission);
+            }
+            catch(NotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         // DELETE api/Admission/1
