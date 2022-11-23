@@ -48,8 +48,19 @@ namespace HospitalAPI.Controllers
         public ActionResult Create([FromBody] VacationRequestDto vacationDto)
         {
             var vacation = _mapper.Map<Vacation>(vacationDto);
+            try
+            {
+                _vacationtService.Create(vacation);
+                return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+            /*
+            var vacation = _mapper.Map<Vacation>(vacationDto);
             _vacationtService.Create(vacation);
-            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);*/
         }
 
         // PUT api/Vacation/1
@@ -84,5 +95,54 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        // GET api/DoctorVacation/CurrentRequests/doctorID
+        [HttpGet("{vacationStatus}/{id}")]
+        public ActionResult GetDoctorVacationsFromSpecificStatus([FromRoute] VacationStatus vacationStatus, [FromRoute] Guid id)
+        {
+            try
+            {
+                var vacation = _vacationtService.GetDoctorVacationsFromSpecificStatus(vacationStatus,id);
+                return Ok(vacation);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        /*
+        // POST api/Vacation/Urgent
+        [HttpPost("Urgent")]
+        public ActionResult CreateUrgent([FromBody] VacationRequestDto vacationDto)
+        {
+            var vacation = _mapper.Map<Vacation>(vacationDto);
+            try
+            {
+                _vacationtService.Create(vacation);
+                return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }  
+        }
+
+        // POST api/VacationNonUrgent
+        [HttpPost("NonUrgent")]
+        public ActionResult CreateNonUrgent([FromBody] VacationRequestDto vacationDto)
+        {
+            var vacation = _mapper.Map<Vacation>(vacationDto);
+            try
+            {
+                _vacationtService.Create(vacation);
+                return CreatedAtAction("GetById", new { id = vacation.Id }, vacation);
+            }
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
+        }*/
+
     }
 }

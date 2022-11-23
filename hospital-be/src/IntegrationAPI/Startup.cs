@@ -27,6 +27,8 @@ using IntegrationLibrary.BloodReport.Repository;
 using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.AspNetCore.Mvc;
+using IntegrationAPI.HostedServices;
+using IntegrationAPI.Dtos.ReportsConfiguration;
 using Confluent.Kafka;
 
 namespace IntegrationAPI
@@ -96,11 +98,17 @@ namespace IntegrationAPI
             services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
+            services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
             services.AddScoped<IConsumer<News>, NewsConsumer>();
 
 
             services.AddControllers();
 
+     
+            services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */1 * * * *", TimeZoneInfo.Local));
+            services.AddHostedService<ReportSendingTask>();
+           
+                //@"* 0 4 * * *"
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

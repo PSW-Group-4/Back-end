@@ -41,7 +41,7 @@ namespace HospitalLibrary.Appointments.Service
 
             foreach (Appointment appointment in doctorsAppointments)
             {
-                if (appointment.DateTime > DateTime.Now /*!appointment.isDone*/)
+                if (appointment.Schedule.DateTime > DateTime.Now /*!appointment.isDone*/)
                 {
                     doctorsCurrentAppointments.Add(appointment);
                 }
@@ -56,7 +56,7 @@ namespace HospitalLibrary.Appointments.Service
 
             foreach (Appointment appointment in doctorsAppointments)
             {
-                if (appointment.DateTime < DateTime.Now /*appointment.isDone*/)
+                if (appointment.Schedule.DateTime < DateTime.Now /*appointment.isDone*/)
                 {
                     doctorsOldAppointments.Add(appointment);
                 }
@@ -72,7 +72,7 @@ namespace HospitalLibrary.Appointments.Service
             //String recipientEmail = appointment.Patient.Email;
             String recipientEmail = "the2922000@gmail.com";
             String subject = "Otkazivanje pregleda";
-            String emailText = "Vaš pregled dana " + appointment.DateTime.ToString("dd.MM.yyyy. dd:mm") + " je otkazan";
+            String emailText = "Vaš pregled dana " + appointment.Schedule.DateTime.ToString("dd.MM.yyyy. dd:mm") + " je otkazan";
 
             _appointmentRepository.Delete(appointmentId);
             MimeMessage emailMessage = EmailSending.createTxtEmail(recipientName,recipientEmail,subject,emailText );

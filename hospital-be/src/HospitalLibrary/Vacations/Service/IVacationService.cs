@@ -14,5 +14,6 @@ namespace HospitalLibrary.Vacations.Service
         Vacation Create(Vacation vacation);
         Vacation Update(Vacation vacation);
         void Delete(Guid vacationId);
+        IEnumerable<Vacation> GetDoctorVacationsFromSpecificStatus(VacationStatus vacationStatus, Guid DoctorId);
     }
 }

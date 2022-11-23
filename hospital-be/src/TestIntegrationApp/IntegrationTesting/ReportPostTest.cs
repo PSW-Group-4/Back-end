@@ -39,8 +39,8 @@ namespace TestIntegrationApp.IntegrationTesting
 
             List<String> bankIds = new List<String>();
             //TODO change to real db test data
-            bankIds.Add("guid1");
-            bankIds.Add("guid2");
+            bankIds.Add("32db7839-f8a4-4c8b-9486-80f783ed6746");
+            //bankIds.Add("guid2");
 
             var result = service.CreateMultiple(bankIds);
 
@@ -54,7 +54,7 @@ namespace TestIntegrationApp.IntegrationTesting
 
             List<String> bankIds = new List<String>();
             //TODO change to real db test data
-            bankIds.Add("guid1");
+            bankIds.Add("9de4cbb3-6eca-458d-86cf-f9683f6c9fb4");
 
             Assert.Throws<NotFoundException>(() => service.CreateMultiple(bankIds));
         }

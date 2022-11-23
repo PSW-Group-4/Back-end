@@ -18,12 +18,17 @@ namespace IntegrationLibrary.ReportConfigurations.Service
         }
         public ReportConfiguration Create(ReportConfiguration config)
         {
-            throw new NotImplementedException();
+            return _repository.Create(config); 
         }
 
         public IEnumerable<ReportConfiguration> GetAll()
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
+        }
+
+        public IEnumerable<ReportConfiguration> GetAllActive()
+        {
+            return _repository.GetAllActive();
         }
 
         public ReportConfiguration GetByBloodBank(Guid bloodBankId)
@@ -38,7 +43,7 @@ namespace IntegrationLibrary.ReportConfigurations.Service
 
         public ReportConfiguration Update(ReportConfiguration config)
         {
-            throw new NotImplementedException();
+            return _repository.Update(config);
         }
     }
 }
