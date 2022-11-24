@@ -22,6 +22,11 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         {
         }
 
+        public RoomsEquipment()
+        {
+
+        }
+
         public RoomsEquipment(Equipment equipment, DoctorRoom doctorRoom, ulong amount)
         {
             Equipment = equipment;
