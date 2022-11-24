@@ -151,11 +151,11 @@ namespace HospitalLibrary.Vacations.Service
 
             foreach (Appointment appointment in doctorAppointments)
             {
-                if(appointment.DateTime > vacation.DateStart &&
-                    appointment.DateTime < vacation.DateEnd)
+                if(appointment.Schedule.DateTime > vacation.DateStart &&
+                    appointment.Schedule.DateTime < vacation.DateEnd)
                 {
                     appointment.DoctorId = availableSwitchDoctor.Id;
-                    appointment.RoomId = availableSwitchDoctor.RoomId;
+                    appointment.Schedule.RoomId = availableSwitchDoctor.RoomId;
                     // updejtuj apojntment
                 }
             }
