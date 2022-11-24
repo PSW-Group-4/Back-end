@@ -19,18 +19,18 @@ namespace HospitalLibrary.Core.Service
 {
     public class JwtService : IJwtService
     {
-        private readonly IConfiguration _config;
+        //private readonly IConfiguration _config;
 
         private readonly IUserRepository _userRepository;
 
         public JwtService(IConfiguration config, IUserRepository userRepository)
         {
-            _config = config;
+            //_config = config;
             _userRepository = userRepository;
         }
         public string GenerateToken(User user)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("DhftOS5uphK3vmCJQrexST1RsyjZBjXWRgJMFPU4"));
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
             var claims = new[]
@@ -40,8 +40,8 @@ namespace HospitalLibrary.Core.Service
                 new Claim("personId", user.PersonId.ToString())
             };
 
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-              _config["Jwt:Audience"],
+            var token = new JwtSecurityToken("http://localhost:16177/",
+              "http://localhost:16177/",
               claims,
               expires: DateTime.Now.AddMinutes(30),
               signingCredentials: credentials);

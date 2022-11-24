@@ -21,6 +21,7 @@ using HospitalAPI.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using HospitalLibrary.EquipmentRelocation.DTO;
+using HospitalLibrary.Users.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -74,6 +75,7 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomSchedules\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -129,6 +131,7 @@ namespace TestHospitalApp.Setup
 
             Patient patient = new Patient
             {
+                Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),
                 BloodType = BloodType.A_POS,
                 ChoosenDoctorId = doctor.Id,
                 Name = "Petar",
@@ -140,7 +143,24 @@ namespace TestHospitalApp.Setup
                 Email = "mail@gmail.krompir",
                 PhoneNumber = "066413242"
             };
+
+            Patient patient2 = new Patient
+            {
+                Id = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"),
+                BloodType = BloodType.A_POS,
+                ChoosenDoctorId = doctor.Id,
+                Name = "Test",
+                Surname = "Test",
+                Birthdate = DateTime.Now,
+                Gender = Gender.Male,
+                AddressId = address.Id,
+                Jmbg = "12312312",
+                Email = "mail2@gmail.krompir",
+                PhoneNumber = "066413242"
+            };
+
             context.Patients.Add(patient);
+            context.Patients.Add(patient2);
 
             Admission admission = new Admission
             {
@@ -271,10 +291,50 @@ namespace TestHospitalApp.Setup
             context.RoomSchedules.Add(schedule);
             context.RoomSchedules.Add(schedule2);
 
+            //Users
+            initUsers(context);
+
 
             context.SaveChanges();
 
             isDbCreated = false;
+        }
+
+        private static void initUsers(HospitalDbContext context)
+        {
+            User user1 = new User
+            {
+                Username = "user",
+                Password = "pass",
+                IsAccountActive = true,
+                IsBlocked = false,
+                Role = UserRole.Patient,
+                PersonId = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1")
+            };
+
+            User managerUser = new User
+            {
+                Username = "manager",
+                Password = "manager",
+                IsAccountActive = true,
+                IsBlocked = false,
+                Role = UserRole.Manager,
+                PersonId = null
+            };
+
+            User userInactive = new User
+            {
+                Username = "notactive",
+                Password = "notactive",
+                IsAccountActive = false,
+                IsBlocked = false,
+                Role = UserRole.Patient,
+                PersonId = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639")
+            };
+
+            context.Add(user1);
+            context.Add(userInactive);
+            context.Add(managerUser);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace HospitalLibrary.Patients.Repository
         int GetDoctorsPatientCountByAgeGroup(AgeGroup ageGroup, Guid doctorId);
         int NumberOfAllPatients();
         int NumberOfPatientsDoctorHas(Guid doctorId);
+        Patient GetByEmail(string email);
     }
 
 }
