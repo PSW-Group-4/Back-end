@@ -20,7 +20,7 @@ namespace IntegrationAPI
                 })
                 .ConfigureServices(services =>
                 {
-                    services.AddHostedService<NewsConsumer>();
+                    services.AddHostedService<NewsListener>();
                 });
     }
 }

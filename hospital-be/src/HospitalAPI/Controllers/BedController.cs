@@ -49,7 +49,7 @@ namespace HospitalAPI.Controllers
         }
         //PUT: api/Bed/FreeBed
         [HttpPut("/FreeBed")]
-        public ActionResult Update([FromBody] BedDto bedDto)
+        public ActionResult FreeBed([FromBody] BedDto bedDto)
         {
             var bed = _mapper.Map<Bed>(bedDto);
             //bed.Id = id;
