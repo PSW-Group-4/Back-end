@@ -14,6 +14,7 @@ using HospitalAPI.Dtos.Medicine;
 using HospitalAPI.Dtos.Patient;
 using HospitalAPI.Dtos.Person;
 using HospitalAPI.Dtos.Rooms;
+using HospitalAPI.Dtos.Treatment;
 using HospitalAPI.Dtos.User;
 using HospitalAPI.Dtos.Vacation;
 using HospitalLibrary.AdmissionHistories.Model;
@@ -29,6 +30,7 @@ using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
 
@@ -104,7 +106,8 @@ namespace HospitalAPI.Mapper
             CreateMap<MedicineRequestDto, Medicine>();
             CreateMap<Medicine, MedicineRequestDto>();
 
-
+            CreateMap<TreatmentRequestDto, Treatment>();
+            CreateMap<Treatment, TreatmentRequestDto>();
 
 
             CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();

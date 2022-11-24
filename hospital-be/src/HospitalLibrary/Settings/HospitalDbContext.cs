@@ -21,6 +21,11 @@ using HospitalLibrary.MoveEquipment.Model;
 using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.EquipmentRelocation.DTO;
+using HospitalLibrary.Treatments.Model;
+
+
+
+
 
 namespace HospitalLibrary.Settings
 {
@@ -76,10 +81,15 @@ namespace HospitalLibrary.Settings
         public DbSet<EquipmentToMove> EquipmentToMoves {get; set;}
 
         // Medicine
-
         public DbSet<Medicine> Medicines { get; set; }
 
+
+
         //public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
+
+        public DbSet<Treatment> Treatments { get; set; }
+        
+
         
 
 
