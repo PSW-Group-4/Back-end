@@ -79,7 +79,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<Medicine> Medicines { get; set; }
 
-        public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
+        //public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
         
 
 
