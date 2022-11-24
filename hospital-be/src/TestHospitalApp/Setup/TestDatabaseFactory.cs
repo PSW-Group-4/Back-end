@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.AdmissionHistories.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -143,6 +144,16 @@ namespace TestHospitalApp.Setup
                 arrivalDate = DateTime.Now
             };
             context.Admissions.Add(admission);
+
+            AdmissionHistory admissionHistory = new AdmissionHistory
+            {
+                Id = new Guid("11942a9c-100e-489a-8434-98704889d8ed"),
+                AdmissionId = admission.Id,
+                Admission = admission,
+                DischargeReason = "Resen problem",
+                DischargeDate = DateTime.Now
+            };
+            context.AdmissionHistories.Add(admissionHistory);
 
             Vacation vacationWFA = new Vacation
             {

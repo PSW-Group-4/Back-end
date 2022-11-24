@@ -21,7 +21,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GenerateSeveralPdf([FromRoute] Guid id)
+        public ActionResult GenerateSeveralPdf([FromRoute] Guid id)
         {
             AdmissionHistory admissionHistory = admissionHistoryService.GetById(id);
             return File(medicalRecordService.GeneratePdf(admissionHistory), "application/pdf", "medicalReport.pdf");
