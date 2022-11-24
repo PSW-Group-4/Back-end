@@ -71,10 +71,7 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
-            
-            
-            
-
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomSchedules\" RESTART IDENTITY CASCADE;");
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -240,6 +237,26 @@ namespace TestHospitalApp.Setup
             patientRoom.BedIds.Add(bed1.Id);
 
             context.Rooms.Add(patientRoom);
+
+            RoomSchedule schedule = new RoomSchedule
+            {
+                Id = new Guid("95a7ac4d-4f11-4530-995b-436f484599e7"),
+                DateTime = new DateTime(2022, 12, 24, 11, 00, 00),
+                IsDone = false,
+                RoomId = room.Id,
+                Duration = 30
+            };
+            RoomSchedule schedule2 = new RoomSchedule
+            {
+                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
+                DateTime = new DateTime(2022, 12, 25, 12, 00, 00),
+                IsDone = true,
+                RoomId = room.Id,
+                Duration = 30
+            };
+
+            context.RoomSchedules.Add(schedule);
+            context.RoomSchedules.Add(schedule2);
 
             context.SaveChanges();
 
