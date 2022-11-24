@@ -20,7 +20,8 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository
 
         public Bed Create(Bed entity)
         {
-            _context.Beds.Add(entity);
+            entity.IsFree = true;
+            _context.Beds.Add(entity);            
             _context.SaveChanges();
             return entity;
         }
