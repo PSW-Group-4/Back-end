@@ -271,43 +271,6 @@ namespace TestHospitalApp.Setup
             context.RoomSchedules.Add(schedule);
             context.RoomSchedules.Add(schedule2);
 
-            Room roomSource = new Room
-            {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d235"),
-                Description = "Soba za premestanje 1",
-                Name = "Spajz",
-                Number = 1
-            };
-
-            Room roomTarget = new Room
-            {
-                Id = new Guid("890e5ca4-e968-4cb6-ab86-aac1b525d235"),
-                Description = "Soba za premestanje 2",
-                Name = "Kuhinja",
-                Number = 5
-            };
-
-            context.Rooms.Add(roomSource);
-            context.Rooms.Add(roomTarget);
-            
-            EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO
-            {
-                relocationStart = new DateTime(2022, 12, 25, 12, 00, 00),
-                duration = 30,
-                sourceId = roomSource.Id,
-                targetId = roomTarget.Id
-            };
-
-            EquipmentRelocationDTO equipmentRelocation2 = new EquipmentRelocationDTO
-            {
-                relocationStart = new DateTime(2022, 12, 20, 14, 00, 00),
-                duration = 30,
-                sourceId = roomTarget.Id,
-                targetId = roomSource.Id
-            };
-
-            context.EquipmentRelocations.Add(equipmentRelocation);
-            context.EquipmentRelocations.Add(equipmentRelocation2);
 
             context.SaveChanges();
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
-using HospitalLibrary.EquipmentRelocation.Repository.Implementation;
+
 
 namespace HospitalLibrary.EquipmentRelocation.Service
 {
@@ -17,7 +17,6 @@ namespace HospitalLibrary.EquipmentRelocation.Service
     {
 
         private readonly IRoomScheduleService _appointemntService;
-        private readonly EquipmentRelocationRepository _relocationRepo;
 
 
         public EquipmentRelocationService( IRoomScheduleService appointemntService)
@@ -83,9 +82,5 @@ namespace HospitalLibrary.EquipmentRelocation.Service
             return duration;
         }
 
-        public IEnumerable<EquipmentRelocationDTO> GetAll()
-        {
-            return _relocationRepo.GetAll();
-        }
     }
 }

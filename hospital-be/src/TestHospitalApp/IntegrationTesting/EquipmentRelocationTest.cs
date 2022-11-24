@@ -30,16 +30,5 @@ namespace TestHospitalApp.IntegrationTesting
             return new EquipmentRelocationController(scope.ServiceProvider.GetRequiredService<IEquipmentRelocationService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
-        [Fact]
-        public void Return_current_move_requests()
-        {
-            using var scope = Factory.Services.CreateScope();
-            var moveController = SetupMoveController(scope);
-
-            List<EquipmentRelocationDTO> result = ((OkObjectResult)moveController.GetAll())?.Value as List<EquipmentRelocationDTO>;
-            result.ShouldNotBeNull(); //treba baza da se napravi 
-        }
-
-
     }
 }

@@ -15,6 +15,5 @@ namespace HospitalLibrary.EquipmentRelocation.Service
 
 
         public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocationDTO dto);
-        IEnumerable<EquipmentRelocationDTO> GetAll();
     }
 }

@@ -43,11 +43,6 @@ namespace HospitalAPI.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult GetAll()
-        {
-            return Ok(_equipmentRelocationService.GetAll());
-        }
 
     }
 }
