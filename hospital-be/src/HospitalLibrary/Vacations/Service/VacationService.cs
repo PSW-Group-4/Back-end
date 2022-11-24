@@ -34,6 +34,7 @@ namespace HospitalLibrary.Vacations.Service
         {
             return _vacationRepository.GetById(id);
         }
+
         public void Delete(Guid vacationId)
         {
             var vacation = GetById(vacationId);
@@ -120,7 +121,6 @@ namespace HospitalLibrary.Vacations.Service
             Doctor currentDoctor = _doctorService.GetById(vacation.DoctorId);
             IEnumerable<Doctor> doctors = _doctorService.GetAll();
             
-
             foreach(Doctor doctor in doctors)
             {
                 bool doctorFound = true;
@@ -151,8 +151,13 @@ namespace HospitalLibrary.Vacations.Service
 
             foreach (Appointment appointment in doctorAppointments)
             {
-                appointment.DoctorId = availableSwitchDoctor.Id;
-                appointment.Schedule.RoomId = availableSwitchDoctor.RoomId;
+                if(appointment.DateTime > vacation.DateStart &&
+                    appointment.DateTime < vacation.DateEnd)
+                {
+                    appointment.DoctorId = availableSwitchDoctor.Id;
+                    appointment.RoomId = availableSwitchDoctor.RoomId;
+                    // updejtuj apojntment
+                }
             }
         }
 
