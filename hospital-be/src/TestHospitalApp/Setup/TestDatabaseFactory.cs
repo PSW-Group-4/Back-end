@@ -53,7 +53,7 @@ namespace TestHospitalApp.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=1;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
