@@ -292,7 +292,6 @@ namespace TestHospitalApp.Setup
             
             EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO
             {
-                Id= new Guid("890e4ba4-e968-4cb6-ab86-aac1b521d255"),
                 relocationStart = new DateTime(2022, 12, 25, 12, 00, 00),
                 duration = 30,
                 sourceId = roomSource.Id,
@@ -301,7 +300,6 @@ namespace TestHospitalApp.Setup
 
             EquipmentRelocationDTO equipmentRelocation2 = new EquipmentRelocationDTO
             {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-aan5b521d255"),
                 relocationStart = new DateTime(2022, 12, 20, 14, 00, 00),
                 duration = 30,
                 sourceId = roomTarget.Id,
