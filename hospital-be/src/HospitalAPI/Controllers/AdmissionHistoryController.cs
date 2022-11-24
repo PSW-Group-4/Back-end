@@ -16,12 +16,14 @@ namespace HospitalAPI.Controllers
     public class AdmissionHistoryController : ControllerBase
     {
         private readonly IAdmissionHistoryService _admissionService;
+        private readonly IAdmissionService service;
         private readonly IMapper _mapper;
 
-        public AdmissionHistoryController(IAdmissionHistoryService admissionService, IMapper mapper)
+        public AdmissionHistoryController(IAdmissionHistoryService admissionService, IMapper mapper, IAdmissionService service)
         {
             _admissionService = admissionService;
             _mapper = mapper;
+            this.service = service;
         }
 
         // GET: api/Admission
@@ -50,9 +52,18 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] AdmissionHistoryRequestDto admissionDto)
         {
-            var admission = _mapper.Map<AdmissionHistory>(admissionDto);
-            _admissionService.Create(admission);
-            return CreatedAtAction("GetById", new { id = admission.Id }, admission);
+            try
+            {
+                if (service.GetById(admissionDto.AdmissionId) == null)
+                    return null;
+                var admission = _mapper.Map<AdmissionHistory>(admissionDto);
+                _admissionService.Create(admission);
+                return CreatedAtAction("GetById", new { id = admission.Id }, admission);
+            }
+            catch(NotFoundException)
+            {
+                return null;
+            }
         }
     }
 }
