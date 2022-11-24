@@ -30,5 +30,9 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             DoctorRoomId = doctorRoom.Id;
             Amount = amount;
         }
+
+        public RoomsEquipment()
+        {
+        }
     }
 }
