@@ -62,7 +62,7 @@ namespace TestHospitalApp.Setup
             if (isDbCreated) return;
             isDbCreated = true;
 
-            //context.Database.EnsureDeleted();
+            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodSupply\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Doctors\" RESTART IDENTITY CASCADE;");

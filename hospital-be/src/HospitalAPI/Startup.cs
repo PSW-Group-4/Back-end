@@ -58,6 +58,8 @@ using HospitalLibrary.EquipmentRelocation.Service;
 using HospitalAPI.HostedService;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Medicines.Service;
+using HospitalLibrary.Treatments.Repository;
+using HospitalLibrary.Treatments.Service;
 
 namespace HospitalAPI
 {
@@ -224,6 +226,9 @@ namespace HospitalAPI
             //Medicines
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IMedicineService, MedicineService>();
+
+            services.AddScoped<ITreatmentRepository, TreatmentRepository>();
+            services.AddScoped<ITreatmentService, TreatmentService>();
 
             //EquipmentRelocation
             services.AddScoped<IEquipmentRelocationService, EquipmentRelocationService>();
