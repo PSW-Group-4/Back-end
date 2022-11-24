@@ -22,7 +22,7 @@ namespace TestHospitalApp.UnitTesting.EquipmentRelocation
         [Fact]
         public void Is_list_full()
         {
-            HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocation equipmentRelocation = new HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocation(new DateTime(2022, 12, 11, 23, 0, 0), 37, Guid.Parse("133962ea-c543-497b-81a6-6a2efb54212a"), Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"));
+            HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO equipmentRelocation = new HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO(new DateTime(2022, 12, 11, 23, 0, 0), 37, Guid.Parse("133962ea-c543-497b-81a6-6a2efb54212a"), Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"));
             List<DateTime> result = new List<DateTime>();
             var appointmentService = new Mock<IRoomScheduleService>();
             EquipmentRelocationService service = new EquipmentRelocationService( appointmentService.Object);

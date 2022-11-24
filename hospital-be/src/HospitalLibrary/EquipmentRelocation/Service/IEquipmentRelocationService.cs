@@ -1,4 +1,6 @@
-﻿using HospitalLibrary.Appointments.Model;
+﻿using HospitalLibrary.Admissions.Model;
+using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.EquipmentRelocation.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,10 @@ namespace HospitalLibrary.EquipmentRelocation.Service
 {
     public interface IEquipmentRelocationService
     {
-        public List<DateTime> RecommendRelocationStart(EquipmentRelocation.DTO.EquipmentRelocation dto);
+        public List<DateTime> RecommendRelocationStart(EquipmentRelocation.DTO.EquipmentRelocationDTO dto);
 
 
-        public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocation dto);
-
+        public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocationDTO dto);
+        IEnumerable<EquipmentRelocationDTO> GetAll();
     }
 }

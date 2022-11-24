@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+using HospitalLibrary.EquipmentRelocation.Repository.Implementation;
 
 namespace HospitalLibrary.EquipmentRelocation.Service
 {
@@ -16,6 +17,7 @@ namespace HospitalLibrary.EquipmentRelocation.Service
     {
 
         private readonly IRoomScheduleService _appointemntService;
+        private readonly EquipmentRelocationRepository _relocationRepo;
 
 
         public EquipmentRelocationService( IRoomScheduleService appointemntService)
@@ -24,7 +26,7 @@ namespace HospitalLibrary.EquipmentRelocation.Service
             _appointemntService = appointemntService;
         }
 
-        public List<DateTime> RecommendRelocationStart(EquipmentRelocation.DTO.EquipmentRelocation dto)
+        public List<DateTime> RecommendRelocationStart(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)
         {
 
             List<RoomSchedule> appointments = (List<RoomSchedule>)_appointemntService.GetAll();
@@ -38,7 +40,7 @@ namespace HospitalLibrary.EquipmentRelocation.Service
         }
 
 
-        public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocation dto)
+        public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocationDTO dto)
 
         {
             List<DateTime> result = new List<DateTime>();
@@ -79,6 +81,11 @@ namespace HospitalLibrary.EquipmentRelocation.Service
                 duration += 15 - duration % 15;
             }
             return duration;
+        }
+
+        public IEnumerable<EquipmentRelocationDTO> GetAll()
+        {
+            return _relocationRepo.GetAll();
         }
     }
 }

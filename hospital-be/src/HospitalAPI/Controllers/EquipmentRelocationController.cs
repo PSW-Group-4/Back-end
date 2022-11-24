@@ -32,7 +32,7 @@ namespace HospitalAPI.Controllers
             try
             {
                 DateTime dateTime= DateTime.Parse(relocationStart);
-                EquipmentRelocation equipmentRelocation = new EquipmentRelocation(dateTime, duration, Guid.Parse(sourceId), Guid.Parse(targetId));
+                EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO(dateTime, duration, Guid.Parse(sourceId), Guid.Parse(targetId));
 
                 List<DateTime> termins = _equipmentRelocationService.RecommendRelocationStart(equipmentRelocation);
                 return Ok(termins);
@@ -41,6 +41,12 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_equipmentRelocationService.GetAll());
         }
 
     }

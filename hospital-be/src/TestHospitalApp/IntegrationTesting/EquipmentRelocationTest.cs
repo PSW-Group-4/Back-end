@@ -2,6 +2,9 @@
 using HospitalAPI;
 using HospitalAPI.Controllers;
 using HospitalLibrary.AdmissionHistories.Service;
+using HospitalLibrary.Admissions.Model;
+using HospitalLibrary.EquipmentRelocation.DTO;
+using HospitalLibrary.EquipmentRelocation.Service;
 using HospitalLibrary.MoveEquipment.Service.Interfaces;
 using HospitalLibrary.SchedulingAppointment.Service;
 using HospitalLibrary.Vacations.Model;
@@ -18,13 +21,13 @@ using Xunit;
 
 namespace TestHospitalApp.IntegrationTesting
 {
-    public class EquipmentMoveTest : BaseIntegrationTest
+    public class EquipmentRelocationTest : BaseIntegrationTest
     {
-        public EquipmentMoveTest(TestDatabaseFactory<Startup> factory) : base(factory) { }
+        public EquipmentRelocationTest(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
-        private static MoveEquipmentTaskController SetupMoveController(IServiceScope scope)
+        private static EquipmentRelocationController SetupMoveController(IServiceScope scope)
         {
-            return new MoveEquipmentTaskController(scope.ServiceProvider.GetRequiredService<IMoveEquipmentTaskService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new EquipmentRelocationController(scope.ServiceProvider.GetRequiredService<IEquipmentRelocationService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]
@@ -33,10 +36,8 @@ namespace TestHospitalApp.IntegrationTesting
             using var scope = Factory.Services.CreateScope();
             var moveController = SetupMoveController(scope);
 
-            /*List<Vacation> result = ((OkObjectResult)moveController.(VacationStatus.Waiting_For_Approval, new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")))?.Value as List<Vacation>;
-            result.ShouldNotBeNull();
-            result.Count.ShouldBe(1);
-            result.First().VacationStatus.ShouldBe(VacationStatus.Waiting_For_Approval);*/
+            List<EquipmentRelocationDTO> result = ((OkObjectResult)moveController.GetAll())?.Value as List<EquipmentRelocationDTO>;
+            result.ShouldNotBeNull(); //treba baza da se napravi 
         }
 
 
