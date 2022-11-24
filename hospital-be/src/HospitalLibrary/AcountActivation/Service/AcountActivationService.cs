@@ -46,13 +46,13 @@ namespace HospitalLibrary.AcountActivation.Service
 
         public void SendVerificationLinkEmail(AcountActivationInfo info)
         {
-            //TODO smisliti kako link da bude dinamican, a ne da zakucam port na kome trci localhost
+            //Stavi tacan port
             var varifyUrl = "http://localhost:4200/loginPage?token=" + info.ActivationToken + "&id=" + info.PersonId;
             Patient patient = _patientService.GetById(info.PersonId);
-            String recipientName = patient.Name + " " + patient.Surname;
-            String recipientEmail = "shadowhuntet@gmail.com";
-            String subject = "Account activation";
-            String emailText = "Please click the following link to activate your account: " + varifyUrl;
+            string recipientName = patient.Name + " " + patient.Surname;
+            string recipientEmail = "stefanapostolovic1@gmail.com";
+            string subject = "Account activation";
+            string emailText = "Please click the following link to activate your account: " + varifyUrl;
 
             MimeMessage emailMessage = EmailSending.createTxtEmail(recipientName, recipientEmail, subject, emailText);
             EmailSending.sendEmail(emailMessage);

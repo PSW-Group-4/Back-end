@@ -33,7 +33,6 @@ namespace TestIntegrationApp.IntegrationTesting
             return new NewsService(scope.ServiceProvider.GetRequiredService<INewsRepository>());
         }
 
-
         [Fact]
         public void Retrieves_all_news()
         {
@@ -65,6 +64,98 @@ namespace TestIntegrationApp.IntegrationTesting
             var result = service.GetAll();
             Assert.NotEmpty(result);
 
+        }
+        [Fact]
+        public void Update_News() 
+        {
+            News news = new()
+            {
+                Id = Guid.NewGuid(),
+                Title = "It's me, hi",
+                Body = "I'm the news, it's me",
+                Timestamp = DateTime.Now,
+                BloodBank = null,
+                IsArchived = false,
+                IsPublished = false
+            };
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            var service = SetupService(scope);
+            service.Save(news);
+            var allNews = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<News>;
+            News updatedNews = allNews.ElementAt(0);
+            var result = controller.ArchiveNews(updatedNews.Id.ToString());
+            Assert.True((((OkObjectResult)result)?.Value as News).IsArchived);
+        }
+        [Fact]
+        public void Get_Archived()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            bool success = true;
+            var result = ((OkObjectResult)controller.GetArchived())?.Value as IEnumerable<News>;
+            if (result != null)
+                foreach (News news in result)
+                {
+                    success = success && news.IsArchived;
+                }
+            else success = false;
+            Assert.True(success);
+        }
+        [Fact]
+        public void Get_Published()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            bool success = true;
+            var result = ((OkObjectResult)controller.GetArchived())?.Value as IEnumerable<News>;
+            if (result != null)
+                foreach (News news in result)
+                {
+                    success = success && news.IsPublished;
+                }
+            else success = false;
+            Assert.True(success);
+        }
+        [Fact]
+        public void Get_Pending()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            bool success = true;
+            var result = ((OkObjectResult)controller.GetPending())?.Value as IEnumerable<News>;
+            if (result != null)
+                foreach (News news in result)
+                {
+                    success = success && !news.IsPublished && !news.IsArchived;
+                }
+            else success = false;
+            Assert.True(success);
+        }
+
+        [Fact]
+        public void Consumes_News()
+        {
+            News news = new()
+            {
+                Id = Guid.NewGuid(),
+                Title = "It's me, hi",
+                Body = "I'm the news, it's me",
+                Timestamp = DateTime.Now,
+                BloodBank = null,
+                IsArchived = false,
+                IsPublished = false
+            };
+            var consumerMock = new Mock<IConsumer<News>>();
+            consumerMock.Setup(consumer => consumer.Consume()).Returns(news);
+
+            using var scope = Factory.Services.CreateScope();
+            var service = SetupService(scope);
+            IConsumer<News> consumer = consumerMock.Object;
+            service.Save(consumer.Consume());
+
+            var result = service.GetAll();
+            Assert.Contains(result, expectedNews => expectedNews.Id == news.Id);
         }
     }
 }

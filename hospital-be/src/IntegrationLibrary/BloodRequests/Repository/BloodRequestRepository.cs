@@ -41,7 +41,7 @@ namespace IntegrationLibrary.BloodRequests.Repository
         public BloodRequest Update(BloodRequest bloodRequest) {
             var local = _context.Set<BloodRequest>()
          .Local
-         .FirstOrDefault(entry => entry.RequestId.Equals(bloodRequest.RequestId));
+         .FirstOrDefault(entry => entry.Id.Equals(bloodRequest.Id));
 
             // check if local is not null 
             if (local != null)
