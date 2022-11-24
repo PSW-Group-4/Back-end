@@ -33,7 +33,6 @@ namespace TestIntegrationApp.IntegrationTesting
             return new NewsService(scope.ServiceProvider.GetRequiredService<INewsRepository>());
         }
 
-
         [Fact]
         public void Retrieves_all_news()
         {
@@ -69,7 +68,7 @@ namespace TestIntegrationApp.IntegrationTesting
         [Fact]
         public void Update_News() 
         {
-           /* News news = new()
+            News news = new()
             {
                 Id = Guid.NewGuid(),
                 Title = "It's me, hi",
@@ -78,13 +77,13 @@ namespace TestIntegrationApp.IntegrationTesting
                 BloodBank = null,
                 IsArchived = false,
                 IsPublished = false
-            };*/
-            
+            };
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            // service.Save(news);
+            var service = SetupService(scope);
+            service.Save(news);
             var allNews = ((OkObjectResult)controller.GetAll())?.Value as IEnumerable<News>;
-            News updatedNews = allNews.First();
+            News updatedNews = allNews.ElementAt(0);
             var result = controller.ArchiveNews(updatedNews.Id.ToString());
             Assert.True((((OkObjectResult)result)?.Value as News).IsArchived);
         }
@@ -95,10 +94,12 @@ namespace TestIntegrationApp.IntegrationTesting
             var controller = SetupController(scope);
             bool success = true;
             var result = ((OkObjectResult)controller.GetArchived())?.Value as IEnumerable<News>;
-            foreach( News news in result)
-            {
-                success = success && news.IsArchived;
-            }
+            if (result != null)
+                foreach (News news in result)
+                {
+                    success = success && news.IsArchived;
+                }
+            else success = false;
             Assert.True(success);
         }
         [Fact]
@@ -108,11 +109,53 @@ namespace TestIntegrationApp.IntegrationTesting
             var controller = SetupController(scope);
             bool success = true;
             var result = ((OkObjectResult)controller.GetArchived())?.Value as IEnumerable<News>;
-            foreach (News news in result)
-            {
-                success = success && news.IsPublished;
-            }
+            if (result != null)
+                foreach (News news in result)
+                {
+                    success = success && news.IsPublished;
+                }
+            else success = false;
             Assert.True(success);
+        }
+        [Fact]
+        public void Get_Pending()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            bool success = true;
+            var result = ((OkObjectResult)controller.GetPending())?.Value as IEnumerable<News>;
+            if (result != null)
+                foreach (News news in result)
+                {
+                    success = success && !news.IsPublished && !news.IsArchived;
+                }
+            else success = false;
+            Assert.True(success);
+        }
+
+        [Fact]
+        public void Consumes_News()
+        {
+            News news = new()
+            {
+                Id = Guid.NewGuid(),
+                Title = "It's me, hi",
+                Body = "I'm the news, it's me",
+                Timestamp = DateTime.Now,
+                BloodBank = null,
+                IsArchived = false,
+                IsPublished = false
+            };
+            var consumerMock = new Mock<IConsumer<News>>();
+            consumerMock.Setup(consumer => consumer.Consume()).Returns(news);
+
+            using var scope = Factory.Services.CreateScope();
+            var service = SetupService(scope);
+            IConsumer<News> consumer = consumerMock.Object;
+            service.Save(consumer.Consume());
+
+            var result = service.GetAll();
+            Assert.Contains(result, expectedNews => expectedNews.Id == news.Id);
         }
     }
 }

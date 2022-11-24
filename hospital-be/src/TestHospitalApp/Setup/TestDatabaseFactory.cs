@@ -16,6 +16,10 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.AdmissionHistories.Model;
+using HospitalAPI.Controllers;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace TestHospitalApp.Setup
 {
@@ -56,15 +60,22 @@ namespace TestHospitalApp.Setup
             if (isDbCreated) return;
             isDbCreated = true;
 
+            //context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"BloodSupply\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Doctors\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Equipments\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Beds\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Rooms\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Buildings\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Addresses\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
+            
+            
+            
+
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -135,12 +146,23 @@ namespace TestHospitalApp.Setup
 
             Admission admission = new Admission
             {
+                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174"),
                 PatientId = patient.Id,
                 Reason = "Razlog za otpust",
                 RoomId = room.Id,
                 arrivalDate = DateTime.Now
             };
             context.Admissions.Add(admission);
+
+            AdmissionHistory admissionHistory = new AdmissionHistory
+            {
+                Id = new Guid("11942a9c-100e-489a-8434-98704889d8ed"),
+                AdmissionId = admission.Id,
+                Admission = admission,
+                DischargeReason = "Resen problem",
+                DischargeDate = DateTime.Now
+            };
+            context.AdmissionHistories.Add(admissionHistory);
 
             Vacation vacationWFA = new Vacation
             {
@@ -164,7 +186,7 @@ namespace TestHospitalApp.Setup
                 VacationStatus = VacationStatus.Approved,
                 DeniedRequestReason = ""
             };
-            
+
             context.Vacations.Add(vacationWFA);
             context.Vacations.Add(vacationA);
 
@@ -179,7 +201,57 @@ namespace TestHospitalApp.Setup
                 
             };
 
+            // BEDS
+
+
+            Equipment eq = new Equipment
+            {
+                Id = new Guid("5c036fba-1118-4f4b-b153-90d75e606299"),
+                Name = "Krevet",
+            };
+
+            context.Equipments.Add(eq);
+
+            Bed bed1 = new Bed {
+                Id = new Guid("5c036fba-1118-4f4b-b153-90d75e606251"),
+                IsFree = true,
+                equipmentId = new Guid("5c036fba-1118-4f4b-b153-90d75e606299"),
+                
+            };
+            Bed bed2 = new Bed
+            {
+                Id = new Guid("5c036fba-1118-4f4b-b153-90d75e606252"),
+                IsFree = true,
+                equipmentId = new Guid("5c036fba-1118-4f4b-b153-90d75e606299"),
+                equipment = null,
+            };
+            Bed bed3 = new Bed
+            {
+                Id = new Guid("5c036fba-1118-4f4b-b153-90d75e606253"),
+                IsFree = false,
+                equipmentId = new Guid("5c036fba-1118-4f4b-b153-90d75e606299"),
+                equipment = null,
+            };
+            context.Beds.Add(bed1);
+            context.Beds.Add(bed2);
+            context.Beds.Add(bed3);
+
             context.Appointments.Add(appointment);
+
+            // PATIENT ROOMS
+
+            PatientRoom patientRoom = new PatientRoom
+            {
+                Id = new Guid("5c036fba-1318-4f4b-b153-90d75e606000"),
+                Name = "Ime sobee",
+                Number = 10,
+                Description = "Opis",
+                BedIds =  new List<Guid>() ,
+            };
+
+            patientRoom.BedIds.Add(bed1.Id);
+
+            context.Rooms.Add(patientRoom);
 
             context.SaveChanges();
 

@@ -25,7 +25,7 @@ namespace TestHospitalApp.IntegrationTesting
 
         private static AdmissionHistoryController SetupAdmissionDischargeController(IServiceScope scope)
         {
-            return new AdmissionHistoryController(scope.ServiceProvider.GetRequiredService<IAdmissionHistoryService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new AdmissionHistoryController(scope.ServiceProvider.GetRequiredService<IAdmissionHistoryService>(), scope.ServiceProvider.GetRequiredService<IMapper>(), scope.ServiceProvider.GetRequiredService<IAdmissionService>());
         }
 
         [Fact]
@@ -43,6 +43,23 @@ namespace TestHospitalApp.IntegrationTesting
 
             AdmissionHistory admission = ((ObjectResult)admissionController.Create(admissionDto)).Value as AdmissionHistory; ;
             admission.ShouldNotBeNull();
+        }
+
+        [Fact]
+        public void Discharge_admission_wrong_id()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var admissionController = SetupAdmissionDischargeController(scope);
+
+            AdmissionHistoryRequestDto admissionDto = new()
+            {
+                AdmissionId = new Guid("9b75b111-e305-4f6f-9990-97cb2d13d174"),
+                DischargeDate = DateTime.Now,
+                DischargeReason = "Zato sto je ozdravio"
+            };
+
+            AdmissionHistory admission = ((ObjectResult)admissionController.Create(admissionDto))?.Value as AdmissionHistory; ;
+            admission.ShouldBeNull();
         }
     }
 }
