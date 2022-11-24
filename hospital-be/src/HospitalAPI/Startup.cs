@@ -53,6 +53,7 @@ using HospitalLibrary.MoveEquipment.Service.Interfaces;
 using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.AdmissionHistories.Repository;
 using HospitalLibrary.AdmissionHistories.Service;
+using HospitalLibrary.EquipmentRelocation.Service;
 
 namespace HospitalAPI
 {
@@ -215,6 +216,8 @@ namespace HospitalAPI
             services.AddScoped<IAdmissionHistoryRepository, AdmissionHistoryRepository>();
             services.AddScoped<IAdmissionHistoryService, AdmissionHistoryService>();
 
+            //EquipmentRelocation
+            services.AddScoped<IEquipmentRelocationService, EquipmentRelocationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
