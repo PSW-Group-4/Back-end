@@ -20,8 +20,12 @@ using HospitalLibrary.AcountActivation.Model;
 using HospitalLibrary.MoveEquipment.Model;
 using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.Medicines.Model;
+<<<<<<< HEAD
 using HospitalLibrary.EquipmentRelocation.DTO;
-
+using HospitalLibrary.Treatments.Model;
+=======
+using HospitalLibrary.Treatments.Model;
+>>>>>>> a606188 (treatment model added)
 namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
@@ -76,10 +80,13 @@ namespace HospitalLibrary.Settings
         public DbSet<EquipmentToMove> EquipmentToMoves {get; set;}
 
         // Medicine
-
         public DbSet<Medicine> Medicines { get; set; }
 
+
         //public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
+
+        public DbSet<Treatment> Treatments { get; set; }
+
         
 
 
