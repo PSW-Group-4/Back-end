@@ -56,6 +56,8 @@ using HospitalLibrary.AdmissionHistories.Service;
 using HospitalLibrary.MedicalReport.Services;
 using HospitalLibrary.EquipmentRelocation.Service;
 using HospitalAPI.HostedService;
+using HospitalLibrary.Medicines.Repository;
+using HospitalLibrary.Medicines.Service;
 
 namespace HospitalAPI
 {
@@ -219,6 +221,10 @@ namespace HospitalAPI
             services.AddScoped<IAdmissionHistoryService, AdmissionHistoryService>();
 
             services.AddScoped<IMedicalRecordService, MedicalReportService>();
+
+            //Medicines
+            services.AddScoped<IMedicineRepository, MedicineRepository>();
+            services.AddScoped<IMedicineService, MedicineService>();
 
             //EquipmentRelocation
             services.AddScoped<IEquipmentRelocationService, EquipmentRelocationService>();

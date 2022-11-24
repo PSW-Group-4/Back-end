@@ -10,6 +10,7 @@ using HospitalAPI.Dtos.BloodSupply;
 using HospitalAPI.Dtos.Doctor;
 using HospitalAPI.Dtos.Feedback;
 using HospitalAPI.Dtos.MapItem;
+using HospitalAPI.Dtos.Medicine;
 using HospitalAPI.Dtos.Patient;
 using HospitalAPI.Dtos.Person;
 using HospitalAPI.Dtos.Rooms;
@@ -25,6 +26,7 @@ using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Users.Model;
@@ -98,6 +100,9 @@ namespace HospitalAPI.Mapper
 
             CreateMap<AdmissionRequestDto, Admission>();
             CreateMap<Admission, AdmissionRequestDto>();
+
+            CreateMap<MedicineRequestDto, Medicine>();
+            CreateMap<Medicine, MedicineRequestDto>();
 
 
 

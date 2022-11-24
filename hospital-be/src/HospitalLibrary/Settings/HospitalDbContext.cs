@@ -19,6 +19,7 @@ using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.AcountActivation.Model;
 using HospitalLibrary.MoveEquipment.Model;
 using HospitalLibrary.AdmissionHistories.Model;
+using HospitalLibrary.Medicines.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -72,6 +73,10 @@ namespace HospitalLibrary.Settings
         public DbSet<RoomSchedule> RoomSchedules {get; set;}
         public DbSet<MoveEquipmentTask> MoveEquipmentTasks {get; set;}
         public DbSet<EquipmentToMove> EquipmentToMoves {get; set;}
+
+        // Medicine
+
+        public DbSet<Medicine> Medicines { get; set; }
         
 
 
