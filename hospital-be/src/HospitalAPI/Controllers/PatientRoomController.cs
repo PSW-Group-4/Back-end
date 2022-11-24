@@ -46,6 +46,20 @@ namespace HospitalAPI.Controllers
             _patientRoomService.Create(room);
             return CreatedAtAction("GetById", new { id = room.Id }, room);
         }
+        // GET api/PatientRoom/2
+        [HttpGet("{id}")]
+        public ActionResult GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                var patient = _patientRoomService.GetById(id);
+                return Ok(patient);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
         //PUT: api/PatientRoom/Capture
         [HttpPut("/Capture")]
         public ActionResult CaptureBed([FromBody] PatientRoomRequestDto patientRoomRequestDto)
