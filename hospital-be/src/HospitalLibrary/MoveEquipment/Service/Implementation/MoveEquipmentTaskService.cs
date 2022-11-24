@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using HospitalLibrary.MoveEquipment.Service.Interfaces;
 using HospitalLibrary.MoveEquipment.Model;
 using HospitalLibrary.MoveEquipment.Repository.Interfaces;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+using HospitalLibrary.RoomsAndEqipment.Model;
+using System.Collections.ObjectModel;
 
 namespace HospitalLibrary.MoveEquipment.Service.Implementation
 {
@@ -16,13 +17,15 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
         
         private readonly IRoomScheduleService _roomScheduleService;
         private readonly IEquipmentToMoveService _equipmentToMoveService;
+        private readonly IDoctorRoomService _doctorRoomService;
         
 
-        public MoveEquipmentTaskService(IMoveEquipmentTaskRepository moveEquipmentTaskRepository, IRoomScheduleService roomScheduleService, IEquipmentToMoveService equipmentToMoveService)
+        public MoveEquipmentTaskService(IMoveEquipmentTaskRepository moveEquipmentTaskRepository, IRoomScheduleService roomScheduleService, IEquipmentToMoveService equipmentToMoveService, IDoctorRoomService doctorRoomService)
         {
             _moveEquipmentTaskRepository = moveEquipmentTaskRepository;
             _roomScheduleService = roomScheduleService;
             _equipmentToMoveService = equipmentToMoveService;
+            _doctorRoomService = doctorRoomService;
         }
 
         public MoveEquipmentTask Create(MoveEquipmentTask entity)
@@ -91,6 +94,40 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
                 RoomScheduleId = destSchedule.Id
             });
             return;
+        }
+
+        public void MoveEquipment(DateTime moveDate)
+        {
+            IEnumerable<MoveEquipmentTask> list = GetAll();
+            foreach (MoveEquipmentTask task in list)
+            {
+                if((task.RoomSchedule.DateTime.AddMinutes(task.RoomSchedule.Duration) >= moveDate))
+                {
+                    MoveEquipmentToRoom(task.Id);
+                }
+            }
+        }
+
+        public void MoveEquipmentToRoom(Guid id)
+        {
+            MoveEquipmentTask task = GetById(id);
+            DoctorRoom room = _doctorRoomService.GetById(task.RoomSchedule.RoomId);
+            ICollection<RoomsEquipment> roomsEquipment = new Collection<RoomsEquipment>();
+            foreach(EquipmentToMove equipmentToMove in task.EquipmentToGet)
+            {
+                RoomsEquipment roomsEquipmentToMove = new RoomsEquipment(equipmentToMove.Equipment,room,equipmentToMove.Amount);
+                roomsEquipment.Add(roomsEquipmentToMove);
+            }
+            ICollection<RoomsEquipment> roomsEquipment2 = new Collection<RoomsEquipment>();
+            foreach (EquipmentToMove equipmentToMove in task.EquipmentToGive)
+            {
+                RoomsEquipment roomsEquipmentToMove = new RoomsEquipment(equipmentToMove.Equipment, room, equipmentToMove.Amount);
+                roomsEquipment2.Add(roomsEquipmentToMove);
+            }
+
+            room.addEquipment(roomsEquipment);
+            room.RemoveEquipment(roomsEquipment2);
+            _doctorRoomService.Update(room);
         }
     }
 }

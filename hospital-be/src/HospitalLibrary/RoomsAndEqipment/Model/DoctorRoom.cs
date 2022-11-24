@@ -14,5 +14,49 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         {
             base.Update(room);            
         }
+
+        public void addEquipment(ICollection<RoomsEquipment> newEquipment)
+        {
+            foreach (RoomsEquipment neweq in newEquipment)
+            {
+                bool flag = false;
+                foreach (RoomsEquipment oldeq in this.RoomsEquipment)
+                {
+                    if(neweq.Equipment.Id.Equals(oldeq.Equipment.Id))
+                    {
+                        oldeq.Amount += neweq.Amount;
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                {
+                    this.RoomsEquipment.Add(neweq);
+                }
+            }
+        }
+
+        public void RemoveEquipment(ICollection<RoomsEquipment> newEquipment)
+        {
+            foreach (RoomsEquipment neweq in newEquipment)
+            {
+                bool flag = false;
+                foreach (RoomsEquipment oldeq in this.RoomsEquipment)
+                {
+                    if (neweq.Equipment.Id.Equals(oldeq.Equipment.Id))
+                    {
+                        if(oldeq.Amount < neweq.Amount)
+                        {
+                            return;
+                        }
+                        oldeq.Amount -= neweq.Amount;
+                        flag = true;
+                    }
+                }
+                if (!flag)
+                {
+                    this.RoomsEquipment.Remove(neweq);
+                }
+            }
+        }
     }
 }

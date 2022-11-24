@@ -21,5 +21,14 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         public void Update(RoomsEquipment room)
         {
         }
+
+        public RoomsEquipment(Equipment equipment, DoctorRoom doctorRoom, ulong amount)
+        {
+            Equipment = equipment;
+            EquipmentId = equipment.Id;
+            DoctorRoom = doctorRoom;
+            DoctorRoomId = doctorRoom.Id;
+            Amount = amount;
+        }
     }
 }

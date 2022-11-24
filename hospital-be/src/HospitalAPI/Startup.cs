@@ -53,6 +53,7 @@ using HospitalLibrary.MoveEquipment.Service.Interfaces;
 using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.AdmissionHistories.Repository;
 using HospitalLibrary.AdmissionHistories.Service;
+using HospitalAPI.HostedService;
 
 namespace HospitalAPI
 {
@@ -214,6 +215,9 @@ namespace HospitalAPI
             
             services.AddScoped<IAdmissionHistoryRepository, AdmissionHistoryRepository>();
             services.AddScoped<IAdmissionHistoryService, AdmissionHistoryService>();
+
+            services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" * */1 * * *", TimeZoneInfo.Local));
+            services.AddHostedService<ReportSendingTask>();
 
         }
 
