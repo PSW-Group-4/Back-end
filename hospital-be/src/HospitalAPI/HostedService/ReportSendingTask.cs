@@ -20,6 +20,7 @@ namespace HospitalAPI.HostedService
         }
         public override Task StartAsync(CancellationToken cancellationToken)
         {
+            DoWork(cancellationToken);
             return base.StartAsync(cancellationToken);
         }
 
