@@ -230,7 +230,7 @@ namespace HospitalAPI
             services.AddScoped<IEquipmentRelocationService, EquipmentRelocationService>();
 
             //Hosted Service
-            services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" * */1 * * *", TimeZoneInfo.Local));
+            services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */15 * * * *", TimeZoneInfo.Local));
             services.AddHostedService<ReportSendingTask>();
 
         }

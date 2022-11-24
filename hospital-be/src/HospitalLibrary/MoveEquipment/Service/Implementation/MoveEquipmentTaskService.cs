@@ -101,9 +101,11 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
             IEnumerable<MoveEquipmentTask> list = GetAll();
             foreach (MoveEquipmentTask task in list)
             {
-                if((task.RoomSchedule.DateTime.AddMinutes(task.RoomSchedule.Duration) >= moveDate))
+                if((task.RoomSchedule.DateTime.AddMinutes(task.RoomSchedule.Duration) >= moveDate) && !(task.RoomSchedule.IsDone))
                 {
                     MoveEquipmentToRoom(task.Id);
+                    task.RoomSchedule.IsDone = true;
+                    Update(task);
                 }
             }
         }
