@@ -37,6 +37,19 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_treatmentService.GetAll());
         }
+        [HttpGet("{id}")]
+        public ActionResult GetById([FromRoute] Guid id)
+        {
+            try
+            {
+                var patient = _treatmentService.GetById(id);
+                return Ok(patient);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
         //POST: api/Treatment
         [HttpPost]
         public ActionResult Create([FromBody] TreatmentRequestDto treatmentRequestDto)
