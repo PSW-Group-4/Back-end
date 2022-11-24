@@ -9,7 +9,6 @@ namespace HospitalLibrary.EquipmentRelocation.DTO
 {
     public class EquipmentRelocationDTO
     {
-        public Guid Id { get; set; }
         public DateTime relocationStart { get; set; }
         public int duration { get; set; }
         public Guid sourceId { get; set; }
