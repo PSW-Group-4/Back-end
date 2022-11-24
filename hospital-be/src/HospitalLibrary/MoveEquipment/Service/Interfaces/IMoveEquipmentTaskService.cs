@@ -10,5 +10,7 @@ namespace HospitalLibrary.MoveEquipment.Service.Interfaces
     public interface IMoveEquipmentTaskService : ICrudService<MoveEquipmentTask>
     {
         public void CreateMoveEquipment(InputCreateData data);
+
+        public void MoveEquipment(DateTime moveDate);
     }
 }

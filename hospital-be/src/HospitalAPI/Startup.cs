@@ -55,6 +55,7 @@ using HospitalLibrary.AdmissionHistories.Repository;
 using HospitalLibrary.AdmissionHistories.Service;
 using HospitalLibrary.MedicalReport.Services;
 using HospitalLibrary.EquipmentRelocation.Service;
+using HospitalAPI.HostedService;
 
 namespace HospitalAPI
 {
@@ -221,6 +222,11 @@ namespace HospitalAPI
 
             //EquipmentRelocation
             services.AddScoped<IEquipmentRelocationService, EquipmentRelocationService>();
+
+            //Hosted Service
+            services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" * */1 * * *", TimeZoneInfo.Local));
+            services.AddHostedService<ReportSendingTask>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
