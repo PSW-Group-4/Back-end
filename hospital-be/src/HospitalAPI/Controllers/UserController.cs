@@ -22,6 +22,7 @@ using HospitalLibrary.AcountActivation.Service;
 using HospitalLibrary.AcountActivation.Model;
 using HospitalAPI.Dtos.Vacation;
 using HospitalLibrary.Vacations.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace HospitalAPI.Controllers
 {
@@ -55,6 +56,15 @@ namespace HospitalAPI.Controllers
                 var address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
                 var patient = _mapper.Map<Patient>(registrationDto);
                 var user = _mapper.Map<User>(registrationDto.UserLoginDto);
+
+                if(!_patientService.isEmailUnique(patient.Email))
+                {
+                    return Conflict("Email not uniqe");
+                }
+                if(_userService.GetByUsername(user.Username) != null)
+                {
+                     return Conflict("Username taken");
+                }
 
                 patient.Address = address;
                 patient.AddressId = address.Id;
@@ -91,6 +101,10 @@ namespace HospitalAPI.Controllers
             catch (BadPasswordException)
             {
                 return Unauthorized("Bad password");
+            }
+            catch (AccountNotActivatedException)
+            {
+                return Forbid("Account not activated");
             }
             catch (UnauthorizedException)
             {

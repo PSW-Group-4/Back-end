@@ -87,6 +87,11 @@ namespace HospitalLibrary.Patients.Repository
         {
            return _context.Patients.Count(p => p.ChoosenDoctorId == doctorId);
         }
+
+        public Patient GetByEmail(string email)
+        {
+           return _context.Patients.SingleOrDefault(p => p.Email.Equals(email));
+        }
     }
 }
 

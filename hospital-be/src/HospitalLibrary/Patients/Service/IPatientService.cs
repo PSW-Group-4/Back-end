@@ -15,5 +15,6 @@ namespace HospitalLibrary.Patients.Service
         public List<NumberOfPatientsByAgeGroup> DoctorsPatientsByAgeGroup(Guid doctorId);
       
         int NumberOfPatientsDoctorHas(Guid doctorId);
+        public bool isEmailUnique(String email);
     }
 }

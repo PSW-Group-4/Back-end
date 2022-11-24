@@ -122,6 +122,11 @@ namespace HospitalLibrary.Users.Service
                 throw new BadPasswordException();
             }
 
+            if(!user.IsAccountActive)
+            {
+                throw new AccountNotActivatedException();
+            }
+
             if (user.Role != UserRole.Patient)
             {
                 throw new UnauthorizedException();

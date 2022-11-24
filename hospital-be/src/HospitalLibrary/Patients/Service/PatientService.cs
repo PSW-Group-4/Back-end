@@ -95,7 +95,12 @@ namespace HospitalLibrary.Patients.Service
             return DoctorsPatientsByAgeGroup;
         }
 
-   
+        public bool isEmailUnique(String email)
+        {
+            if (_patientRepository.GetByEmail(email) == null)
+                return false;
+            return true;
+        }
 
         public int NumberOfPatientsDoctorHas(Guid doctorId)
         {
