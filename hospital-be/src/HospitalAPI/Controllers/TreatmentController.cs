@@ -17,6 +17,7 @@ using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Treatments.Service;
 using HospitalAPI.Dtos.Medicine;
 using HospitalLibrary.Medicines.Model;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HospitalAPI.Controllers
 {
@@ -58,6 +59,43 @@ namespace HospitalAPI.Controllers
             _treatmentService.Create(treatment);
             return CreatedAtAction("GetById", new { id = treatment.Id }, treatment);
         }
+
+        //PUT
+        [HttpPut("/TreatmentMedicine/{medicineId}")]
+        public ActionResult UpdateMedicine([FromRoute] Guid medicineId, [FromBody] TreatmentUpdateDto treatmentRequestDto)
+        {
+            var treatment = _mapper.Map<Treatment>(treatmentRequestDto);
+            //treatment.MedicineId = medicineId;
+
+            try
+            {
+                var result = _treatmentService.UpdateMedicine(treatment, medicineId);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+        [HttpPut("/TreatmentBlood/{bloodConsumptionRecordId}")]
+        public ActionResult UpdateBloodConsumption([FromRoute] Guid bloodConsumptionRecordId, [FromBody] TreatmentUpdateDto treatmentRequestDto)
+        {
+            var treatment = _mapper.Map<Treatment>(treatmentRequestDto);
+            //treatment.BloodConsumptionRecordId = bloodConsumptionRecordId;
+
+            try
+            {
+                var result = _treatmentService.UpdateBloodConsuptionRecord(treatment, bloodConsumptionRecordId);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+
+
         //DELETE: api/Treatment/222
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] Guid id)
@@ -70,7 +108,9 @@ namespace HospitalAPI.Controllers
             catch (NotFoundException)
             {
                 return NotFound();
-            }
+            }        
+
         }
+        
     }
 }
