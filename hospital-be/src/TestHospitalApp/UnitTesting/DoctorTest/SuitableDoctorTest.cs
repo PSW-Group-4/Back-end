@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalLibrary.Constants;
-using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Repository;
-using HospitalLibrary.Settings;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Shouldly;
 using Xunit;
 
-namespace TestHospitalApp.IntegrationTesting
+namespace TestHospitalApp.UnitTesting.DoctorTest
 {
     public class SuitableDoctorTest
     {
