@@ -10,5 +10,6 @@ namespace HospitalLibrary.Admissions.Repository
 {
     public interface IAdmissionRepository : IRepositoryBase<Admission>
     {
+        public Admission UpdateTreatment(Admission admission, Guid treatmentId);
     }
 }

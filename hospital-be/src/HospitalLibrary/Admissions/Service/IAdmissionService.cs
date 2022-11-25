@@ -14,6 +14,7 @@ namespace HospitalLibrary.Admissions.Service
         Admission Create(Admission admission);
         Admission Update(Admission admission);
         void Delete(Guid id);
+        public Admission UpdateTreatment(Admission admission, Guid treatmentId);
 
     }
 }

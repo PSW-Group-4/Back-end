@@ -39,22 +39,24 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         {
             foreach (RoomsEquipment neweq in newEquipment)
             {
-                bool flag = false;
                 foreach (RoomsEquipment oldeq in this.RoomsEquipment)
                 {
                     if (neweq.Equipment.Id.Equals(oldeq.Equipment.Id))
                     {
-                        if(oldeq.Amount < neweq.Amount)
+                        if(oldeq.Amount > neweq.Amount)
+                        {
+                            oldeq.Amount -= neweq.Amount;
+                        }
+                        else if(oldeq.Amount == neweq.Amount)    
+                        {
+                            this.RoomsEquipment.Remove(oldeq);
+                        }
+                        else
                         {
                             return;
                         }
-                        oldeq.Amount -= neweq.Amount;
-                        flag = true;
+                        
                     }
-                }
-                if (!flag)
-                {
-                    this.RoomsEquipment.Remove(neweq);
                 }
             }
         }
