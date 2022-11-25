@@ -26,20 +26,27 @@ namespace IntegrationAPI.Authorization
          public override  void  OnActionExecuting(ActionExecutingContext context)
         {
             if (ExpectedRoles == null) return;
-            
-            string jwt = context.HttpContext.Request.Headers["Authorization"];
-            if (jwt == null)
+
+            try
+            {
+                string jwt = context.HttpContext.Request.Headers["Authorization"] ;
+                if (jwt == null) //Even if I catch it in try catch, null check is required :O
+                {
+                    context.Result = new UnauthorizedResult();
+                    return;
+                }
+                var response =  SendAuthorizationRequest(jwt);
+                response.Wait();
+                
+                if (response.Result.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    context.Result = new UnauthorizedResult();
+                }
+            }
+            catch(NullReferenceException)
             {
                 context.Result = new UnauthorizedResult();
                 return;
-            }
-            
-            var response =  SendAuthorizationRequest(jwt);
-            response.Wait();
-            
-            if (response.Result.StatusCode == HttpStatusCode.Unauthorized)
-            {
-                context.Result = new UnauthorizedResult();
             }
         }
 
