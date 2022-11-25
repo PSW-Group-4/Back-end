@@ -112,6 +112,9 @@ namespace HospitalAPI.Mapper
             CreateMap<TreatmentUpdateDto, Treatment>();
             CreateMap<Treatment, TreatmentUpdateDto>();
 
+            CreateMap<AdmissionUpdateTreatmentDto, Admission>();
+            CreateMap<Admission, AdmissionUpdateTreatmentDto>();
+
 
             CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
 
