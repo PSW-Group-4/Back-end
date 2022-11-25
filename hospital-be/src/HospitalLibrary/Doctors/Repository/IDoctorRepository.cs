@@ -6,8 +6,8 @@ namespace HospitalLibrary.Doctors.Repository
 {
     public interface IDoctorRepository : IRepositoryBase<Doctor>
     {
-        public int NumberOfPatientsTheDoctorWithLeastPatientsHas();
-        public IEnumerable<Doctor> GetAllBySpecialization(string specialization);
+      
+     
     }
 
 }

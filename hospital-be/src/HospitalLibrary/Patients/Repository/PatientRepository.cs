@@ -12,12 +12,12 @@ namespace HospitalLibrary.Patients.Repository
     public class PatientRepository : IPatientRepository
     {
         private readonly HospitalDbContext _context;
-        private readonly IAddressRepository _addressRepository;
 
-        public PatientRepository(HospitalDbContext context, IAddressRepository addressRepository)
+
+        public PatientRepository(HospitalDbContext context)
         {
             _context = context;
-            _addressRepository = addressRepository;
+         
         }
 
         public IEnumerable<Patient> GetAll()
@@ -83,10 +83,7 @@ namespace HospitalLibrary.Patients.Repository
         return _context.Patients.Count();
         }
 
-        public int NumberOfPatientsDoctorHas(Guid doctorId)
-        {
-           return _context.Patients.Count(p => p.ChoosenDoctorId == doctorId);
-        }
+ 
 
         public Patient GetByEmail(string email)
         {
