@@ -60,5 +60,18 @@ namespace HospitalLibrary.Admissions.Repository
             _context.Admissions.Remove(admission);
             _context.SaveChanges();
         }
+        public Admission UpdateTreatment(Admission admission, Guid treatmentId)
+        {
+            var updatingAdmission = _context.Admissions.SingleOrDefault(a => a.Id == admission.Id);
+            if (updatingAdmission == null)
+            {
+                throw new NotFoundException();
+            }
+
+            updatingAdmission.UpdateTreatment(treatmentId);
+
+            _context.SaveChanges();
+            return updatingAdmission;
+        }
     }
 }

@@ -12,9 +12,9 @@ namespace HospitalLibrary.Treatments.Model
     public class Treatment
     {
         public Guid Id { get; set; }
-        public Guid MedicineId { get; set; }
+        public Nullable<Guid> MedicineId { get; set; }
         public virtual Medicine Medicine { get; set; }
-        public Guid BloodConsumptionRecordId { get; set; }
+        public Nullable<Guid> BloodConsumptionRecordId { get; set; }
         public virtual BloodConsumptionRecord BloodConsumptionRecord { get; set; }
         public DateTime DateChanged { get; set; }
 
@@ -23,6 +23,16 @@ namespace HospitalLibrary.Treatments.Model
             MedicineId = treatment.MedicineId;
             BloodConsumptionRecordId = treatment.BloodConsumptionRecordId;
             DateChanged = treatment.DateChanged;
+        }
+        public void UpdateMedicine(Guid medicineId)
+        {
+            DateChanged = DateTime.Now;
+            MedicineId = medicineId;
+        }
+        public void UpdateBloodConsuptionRecord(Guid bcrId)
+        {
+            DateChanged = DateTime.Now;
+            BloodConsumptionRecordId = bcrId;
         }
     }
 }

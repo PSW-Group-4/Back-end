@@ -4,15 +4,17 @@ using System.Collections.Generic;
 using HospitalLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221125030322_AddedNullableColonsInTreatments")]
+    partial class AddedNullableColonsInTreatments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -86,9 +88,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("TreatmentId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("arrivalDate")
                         .HasColumnType("timestamp without time zone");
 
@@ -97,8 +96,6 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("PatientId");
 
                     b.HasIndex("RoomId");
-
-                    b.HasIndex("TreatmentId");
 
                     b.ToTable("Admissions");
                 });
@@ -798,15 +795,9 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.Treatments.Model.Treatment", "Treatments")
-                        .WithMany()
-                        .HasForeignKey("TreatmentId");
-
                     b.Navigation("Patient");
 
                     b.Navigation("Room");
-
-                    b.Navigation("Treatments");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Appointments.Model.Appointment", b =>

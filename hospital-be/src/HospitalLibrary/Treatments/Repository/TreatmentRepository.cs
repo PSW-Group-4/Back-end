@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Exceptions;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Treatments.Model;
@@ -55,6 +56,34 @@ namespace HospitalLibrary.Treatments.Repository
             }
 
             updatingTreatment.Update(treatment);
+
+            _context.SaveChanges();
+            return updatingTreatment;
+        }
+        public Treatment UpdateMedicine(Treatment treatment, Guid medicineId)
+        {
+            var updatingTreatment = _context.Treatments.SingleOrDefault(p => p.Id == treatment.Id);
+            
+            if (updatingTreatment == null)
+            {
+                throw new NotFoundException();
+            }
+
+            updatingTreatment.UpdateMedicine(medicineId);
+
+            _context.SaveChanges();
+            return updatingTreatment;
+        }
+        public Treatment UpdateBloodConsuptionRecord(Treatment treatment, Guid bcrId)
+        {
+            var updatingTreatment = _context.Treatments.SingleOrDefault(p => p.Id == treatment.Id);
+
+            if (updatingTreatment == null)
+            {
+                throw new NotFoundException();
+            }
+
+            updatingTreatment.UpdateBloodConsuptionRecord(bcrId);
 
             _context.SaveChanges();
             return updatingTreatment;

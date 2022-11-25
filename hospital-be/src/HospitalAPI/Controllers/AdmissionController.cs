@@ -76,6 +76,24 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        // PUT api/Admission/treatmentId
+        [HttpPut("{treatmentId}/{admissionId}")]
+        public ActionResult UpdateTreatment([FromRoute] Guid treatmentId, [FromRoute] Guid admissionId)
+        {
+
+            //var admission = _mapper.Map<Admission>(admissionUpdateTreatmentDto);
+            var admission = _admissionService.GetById(admissionId);
+            try
+            {
+                var result = _admissionService.UpdateTreatment(admission, treatmentId);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
     
 }

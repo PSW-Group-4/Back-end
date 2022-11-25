@@ -61,5 +61,9 @@ namespace HospitalLibrary.Admissions.Service
         {
             _admissionRepository.Delete(admissionId);
         }
+        public Admission UpdateTreatment(Admission admission, Guid treatmentId)
+        {
+            return _admissionRepository.UpdateTreatment(admission, treatmentId);
+        }
     }
 }

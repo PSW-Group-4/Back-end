@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.RoomsAndEqipment.Model;
+﻿using HospitalLibrary.Medicines.Model;
+using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Treatments.Repository;
 using System;
@@ -39,6 +40,14 @@ namespace HospitalLibrary.Treatments.Service
         public void Delete(Guid entityId)
         {
             _treatmentRepository.Delete(entityId);
+        }
+        public Treatment UpdateMedicine(Treatment treatment, Guid medicineId)
+        {
+           return _treatmentRepository.UpdateMedicine(treatment, medicineId);
+        }
+        public Treatment UpdateBloodConsuptionRecord(Treatment treatment, Guid bcrId)
+        {
+            return _treatmentRepository.UpdateBloodConsuptionRecord(treatment, bcrId);
         }
     }
 }
