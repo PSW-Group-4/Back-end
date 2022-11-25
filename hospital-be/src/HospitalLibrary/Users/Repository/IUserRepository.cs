@@ -15,5 +15,6 @@ namespace HospitalLibrary.Users.Repository
         public User Create(User User);
         public User Update(User user);
         public IEnumerable<User> GetAll();
+        bool IsUsernameUnique(string username);
     }
 }

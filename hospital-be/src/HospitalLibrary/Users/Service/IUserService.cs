@@ -19,5 +19,6 @@ namespace HospitalLibrary.Users.Service
         public string AuthenticatePublic(string username, string password);
         string AuthenticatePrivate(string userLoginUsername, string userLoginPassword);
         void ActivateAccount(Guid activationToken, Guid userId);
+        bool IsUsernameUnique(string username);
     }
 }

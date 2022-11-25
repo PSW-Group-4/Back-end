@@ -98,8 +98,8 @@ namespace HospitalLibrary.Patients.Service
         public bool isEmailUnique(String email)
         {
             if (_patientRepository.GetByEmail(email) == null)
-                return false;
-            return true;
+                return true;
+            return false;
         }
 
         public int NumberOfPatientsDoctorHas(Guid doctorId)

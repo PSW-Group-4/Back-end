@@ -59,11 +59,14 @@ namespace HospitalAPI.Controllers
 
                 if(!_patientService.isEmailUnique(patient.Email))
                 {
+                    Console.WriteLine("puca ovde kod maila");
                     return Conflict("Email not unique");
                 }
-                if(_userService.GetByUsername(user.Username) != null)
+
+                if(!_userService.IsUsernameUnique(user.Username) )
                 {
-                     return Conflict("Username taken");
+                    Console.WriteLine("puca ovde kod usernamea");
+                    return Conflict("Username taken");
                 }
 
                 patient.Address = address;

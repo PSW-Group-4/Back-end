@@ -164,5 +164,11 @@ namespace HospitalLibrary.Users.Service
         {
             _userRepository.Delete(username);
         }
+
+        public bool IsUsernameUnique(string username)
+        {
+          
+            return _userRepository.IsUsernameUnique(username);
+        }
     }
 }

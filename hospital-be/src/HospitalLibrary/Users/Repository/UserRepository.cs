@@ -34,6 +34,13 @@ namespace HospitalLibrary.Users.Repository
             return  result;
         }
 
+        public bool IsUsernameUnique(string username)
+        {
+            var result = _context.Users.Find(username);
+            return result == null;
+        }
+
+
         public User Create(User User)
         {
             _context.Users.Add(User);
