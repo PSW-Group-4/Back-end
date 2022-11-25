@@ -107,7 +107,7 @@ namespace TestHospitalApp.IntegrationTesting
             patientStubRepository.Setup(m => m.GetAll()).Returns(CreatePatients());
 
             var doctorStubRepository = new Mock<IDoctorRepository>();
-            doctorStubRepository.Setup(m => m.GetAll()).Returns(CreateDoctors);
+            doctorStubRepository.Setup(m => m.GetAll()).Returns(CreateDoctors());
 
             var doctorService = new DoctorService(doctorStubRepository.Object, patientStubRepository.Object);
             return doctorService;
