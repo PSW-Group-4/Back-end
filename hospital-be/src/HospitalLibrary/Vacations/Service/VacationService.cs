@@ -135,7 +135,7 @@ namespace HospitalLibrary.Vacations.Service
                 }
                 if (doctorFound)
                 {
-                    SwitchAppointmentsToAnotherDoctor(doctor.Id, vacation);
+                    //SwitchAppointmentsToAnotherDoctor(doctor.Id, vacation);
                     return true;
                 }
             }

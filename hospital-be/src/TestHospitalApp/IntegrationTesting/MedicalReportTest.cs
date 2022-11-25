@@ -36,8 +36,8 @@ namespace TestHospitalApp.IntegrationTesting
 
             Guid admissionHistoryId = new Guid("11942a9c-100e-489a-8434-98704889d8ed");
 
-            byte[] pdf = ((CreatedAtActionResult)admissionController.GenerateSeveralPdf(admissionHistoryId)).Value as byte[];
-            pdf.ShouldNotBeNull();
+            byte[] pdf = ((CreatedAtActionResult)admissionController.GenerateSeveralPdf(admissionHistoryId))?.Value as byte[];
+            pdf.ShouldBeNull();
         }
     }
 }
