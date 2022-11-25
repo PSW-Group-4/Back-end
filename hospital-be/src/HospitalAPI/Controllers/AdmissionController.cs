@@ -78,10 +78,12 @@ namespace HospitalAPI.Controllers
         }
 
         // PUT api/Admission/treatmentId
-        [HttpPut("{treatmentId}")]
-        public ActionResult UpdateTreatment([FromRoute] Guid treatmentId, [FromBody] AdmissionUpdateTreatmentDto admissionUpdateTreatmentDto)
+        [HttpPut("{treatmentId}/{admissionId}")]
+        public ActionResult UpdateTreatment([FromRoute] Guid treatmentId, [FromRoute] Guid admissionId)
         {
-            var admission = _mapper.Map<Admission>(admissionUpdateTreatmentDto);
+
+            //var admission = _mapper.Map<Admission>(admissionUpdateTreatmentDto);
+            var admission = _admissionService.GetById(admissionId);
             try
             {
                 var result = _admissionService.UpdateTreatment(admission, treatmentId);
