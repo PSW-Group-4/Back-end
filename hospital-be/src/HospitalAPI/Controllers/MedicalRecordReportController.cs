@@ -2,6 +2,7 @@
 using HospitalLibrary.AdmissionHistories.Service;
 using HospitalLibrary.Admissions.Service;
 using HospitalLibrary.MedicalReport.Services;
+using iTextSharp.text.pdf;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -23,8 +24,15 @@ namespace HospitalAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult GenerateSeveralPdf([FromRoute] Guid id)
         {
-            AdmissionHistory admissionHistory = admissionHistoryService.GetById(id);
-            return File(medicalRecordService.GeneratePdf(admissionHistory), "application/pdf", "medicalReport.pdf");
+            try
+            {
+                AdmissionHistory admissionHistory = admissionHistoryService.GetById(id);
+                return File(medicalRecordService.GeneratePdf(admissionHistory), "application/pdf", "medicalReport.pdf");
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
     }
 }

@@ -16,6 +16,7 @@ delete from "Buildings";
 delete from "Allergies";
 delete from "Addresses";
 delete from "AgeGroups";
+delete from "Admissions";
 insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
 	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
 	('113faa92-ea79-4bd7-9b9a-6413098f39ec','Young adults',17,30),
@@ -657,3 +658,7 @@ INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Hei
 			('56d875b8-c7f0-4c4e-acdf-99bdc4a979e8', '66b63e58-17a2-4a4a-9fa4-b5a26afd0fc6', 170, 120, 80, 80),
 			('a7120f41-2893-4041-88cb-55beb585583a', 'be5d6557-f0fa-42fb-bff0-823923d6dfd9', 250, 120, 80, 80)
 			;
+
+INSERT INTO public."Admissions" ("Id","PatientId","Reason","RoomId","arrivalDate") VALUES
+	 ('1412c639-c5e1-47a1-b29b-1fe925536612','11942a9c-850e-489a-8434-98704889d8ed','Povisen secer pa mora da se oporavi','54c6de76-bc71-4615-8c73-4ebf9546444f','2022-11-11 11:11:00'),
+	 ('15f4c4e0-08b2-44ef-9e1b-0f14164d59d2','c1db258b-3034-4ba5-98bd-4f68137bac94','Srcani zastoj u prednjoj komori','d4857133-ef89-4e5e-865f-b49c83ecec23','2022-09-09 10:10:00');

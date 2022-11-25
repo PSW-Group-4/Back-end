@@ -62,6 +62,26 @@ namespace HospitalLibrary.MedicalReport.Services
                 para8.SpacingAfter = 10;
                 document.Add(para8);
 
+                Paragraph para9 = new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, 20));
+                para9.Alignment = Element.ALIGN_CENTER;
+                para9.SpacingAfter = 10;
+                document.Add(para9);
+
+                Paragraph para10 = new Paragraph("Tretman", new Font(Font.FontFamily.HELVETICA, 20));
+                para10.Alignment = Element.ALIGN_CENTER;
+                para10.SpacingAfter = 10;
+                document.Add(para10);
+
+                Paragraph para11 = new Paragraph("Kolicina krvi :" + admissionHistory.Admission.Treatments.BloodConsumptionRecord.Amount + "ml", new Font(Font.FontFamily.HELVETICA, 12));
+                para11.Alignment = Element.ALIGN_LEFT;
+                para11.SpacingAfter = 10;
+                document.Add(para11);
+
+                Paragraph para12 = new Paragraph("Lek koji je prepisan pacijentu :" + admissionHistory.Admission.Treatments.Medicine.Name, new Font(Font.FontFamily.HELVETICA, 12));
+                para12.Alignment = Element.ALIGN_LEFT;
+                para12.SpacingAfter = 10;
+                document.Add(para12);
+
                 document.Close();
                 writer.Close();
                 var constant = ms.ToArray();
