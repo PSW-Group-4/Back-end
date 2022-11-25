@@ -12,7 +12,8 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         public virtual ICollection<RoomsEquipment> RoomsEquipment { get; set; }
         public void Update(DoctorRoom room)
         {
-            base.Update(room);            
+            base.Update(room);
+            RoomsEquipment = room.RoomsEquipment;
         }
 
         public void addEquipment(ICollection<RoomsEquipment> newEquipment)
