@@ -78,7 +78,7 @@ namespace HospitalAPI.Controllers
                 //slanje maila (pozivanje servia koji salje mail)
                 _acountActivationService.SendVerificationLinkEmail(info);
 
-                return Ok();
+                return Ok(info);
             }
             catch (NotFoundException)
             {
