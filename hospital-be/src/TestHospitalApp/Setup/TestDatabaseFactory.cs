@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Users.Model;
+using HospitalLibrary.MoveEquipment.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -54,7 +55,7 @@ namespace TestHospitalApp.Setup
 
         private static string CreateConnectionStringForTest()
         {
-            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=password;";
+            return "Host=localhost;Database=HospitalTestDb;Username=postgres;Password=1;";
         }
 
         private static void InitializeDatabase(HospitalDbContext context)
@@ -74,8 +75,8 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomSchedules\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"EquipmentToMoves\" RESTART IDENTITY CASCADE;");
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -271,25 +272,22 @@ namespace TestHospitalApp.Setup
 
             context.Rooms.Add(patientRoom);
 
-            RoomSchedule schedule = new RoomSchedule
+            EquipmentToMove eq1 = new EquipmentToMove
             {
-                Id = new Guid("95a7ac4d-4f11-4530-995b-436f484599e7"),
-                DateTime = new DateTime(2022, 12, 24, 11, 00, 00),
-                IsDone = false,
-                RoomId = room.Id,
-                Duration = 30
-            };
-            RoomSchedule schedule2 = new RoomSchedule
-            {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
-                DateTime = new DateTime(2022, 12, 25, 12, 00, 00),
-                IsDone = true,
-                RoomId = room.Id,
-                Duration = 30
+                Id = new Guid("1d9aae17-fc67-4a7c-b05e-913fb94c4639"),
+                EquipmentId = eq.Id,
+                Amount = 50
             };
 
-            context.RoomSchedules.Add(schedule);
-            context.RoomSchedules.Add(schedule2);
+            EquipmentToMove eq2 = new EquipmentToMove
+            {
+                Id = new Guid("1d9aae20-fc57-4a7c-b05e-913fb94c4639"),
+                EquipmentId = eq.Id,
+                Amount = 30
+            };
+
+            context.EquipmentToMoves.Add(eq1);
+            context.EquipmentToMoves.Add(eq2);
 
             //Users
             initUsers(context);
@@ -335,6 +333,8 @@ namespace TestHospitalApp.Setup
             context.Add(user1);
             context.Add(userInactive);
             context.Add(managerUser);
+
+            
         }
     }
 }

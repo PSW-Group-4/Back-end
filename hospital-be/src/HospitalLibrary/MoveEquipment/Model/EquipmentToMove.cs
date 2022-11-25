@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalLibrary.MoveEquipment.Model
 {
@@ -18,5 +19,6 @@ namespace HospitalLibrary.MoveEquipment.Model
             EquipmentId = eq.EquipmentId;
             Amount = eq.Amount;
         }
+
     }
 }
