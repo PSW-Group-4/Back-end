@@ -102,9 +102,6 @@ namespace HospitalLibrary.Patients.Service
             return false;
         }
 
-        public int NumberOfPatientsDoctorHas(Guid doctorId)
-        {
-            return _patientRepository.NumberOfPatientsDoctorHas(doctorId);
-        }
+     
     }
 }

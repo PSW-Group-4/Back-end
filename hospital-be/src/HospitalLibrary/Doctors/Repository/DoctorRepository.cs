@@ -12,22 +12,19 @@ namespace HospitalLibrary.Doctors.Repository
     public class DoctorRepository : IDoctorRepository
     {
         private readonly HospitalDbContext _context;
-        private readonly IPatientRepository _patientRepository;
+       
 
-        public DoctorRepository(HospitalDbContext context, IPatientRepository patientRepository)
+        public DoctorRepository(HospitalDbContext context)
         {
             _context = context;
-            _patientRepository = patientRepository;
+           
         }
 
         public IEnumerable<Doctor> GetAll()
         {
             return _context.Doctors.ToList();
         }
-        public IEnumerable<Doctor> GetAllBySpecialization(string specialization)
-        {
-            return _context.Doctors.Where(d=>d.Speciality == specialization).ToList();
-        }
+     
 
         public Doctor GetById(Guid id)
         {
@@ -67,12 +64,7 @@ namespace HospitalLibrary.Doctors.Repository
             _context.SaveChanges();
         }
 
-        public int NumberOfPatientsTheDoctorWithLeastPatientsHas()
-        {
-           
-            int minimum = _patientRepository.NumberOfAllPatients();
-            return _context.Doctors.Where(d=>d.Speciality==Constants.Constants.GeneralPractitioner).ToList().Select(doctor => _patientRepository.NumberOfPatientsDoctorHas(doctor.Id)).Prepend(minimum).Min();
-        }
+      
 
 
 
