@@ -1,6 +1,6 @@
 ﻿using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
-using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Patients.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,13 +11,14 @@ namespace HospitalLibrary.Doctors.Service
     public class DoctorService : IDoctorService
     {
         private readonly IDoctorRepository _doctorRepository;
-        private readonly IPatientService _patientService
+
+        private readonly IPatientRepository _patientRepository
             ;
 
-        public DoctorService(IDoctorRepository doctorRepository, IPatientService patientService)
+        public DoctorService(IDoctorRepository doctorRepository, IPatientRepository patientRepository)
         {
             _doctorRepository = doctorRepository;
-            _patientService = patientService;
+            _patientRepository = patientRepository;
 
         }
 
@@ -46,10 +47,24 @@ namespace HospitalLibrary.Doctors.Service
             _doctorRepository.Delete(doctorId);
         }
 
+        private  int NumberOfPatientsDoctorHas(Guid doctorId)
+        {
+           
+            return _patientRepository.GetAll().Count(p => p.ChoosenDoctorId == doctorId);
+        }
+
 
         public IEnumerable<ChooseDoctorDTO> DoctorsWithLeastPatients()
         {
-            return (from doc in _doctorRepository.GetAllBySpecialization(Constants.Constants.GeneralPractitioner) where _patientService.NumberOfPatientsDoctorHas(doc.Id) <= 2 + _doctorRepository.NumberOfPatientsTheDoctorWithLeastPatientsHas() select new ChooseDoctorDTO(doc.Id, doc.Name, doc.Surname, _patientService.NumberOfPatientsDoctorHas(doc.Id))).ToList();
+            const int maxPatientCountOffset = 2;
+            int maximum = _patientRepository.GetAll().Count();
+            int minimum = NumberOfPatientsDoctorWithLeastPatientHas(maximum);
+            return (from doc in _doctorRepository.GetAll().Where(d => d.Speciality == Constants.Constants.GeneralPractitioner) where NumberOfPatientsDoctorHas(doc.Id) <= maxPatientCountOffset + minimum select new ChooseDoctorDTO(doc.Id, doc.Name, doc.Surname, NumberOfPatientsDoctorHas(doc.Id))).ToList();
+        }
+
+        private int NumberOfPatientsDoctorWithLeastPatientHas(int maximum)
+        {
+            return _doctorRepository.GetAll().Where(d => d.Speciality == Constants.Constants.GeneralPractitioner).ToList().Select(doctor => NumberOfPatientsDoctorHas(doctor.Id)).Prepend(maximum).Min();
         }
     }
 }
