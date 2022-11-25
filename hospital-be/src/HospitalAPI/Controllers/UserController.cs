@@ -59,7 +59,7 @@ namespace HospitalAPI.Controllers
 
                 if(!_patientService.isEmailUnique(patient.Email))
                 {
-                    return Conflict("Email not uniqe");
+                    return Conflict("Email not unique");
                 }
                 if(_userService.GetByUsername(user.Username) != null)
                 {
