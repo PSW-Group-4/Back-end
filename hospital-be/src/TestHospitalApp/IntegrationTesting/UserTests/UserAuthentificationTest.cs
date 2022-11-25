@@ -67,8 +67,8 @@ namespace TestHospitalApp.IntegrationTesting.UserTests
 
             UserLoginDto userDto = new UserLoginDto { Username = "notactive", Password = "notactive" };
 
-            var response = userController.LoginPublic(userDto);
-            response.ShouldBeOfType<ForbidResult>();
+            var response = (StatusCodeResult)userController.LoginPublic(userDto);
+            response.StatusCode.ShouldBe(403);
         }
 
         [Fact]

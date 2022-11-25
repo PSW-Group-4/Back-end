@@ -107,7 +107,7 @@ namespace HospitalAPI.Controllers
             }
             catch (AccountNotActivatedException)
             {
-                return Forbid("Account not activated");
+                return StatusCode(403);
             }
             catch (UnauthorizedException)
             {
