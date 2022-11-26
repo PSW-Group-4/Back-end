@@ -6,14 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using IronPdf;
 
-namespace IntegrationLibrary.Utilities
+namespace IntegrationLibrary.Utilities.Converters
 {
-    public class HtmlToPdfConvertor
+    public class HtmlToPdfConverter
     {
         public static string defaultPath = Directory.GetCurrentDirectory().ToString() + Path.DirectorySeparatorChar + "Reports" + Path.DirectorySeparatorChar;
-        public static String Convert(String html, String path, String BloodBankTitle)
+        public static string Convert(string html, string path, string BloodBankTitle)
         {
-            var Renderer = new IronPdf.ChromePdfRenderer();
+            var Renderer = new ChromePdfRenderer();
             var pdf = Renderer.RenderHtmlAsPdf(html);
             path += BloodBankTitle + DateTime.Now.ToString("yyyyMMddHHmmssffff") + ".pdf";
             pdf.SaveAs(path);

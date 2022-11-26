@@ -30,6 +30,7 @@ using Microsoft.AspNetCore.Mvc;
 using IntegrationAPI.HostedServices;
 using IntegrationAPI.Dtos.ReportsConfiguration;
 using Confluent.Kafka;
+using IntegrationAPI.Communications.Mail;
 
 namespace IntegrationAPI
 {

@@ -5,14 +5,14 @@ using MailKit.Security;
 using MimeKit;
 using System;
 
-namespace IntegrationAPI.Communications
+namespace IntegrationAPI.Communications.Mail
 {
     public class MailSender : IMailSender
     {
         public string CreateEmailText(BloodBank bloodBank)
         {
             //TODO when the public app is done change add the link to EmailingResources and put it here 
-            return String.Format(IntegrationLibrary.Settings.EmailingResources.EmailTemplate, bloodBank.ApiKey, bloodBank.Password, $"http://localhost:4200/bloodBanks/{bloodBank.ApiKey}");
+            return string.Format(IntegrationLibrary.Settings.EmailingResources.EmailTemplate, bloodBank.ApiKey, bloodBank.Password, $"http://localhost:4200/bloodBanks/{bloodBank.ApiKey}");
         }
 
         public MimeMessage createTxtEmail(string recipientName, string recipientEmail, string subject, string emailText)

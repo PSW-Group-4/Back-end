@@ -22,5 +22,7 @@ namespace IntegrationLibrary.BloodRequests.Model
         public String RejectionComment { get; set; }
         public String ManagerId { get; set; }
         public DateTime DateTime { get; set; }
+        public DateTime SendOnDate { get; set; }
+        public bool IsUrgent { get; set; }
     }
 }

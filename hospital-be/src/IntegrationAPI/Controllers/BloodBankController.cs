@@ -3,10 +3,10 @@ using IntegrationLibrary.BloodBanks.Service;
 using AutoMapper;
 using System.Collections.Generic;
 using IntegrationLibrary.BloodBanks.Model;
-using IntegrationAPI.Communications;
 using System;
 using IntegrationAPI.Authorization;
 using IntegrationAPI.Dtos.BloodBank;
+using IntegrationAPI.Communications.Mail;
 
 namespace IntegrationAPI.Controllers
 {

@@ -1,6 +1,6 @@
 ﻿using RestSharp;
 
-namespace IntegrationAPI.Communications
+namespace IntegrationAPI.Communications.Pdf
 {
     public class PdfSender
     {
@@ -20,6 +20,6 @@ namespace IntegrationAPI.Communications
             return response.Result.ResponseStatus.ToString();
 
         }
-        
+
     }
 }

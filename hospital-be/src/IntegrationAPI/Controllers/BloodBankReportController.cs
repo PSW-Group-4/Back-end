@@ -1,4 +1,4 @@
-﻿using IntegrationAPI.Communications;
+﻿using IntegrationAPI.Communications.Pdf;
 using IntegrationLibrary.BloodReport.Service;
 using Microsoft.AspNetCore.Mvc;
 

@@ -11,7 +11,7 @@ using IntegrationAPI.Dtos.BloodBankNews;
 using Microsoft.Extensions.DependencyInjection;
 using IntegrationLibrary.BloodBankNews.Service;
 
-namespace IntegrationAPI.Communications
+namespace IntegrationAPI.Communications.Consumer
 {
     public class NewsListener : IHostedService
     {
@@ -37,7 +37,7 @@ namespace IntegrationAPI.Communications
 
             try
             {
-                using(var scope = _serviceScopeFactory.CreateScope())
+                using (var scope = _serviceScopeFactory.CreateScope())
                 {
                     INewsService newsService = scope.ServiceProvider.GetRequiredService<INewsService>();
                     var newsConverter = scope.ServiceProvider.GetRequiredService<IConverter<News, NewsDto>>();
@@ -64,7 +64,7 @@ namespace IntegrationAPI.Communications
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
+                Debug.WriteLine(ex.Message);
             }
 
             return Task.CompletedTask;
