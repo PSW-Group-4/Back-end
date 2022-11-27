@@ -1,6 +1,5 @@
 using System;
 using IntegrationAPI.Authorization;
-using IntegrationAPI.Communications;
 using IntegrationAPI.Mappers;
 using IntegrationAPI.Dtos;
 using IntegrationLibrary.BloodBankNews.Repository;
@@ -31,6 +30,7 @@ using IntegrationAPI.HostedServices;
 using IntegrationAPI.Dtos.ReportsConfiguration;
 using Confluent.Kafka;
 using IntegrationAPI.Communications.Mail;
+using IntegrationAPI.Communications.Consumer;
 
 namespace IntegrationAPI
 {

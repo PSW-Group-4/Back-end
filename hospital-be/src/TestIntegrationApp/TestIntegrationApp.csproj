@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UnitTesting\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="UnitTesting\BloodUsageTests\BRHtmlTest.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
