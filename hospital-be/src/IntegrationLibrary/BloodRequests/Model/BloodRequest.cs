@@ -24,7 +24,7 @@ namespace IntegrationLibrary.BloodRequests.Model
         public DateTime SendOnDate { get; set; }
         public bool IsUrgent { get; set; }
         public BloodRequestStatus Status { get; set; }
-        public BloodBank BloodBank { get; set; }
+        public virtual BloodBank BloodBank { get; set; }
     }
 
     public enum BloodRequestStatus
