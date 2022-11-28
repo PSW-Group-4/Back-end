@@ -1,4 +1,4 @@
-using IntegrationAPI.Communications.Consumer;
+using IntegrationAPI.Communications.Consumer.News;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;

@@ -1,13 +1,17 @@
 ﻿using AutoMapper;
 using IntegrationAPI;
+using IntegrationAPI.Communications.Consumer;
+using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodRequests.Repository;
 using IntegrationLibrary.BloodRequests.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,6 +77,5 @@ namespace TestIntegrationApp.IntegrationTesting
             Assert.True(result.BloodAmountInMilliliters == 200.00);
 
         }
-       
     }
 }

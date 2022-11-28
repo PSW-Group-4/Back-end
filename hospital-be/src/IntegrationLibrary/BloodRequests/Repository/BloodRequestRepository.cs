@@ -29,7 +29,7 @@ namespace IntegrationLibrary.BloodRequests.Repository
         public IEnumerable<BloodRequest> GetUnapproved()
         {
             return _context.BloodRequests.Where(b => b.IsApproved == false);
-        }  
+        }
 
         public BloodRequest Create(BloodRequest bloodRequest)
         {
@@ -38,21 +38,15 @@ namespace IntegrationLibrary.BloodRequests.Repository
             return bloodRequest;
         }
 
-        public BloodRequest Update(BloodRequest bloodRequest) {
-            var local = _context.Set<BloodRequest>()
-         .Local
-         .FirstOrDefault(entry => entry.Id.Equals(bloodRequest.Id));
-
-            // check if local is not null 
+        public BloodRequest Update(BloodRequest bloodRequest)
+        {
+            var local = _context.Set<BloodRequest>().Local.FirstOrDefault(entry => entry.Id.Equals(bloodRequest.Id));
             if (local != null)
             {
-                // detach
                 _context.Entry(local).State = EntityState.Detached;
             }
-            // set Modified flag in your entry
+            _context.Update(bloodRequest);
             _context.Entry(bloodRequest).State = EntityState.Modified;
-
-            // save
             _context.SaveChanges();
             return bloodRequest;
         }

@@ -33,6 +33,7 @@ using IntegrationAPI.Communications.Mail;
 using IntegrationAPI.Communications.Consumer;
 using IntegrationAPI.Communications.Producer;
 using IntegrationLibrary.BloodRequests.Model;
+using IntegrationAPI.Communications.Consumer.News;
 
 namespace IntegrationAPI
 {

@@ -1,31 +1,29 @@
 ﻿using Confluent.Kafka;
-using IntegrationAPI.Dtos.BloodBankNews;
-using IntegrationLibrary.BloodBankNews.Model;
-using IntegrationLibrary.BloodBankNews.Service;
+using HospitalLibrary.BloodSupplies.Model;
+using HospitalLibrary.BloodSupplies.Service;
+using IntegrationAPI.Communications.Consumer.BloodSupplyConsumers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-using Microsoft.Extensions.Hosting;
-using HospitalLibrary.BloodSupplies.Model;
-using HospitalLibrary.BloodSupplies.Service;
+using IntegrationLibrary.BloodRequests.Service;
+using IntegrationLibrary.BloodRequests.Model;
 
-namespace IntegrationAPI.Communications.Consumer
+namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
 {
-    public class BloodSupplyListener : IHostedService
+    public class BloodRequestResponseListener : IHostedService
     {
-        private readonly string topic = "blood.supply.topic";
-        private readonly string groupId = "bloodSupplies";
+        private readonly string topic = "blood.requests.responses.topic";
+        private readonly string groupId = "bloodRequestResponses";
         private readonly string bootstrapServers = "localhost:9094";
         public IServiceScopeFactory _serviceScopeFactory;
 
-        public BloodSupplyListener(IServiceScopeFactory serviceScopeFactory)
+        public BloodRequestResponseListener(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
-
-
         public Task StartAsync(CancellationToken cancellationToken)
         {
             var config = new ConsumerConfig
@@ -39,19 +37,18 @@ namespace IntegrationAPI.Communications.Consumer
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    IBloodSupplyService bloodSupplyService = scope.ServiceProvider.GetRequiredService<IBloodSupplyService>();
-                    IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder
-                <Ignore, string>(config).Build();
+                    IBloodRequestService bloodRequestService = scope.ServiceProvider.GetRequiredService<IBloodRequestService>();
+                    IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
                         consumerBuilder.Subscribe(topic);
                         CancellationTokenSource cancelToken = new CancellationTokenSource();
-                        BloodSupplyConsumer bloodSupplyConsumer = new(consumerBuilder, cancelToken);
+                        BloodRequestResponseConsumer consumer = new BloodRequestResponseConsumer(consumerBuilder, cancelToken, bloodRequestService);
                         try
                         {
                             while (true)
                             {
-                                BloodSupply bloodSupply = bloodSupplyConsumer.Consume();
-                                bloodSupplyService.Create(bloodSupply);
+                                BloodRequest response = consumer.Consume();
+                                bloodRequestService.Update(response);
                             }
                         }
                         catch (OperationCanceledException)
@@ -73,5 +70,4 @@ namespace IntegrationAPI.Communications.Consumer
             return Task.CompletedTask;
         }
     }
-
 }

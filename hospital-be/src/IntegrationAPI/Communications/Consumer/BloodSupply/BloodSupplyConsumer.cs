@@ -6,7 +6,7 @@ using IntegrationLibrary.BloodBankNews.Model;
 using System.Text.Json;
 using System.Threading;
 
-namespace IntegrationAPI.Communications.Consumer
+namespace IntegrationAPI.Communications.Consumer.BloodSupplyConsumers
 {
     public class BloodSupplyConsumer : IConsumer<BloodSupply>
     {

@@ -23,5 +23,15 @@ namespace IntegrationLibrary.BloodRequests.Model
         public String ManagerId { get; set; }
         public DateTime SendOnDate { get; set; }
         public bool IsUrgent { get; set; }
+        public BloodRequestStatus Status { get; set; }
+    }
+
+    public enum BloodRequestStatus
+    {
+        PENDING_RESPONSE,
+        APPROVED_BY_BANK,
+        REJECTED_BY_BANK,
+        FAILED,
+        FULFILLED
     }
 }

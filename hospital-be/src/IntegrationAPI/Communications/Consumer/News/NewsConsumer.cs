@@ -7,7 +7,7 @@ using System;
 using System.Text.Json;
 using System.Threading;
 
-namespace IntegrationAPI.Communications.Consumer
+namespace IntegrationAPI.Communications.Consumer.News
 {
     public class NewsConsumer : IConsumer<News>
     {
