@@ -43,5 +43,11 @@ namespace HospitalLibrary.BloodSupplies.Service
         {
             _bloodSupplyRepository.Delete(bloodSupplyId);
         }
+        public BloodSupply UpdateByType(string type, double amount)
+        {
+            BloodSupply bloodSupply = GetByType(type);
+            bloodSupply.Amount += amount;
+            return _bloodSupplyRepository.Update(bloodSupply);
+        }
     }
 }

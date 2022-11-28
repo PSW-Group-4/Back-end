@@ -33,7 +33,7 @@ using IntegrationAPI.Communications.Mail;
 using IntegrationAPI.Communications.Consumer;
 using IntegrationAPI.Communications.Producer;
 using IntegrationLibrary.BloodRequests.Model;
-using IntegrationAPI.Communications.Consumer.News;
+using IntegrationAPI.Communications.Consumer.BloodBankNews;
 
 namespace IntegrationAPI
 {
@@ -103,7 +103,7 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
-            services.AddScoped<IConsumer<News>, NewsConsumer>();
+            services.AddScoped<IConsumer<News>, NewsConsu>();
             services.AddScoped<IProducer<BloodRequest>, BloodRequestProducer>();
 
 
