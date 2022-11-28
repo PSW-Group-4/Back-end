@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Threading;
 using System;
 using Microsoft.Extensions.Hosting;
+using HospitalLibrary.BloodSupplies.Model;
+using HospitalLibrary.BloodSupplies.Service;
 
 namespace IntegrationAPI.Communications.Consumer
 {
@@ -37,7 +39,7 @@ namespace IntegrationAPI.Communications.Consumer
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    //IBloodSupplyService bloodSupplyService = scope.ServiceProvider.GetRequiredService<IBloodSupplyService>();
+                    IBloodSupplyService bloodSupplyService = scope.ServiceProvider.GetRequiredService<IBloodSupplyService>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder
                 <Ignore, string>(config).Build();
                     {
@@ -48,8 +50,8 @@ namespace IntegrationAPI.Communications.Consumer
                         {
                             while (true)
                             {
-                                News news = newsConsumer.Consume();
-                                newsService.Save(news);
+                                BloodSupply bloodSupply = bloodSupplyConsumer.Consume();
+                                bloodSupplyService.Create(bloodSupply);
                             }
                         }
                         catch (OperationCanceledException)

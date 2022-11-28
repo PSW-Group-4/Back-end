@@ -4,6 +4,7 @@ using HospitalAPI.Dtos.Person;
 using HospitalLibrary.Allergies;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Patients.Model;
+using IntegrationLibrary.BloodBanks.Model;
 using System;
 using System.Collections.Generic;
 

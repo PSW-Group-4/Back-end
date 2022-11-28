@@ -46,7 +46,7 @@ namespace HospitalLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("SendOnDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("DoctorId")

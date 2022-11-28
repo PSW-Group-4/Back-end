@@ -3,6 +3,7 @@ using HospitalLibrary.Patients.Model;
 using System.Collections.Generic;
 using System;
 using HospitalLibrary.Allergies.Model;
+using IntegrationLibrary.BloodBanks.Model;
 
 namespace HospitalAPI.Dtos.Patient
 {

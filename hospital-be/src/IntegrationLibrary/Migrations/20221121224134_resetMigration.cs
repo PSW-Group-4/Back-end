@@ -42,7 +42,8 @@ namespace IntegrationLibrary.Migrations
                     IsApproved = table.Column<bool>(type: "boolean", nullable: false),
                     RejectionComment = table.Column<string>(type: "text", nullable: true),
                     ManagerId = table.Column<string>(type: "text", nullable: true),
-                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                    SendOnDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    IsUrgent = table.Column<bool>(type: "boolean", nullable: false),
                 },
                 constraints: table =>
                 {

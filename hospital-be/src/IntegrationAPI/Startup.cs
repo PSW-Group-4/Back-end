@@ -31,6 +31,8 @@ using IntegrationAPI.Dtos.ReportsConfiguration;
 using Confluent.Kafka;
 using IntegrationAPI.Communications.Mail;
 using IntegrationAPI.Communications.Consumer;
+using IntegrationAPI.Communications.Producer;
+using IntegrationLibrary.BloodRequests.Model;
 
 namespace IntegrationAPI
 {
@@ -101,6 +103,7 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
             services.AddScoped<IConsumer<News>, NewsConsumer>();
+            services.AddScoped<IProducer<BloodRequest>, BloodRequestProducer>();
 
 
             services.AddControllers();

@@ -2,22 +2,12 @@
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
+using IntegrationLibrary.BloodBanks.Model;
 using System;
 using System.Collections.Generic;
 
 namespace HospitalLibrary.Patients.Model
 {
-    public enum BloodType
-    {
-        A_POS,
-        A_NEG,
-        B_POS,
-        B_NEG,
-        O_POS,
-        O_NEG,
-        AB_POS,
-        AB_NEG
-    }
 
     public class Patient : Person
     {

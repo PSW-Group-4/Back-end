@@ -157,7 +157,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("BloodType")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("SendOnDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DoctorId")
@@ -177,6 +177,9 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<string>("RejectionComment")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsUrgent")
+                        .HasColumnType("boolean");
 
                     b.HasKey("Id");
 

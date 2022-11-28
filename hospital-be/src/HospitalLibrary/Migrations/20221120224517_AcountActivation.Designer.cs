@@ -97,7 +97,7 @@ namespace HospitalLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("SendOnDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("DoctorId")
@@ -135,7 +135,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<string>("BloodType")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("DateTime")
+                    b.Property<DateTime>("SendOnDate")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<Guid>("DoctorId")

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Utilities.Converters
 {
-    public class BloodRequestConverter : IConverter<BloodRequest, >
+    public class BloodRequestConverter
     {
     }
 }

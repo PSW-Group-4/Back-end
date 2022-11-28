@@ -1,7 +1,9 @@
 ﻿using Confluent.Kafka;
+using HospitalAPI.Dtos.BloodSupply;
 using HospitalLibrary.BloodSupplies.Model;
 using IntegrationAPI.Dtos.BloodBankNews;
 using IntegrationLibrary.BloodBankNews.Model;
+using System.Text.Json;
 using System.Threading;
 
 namespace IntegrationAPI.Communications.Consumer
@@ -20,7 +22,7 @@ namespace IntegrationAPI.Communications.Consumer
         public BloodSupply Consume()
         {
             var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
-            //BloodSupplyDto dto = JsonSerializer.Deserialize<BloodSupplyDto>(consumer.Message.Value);
+            BloodSupplyDto dto = JsonSerializer.Deserialize<BloodSupplyDto>(consumer.Message.Value);
             //BloodSupply bloodSupply = convertFromDto;
             //return bloodSupply;
             return new();
