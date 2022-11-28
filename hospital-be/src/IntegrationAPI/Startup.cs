@@ -30,6 +30,8 @@ using Microsoft.AspNetCore.Mvc;
 using IntegrationAPI.HostedServices;
 using IntegrationAPI.Dtos.ReportsConfiguration;
 using Confluent.Kafka;
+using IntegrationLibrary.Tenders.Repository;
+using IntegrationLibrary.Tenders.Service;
 
 namespace IntegrationAPI
 {
@@ -100,6 +102,8 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
             services.AddScoped<IConsumer<News>, NewsConsumer>();
+            services.AddScoped<ITenderRepository, TenderRepository>();
+            services.AddScoped<ITenderService, TenderService>();
 
 
             services.AddControllers();
