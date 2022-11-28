@@ -159,7 +159,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<int>("BloodType")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("SendOnDate")
+                    b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DoctorId")

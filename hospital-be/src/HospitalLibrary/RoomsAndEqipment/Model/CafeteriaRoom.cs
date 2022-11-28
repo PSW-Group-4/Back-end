@@ -7,7 +7,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
 {
     public class CafeteriaRoom : Room
     {
-        //TODO Change to SendOnDate
+        //TODO Change to DateTime
         public String Workhours {get; set;}
 
         public void Update(CafeteriaRoom room) {

@@ -23,8 +23,6 @@ namespace IntegrationAPI.Communications.Consumer
         {
             var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
             BloodSupplyDto dto = JsonSerializer.Deserialize<BloodSupplyDto>(consumer.Message.Value);
-            //BloodSupply bloodSupply = convertFromDto;
-            //return bloodSupply;
             return new();
         }
     }

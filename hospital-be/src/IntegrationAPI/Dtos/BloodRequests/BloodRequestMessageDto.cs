@@ -8,6 +8,6 @@ namespace IntegrationAPI.Dtos.BloodRequests
         public BloodType BloodType { get; set; }
         public RHFactor RHFactor { get; set; }
         public double BloodAmountInMilliliters { get; set; }
-        public DateTime SendOnDate { get; set; }
+        public DateTime DateTime { get; set; }
     }
 }

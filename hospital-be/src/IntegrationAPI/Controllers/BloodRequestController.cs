@@ -51,7 +51,7 @@ namespace IntegrationAPI.Controllers
                     BloodType = bloodRequest.BloodType,
                     RHFactor = bloodRequest.RHFactor,
                     BloodAmountInMilliliters = bloodRequest.BloodAmountInMilliliters,
-                    SendOnDate = bloodRequest.SendOnDate
+                    DateTime = bloodRequest.SendOnDate
                 };
                 bloodRequestProducer.Send(JsonSerializer.Serialize(message));
             }

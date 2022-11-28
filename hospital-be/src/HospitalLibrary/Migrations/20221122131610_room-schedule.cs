@@ -12,7 +12,7 @@ namespace HospitalLibrary.Migrations
                 table: "Appointments");
 
             migrationBuilder.DropColumn(
-                name: "SendOnDate",
+                name: "DateTime",
                 table: "Appointments");
 
             migrationBuilder.DropColumn(
@@ -84,7 +84,7 @@ namespace HospitalLibrary.Migrations
                 newName: "IX_Appointments_RoomId");
 
             migrationBuilder.AddColumn<DateTime>(
-                name: "SendOnDate",
+                name: "DateTime",
                 table: "Appointments",
                 type: "timestamp without time zone",
                 nullable: false,
