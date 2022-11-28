@@ -103,7 +103,7 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
-            services.AddScoped<IConsumer<News>, NewsConsu>();
+            services.AddScoped<IConsumer<News>, NewsConsumer>();
             services.AddScoped<IProducer<BloodRequest>, BloodRequestProducer>();
 
 

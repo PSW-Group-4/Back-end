@@ -1,7 +1,7 @@
 ﻿using Confluent.Kafka;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BloodSupplies.Service;
-using IntegrationAPI.Communications.Consumer.BloodSupplyConsumers;
+using IntegrationAPI.Communications.Consumer.BankBloodSupply;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Diagnostics;

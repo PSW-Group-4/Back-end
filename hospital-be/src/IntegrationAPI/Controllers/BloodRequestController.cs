@@ -23,7 +23,6 @@ namespace IntegrationAPI.Controllers
 
         public BloodRequestController(IBloodRequestService service, IMapper mapper)
         {
-
             _service = service;
             _mapper = mapper;
         }
