@@ -19,11 +19,9 @@ namespace IntegrationAPI.Dtos.Tenders
 
         public Tender Convert(TenderDto dto)
         {
-            return new Tender(
-                (BloodType) Enum.Parse(typeof(BloodType), dto.BloodType),
-                (RHFactor) Enum.Parse(typeof(RHFactor), dto.RHFactor),
+            return Tender.Create((BloodType)Enum.Parse(typeof(BloodType), dto.BloodType),
+                (RHFactor)Enum.Parse(typeof(RHFactor), dto.RHFactor),
                 dto.Amount,
-                DateTime.Now,
                 DateTime.Parse(dto.Deadline));
         }
     }

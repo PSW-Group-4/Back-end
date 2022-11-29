@@ -22,7 +22,7 @@ namespace IntegrationLibrary.Common
                 return new EmailAddress(input.Split('@')[0], input.Split('@')[1]);
             } else
             {
-                throw new InvalidEmailFormat();
+                throw new InvalidEmailFormatException();
             }
         }
 

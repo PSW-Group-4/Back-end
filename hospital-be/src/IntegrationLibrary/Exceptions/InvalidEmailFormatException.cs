@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Exceptions
 {
-    public class InvalidEmailFormat : Exception
+    public class InvalidEmailFormatException : Exception
     {
-        public InvalidEmailFormat() { }
+        public InvalidEmailFormatException() { }
     }
 }

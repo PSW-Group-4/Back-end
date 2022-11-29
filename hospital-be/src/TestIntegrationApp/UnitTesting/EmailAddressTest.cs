@@ -66,7 +66,7 @@ namespace TestIntegrationApp.UnitTesting
         public void Invalid_Email_Address_Creation_Throws_Exception()
         {
 
-            Assert.Throws<InvalidEmailFormat>(() => EmailAddress.Create("adresicagmailcom"));
+            Assert.Throws<InvalidEmailFormatException>(() => EmailAddress.Create("adresicagmailcom"));
         }
 
         [Fact]
