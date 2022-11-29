@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationLibrary.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.BloodBanks.Model
 {
-    public enum BloodTypeTitle
+    public enum BloodGroup
     {
         O,
         A,
@@ -20,17 +21,31 @@ namespace IntegrationLibrary.BloodBanks.Model
     }
     public class BloodType
     {
-        public BloodTypeTitle Title { get; private set; }
+        public BloodGroup Title { get; private set; }
         public RHFactor RHFactor { get; private set; }
 
         public BloodType() { }
 
-        public BloodType(BloodTypeTitle title, RHFactor rHFactor)
+        public BloodType(BloodGroup title, RHFactor rHFactor)
         {
             this.Title = title;
             this.RHFactor = rHFactor;
         }
-
+        public static BloodType FromString(string type)
+        {
+            //Assumed structure of string type => BloodGroup *space* RHFactor; "A POSITIVE"
+            var parseFlag1 = Enum.TryParse<BloodGroup>(type.Split(" ")[0], true, out BloodGroup bloodGroup);
+            var parseFlag2 = Enum.TryParse<RHFactor>(type.Split(" ")[1], true, out RHFactor rHFactor);
+            if (parseFlag1 && parseFlag2)
+            {
+                return new BloodType() { Title = bloodGroup, RHFactor = rHFactor };
+            }
+            throw new EnumToStringCastException();
+        }
+        public override string ToString()
+        {
+            return Title.ToString() + " " + RHFactor.ToString();
+        }
         public override bool Equals(object obj)
         {
            if(obj == null) return false;

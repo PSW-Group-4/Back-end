@@ -60,7 +60,7 @@ namespace TestIntegrationApp.IntegrationTesting
             var controller = SetupController(scope);
             BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
             {
-                BloodType = new BloodType(BloodTypeTitle.A, RHFactor.NEGATIVE),
+                BloodType = new BloodType(BloodGroup.A, RHFactor.NEGATIVE),
                 ReasonsWhyBloodIsNeeded = "Reason",
                 BloodAmountInMilliliters = 100.00,
                 DateTime = DateTime.Now,
