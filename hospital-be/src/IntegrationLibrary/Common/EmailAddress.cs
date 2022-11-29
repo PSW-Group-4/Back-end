@@ -9,18 +9,17 @@ namespace IntegrationLibrary.Common
         public String LocalPart { get; private set; }
         public String Domain { get; private set; }
 
-        public EmailAddress(string localPart, string domain)
-        {
-            LocalPart = localPart;
+        private EmailAddress(string localPart, string domain)
+        {LocalPart = localPart;
             Domain = domain;
+            
         }
 
-        public EmailAddress(String input)
+        public static EmailAddress Create(String input)
         {
             if(IsValid(input))
             {
-                LocalPart = input.Split('@')[0];
-                Domain = input.Split('@')[1];
+                return new EmailAddress(input.Split('@')[0], input.Split('@')[1]);
             } else
             {
                 throw new InvalidEmailFormat();

@@ -55,7 +55,7 @@ namespace TestIntegrationApp.UnitTesting
         [Fact]
         public void Email_Address_Is_Created_From_String()
         {
-            EmailAddress addressFromInput = new("adresica@gmail.com");
+            EmailAddress addressFromInput = EmailAddress.Create("adresica@gmail.com");
 
             var result = addressFromInput.LocalPart == "adresica" && addressFromInput.Domain == "gmail.com";
 
@@ -65,16 +65,15 @@ namespace TestIntegrationApp.UnitTesting
         [Fact]
         public void Invalid_Email_Address_Creation_Throws_Exception()
         {
-            EmailAddress addressFromInput = new("adresica@gmail.com");
 
-            Assert.Throws<InvalidEmailFormat>(() => new EmailAddress("adresicagmailcom"));
+            Assert.Throws<InvalidEmailFormat>(() => EmailAddress.Create("adresicagmailcom"));
         }
 
         [Fact]
         public void Equality_Check()
         {
             String input = "adresica@gmail.com";
-            EmailAddress addressFromInput = new(input);
+            EmailAddress addressFromInput = EmailAddress.Create(input);
 
             var result = addressFromInput.Equals(input);
 
@@ -84,8 +83,8 @@ namespace TestIntegrationApp.UnitTesting
         [Fact]
         public void Equality_Check_2()
         {
-            EmailAddress first = new("adresica@gmail.com");
-            EmailAddress second = new("adresica@gmail.com");
+            EmailAddress first = EmailAddress.Create("adresica@gmail.com");
+            EmailAddress second = EmailAddress.Create("adresica@gmail.com");
 
             var result = first.Equals(second);
 
@@ -96,7 +95,7 @@ namespace TestIntegrationApp.UnitTesting
         public void Equality_Check_3()
         {
             String input = "adresica@gmail.com";
-            EmailAddress addressFromInput = new(input);
+            EmailAddress addressFromInput = EmailAddress.Create(input);
 
             var result = addressFromInput == input;
 
@@ -106,8 +105,8 @@ namespace TestIntegrationApp.UnitTesting
         [Fact]
         public void Equality_Check_4()
         {
-            EmailAddress first = new("adresica@gmail.com");
-            EmailAddress second = new("adresica@gmail.com");
+            EmailAddress first = EmailAddress.Create("adresica@gmail.com");
+            EmailAddress second = EmailAddress.Create("adresica@gmail.com");
 
             var result = first == second;
 
@@ -118,7 +117,7 @@ namespace TestIntegrationApp.UnitTesting
         public void Inequality_Check()
         {
             String input = "adresica@gmail.com";
-            EmailAddress address = new("adresicaa@gmail.com");
+            EmailAddress address = EmailAddress.Create("adresicaa@gmail.com");
 
             var result = address.Equals(input);
 
@@ -128,8 +127,8 @@ namespace TestIntegrationApp.UnitTesting
         [Fact]
         public void Inquality_Check_2()
         {
-            EmailAddress first = new("adresica@gmail.com");
-            EmailAddress second = new("adresicaa@gmail.com");
+            EmailAddress first = EmailAddress.Create("adresica@gmail.com");
+            EmailAddress second = EmailAddress.Create("adresicaa@gmail.com");
 
             var result = first.Equals(second);
 
@@ -140,7 +139,7 @@ namespace TestIntegrationApp.UnitTesting
         public void Inequality_Check_3()
         {
             String input = "adresica@gmail.com";
-            EmailAddress address = new("adresicaa@gmail.com");
+            EmailAddress address = EmailAddress.Create("adresicaa@gmail.com");
 
             var result = address != input;
 
@@ -150,8 +149,8 @@ namespace TestIntegrationApp.UnitTesting
         [Fact]
         public void Inequality_Check_4()
         {
-            EmailAddress first = new("adresica@gmail.com");
-            EmailAddress second = new("adresicaa@gmail.com");
+            EmailAddress first = EmailAddress.Create("adresica@gmail.com");
+            EmailAddress second = EmailAddress.Create("adresicaa@gmail.com");
 
             var result = first != second;
 

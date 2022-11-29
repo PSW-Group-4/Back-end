@@ -28,5 +28,10 @@ namespace IntegrationLibrary.Tenders.Model
             DatePosted = datePosted;
             Deadline = deadline;
         }
+
+        public bool IsActive()
+        {
+            return DateTime.Compare(DateTime.Now, Deadline) < 0;
+        }
     }
 }
