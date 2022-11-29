@@ -3,6 +3,11 @@ using IntegrationAPI.Communications;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos;
 using IntegrationAPI.Dtos.Tenders;
+using IntegrationLibrary.BloodRequests.Model;
+using IntegrationLibrary.BloodRequests.Repository;
+using IntegrationLibrary.BloodRequests.Service;
+using IntegrationLibrary.Tenders.Model;
+using IntegrationLibrary.Tenders.Repository;
 using IntegrationLibrary.Tenders.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +17,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using TestIntegrationApp.Setup;
 using Xunit;
 namespace TestIntegrationApp.IntegrationTesting
@@ -22,7 +28,11 @@ namespace TestIntegrationApp.IntegrationTesting
         public TenderTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
         private static TenderController SetupController(IServiceScope scope)
         {
-            return new TenderController(scope.ServiceProvider.GetRequiredService<ITenderService>());
+            return new TenderController(scope.ServiceProvider.GetRequiredService<ITenderService>(), new TenderConverter());
+        }
+        private static TenderService SetupService(IServiceScope scope)
+        {
+            return new TenderService(scope.ServiceProvider.GetRequiredService<ITenderRepository>());
         }
 
         [Fact]
@@ -32,7 +42,7 @@ namespace TestIntegrationApp.IntegrationTesting
             using var scope = Factory.Services.CreateScope();
             TenderController tenderController = SetupController(scope);
 
-            TenderDto tenderDto = new TenderDto
+            TenderDto tenderDto = new()
             {
                 BloodType = "AB",
                 RHFactor = "NEGATIVE",
@@ -41,9 +51,9 @@ namespace TestIntegrationApp.IntegrationTesting
             };
 
             tenderController.Create(tenderDto);
-            var result = tenderController.GetAll();
+            IEnumerable<Tender> result = ((OkObjectResult)tenderController.GetAll())?.Value as IEnumerable<Tender>;
 
-            Assert.NotNull(result);
+            Assert.Single(result);
         }
     }
 }

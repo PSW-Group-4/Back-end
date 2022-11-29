@@ -32,6 +32,8 @@ using IntegrationAPI.Dtos.ReportsConfiguration;
 using Confluent.Kafka;
 using IntegrationLibrary.Tenders.Repository;
 using IntegrationLibrary.Tenders.Service;
+using IntegrationLibrary.Tenders.Model;
+using IntegrationAPI.Dtos.Tenders;
 
 namespace IntegrationAPI
 {
@@ -86,6 +88,7 @@ namespace IntegrationAPI
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
             services.AddScoped<IConverter<News, NewsDto>, NewsConverter>();
+            services.AddScoped<IConverter<Tender, TenderDto>, TenderConverter>();
             services.AddScoped<IPasswordHandler, PasswordHandler>();
             services.AddScoped<IBloodBankRepository, BloodBankRepository>();
             services.AddScoped<IBloodBankService, BloodBankService>();

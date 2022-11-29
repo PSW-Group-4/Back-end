@@ -11,6 +11,12 @@ namespace IntegrationLibrary.Tenders.Service
     public class TenderService : ITenderService
     {
         private readonly ITenderRepository _repository;
+
+        public TenderService(ITenderRepository repository)
+        {
+            _repository = repository;
+        }
+
         public void Create(Tender tender)
         {
             _repository.Create(tender);
