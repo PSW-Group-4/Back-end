@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IntegrationLibrary.Tenders.Model;
+using IntegrationLibrary.Tenders.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +10,15 @@ namespace IntegrationLibrary.Tenders.Service
 {
     public class TenderService : ITenderService
     {
+        private readonly ITenderRepository _repository;
+        public void Create(Tender tender)
+        {
+            _repository.Create(tender);
+        }
+
+        public IEnumerable<Tender> GetAll()
+        {
+            return _repository.GetAll();
+        }
     }
 }

@@ -34,11 +34,10 @@ namespace TestIntegrationApp.IntegrationTesting
 
             TenderDto tenderDto = new TenderDto
             {
-                BloodType = IntegrationLibrary.BloodBanks.Model.BloodType.AB,
-                RHFactor = IntegrationLibrary.BloodBanks.Model.RHFactor.NEGATIVE,
+                BloodType = "AB",
+                RHFactor = "NEGATIVE",
                 Amount = 5000.0,
-                DatePosted = DateTime.Now,
-                Deadline = DateTime.Now.AddDays(3)
+                Deadline = DateTime.Now.AddDays(3).ToString(),
             };
 
             tenderController.Create(tenderDto);
