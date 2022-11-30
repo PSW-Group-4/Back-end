@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129003454_TendersMigration")]
+    partial class TendersMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -207,26 +209,6 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("tenders");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
-                {
-                    b.Property<Guid>("ApplicationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("BloodBankId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("PriceInRSD")
-                        .HasColumnType("double precision");
-
-                    b.Property<Guid>("TenderId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("ApplicationId");
-
-                    b.ToTable("TenderApplications");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodBankNews.Model.News", b =>
