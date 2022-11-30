@@ -41,12 +41,14 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             using var scope = Factory.Services.CreateScope();
             TenderController tenderController = SetupController(scope);
+            List<BloodProductDto> bloodProductDtos = new()
+            {
+                new BloodProductDto("A POSITIVE", 5000)
+            };
 
             TenderDto tenderDto = new()
             {
-                BloodGroup = "AB",
-                RHFactor = "NEGATIVE",
-                Amount = 5000.0,
+                BloodProducts = bloodProductDtos,
                 Deadline = DateTime.Now.AddDays(3).ToString(),
             };
 

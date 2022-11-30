@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodUsages.Model;
+using IntegrationLibrary.Common;
 using IntegrationLibrary.Settings;
 using System;
 using System.Collections.Generic;

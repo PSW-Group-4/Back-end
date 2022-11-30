@@ -2,24 +2,33 @@
 using IntegrationLibrary.Common;
 using IntegrationLibrary.Exceptions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace IntegrationLibrary.Tenders.Model
 {
     [Table("tenders")]
     public class Tender : Entity
     {
-        public BloodType BloodType { get; private set; }
-        public double Amount { get; private set; }
+        private IEnumerable<BloodProduct> bloodProducts;
+
+        public IEnumerable<BloodProduct> BloodProducts
+        {
+            get
+            {
+                return bloodProducts.ToList();
+            }
+
+            private set => bloodProducts = value;
+        }
         public DateTime Deadline { get; private set; }
 
-        public Tender() { }
-
-        private Tender(BloodType bloodType, double amount, DateTime deadline)
+        private Tender(IEnumerable<BloodProduct> bloodProducts, DateTime deadline)
         {
             Id = Guid.NewGuid();
-            BloodType = bloodType;
-            Amount = amount;
+            BloodProducts = bloodProducts;
             CreatedDate = DateTime.Now;
             Deadline = deadline;
             Version = 1.0;
@@ -30,11 +39,11 @@ namespace IntegrationLibrary.Tenders.Model
             return DateTime.Compare(DateTime.Now, Deadline) < 0;
         }
 
-        public static Tender Create(BloodType bloodType, double amount, DateTime deadline)
+        public static Tender Create(IEnumerable<BloodProduct> bloodProducts, DateTime deadline)
         {
             if(DateTime.Compare(DateTime.Now, deadline) < 0)
             {
-                return new Tender(bloodType, amount, deadline);
+                return new Tender(bloodProducts, deadline);
             } else
             {
                 throw new DateIsBeforeTodayException();

@@ -1,27 +1,31 @@
-﻿using IntegrationLibrary.BloodBanks.Model;
+﻿using AutoMapper;
+using IntegrationLibrary.Common;
 using IntegrationLibrary.Tenders.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IntegrationAPI.Dtos.Tenders
 {
     public class TenderConverter : IConverter<Tender, TenderDto>
     {
+
+        public TenderConverter() { }
+
         public TenderDto Convert(Tender entity)
         {
+            IEnumerable<BloodProductDto> bloodProductDtos = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() });
             return new TenderDto
             {
-                Amount = entity.Amount,
-                BloodGroup = entity.BloodType.ToString(),
+                BloodProducts = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() }),
                 Deadline = entity.Deadline.ToString()
             };
         }
 
         public Tender Convert(TenderDto dto)
         {
-            BloodType bloodType = new((BloodGroup)Enum.Parse(typeof(BloodGroup), dto.BloodGroup),
-                (RHFactor)Enum.Parse(typeof(RHFactor), dto.RHFactor));
-            return Tender.Create(bloodType,
-                dto.Amount,
+            IEnumerable<BloodProduct> bloodProducts = dto.BloodProducts.Select(dto => new BloodProduct(BloodType.FromString(dto.BloodType), dto.Amount));
+            return Tender.Create(bloodProducts,
                 DateTime.Parse(dto.Deadline));
         }
     }

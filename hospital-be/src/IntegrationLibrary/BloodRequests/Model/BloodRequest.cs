@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.BloodBanks.Model;
+﻿using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

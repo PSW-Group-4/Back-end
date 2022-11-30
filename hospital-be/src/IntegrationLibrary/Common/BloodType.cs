@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.BloodBanks.Model
+namespace IntegrationLibrary.Common
 {
     public enum BloodGroup
     {
@@ -28,23 +28,23 @@ namespace IntegrationLibrary.BloodBanks.Model
 
         public BloodType(BloodGroup title, RHFactor rHFactor)
         {
-            this.BloodGroup = title;
-            this.RHFactor = rHFactor;
+            BloodGroup = title;
+            RHFactor = rHFactor;
         }
         public static BloodType FromString(string type)
         {
-            string[] data=new string[2];
+            string[] data = new string[2];
             try
             {
                 data = type.Split(" ");
             }
-            catch(IndexOutOfRangeException e)
+            catch (IndexOutOfRangeException e)
             {
-                
+
             }
             //Assumed structure of string type => BloodGroup *space* RHFactor; "A POSITIVE"
-            var parseFlag1 = Enum.TryParse<BloodGroup>(data[0], true, out BloodGroup bloodGroup);
-            var parseFlag2 = Enum.TryParse<RHFactor> (data[1], true, out RHFactor rHFactor);
+            var parseFlag1 = Enum.TryParse(data[0], true, out BloodGroup bloodGroup);
+            var parseFlag2 = Enum.TryParse(data[1], true, out RHFactor rHFactor);
             if (parseFlag1 && parseFlag2)
             {
                 return new BloodType() { BloodGroup = bloodGroup, RHFactor = rHFactor };
@@ -57,7 +57,7 @@ namespace IntegrationLibrary.BloodBanks.Model
         }
         public override bool Equals(object obj)
         {
-           if(obj == null) return false;
+            if (obj == null) return false;
 
             if (GetType() != obj.GetType())
                 throw new ArgumentException($"Invalid comparison of Value Objects of different types: {GetType()} and {obj.GetType()}");
