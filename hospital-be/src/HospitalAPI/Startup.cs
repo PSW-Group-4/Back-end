@@ -211,8 +211,8 @@ namespace HospitalAPI
             services.AddScoped<IAppointmentRepository, AppointmentRepository>();
             services.AddScoped<IAppointmentService, AppointmentService>();
 
-            services.AddScoped<IMoveEquipmentTaskRepository, MoveEquipmentTaskRepository>();
-            services.AddScoped<IMoveEquipmentTaskService, MoveEquipmentTaskService>();
+            services.AddScoped<IMoveEquipmentAppointmentRepository, MoveEquipmentAppointmentRepository>();
+            services.AddScoped<IMoveEquipmentAppointmentService, MoveEquipmentAppointmentService>();
 
             services.AddScoped<IEquipmentToMoveRepository, EquipmentToMoveRepository>();
             services.AddScoped<IEquipmentToMoveService, EquipmentToMoveService>();

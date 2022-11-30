@@ -7,7 +7,7 @@ using HospitalLibrary.MoveEquipment.Model;
 
 namespace HospitalLibrary.MoveEquipment.Repository.Interfaces
 {
-    public interface IMoveEquipmentTaskRepository : IRepositoryBase<MoveEquipmentTask>
+    public interface IMoveEquipmentAppointmentRepository : IRepositoryBase<MoveEquipmentAppointment>
     {
         
     }
