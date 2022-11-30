@@ -21,14 +21,14 @@ namespace IntegrationLibrary.BloodBanks.Model
     }
     public class BloodType
     {
-        public BloodGroup Title { get; private set; }
+        public BloodGroup BloodGroup { get; private set; }
         public RHFactor RHFactor { get; private set; }
 
         public BloodType() { }
 
         public BloodType(BloodGroup title, RHFactor rHFactor)
         {
-            this.Title = title;
+            this.BloodGroup = title;
             this.RHFactor = rHFactor;
         }
         public static BloodType FromString(string type)
@@ -47,13 +47,13 @@ namespace IntegrationLibrary.BloodBanks.Model
             var parseFlag2 = Enum.TryParse<RHFactor> (data[1], true, out RHFactor rHFactor);
             if (parseFlag1 && parseFlag2)
             {
-                return new BloodType() { Title = bloodGroup, RHFactor = rHFactor };
+                return new BloodType() { BloodGroup = bloodGroup, RHFactor = rHFactor };
             }
             throw new EnumToStringCastException();
         }
         public override string ToString()
         {
-            return Title.ToString() + " " + RHFactor.ToString();
+            return BloodGroup.ToString() + " " + RHFactor.ToString();
         }
         public override bool Equals(object obj)
         {
@@ -67,7 +67,7 @@ namespace IntegrationLibrary.BloodBanks.Model
         //GetEqualityComponents exists so that we can use SequenceEqual to compare 2 blood types field by field 
         protected IEnumerable<object> GetEqualityComponents()
         {
-            yield return Title;
+            yield return BloodGroup;
             yield return RHFactor;
         }
 

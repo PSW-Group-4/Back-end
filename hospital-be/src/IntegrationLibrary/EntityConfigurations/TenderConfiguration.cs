@@ -1,19 +1,20 @@
 ﻿using IntegrationLibrary.BloodRequests.Model;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Tenders.Model;
 
 namespace IntegrationLibrary.EntityConfigurations
 {
-    public class BloodRequestConfiguration : IEntityTypeConfiguration<BloodRequest>
+    public class TenderConfiguration : IEntityTypeConfiguration<Tender>
     {
-        public void Configure(EntityTypeBuilder<BloodRequest> builder)
+        public void Configure(EntityTypeBuilder<Tender> builder)
         {
-            builder.OwnsOne(request => request.BloodType, a =>
+            builder.OwnsOne(tender => tender.BloodType, a =>
             {
                 a.Property(prop => prop.BloodGroup).HasMaxLength(1)
                 .HasColumnName("BloodGroup");

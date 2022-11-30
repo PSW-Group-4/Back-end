@@ -44,7 +44,7 @@ namespace TestIntegrationApp.IntegrationTesting
 
             TenderDto tenderDto = new()
             {
-                BloodType = "AB",
+                BloodGroup = "AB",
                 RHFactor = "NEGATIVE",
                 Amount = 5000.0,
                 Deadline = DateTime.Now.AddDays(3).ToString(),
