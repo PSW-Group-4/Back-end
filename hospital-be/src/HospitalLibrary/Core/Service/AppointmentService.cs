@@ -18,6 +18,7 @@ namespace HospitalLibrary.Core.Service
             _dctorService = doctorService;
         }
         //TODO refactor
+        //PETAR
         public bool IsAvailable(DateTime time)
         {
             List<Appointment> appointments = getAll();
@@ -47,6 +48,13 @@ namespace HospitalLibrary.Core.Service
             Guid id = new Guid("487d0767-1f8b-4a09-a593-4f076bdb9881");
             return _dctorService.GetById(id);
         }
+
+        List<DateTime> IAppointmentService.AvailableTerminsForDate(DateTime date)
+        {
+            throw new NotImplementedException();
+        }
+
+        //PETAR
         public List<DateRange> AvailableTerminsForDate(DateTime date)
         {
             List<DateTime> list = new List<DateTime>();
@@ -60,6 +68,7 @@ namespace HospitalLibrary.Core.Service
             }
             return list;
         }
+        //PETAR
         public void UpdateDoneAppointments() 
         {
             List<MedicalAppointment> appointments = getAll();
@@ -69,6 +78,31 @@ namespace HospitalLibrary.Core.Service
                     appointment.Schedule.IsDone = true;
                     _medicalAppointmentRepository.Update(appointment);
                 }
+        }
+
+        public IEnumerable<Appointment> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Appointment GetById(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Appointment Create(Appointment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Appointment Update(Appointment entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(Guid entityId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

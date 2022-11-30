@@ -208,8 +208,8 @@ namespace HospitalAPI
             services.AddScoped<IAdmissionRepository, AdmissionRepository>();
             services.AddScoped<IAdmissionService, AdmissionService>();
 
-            services.AddScoped<IRoomScheduleRepository, RoomScheduleRepository>();
-            services.AddScoped<IRoomScheduleService, RoomScheduleService>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
             services.AddScoped<IMoveEquipmentTaskRepository, MoveEquipmentTaskRepository>();
             services.AddScoped<IMoveEquipmentTaskService, MoveEquipmentTaskService>();
