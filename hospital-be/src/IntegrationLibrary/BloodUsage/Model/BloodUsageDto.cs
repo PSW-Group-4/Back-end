@@ -9,8 +9,7 @@ namespace IntegrationLibrary.BloodUsages.Model
 {
     public class BloodUsageDto
     {
-        public BloodType Type { get; set; }
-        public RHFactor RHFactor { get; set; }
+        public BloodType BloodType { get; set; }    
         public double Milliliters { get; set; }
     }
 }

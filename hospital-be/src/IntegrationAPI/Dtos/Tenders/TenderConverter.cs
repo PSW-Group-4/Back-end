@@ -11,16 +11,16 @@ namespace IntegrationAPI.Dtos.Tenders
             return new TenderDto
             {
                 Amount = entity.Amount,
-                BloodType = entity.BloodType.ToString(),
-                RHFactor = entity.RHFactor.ToString(),
+                BloodGroup = entity.BloodType.ToString(),
                 Deadline = entity.Deadline.ToString()
             };
         }
 
         public Tender Convert(TenderDto dto)
         {
-            return Tender.Create((BloodType)Enum.Parse(typeof(BloodType), dto.BloodType),
-                (RHFactor)Enum.Parse(typeof(RHFactor), dto.RHFactor),
+            BloodType bloodType = new((BloodGroup)Enum.Parse(typeof(BloodGroup), dto.BloodGroup),
+                (RHFactor)Enum.Parse(typeof(RHFactor), dto.RHFactor));
+            return Tender.Create(bloodType,
                 dto.Amount,
                 DateTime.Parse(dto.Deadline));
         }
