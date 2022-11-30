@@ -11,12 +11,12 @@ namespace HospitalLibrary.MoveEquipment.Model
         public Guid Id {get; set;}
         public virtual ICollection<EquipmentToMove> EquipmentToGet {get; set;}
         public virtual ICollection<EquipmentToMove> EquipmentToGive {get; set;}
-        public virtual RoomSchedule RoomSchedule {get; set;}
+        public virtual Appointment Appointment {get; set;}
         public Guid RoomScheduleId {get; set;}
         public void Update(MoveEquipmentTask task) {
             EquipmentToGet = task.EquipmentToGet;
             EquipmentToGive = task.EquipmentToGive;
-            RoomSchedule = task.RoomSchedule;
+            Appointment = task.Appointment;
             RoomScheduleId = task.RoomScheduleId;
         }
     }

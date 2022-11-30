@@ -2,9 +2,9 @@
 using HospitalLibrary;
 using HospitalLibrary.Exceptions;
 using HospitalLibrary.Patients.Service;
-using HospitalLibrary.SchedulingAppointment.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using HospitalLibrary.Core.Service;
 
 namespace HospitalAPI.Controllers
 {
@@ -12,12 +12,12 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class SchedulingController : ControllerBase
     {
-        private readonly ISchedulingService _schedulingService;
+        private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
 
-        public SchedulingController(ISchedulingService patientService, IMapper mapper)
+        public SchedulingController(IAppointmentService patientService, IMapper mapper)
         {
-            _schedulingService = patientService;
+            _appointmentService = patientService;
             _mapper = mapper;
         }
 
@@ -27,7 +27,7 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                var termins = _schedulingService.AvailableTerminsForDate(date);
+                var termins = _appointmentService.AvailableTerminsForDate(date);
                 return Ok(termins);
             }
             catch (NotFoundException)

@@ -2,7 +2,6 @@
 using HospitalLibrary;
 using HospitalLibrary.Exceptions;
 using HospitalLibrary.Patients.Service;
-using HospitalLibrary.SchedulingAppointment.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using HospitalLibrary.EquipmentRelocation.Service;

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using AutoMapper;
 using HospitalLibrary;
-using HospitalLibrary.SchedulingAppointment.Service;
 using HospitalLibrary.Doctors.Service;
 using System.Collections.Generic;
 using HospitalAPI.Dtos.Appointment;
@@ -16,12 +15,12 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class AppointmentController : ControllerBase
     {
-        private readonly IAppointmentService _appointmentService;
+        private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IMapper _mapper;
 
-        public AppointmentController(IAppointmentService appointmentService,IDoctorService doctorService, IMapper mapper)
+        public AppointmentController(IMedicalAppointmentService medicalAppointmentService,IDoctorService doctorService, IMapper mapper)
         {
-            _appointmentService = appointmentService;
+            _medicalAppointmentService = medicalAppointmentService;
             _mapper = mapper;
         }
 
@@ -29,7 +28,7 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         { 
-            return Ok(_appointmentService.GetAll());
+            return Ok(_medicalAppointmentService.GetAll());
         }
 
         // GET api/Appointment/1
@@ -38,7 +37,7 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                var appointment = _appointmentService.GetById(id);
+                var appointment = _medicalAppointmentService.GetById(id);
                 return Ok(appointment);
             }
             catch (NotFoundException)
@@ -51,8 +50,8 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] AppointmentRequestDto appointmentDto)
         {
-            var appointment = _mapper.Map<Appointment>(appointmentDto);
-            _appointmentService.Create(appointment);
+            var appointment = _mapper.Map<MedicalAppointment>(appointmentDto);
+            _medicalAppointmentService.Create(appointment);
             return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
         }
 
@@ -60,12 +59,11 @@ namespace HospitalAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromRoute] Guid id, [FromBody] AppointmentRequestDto appointmentDto)
         {
-            var appointment = _mapper.Map<Appointment>(appointmentDto);
-            appointment.Id = id;
+            var appointment = _mapper.Map<MedicalAppointment>(appointmentDto);
 
             try
             {
-                var result = _appointmentService.Update(appointment);
+                var result = _medicalAppointmentService.Update(appointment);
                 return Ok(result);
             }
             catch (NotFoundException)
@@ -80,7 +78,7 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                _appointmentService.Delete(id);
+                _medicalAppointmentService.Delete(id);
                 return NoContent();
             }
             catch (NotFoundException)

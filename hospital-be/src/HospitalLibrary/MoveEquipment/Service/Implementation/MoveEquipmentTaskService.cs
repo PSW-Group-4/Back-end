@@ -55,18 +55,14 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
 
         public void CreateMoveEquipment(InputCreateData data) 
         {
-            RoomSchedule sourceSchedule = new RoomSchedule
+            Appointment sourceSchedule = new Appointment
             {
                 Id = Guid.NewGuid(),
-                DateTime = data.Date,
-                Duration = data.Duration,
                 RoomId = Guid.Parse(data.Source)
             };
-            RoomSchedule destSchedule = new RoomSchedule
+            Appointment destSchedule = new Appointment
             {
                 Id = Guid.NewGuid(),
-                DateTime = data.Date,
-                Duration = data.Duration,
                 RoomId = Guid.Parse(data.Destination)
             };
             List<EquipmentToMove> equipmentToMoveList = new List<EquipmentToMove>();
@@ -83,14 +79,14 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
                 Id = Guid.NewGuid(),
                 EquipmentToGive = equipmentToMoveList,
                 EquipmentToGet = null,
-                RoomSchedule = sourceSchedule,
+                Appointment = sourceSchedule,
                 RoomScheduleId = sourceSchedule.Id
             });
             this.Create(new MoveEquipmentTask{
                 Id = Guid.NewGuid(),
                 EquipmentToGive = null,
                 EquipmentToGet = equipmentToMoveList,
-                RoomSchedule = destSchedule,
+                Appointment = destSchedule,
                 RoomScheduleId = destSchedule.Id
             });
             return;
@@ -101,10 +97,10 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
             IEnumerable<MoveEquipmentTask> list = GetAll();
             foreach (MoveEquipmentTask task in list)
             {
-                if((task.RoomSchedule.DateTime.AddMinutes(task.RoomSchedule.Duration) >= moveDate) && !(task.RoomSchedule.IsDone))
+                if((task.Appointment.DateTime.AddMinutes(task.Appointment.Duration) >= moveDate) && !(task.Appointment.IsDone))
                 {
                     MoveEquipmentToRoom(task.Id);
-                    task.RoomSchedule.IsDone = true;
+                    task.Appointment.IsDone = true;
                     Update(task);
                 }
             }
@@ -113,7 +109,7 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
         public void MoveEquipmentToRoom(Guid id)
         {
             MoveEquipmentTask task = GetById(id);
-            DoctorRoom room = _doctorRoomService.GetById(task.RoomSchedule.RoomId);
+            DoctorRoom room = _doctorRoomService.GetById(task.Appointment.RoomId);
             ICollection<RoomsEquipment> roomsEquipment = new Collection<RoomsEquipment>();
             foreach(EquipmentToMove equipmentToMove in task.EquipmentToGet)
             {

@@ -1,25 +1,23 @@
-﻿using HospitalLibrary.Appointments.Model;
+﻿using System;
+using System.Collections.Generic;
+using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Repository;
-using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace HospitalLibrary.SchedulingAppointment.Service
+namespace HospitalLibrary.Core.Service
 {
-    public class SchedulingService : ISchedulingService
+    public class AppointmentService : IAppointmentService
     {
-        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IMedicalAppointmentRepository _medicalAppointmentRepository;
         private readonly IDoctorService _dctorService;
-        public SchedulingService(IAppointmentRepository appointmentRepository, IDoctorService doctorService)
+        public AppointmentService(IMedicalAppointmentRepository medicalAppointmentRepository, IDoctorService doctorService)
         {
-            _appointmentRepository = appointmentRepository;
+            _medicalAppointmentRepository = medicalAppointmentRepository;
             _dctorService = doctorService;
         }
+        //TODO refactor
         public bool IsAvailable(DateTime time)
         {
             List<Appointment> appointments = getAll();
@@ -30,6 +28,7 @@ namespace HospitalLibrary.SchedulingAppointment.Service
             }
             return IsDoctorWorkTimeAvailable(time);
         }
+        //TODO izbaci
         public bool IsDoctorWorkTimeAvailable(DateTime time)
         {
             Doctor doctor = getDoctor();
@@ -39,16 +38,16 @@ namespace HospitalLibrary.SchedulingAppointment.Service
                 return true;
             return false;
         }
-        public List<Appointment> getAll()
+        public List<MedicalAppointment> getAll()
         {
-            return (List<Appointment>)_appointmentRepository.GetAll();
+            return (List<MedicalAppointment>)_medicalAppointmentRepository.GetAll();
         }
         public Doctor getDoctor()
         {
             Guid id = new Guid("487d0767-1f8b-4a09-a593-4f076bdb9881");
             return _dctorService.GetById(id);
         }
-        public List<DateTime> AvailableTerminsForDate(DateTime date)
+        public List<DateRange> AvailableTerminsForDate(DateTime date)
         {
             List<DateTime> list = new List<DateTime>();
             DateTime WorkTimeStart = new DateTime(date.Year,date.Month,date.Day, DateTime.Parse(getDoctor().WorkingTimeStart).Hour, DateTime.Parse(getDoctor().WorkingTimeStart).Minute,0);
@@ -63,12 +62,12 @@ namespace HospitalLibrary.SchedulingAppointment.Service
         }
         public void UpdateDoneAppointments() 
         {
-            List<Appointment> appointments = getAll();
-            foreach (Appointment appointment in appointments)
+            List<MedicalAppointment> appointments = getAll();
+            foreach (MedicalAppointment appointment in appointments)
                 if (!appointment.Schedule.IsDone && (DateTime.Compare(appointment.Schedule.DateTime, DateTime.Now) < 0))
                 {
                     appointment.Schedule.IsDone = true;
-                    _appointmentRepository.Update(appointment);
+                    _medicalAppointmentRepository.Update(appointment);
                 }
         }
     }

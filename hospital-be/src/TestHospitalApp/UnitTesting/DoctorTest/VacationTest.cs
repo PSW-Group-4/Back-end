@@ -27,23 +27,15 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             var vacationRepo = new Mock<IVacationRepository>();
             var doctorService = new Mock<IDoctorService>();
             VacationService vc = new VacationService(vacationRepo.Object, doctorAppointmentService.Object, doctorService.Object);
-            List<Appointment> doctorAppointments = new List<Appointment>();
+            List<MedicalAppointment> doctorAppointments = new List<MedicalAppointment>();
 
-            doctorAppointments.Add(new Appointment
+            doctorAppointments.Add(new MedicalAppointment
             {
-                DoctorId = DoctorId,
-                Schedule = new RoomSchedule{
-                    DateTime = new DateTime(2022, 12, 25, 0, 0, 0)
-                }
-                
+                DoctorId = DoctorId
             });
-            doctorAppointments.Add(new Appointment
+            doctorAppointments.Add(new MedicalAppointment
             {
-                DoctorId = DoctorId,
-                Schedule = new RoomSchedule{
-                    DateTime = new DateTime(2022, 11, 25, 0, 0, 0)
-                }
-               
+                DoctorId = DoctorId
             });
             Vacation vacationTrue = new Vacation()
             {

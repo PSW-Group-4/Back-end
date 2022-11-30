@@ -78,9 +78,9 @@ namespace HospitalLibrary.Vacations.Service
         public bool CheckDoctorAvailability(Vacation vacation)
         {
             bool canCreateVacation = true;
-            IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(vacation.DoctorId);
+            IEnumerable<MedicalAppointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(vacation.DoctorId);
 
-            foreach (Appointment doctorAppointment in doctorAppointments)
+            foreach (MedicalAppointment doctorAppointment in doctorAppointments)
             {
                 if (!((doctorAppointment.Schedule.DateTime<vacation.DateStart && doctorAppointment.Schedule.DateTime < vacation.DateEnd)
                     || doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateStart && doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateEnd))
@@ -124,8 +124,8 @@ namespace HospitalLibrary.Vacations.Service
             foreach(Doctor doctor in doctors)
             {
                 bool doctorFound = true;
-                IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(doctor.Id);
-                foreach(Appointment appointment in doctorAppointments)
+                IEnumerable<MedicalAppointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(doctor.Id);
+                foreach(MedicalAppointment appointment in doctorAppointments)
                 {
                     if(appointment.Schedule.DateTime.Date > vacation.DateStart && appointment.Schedule.DateTime.Date < vacation.DateEnd)
                     {
@@ -147,9 +147,9 @@ namespace HospitalLibrary.Vacations.Service
         {
             Doctor availableSwitchDoctor = _doctorService.GetById(doctorId);
             Doctor currentDoctor = _doctorService.GetById(vacation.DoctorId);
-            IEnumerable<Appointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(vacation.DoctorId);
+            IEnumerable<MedicalAppointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(vacation.DoctorId);
 
-            foreach (Appointment appointment in doctorAppointments)
+            foreach (MedicalAppointment appointment in doctorAppointments)
             {
                 if(appointment.Schedule.DateTime > vacation.DateStart &&
                     appointment.Schedule.DateTime < vacation.DateEnd)

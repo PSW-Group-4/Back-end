@@ -56,7 +56,7 @@ namespace HospitalLibrary.Settings
         public DbSet<PatientRoom> PatientRooms { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<MedicalAppointment> MedicalAppointments { get; set; }
 
         public DbSet<BloodConsumptionRecord> BloodConsumptionRecords { get; set; }
 
@@ -76,7 +76,7 @@ namespace HospitalLibrary.Settings
 
         public DbSet<BloodSupply> BloodSupply { get; set; }
 
-        public DbSet<RoomSchedule> RoomSchedules {get; set;}
+        public DbSet<Appointment> Appointments {get; set;}
         public DbSet<MoveEquipmentTask> MoveEquipmentTasks {get; set;}
         public DbSet<EquipmentToMove> EquipmentToMoves {get; set;}
 
