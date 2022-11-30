@@ -5,7 +5,7 @@ using IntegrationAPI.Dtos.Tenders;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
-using IntegrationLibrary.Tenders.Model;
+using IntegrationLibrary.Common;
 
 namespace IntegrationAPI.Mappers
 {

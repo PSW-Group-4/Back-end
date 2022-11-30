@@ -1,4 +1,4 @@
-using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Common;
 using System;
 
 namespace IntegrationAPI.Dtos.BloodRequests

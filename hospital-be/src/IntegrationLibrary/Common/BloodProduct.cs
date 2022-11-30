@@ -1,11 +1,10 @@
-﻿using IntegrationLibrary.BloodBanks.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.Tenders.Model
+namespace IntegrationLibrary.Common
 {
     public class BloodProduct
     {
@@ -18,9 +17,17 @@ namespace IntegrationLibrary.Tenders.Model
             Amount = amount;
         }
 
+        public BloodProduct() { }
+
         public override string ToString()
         {
-            return BloodType.ToString() + ' ' + Amount + "ml";
+            return BloodType.ToString() + "," + Amount;
+        }
+
+        public static BloodProduct FromString(String input)
+        {
+            var splitted = input.Split(',');
+            return new BloodProduct(BloodType.FromString(splitted[0]), Double.Parse(splitted[1]));
         }
     }
 }

@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using IntegrationAPI;
 using IntegrationAPI.Controllers;
-using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Service;
 using Microsoft.Extensions.DependencyInjection;
 using TestIntegrationApp.Setup;
 using Xunit;
 using System;
 using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationLibrary.Common;
 
 namespace TestIntegrationApp.IntegrationTesting
 {

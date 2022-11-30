@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Common;
 using IntegrationLibrary.Tenders.Model;
 using System;
 using System.Collections.Generic;
@@ -24,7 +24,7 @@ namespace IntegrationAPI.Dtos.Tenders
 
         public Tender Convert(TenderDto dto)
         {
-            IEnumerable<BloodProduct> bloodProducts = dto.BloodProducts.Select(dto => new BloodProduct(BloodType.O, dto.Amount));
+            IEnumerable<BloodProduct> bloodProducts = dto.BloodProducts.Select(dto => new BloodProduct(BloodType.FromString(dto.BloodType), dto.Amount));
             return Tender.Create(bloodProducts,
                 DateTime.Parse(dto.Deadline));
         }

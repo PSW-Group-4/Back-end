@@ -11,7 +11,9 @@ using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.Tenders.Model;
-
+using IntegrationLibrary.EntityConfigurations;
+using IntegrationLibrary.Common;
+using System.Text.Json;
 
 namespace IntegrationLibrary.Settings
 {
@@ -31,6 +33,7 @@ namespace IntegrationLibrary.Settings
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.ApplyConfiguration(new BloodUsageConfiguration());
             modelBuilder.ApplyConfiguration(new BloodRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new TenderConfiguration());
         }
     }
 }

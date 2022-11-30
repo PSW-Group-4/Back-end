@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IntegrationLibrary.Tenders.Model;
+using IntegrationLibrary.Common;
+using System.Text.Json;
 
 namespace IntegrationLibrary.EntityConfigurations
 {
@@ -14,13 +16,9 @@ namespace IntegrationLibrary.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Tender> builder)
         {
-            builder.OwnsOne(tender => tender.BloodType, a =>
-            {
-                a.Property(prop => prop.BloodGroup).HasMaxLength(1)
-                .HasColumnName("BloodGroup");
-                a.Property(prop => prop.RHFactor).HasMaxLength(10)
-                .HasColumnName("RhFactor");
-            });
+            builder.Property(tender => tender.BloodProducts).HasConversion(
+                bloodProducts => JsonSerializer.Serialize(bloodProducts, (JsonSerializerOptions)null),
+                json => JsonSerializer.Deserialize<IEnumerable<BloodProduct>>(json, (JsonSerializerOptions)null));
         }
     }
 }
