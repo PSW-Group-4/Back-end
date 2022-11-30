@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129003454_TendersMigration")]
+    partial class TendersMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,8 +87,14 @@ namespace IntegrationLibrary.Migrations
                     b.Property<double>("Milliliters")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("RHFactor")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -148,6 +156,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<double>("BloodAmountInMilliliters")
                         .HasColumnType("double precision");
 
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
 
@@ -159,6 +170,9 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<string>("ManagerId")
                         .HasColumnType("text");
+
+                    b.Property<int>("RHFactor")
+                        .HasColumnType("integer");
 
                     b.Property<string>("ReasonsWhyBloodIsNeeded")
                         .HasColumnType("text");
@@ -206,34 +220,6 @@ namespace IntegrationLibrary.Migrations
                     b.Navigation("BloodBank");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsage", b =>
-                {
-                    b.OwnsOne("IntegrationLibrary.BloodBanks.Model.BloodType", "Type", b1 =>
-                        {
-                            b1.Property<Guid>("BloodUsageId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("RHFactor")
-                                .HasMaxLength(10)
-                                .HasColumnType("integer")
-                                .HasColumnName("RhFactor");
-
-                            b1.Property<int>("Title")
-                                .HasMaxLength(1)
-                                .HasColumnType("integer")
-                                .HasColumnName("BloodTypeTitle");
-
-                            b1.HasKey("BloodUsageId");
-
-                            b1.ToTable("blood_usage");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BloodUsageId");
-                        });
-
-                    b.Navigation("Type");
-                });
-
             modelBuilder.Entity("IntegrationLibrary.BloodBanks.Model.BloodUsageReport", b =>
                 {
                     b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
@@ -256,34 +242,6 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("BloodBankId");
 
                     b.Navigation("BloodBank");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
-                {
-                    b.OwnsOne("IntegrationLibrary.BloodBanks.Model.BloodType", "BloodType", b1 =>
-                        {
-                            b1.Property<Guid>("BloodRequestId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("RHFactor")
-                                .HasMaxLength(10)
-                                .HasColumnType("integer")
-                                .HasColumnName("RhFactor");
-
-                            b1.Property<int>("Title")
-                                .HasMaxLength(1)
-                                .HasColumnType("integer")
-                                .HasColumnName("BloodTypeTitle");
-
-                            b1.HasKey("BloodRequestId");
-
-                            b1.ToTable("blood_requests");
-
-                            b1.WithOwner()
-                                .HasForeignKey("BloodRequestId");
-                        });
-
-                    b.Navigation("BloodType");
                 });
 #pragma warning restore 612, 618
         }
