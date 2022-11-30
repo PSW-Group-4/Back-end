@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodBankNews.Model;
+using IntegrationLibrary.TenderApplications.Model;
 
 namespace IntegrationLibrary.Settings
 {
@@ -21,6 +22,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<News> News { get; set; }
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<BloodUsage> BloodUsages { get; set; }
+        public DbSet<TenderApplication> TenderApplications { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
