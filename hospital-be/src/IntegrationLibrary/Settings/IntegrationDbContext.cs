@@ -12,6 +12,7 @@ using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.Tenders.Model;
 
+
 namespace IntegrationLibrary.Settings
 {
     public class IntegrationDbContext : DbContext
@@ -28,6 +29,8 @@ namespace IntegrationLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new BloodUsageConfiguration());
+            modelBuilder.ApplyConfiguration(new BloodRequestConfiguration());
         }
     }
 }

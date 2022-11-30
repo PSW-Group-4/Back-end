@@ -62,13 +62,11 @@ namespace TestIntegrationApp.UnitTesting.BloodUsageTests
         private List<BloodUsageDto> generateTestBloodUsage()
         {
             BloodUsageDto usageApos = new BloodUsageDto();
-            usageApos.Type = BloodType.A;
-            usageApos.RHFactor = RHFactor.POSITIVE;
+            usageApos.BloodType = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
             usageApos.Milliliters = 650;
 
             BloodUsageDto usage0neg = new BloodUsageDto();
-            usage0neg.Type = BloodType.O;
-            usage0neg.RHFactor = RHFactor.NEGATIVE;
+            usage0neg.BloodType = new BloodType(BloodGroup.O, RHFactor.NEGATIVE);
             usage0neg.Milliliters = 350;
 
             List<BloodUsageDto> retVal = new List<BloodUsageDto>();
