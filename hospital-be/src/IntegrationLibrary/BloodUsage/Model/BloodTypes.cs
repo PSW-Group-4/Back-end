@@ -33,9 +33,18 @@ namespace IntegrationLibrary.BloodBanks.Model
         }
         public static BloodType FromString(string type)
         {
+            string[] data=new string[2];
+            try
+            {
+                data = type.Split(" ");
+            }
+            catch(IndexOutOfRangeException e)
+            {
+                
+            }
             //Assumed structure of string type => BloodGroup *space* RHFactor; "A POSITIVE"
-            var parseFlag1 = Enum.TryParse<BloodGroup>(type.Split(" ")[0], true, out BloodGroup bloodGroup);
-            var parseFlag2 = Enum.TryParse<RHFactor>(type.Split(" ")[1], true, out RHFactor rHFactor);
+            var parseFlag1 = Enum.TryParse<BloodGroup>(data[0], true, out BloodGroup bloodGroup);
+            var parseFlag2 = Enum.TryParse<RHFactor> (data[1], true, out RHFactor rHFactor);
             if (parseFlag1 && parseFlag2)
             {
                 return new BloodType() { Title = bloodGroup, RHFactor = rHFactor };

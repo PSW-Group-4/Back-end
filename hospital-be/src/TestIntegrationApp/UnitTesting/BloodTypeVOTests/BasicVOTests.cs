@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Exceptions;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -54,6 +55,29 @@ namespace TestIntegrationApp.UnitTesting.BloodTypeVOTests
 
             var result = a_neg != b_pos;
             result.ShouldBe(true);
+        }
+        [Fact]
+        public void Checks_String_Cast_True()
+        {
+            string type = "A POSITIVE";
+            BloodType typeFromString = BloodType.FromString(type);
+            BloodType a_pos = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
+            var result = a_pos == typeFromString;
+            result.ShouldBe(true);
+        }
+        [Fact]
+        public void Checks_String_Cast_False()
+        {
+            string type = "A AAAA";
+            BloodType typeFromString;
+            Assert.Throws<EnumToStringCastException>(() => typeFromString = BloodType.FromString(type));
+        }
+        [Fact]
+        public void Checks_Invalid_String_Exception()
+        {
+            string type = "AAAAA";
+            BloodType typeFromString;
+            Assert.Throws<IndexOutOfRangeException>(() => typeFromString = BloodType.FromString(type));
         }
     }
 }
