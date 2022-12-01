@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
 using IntegrationAPI;
 using IntegrationAPI.Controllers;
-using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Service;
 using Microsoft.Extensions.DependencyInjection;
 using TestIntegrationApp.Setup;
 using Xunit;
 using System;
 using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationLibrary.Common;
 
 namespace TestIntegrationApp.IntegrationTesting
 {
@@ -27,8 +27,7 @@ namespace TestIntegrationApp.IntegrationTesting
             var controller = SetupController(scope);
             BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
             {
-                BloodType = BloodType.A,
-                RHFactor = RHFactor.NEGATIVE,
+                BloodType = new BloodType(BloodGroup.A, RHFactor.NEGATIVE),
                 ReasonsWhyBloodIsNeeded = "Reason",
                 BloodAmountInMilliliters = 100.00,
                 DateTime = DateTime.Now,

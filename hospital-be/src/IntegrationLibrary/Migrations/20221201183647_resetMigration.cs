@@ -13,6 +13,8 @@ namespace IntegrationLibrary.Migrations
             migrationBuilder.Sql("DROP TABLE IF EXISTS blood_usage_report CASCADE");
             migrationBuilder.Sql("DROP TABLE IF EXISTS blood_banks_config CASCADE");
             migrationBuilder.Sql("DROP TABLE IF EXISTS blood_banks CASCADE");
+            migrationBuilder.Sql("DROP TABLE IF EXISTS tenders CASCADE");
+            migrationBuilder.Sql("DROP TABLE IF EXISTS TenderApplications CASCADE");
             migrationBuilder.CreateTable(
                 name: "blood_banks",
                 columns: table => new
@@ -35,8 +37,8 @@ namespace IntegrationLibrary.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     DoctorId = table.Column<string>(type: "text", nullable: true),
-                    BloodType = table.Column<int>(type: "integer", nullable: false),
-                    RHFactor = table.Column<int>(type: "integer", nullable: false),
+                    BloodGroup = table.Column<int>(type: "integer", maxLength: 1, nullable: true),
+                    RhFactor = table.Column<int>(type: "integer", maxLength: 10, nullable: true),
                     ReasonsWhyBloodIsNeeded = table.Column<string>(type: "text", nullable: true),
                     BloodAmountInMilliliters = table.Column<double>(type: "double precision", nullable: false),
                     IsApproved = table.Column<bool>(type: "boolean", nullable: false),
@@ -55,14 +57,30 @@ namespace IntegrationLibrary.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Type = table.Column<int>(type: "integer", nullable: false),
-                    RHFactor = table.Column<int>(type: "integer", nullable: false),
+                    BloodTypeTitle = table.Column<int>(type: "integer", maxLength: 1, nullable: true),
+                    RhFactor = table.Column<int>(type: "integer", maxLength: 10, nullable: true),
                     Milliliters = table.Column<double>(type: "double precision", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_blood_usage", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "tenders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BloodProducts = table.Column<string>(type: "text", nullable: true),
+                    Deadline = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Version = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_tenders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,6 +122,32 @@ namespace IntegrationLibrary.Migrations
                         name: "FK_blood_banks_config_blood_banks_BloodBankId",
                         column: x => x.BloodBankId,
                         principalTable: "blood_banks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TenderApplications",
+                columns: table => new
+                {
+                    ApplicationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    BloodBankId = table.Column<Guid>(type: "uuid", nullable: true),
+                    TenderId = table.Column<Guid>(type: "uuid", nullable: true),
+                    PriceInRSD = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TenderApplications", x => x.ApplicationId);
+                    table.ForeignKey(
+                        name: "FK_TenderApplications_blood_banks_BloodBankId",
+                        column: x => x.BloodBankId,
+                        principalTable: "blood_banks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TenderApplications_tenders_TenderId",
+                        column: x => x.TenderId,
+                        principalTable: "tenders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -153,6 +197,16 @@ namespace IntegrationLibrary.Migrations
                 name: "IX_blood_usage_report_ReportConfigurationId",
                 table: "blood_usage_report",
                 column: "ReportConfigurationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderApplications_BloodBankId",
+                table: "TenderApplications",
+                column: "BloodBankId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TenderApplications_TenderId",
+                table: "TenderApplications",
+                column: "TenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -170,7 +224,13 @@ namespace IntegrationLibrary.Migrations
                 name: "blood_usage_report");
 
             migrationBuilder.DropTable(
+                name: "TenderApplications");
+
+            migrationBuilder.DropTable(
                 name: "blood_banks_config");
+
+            migrationBuilder.DropTable(
+                name: "tenders");
 
             migrationBuilder.DropTable(
                 name: "blood_banks");

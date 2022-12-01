@@ -49,7 +49,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
                         NewsConsumer newsConsumer = new(consumerBuilder, cancelToken, newsConverter);
                         try
                         {
-                            while (true)
+                            while (false)
                             {
                                 News news = newsConsumer.Consume();
                                 newsService.Save(news);

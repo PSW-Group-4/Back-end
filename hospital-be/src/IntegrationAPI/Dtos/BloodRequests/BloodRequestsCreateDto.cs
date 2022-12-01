@@ -1,4 +1,4 @@
-using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Common;
 using System;
 
 namespace IntegrationAPI.Dtos.BloodRequests
@@ -7,7 +7,6 @@ namespace IntegrationAPI.Dtos.BloodRequests
     {
         public String DoctorId { get; set; }
         public BloodType BloodType { get; set; }
-        public RHFactor RHFactor { get; set; }
         public String ReasonsWhyBloodIsNeeded { get; set; }
         public double BloodAmountInMilliliters { get; set; }
         public DateTime DateTime { get; set; }
