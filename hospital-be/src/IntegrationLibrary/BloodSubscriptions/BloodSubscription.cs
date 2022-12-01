@@ -23,9 +23,9 @@ namespace IntegrationLibrary.BloodSubscriptions
         {
             BloodTypes = new List<BloodType>();
         }
-        public BloodSubscription(Guid id, string bloodBankName)
+        public BloodSubscription(string bloodBankName)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             BloodBankName = bloodBankName;
             BloodTypes = new List<BloodType>();
         }
@@ -34,10 +34,11 @@ namespace IntegrationLibrary.BloodSubscriptions
         {
 
         }
-
+        public void addBloodType(List<BloodType> types) { }
         public void removeBloodType(BloodType type)
         {
 
         }
+        public void removeBloodType(List<BloodType> types) { }
     }
 }
