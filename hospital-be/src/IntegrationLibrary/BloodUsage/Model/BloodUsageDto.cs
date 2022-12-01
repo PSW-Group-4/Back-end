@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.BloodBanks.Model;
+﻿using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,7 @@ namespace IntegrationLibrary.BloodUsages.Model
 {
     public class BloodUsageDto
     {
-        public BloodType Type { get; set; }
-        public RHFactor RHFactor { get; set; }
+        public BloodType BloodType { get; set; }    
         public double Milliliters { get; set; }
     }
 }

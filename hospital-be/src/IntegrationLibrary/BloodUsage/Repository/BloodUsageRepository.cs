@@ -1,5 +1,6 @@
 ﻿using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodUsages.Model;
+using IntegrationLibrary.Common;
 using IntegrationLibrary.Settings;
 using System;
 using System.Collections.Generic;
@@ -34,11 +35,9 @@ namespace IntegrationLibrary.BloodReport.Repository
                 .GroupBy(group => new
                 {
                     bType = group.Type,
-                    bFactor = group.RHFactor
                 }).Select(select => new BloodUsageDto
                 {
-                    Type = select.Key.bType,
-                    RHFactor = select.Key.bFactor,
+                    BloodType = new BloodType(select.Key.bType.BloodGroup, select.Key.bType.RHFactor),
                     Milliliters = select.Sum(ml => ml.Milliliters)
                 }).ToList();    
         } 

@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.BloodBanks.Model;
+﻿using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -14,8 +14,7 @@ namespace IntegrationLibrary.BloodRequests.Model
     {
         public Guid Id { get; set; }
         public String DoctorId { get; set; }
-        public BloodType BloodType { get; set; }
-        public RHFactor RHFactor { get; set; }
+        public virtual BloodType BloodType { get; set; }
         public String ReasonsWhyBloodIsNeeded { get; set; }
         public double BloodAmountInMilliliters { get; set; }
         public Boolean IsApproved { get; set; }

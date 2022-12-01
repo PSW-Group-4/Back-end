@@ -2,10 +2,10 @@
 using IntegrationAPI;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos.BloodRequests;
-using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodRequests.Repository;
 using IntegrationLibrary.BloodRequests.Service;
+using IntegrationLibrary.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -18,7 +18,7 @@ using Xunit;
 
 namespace TestIntegrationApp.IntegrationTesting
 {
-   public class BloodRequestTests : BaseIntegrationTest
+    public class BloodRequestTests : BaseIntegrationTest
     {
         public BloodRequestTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
@@ -60,8 +60,7 @@ namespace TestIntegrationApp.IntegrationTesting
             var controller = SetupController(scope);
             BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
             {
-                BloodType = BloodType.A,
-                RHFactor = RHFactor.NEGATIVE,
+                BloodType = new BloodType(BloodGroup.A, RHFactor.NEGATIVE),
                 ReasonsWhyBloodIsNeeded = "Reason",
                 BloodAmountInMilliliters = 100.00,
                 DateTime = DateTime.Now,

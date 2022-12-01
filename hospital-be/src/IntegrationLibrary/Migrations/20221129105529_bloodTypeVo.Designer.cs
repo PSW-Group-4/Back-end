@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221129105529_bloodTypeVo")]
+    partial class bloodTypeVo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -171,62 +173,6 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("blood_requests");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
-                {
-                    b.Property<Guid>("ApplicationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("BloodBankId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("PriceInRSD")
-                        .HasColumnType("double precision");
-
-                    b.Property<Guid?>("TenderId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("ApplicationId");
-
-                    b.HasIndex("BloodBankId");
-
-                    b.HasIndex("TenderId");
-
-                    b.ToTable("TenderApplications");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.Tenders.Model.Tender", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
-
-                    b.Property<int>("BloodType")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime>("Deadline")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("RHFactor")
-                        .HasColumnType("integer");
-
-                    b.Property<double>("Version")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("tenders");
-                });
-
             modelBuilder.Entity("IntegrationLibrary.BloodBankNews.Model.News", b =>
                 {
                     b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
@@ -286,21 +232,6 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("BloodBankId");
 
                     b.Navigation("BloodBank");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
-                {
-                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
-                        .WithMany()
-                        .HasForeignKey("BloodBankId");
-
-                    b.HasOne("IntegrationLibrary.Tenders.Model.Tender", "Tender")
-                        .WithMany()
-                        .HasForeignKey("TenderId");
-
-                    b.Navigation("BloodBank");
-
-                    b.Navigation("Tender");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
