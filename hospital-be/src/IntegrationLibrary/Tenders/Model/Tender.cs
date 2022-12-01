@@ -45,12 +45,11 @@ namespace IntegrationLibrary.Tenders.Model
             Version = 1.0;
         }
 
+        public Tender() { }
         public bool IsActive()
         {
             return Deadline == null || DateTime.Compare(DateTime.Now, (DateTime)Deadline) < 0;
         }
-
-        public Tender() { }
 
         public static Tender Create(IEnumerable<BloodProduct> bloodProducts, DateTime? deadline)
         {

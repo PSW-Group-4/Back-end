@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Settings;
+﻿using IntegrationLibrary.Exceptions;
+using IntegrationLibrary.Settings;
 using IntegrationLibrary.Tenders.Model;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,18 @@ namespace IntegrationLibrary.Tenders.Repository
         public IEnumerable<Tender> GetAll()
         {
             return _context.Tenders.ToList();
+        }
+        public Tender GetById(Guid id) 
+        {
+            Tender tender = _context.Tenders.Find(id);
+            if (tender == null)
+            {
+                throw new NotFoundException();
+            }
+            else
+            {
+                return tender;
+            }
         }
     }
 }

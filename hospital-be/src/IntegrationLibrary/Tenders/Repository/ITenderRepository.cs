@@ -11,5 +11,6 @@ namespace IntegrationLibrary.Tenders.Repository
     {
         void Create(Tender tender);
         IEnumerable<Tender> GetAll();
+        Tender GetById(Guid Id);
     }
 }

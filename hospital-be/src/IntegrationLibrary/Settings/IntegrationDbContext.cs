@@ -14,6 +14,7 @@ using IntegrationLibrary.Tenders.Model;
 using IntegrationLibrary.EntityConfigurations;
 using IntegrationLibrary.Common;
 using System.Text.Json;
+using IntegrationLibrary.TenderApplications.Model;
 
 namespace IntegrationLibrary.Settings
 {
@@ -26,6 +27,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<BloodUsage> BloodUsages { get; set; }
         public DbSet<Tender> Tenders { get; set; }
+        public DbSet<TenderApplication> TenderApplications { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
