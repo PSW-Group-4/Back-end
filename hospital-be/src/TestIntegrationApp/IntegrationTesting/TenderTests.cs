@@ -43,7 +43,7 @@ namespace TestIntegrationApp.IntegrationTesting
             TenderController tenderController = SetupController(scope);
             List<BloodProductDto> bloodProductDtos = new()
             {
-                new BloodProductDto("A POSITIVE", 5000)
+                new BloodProductDto(new BloodTypeDto("A", "POSITIVE"), 5000)
             };
 
             TenderDto tenderDto = new()

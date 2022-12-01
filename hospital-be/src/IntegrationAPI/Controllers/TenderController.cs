@@ -15,9 +15,9 @@ namespace IntegrationAPI.Controllers
     public class TenderController : Controller
     {
         private readonly ITenderService _tenderService;
-        private readonly TenderConverter tenderConverter;
+        private readonly IConverter<Tender, TenderDto> tenderConverter;
 
-        public TenderController(ITenderService tenderService, TenderConverter tenderConverter)
+        public TenderController(ITenderService tenderService, IConverter<Tender, TenderDto> tenderConverter)
         {
             _tenderService = tenderService;
             this.tenderConverter = tenderConverter;
