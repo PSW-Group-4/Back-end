@@ -34,6 +34,7 @@ using IntegrationLibrary.Tenders.Repository;
 using IntegrationLibrary.Tenders.Service;
 using IntegrationLibrary.Tenders.Model;
 using IntegrationAPI.Dtos.Tenders;
+using IntegrationLibrary.BloodSubscriptions.Service;
 
 namespace IntegrationAPI
 {
@@ -107,7 +108,7 @@ namespace IntegrationAPI
             services.AddScoped<IConsumer<News>, NewsConsumer>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
-
+            services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
 
             services.AddControllers();
 
