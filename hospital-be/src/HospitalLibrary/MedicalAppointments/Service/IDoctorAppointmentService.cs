@@ -9,9 +9,9 @@ namespace HospitalLibrary.Appointments.Service
 {
     public interface IDoctorAppointmentService
     {
-        IEnumerable<Appointment> GetDoctorAppointments(Guid id);
-        IEnumerable<Appointment> GetDoctorsOldAppointments(Guid id);
-        IEnumerable<Appointment> GetDoctorsCurrentAppointments(Guid id);
+        IEnumerable<MedicalAppointment> GetDoctorAppointments(Guid id);
+        IEnumerable<MedicalAppointment> GetDoctorsOldAppointments(Guid id);
+        IEnumerable<MedicalAppointment> GetDoctorsCurrentAppointments(Guid id);
         void deleteAppointmentEndSendNotification(Guid id);
     }
 }

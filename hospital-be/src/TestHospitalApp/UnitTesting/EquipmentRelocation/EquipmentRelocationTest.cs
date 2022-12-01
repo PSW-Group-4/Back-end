@@ -26,9 +26,9 @@ namespace TestHospitalApp.UnitTesting.EquipmentRelocation
             List<DateTime> result = new List<DateTime>();
             var appointmentService = new Mock<IRoomScheduleService>();
             EquipmentRelocationService service = new EquipmentRelocationService( appointmentService.Object);
-            List<RoomSchedule> appointments = new List<RoomSchedule>();
-            appointments.Add(new RoomSchedule { DateTime = new DateTime(2022, 12, 25, 1, 0, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
-            appointments.Add(new RoomSchedule { DateTime = new DateTime(2022, 12, 25, 1, 30, 0), RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
+            List<Appointment> appointments = new List<Appointment>();
+            appointments.Add(new Appointment { RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
+            appointments.Add(new Appointment { RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
 
 
             appointmentService.Setup(x => x.GetAll()).Returns(appointments);

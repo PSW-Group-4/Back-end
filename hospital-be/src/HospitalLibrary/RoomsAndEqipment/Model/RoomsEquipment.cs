@@ -12,10 +12,10 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         
         [JsonIgnore]
         public Guid EquipmentId {get; set;}
-        public virtual DoctorRoom DoctorRoom {get; set;}
+        public virtual Room Room {get; set;}
         
         [JsonIgnore]
-        public Guid DoctorRoomId {get; set;}
+        public Guid RoomId {get; set;}
         public UInt64 Amount {get; set;}
 
         public void Update(RoomsEquipment room)
@@ -27,12 +27,12 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
 
         }
 
-        public RoomsEquipment(Equipment equipment, DoctorRoom doctorRoom, ulong amount)
+        public RoomsEquipment(Equipment equipment, Room room, ulong amount)
         {
             Equipment = equipment;
             EquipmentId = equipment.Id;
-            DoctorRoom = doctorRoom;
-            DoctorRoomId = doctorRoom.Id;
+            Room = room;
+            RoomId = Room.Id;
             Amount = amount;
         }
     }

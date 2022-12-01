@@ -28,8 +28,8 @@ namespace HospitalLibrary.EquipmentRelocation.Service
         public List<DateTime> RecommendRelocationStart(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)
         {
 
-            List<RoomSchedule> appointments = (List<RoomSchedule>)_appointemntService.GetAll();
-            appointments.Add(new RoomSchedule { DateTime = new DateTime(9999, 12, 12, 3, 30, 0), RoomId = dto.targetId });
+            List<Appointment> appointments = (List<Appointment>)_appointemntService.GetAll();
+            appointments.Add(new Appointment { RoomId = dto.targetId });
 
 
             dto.relocationStart = CheckDate(dto.relocationStart);
@@ -39,14 +39,14 @@ namespace HospitalLibrary.EquipmentRelocation.Service
         }
 
 
-        public List<DateTime> GetAvailableDates(List<RoomSchedule> appointments, DTO.EquipmentRelocationDTO dto)
+        public List<DateTime> GetAvailableDates(List<Appointment> appointments, DTO.EquipmentRelocationDTO dto)
 
         {
             List<DateTime> result = new List<DateTime>();
             do
             {
 
-                foreach (RoomSchedule appointment in appointments)
+                foreach (Appointment appointment in appointments)
 
                 {
                     if (appointment.DateTime.AddMinutes(30) > dto.relocationStart && (appointment.RoomId.Equals(dto.targetId) || appointment.RoomId.Equals(dto.sourceId)))

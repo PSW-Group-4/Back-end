@@ -80,7 +80,7 @@ namespace HospitalAPI.Mapper
             //CreateMap<PatientRoom, PatientRoomRequestDto>().IncludeBase<Room, RoomRequestDto>();
             CreateMap<PatientRoomRequestDto, PatientRoom>().IncludeBase<RoomRequestDto, Room>();
 
-            CreateMap<AppointmentRequestDto, Appointment>();
+            CreateMap<AppointmentRequestDto, MedicalAppointment>();
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();

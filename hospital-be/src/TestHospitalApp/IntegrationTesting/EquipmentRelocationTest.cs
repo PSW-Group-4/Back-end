@@ -6,7 +6,6 @@ using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.EquipmentRelocation.Service;
 using HospitalLibrary.MoveEquipment.Service.Interfaces;
-using HospitalLibrary.SchedulingAppointment.Service;
 using HospitalLibrary.Vacations.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;

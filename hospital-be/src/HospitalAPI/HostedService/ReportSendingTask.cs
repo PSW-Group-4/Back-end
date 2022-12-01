@@ -13,10 +13,10 @@ namespace HospitalAPI.HostedService
     public class ReportSendingTask : BaseTaskScheduler
     {
 
-        IMoveEquipmentTaskService _moveEquipmentTaskService;
+        IMoveEquipmentAppointmentService _moveEquipmentTaskService;
         public ReportSendingTask(IServiceScopeFactory factory, ITaskSettings<ReportSendingTask> config) : base(config.CronExpression, config.TimeZoneInfo)
         {
-            _moveEquipmentTaskService = factory.CreateScope().ServiceProvider.GetService<IMoveEquipmentTaskService>();
+            _moveEquipmentTaskService = factory.CreateScope().ServiceProvider.GetService<IMoveEquipmentAppointmentService>();
         }
         public override Task StartAsync(CancellationToken cancellationToken)
         {
