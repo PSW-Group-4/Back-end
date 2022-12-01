@@ -17,6 +17,12 @@ namespace IntegrationLibrary.TenderApplications.Repository
         {
             _context = context;
         }
+
+        public TenderApplication Apply(TenderApplication tenderApplication)
+        {
+            throw new NotImplementedException();
+        }
+
         public TenderApplication FindById(Guid applicationId)
         {
             TenderApplication tenderApplication = _context.TenderApplications.Find(applicationId);

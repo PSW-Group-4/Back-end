@@ -11,5 +11,6 @@ namespace IntegrationLibrary.TenderApplications.Repository
     {
         public IEnumerable<TenderApplication> GetAll();
         public TenderApplication FindById(Guid applicationId);
+        public TenderApplication Apply(TenderApplication tenderApplication);
     }
 }

@@ -24,7 +24,7 @@ namespace IntegrationLibrary.Tenders.Model
             Deadline = deadline;
             Version = 1.0;
         }
-
+        public Tender() { }
         public bool IsActive()
         {
             return DateTime.Compare(DateTime.Now, Deadline) < 0;

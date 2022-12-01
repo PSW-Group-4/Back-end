@@ -1,4 +1,6 @@
-﻿using System;
+﻿using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Tenders.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,8 +13,8 @@ namespace IntegrationLibrary.TenderApplications.Model
     {
         [Key]
         public Guid ApplicationId { get; set; }
-        public Guid BloodBankId { get; set; }
-        public Guid TenderId { get; set; }
+        public virtual BloodBank BloodBank { get; set; }
+        public virtual Tender Tender { get; set; }
         public double PriceInRSD { get; set; }
     }
 }

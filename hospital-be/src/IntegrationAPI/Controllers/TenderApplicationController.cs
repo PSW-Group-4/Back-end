@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IntegrationAPI.Dtos.TenderApplications;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.TenderApplications.Service;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +28,11 @@ namespace IntegrationAPI.Controllers
         {
             IEnumerable<TenderApplication> tenderApplications = _service.GetAll();
             return Ok(tenderApplications);
+        }
+        [HttpPost]
+        public ActionResult Apply(ApplyForTenderDto applicationDto) {
+            var application = _mapper.Map<TenderApplication>(applicationDto);
+            return Ok(_service.Apply(application));
         }
     }
 }

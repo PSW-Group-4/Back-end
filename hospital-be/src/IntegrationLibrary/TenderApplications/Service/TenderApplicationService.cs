@@ -15,6 +15,12 @@ namespace IntegrationLibrary.TenderApplications.Service
         {
             _repository = repository;
         }
+
+        public TenderApplication Apply(TenderApplication tenderApplication)
+        {
+            throw new NotImplementedException();
+        }
+
         public TenderApplication FindById(Guid applicationId)
         {
             return _repository.FindById(applicationId);
