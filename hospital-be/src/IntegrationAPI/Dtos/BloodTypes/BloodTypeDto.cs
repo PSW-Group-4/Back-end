@@ -1,4 +1,4 @@
-﻿namespace IntegrationAPI.Dtos
+﻿namespace IntegrationAPI.Dtos.BloodTypes
 {
     public class BloodTypeDto
     {

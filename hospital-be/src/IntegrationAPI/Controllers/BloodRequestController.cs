@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using IntegrationAPI.Dtos.BloodRequests;
 using IntegrationAPI.Communications.Producer;
 using System.Text.Json;
+using IntegrationLibrary.Common;
+using IntegrationAPI.Dtos.BloodTypes;
 
 namespace IntegrationAPI.Controllers
 {
@@ -42,6 +44,12 @@ namespace IntegrationAPI.Controllers
         [Route("update"), HttpPost]
         public ActionResult Update(BloodRequestEditDto bloodRequestDto)
         {
+            BloodRequest bloodRequest = new BloodRequest
+            {
+                Id = bloodRequestDto.Id,
+                DoctorId = bloodRequestDto.DoctorId,
+                BloodType = BloodTypeConverter.Convert(new BloodTypeDto(bloodRequestDto.BloodGroup, bloodRequestDto.RHFactor))
+            }
             var bloodRequest = _mapper.Map<BloodRequest>(bloodRequestDto);
             if(bloodRequestDto.IsApproved)
             {

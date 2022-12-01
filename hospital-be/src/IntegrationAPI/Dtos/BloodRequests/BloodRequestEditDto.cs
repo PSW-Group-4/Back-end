@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Common;
+﻿using IntegrationAPI.Dtos.BloodProducts;
+using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,11 @@ namespace IntegrationAPI.Dtos.BloodRequests
     {
         public Guid Id { get; set; }
         public String DoctorId { get; set; }
-        public BloodType BloodType { get; set; }
-        public RHFactor RHFactor { get; set; }
-        public String ReasonsWhyBloodIsNeeded { get; set; }
-        public double BloodAmountInMilliliters { get; set; }
+        public BloodProductDto bloodProduct { get; set; }
+        public String Reason { get; set; }
         public Boolean IsApproved { get; set; }
         public String RejectionComment { get; set; }
         public String ManagerId { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime SendOnDate { get; set; }
     }
 }

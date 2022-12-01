@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using IntegrationAPI.Dtos.BloodBank;
+using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationAPI.Dtos.BloodRequests;
-using IntegrationAPI.Dtos.Tenders;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;

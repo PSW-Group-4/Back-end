@@ -1,4 +1,6 @@
-﻿namespace IntegrationAPI.Dtos.Tenders
+﻿using IntegrationAPI.Dtos.BloodTypes;
+
+namespace IntegrationAPI.Dtos.BloodProducts
 {
     public class BloodProductDto
     {

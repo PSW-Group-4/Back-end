@@ -1,7 +1,6 @@
 using System;
 using IntegrationAPI.Authorization;
 using IntegrationAPI.Mappers;
-using IntegrationAPI.Dtos;
 using IntegrationLibrary.BloodBankNews.Repository;
 using IntegrationLibrary.BloodBankNews.Service;
 using IntegrationLibrary.BloodBanks.Model;
@@ -40,6 +39,7 @@ using IntegrationAPI.Communications.Consumer;
 using IntegrationAPI.Communications.Producer;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationAPI.Communications.Consumer.BloodBankNews;
+using IntegrationAPI.Dtos;
 
 namespace IntegrationAPI
 {

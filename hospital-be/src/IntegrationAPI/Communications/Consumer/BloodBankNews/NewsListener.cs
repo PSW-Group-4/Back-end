@@ -5,11 +5,11 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using IntegrationAPI.Dtos;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationAPI.Dtos.BloodBankNews;
 using Microsoft.Extensions.DependencyInjection;
 using IntegrationLibrary.BloodBankNews.Service;
+using IntegrationAPI.Dtos;
 
 namespace IntegrationAPI.Communications.Consumer.BloodBankNews
 {

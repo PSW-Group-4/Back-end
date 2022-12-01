@@ -2,6 +2,7 @@
 using IntegrationAPI.Communications;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos;
+using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationAPI.Dtos.Tenders;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodRequests.Repository;

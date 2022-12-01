@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationLibrary.Common;
 using IntegrationLibrary.Tenders.Model;
 using System;
@@ -35,11 +36,8 @@ namespace IntegrationAPI.Dtos.Tenders
             }
             IEnumerable<BloodProduct> bloodProducts = dto.BloodProducts.Select
                 (dto => new BloodProduct(
-                    new BloodType(
-                        (BloodGroup)Enum.Parse(typeof(BloodGroup), dto.BloodType.BloodGroup), 
-                        (RHFactor) Enum.Parse(typeof(RHFactor), dto.BloodType.RhFactor)
-                    ),
-                    dto.Amount));
+                    BloodTypeConverter.Convert(dto.BloodType),
+                    dto.Amount));;
             return Tender.Create(bloodProducts,
                 deadline);
         }
