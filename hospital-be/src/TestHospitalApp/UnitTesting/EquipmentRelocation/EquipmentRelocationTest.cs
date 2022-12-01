@@ -7,7 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 using HospitalLibrary.EquipmentRelocation.DTO;
-using HospitalLibrary.EquipmentRelocation.Service;
 using Moq;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Appointments.Service;

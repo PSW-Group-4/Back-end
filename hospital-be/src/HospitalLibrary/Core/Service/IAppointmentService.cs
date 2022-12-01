@@ -16,7 +16,7 @@ namespace HospitalLibrary.Core.Service
         public void UpdateDoneAppointments();
         public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto);
 
-        public List<DateTime> GetAvailableDatesForRelocationOrRenovation(List<Appointment> appointments, HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange);
+        public List<DateTime> GetAvailableDatesForRelocationOrRenovation(HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange);
 
     }
 }

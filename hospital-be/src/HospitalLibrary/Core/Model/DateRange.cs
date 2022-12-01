@@ -13,5 +13,7 @@ namespace HospitalLibrary.Core.Model
             this.StartTime = startTime;
             this.EndTime = endTime;
         }
+
+
     }
 }

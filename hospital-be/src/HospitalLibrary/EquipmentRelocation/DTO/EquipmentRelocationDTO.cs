@@ -24,5 +24,21 @@ namespace HospitalLibrary.EquipmentRelocation.DTO
             this.SourceId = sourceId;
             this.TargetId = targetId;
         }
+
+        //Minutes should be 0, 15, 30, 45
+        public DateRange CheckDateRange(DateRange dateRange)
+        {
+            DateTime start = dateRange.StartTime;
+            DateTime end = dateRange.EndTime;
+            if (start.Minute % 15 != 0)
+            {
+                start = start.AddMinutes(15 - start.Minute % 15);
+            }
+            if (end.Minute % 15 != 0)
+            {
+                end = end.AddMinutes(15 - end.Minute % 15);
+            }
+            return new DateRange(start, end);
+        }
     }
 }
