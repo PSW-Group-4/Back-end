@@ -9,11 +9,11 @@ namespace IntegrationLibrary.BloodSubscriptions
 {
     public class BloodSubscription : Entity
     {
-        public List<BloodType> BloodTypes 
+        public List<BloodProduct> BloodProducts 
         {
             get
             {
-                return new List<BloodType>(this.BloodTypes);
+                return new List<BloodProduct>(this.BloodProducts);
             }
             private set { }
         }
@@ -21,24 +21,36 @@ namespace IntegrationLibrary.BloodSubscriptions
         
         public BloodSubscription()
         {
-            BloodTypes = new List<BloodType>();
+            BloodProducts = new List<BloodProduct>();
         }
         public BloodSubscription(string bloodBankName)
         {
             Id = Guid.NewGuid();
             BloodBankName = bloodBankName;
-            BloodTypes = new List<BloodType>();
+            BloodProducts = new List<BloodProduct>();
         }
 
-        public void addBloodType(BloodType type)
+        public void AddBloodType(BloodProduct type)
         {
-
+            this.BloodProducts.Add(type);
         }
-        public void addBloodType(List<BloodType> types) { }
-        public void removeBloodType(BloodType type)
+        public void AddBloodType(List<BloodProduct> types) 
         {
-
+            foreach(BloodProduct type in types)
+            {
+               this.BloodProducts.Add(type);
+            }
         }
-        public void removeBloodType(List<BloodType> types) { }
+        public void RemoveBloodType(BloodProduct type)
+        {
+            this.BloodProducts.Remove(type);
+        }
+        public void RemoveBloodType(List<BloodProduct> types) 
+        {
+            foreach(var type in types)
+            {
+                this.BloodProducts.Remove(type);
+            }
+        }
     }
 }

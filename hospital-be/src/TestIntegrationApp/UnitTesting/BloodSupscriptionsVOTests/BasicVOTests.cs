@@ -16,13 +16,14 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
         public void Checks_addition()
         {
             BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
+            BloodProduct product = new BloodProduct(type,150);
             BloodSubscription subscription = new BloodSubscription("TestBB");
 
-            subscription.addBloodType(type);
+            subscription.AddBloodType(product);
 
-            List<BloodType> types = new List<BloodType>();
-            types.Add(type);
-            types.Equals(subscription.BloodTypes).ShouldBe(true);
+            List<BloodProduct> types = new List<BloodProduct>();
+            types.Add(product);
+            types.Equals(subscription.BloodProducts).ShouldBe(true);
 
         }
         [Fact]
@@ -30,15 +31,17 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
         {
             BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
             BloodType type2 = new BloodType(BloodGroup.B, RHFactor.POSITIVE);
+            BloodProduct product = new BloodProduct(type, 150);
+            BloodProduct product2 = new BloodProduct(type2, 250);
             BloodSubscription subscription = new BloodSubscription("TestBB");
-            List<BloodType> types = new List<BloodType>();
-            types.Add(type);
-            types.Add(type2);
+            List<BloodProduct> types = new List<BloodProduct>();
+            types.Add(product);
+            types.Add(product2);
 
-            subscription.addBloodType(types);
+            subscription.AddBloodType(types);
 
             
-            types.Equals(subscription.BloodTypes).ShouldBe(true);
+            types.Equals(subscription.BloodProducts).ShouldBe(true);
 
         }
         [Fact]
@@ -47,17 +50,20 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
             BloodType type2 = new BloodType(BloodGroup.B, RHFactor.POSITIVE);
             BloodType type3 = new BloodType(BloodGroup.O, RHFactor.POSITIVE);
+            BloodProduct product = new BloodProduct(type, 150);
+            BloodProduct product2 = new BloodProduct(type2, 250);
+            BloodProduct product3 = new BloodProduct(type3, 69);
             BloodSubscription subscription = new BloodSubscription("TestBB");
-            List<BloodType> types = new List<BloodType>();
-            types.Add(type);
-            types.Add(type2);
-            types.Add(type3);
-            subscription.addBloodType(types);
+            List<BloodProduct> types = new List<BloodProduct>();
+            types.Add(product);
+            types.Add(product2);
+            types.Add(product3);
+            subscription.AddBloodType(types);
 
-            subscription.removeBloodType(type);
+            subscription.RemoveBloodType(product);
 
-            types.Remove(type);
-            types.Equals(subscription.BloodTypes).ShouldBe(true);
+            types.Remove(product);
+            types.Equals(subscription.BloodProducts).ShouldBe(true);
 
         }
         [Fact]
@@ -66,22 +72,25 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
             BloodType type2 = new BloodType(BloodGroup.B, RHFactor.POSITIVE);
             BloodType type3 = new BloodType(BloodGroup.O, RHFactor.POSITIVE);
+            BloodProduct product = new BloodProduct(type, 150);
+            BloodProduct product2 = new BloodProduct(type2, 250);
+            BloodProduct product3 = new BloodProduct(type3, 69); ;
             BloodSubscription subscription = new BloodSubscription("TestBB");
-            List<BloodType> types = new List<BloodType>();
-            types.Add(type);
-            types.Add(type2);
-            types.Add(type3);
-            subscription.addBloodType(types);
-            List<BloodType> forRemoval = new List<BloodType>();
-            forRemoval.Add(type);
-            forRemoval.Add(type2);
+            List<BloodProduct> types = new List<BloodProduct>();
+            types.Add(product);
+            types.Add(product2);
+            types.Add(product3);
+            subscription.AddBloodType(types);
+            List<BloodProduct> forRemoval = new List<BloodProduct>();
+            forRemoval.Add(product);
+            forRemoval.Add(product2);
 
 
-            subscription.removeBloodType(forRemoval);
+            subscription.RemoveBloodType(forRemoval);
 
-            types.Remove(type);
-            types.Remove(type2);
-            types.Equals(subscription.BloodTypes).ShouldBe(true);
+            types.Remove(product);
+            types.Remove(product2);
+            types.Equals(subscription.BloodProducts).ShouldBe(true);
 
         }
     }

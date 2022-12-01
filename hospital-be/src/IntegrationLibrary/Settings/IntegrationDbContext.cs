@@ -14,6 +14,7 @@ using IntegrationLibrary.Tenders.Model;
 using IntegrationLibrary.EntityConfigurations;
 using IntegrationLibrary.Common;
 using System.Text.Json;
+using IntegrationLibrary.BloodSubscriptions;
 
 namespace IntegrationLibrary.Settings
 {
@@ -26,14 +27,15 @@ namespace IntegrationLibrary.Settings
         public DbSet<BloodRequest> BloodRequests { get; set; }
         public DbSet<BloodUsage> BloodUsages { get; set; }
         public DbSet<Tender> Tenders { get; set; }
+        public DbSet<BloodSubscription> BloodSubscription { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             modelBuilder.ApplyConfiguration(new BloodUsageConfiguration());
             modelBuilder.ApplyConfiguration(new BloodRequestConfiguration());
             modelBuilder.ApplyConfiguration(new TenderConfiguration());
+            modelBuilder.ApplyConfiguration(new BloodSubscriptionConfiguration());
         }
     }
 }
