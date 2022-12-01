@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegrationLibrary.BloodSubscriptions.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace IntegrationLibrary.BloodSubscriptions.Service
 {
     public class BloodSubscriptionService : IBloodSubscriptionService
     {
-        private readonly IBloodSubscriptionService _repository;
-        public BloodSubscriptionService(IBloodSubscriptionService repository)
+        private readonly IBloodSubscriptionRepository _repository;
+        public BloodSubscriptionService(IBloodSubscriptionRepository repository)
         {
             _repository = repository;
         }
