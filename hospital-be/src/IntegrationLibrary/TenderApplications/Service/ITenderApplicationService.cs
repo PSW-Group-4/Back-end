@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace IntegrationLibrary.TenderApplications.Service
 {
    public interface ITenderApplicationService
     {
-        public IEnumerable<TenderApplication> GetAll();
-        public TenderApplication FindById(Guid applicationId);
-        public TenderApplication Apply(TenderApplication tenderApplication);
+         IEnumerable<TenderApplication> GetAll();
+        TenderApplication FindById(Guid applicationId);
+        TenderApplication Apply(TenderApplication application);
     }
 }

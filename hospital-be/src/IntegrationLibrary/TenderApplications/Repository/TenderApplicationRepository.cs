@@ -20,7 +20,9 @@ namespace IntegrationLibrary.TenderApplications.Repository
 
         public TenderApplication Apply(TenderApplication tenderApplication)
         {
-            throw new NotImplementedException();
+            _context.TenderApplications.Add(tenderApplication);
+            _context.SaveChanges();
+            return tenderApplication;
         }
 
         public TenderApplication FindById(Guid applicationId)

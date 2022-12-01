@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
 using IntegrationAPI.Dtos.TenderApplications;
+using IntegrationLibrary.BloodBanks.Repository;
+using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.TenderApplications.Service;
+using IntegrationLibrary.Tenders.Repository;
+using IntegrationLibrary.Tenders.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,10 +20,12 @@ namespace IntegrationAPI.Controllers
     {
         private readonly ITenderApplicationService _service;
         private readonly IMapper _mapper;
-
-        public TenderApplicationController(ITenderApplicationService service, IMapper mapper)
+        private readonly ITenderService _tenderService;
+        private readonly IBloodBankService _bloodBankService;
+        public TenderApplicationController(ITenderApplicationService service, IMapper mapper, ITenderService tenderService, IBloodBankService bloodBankService)
         {
-
+            _tenderService = tenderService;
+            _bloodBankService = bloodBankService;
             _service = service;
             _mapper = mapper;
         }
@@ -31,7 +37,11 @@ namespace IntegrationAPI.Controllers
         }
         [HttpPost]
         public ActionResult Apply(ApplyForTenderDto applicationDto) {
-            var application = _mapper.Map<TenderApplication>(applicationDto);
+            TenderApplication application = new TenderApplication();
+            application.ApplicationId = Guid.NewGuid();
+            application.BloodBank = _bloodBankService.GetById(applicationDto.BloodBankId);
+            application.Tender = _tenderService.GetById(applicationDto.TenderId);
+            application.PriceInRSD = applicationDto.PriceInRSD;
             return Ok(_service.Apply(application));
         }
     }

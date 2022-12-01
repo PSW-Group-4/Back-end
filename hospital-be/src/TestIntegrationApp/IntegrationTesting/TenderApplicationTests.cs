@@ -29,7 +29,7 @@ namespace TestIntegrationApp.IntegrationTesting
         public TenderApplicationTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
         private static TenderApplicationController SetupController(IServiceScope scope)
         {
-            return new TenderApplicationController(scope.ServiceProvider.GetRequiredService<ITenderApplicationService>(), scope.ServiceProvider.GetRequiredService <IMapper>());
+            return new TenderApplicationController(scope.ServiceProvider.GetRequiredService<ITenderApplicationService>(), scope.ServiceProvider.GetRequiredService <IMapper>(), scope.ServiceProvider.GetRequiredService<ITenderService>(), scope.ServiceProvider.GetRequiredService<IBloodBankService>());
         }
         private static TenderApplicationService SetupService(IServiceScope scope)
         {
