@@ -105,13 +105,13 @@ namespace HospitalLibrary.Core.Service
             throw new NotImplementedException();
         }
 
+        //Bojana
         public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)
         {
 
             List<Appointment> appointments = (List<Appointment>) GetAll();
             appointments.Add(new Appointment { RoomId = dto.TargetId });
 
-            //Should be DateRange but we don't have form-to, only from
             DateTime start = CheckDate(dto.DateRange.StartTime);
             DateTime end = CheckDate(dto.DateRange.EndTime);
             DateRange dr = new DateRange(start, end);
@@ -120,6 +120,7 @@ namespace HospitalLibrary.Core.Service
             return GetAvailableDatesForRelocationOrRenovation(appointments, dto, dr);
         }
 
+        //Bojana
         public List<DateTime> GetAvailableDatesForRelocationOrRenovation(List<Appointment> appointments, HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange)
 
         {
