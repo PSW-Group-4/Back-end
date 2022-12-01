@@ -1,4 +1,5 @@
 ﻿using IntegrationLibrary.Common;
+using IntegrationLibrary.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace IntegrationLibrary.BloodSubscriptions
             private set { }
         }
         public string BloodBankName { get; private set; }
-        
+        public bool ActiveStatus { get; private set; }
         public BloodSubscription()
         {
             BloodProducts = new List<BloodProduct>();
@@ -43,13 +44,33 @@ namespace IntegrationLibrary.BloodSubscriptions
         }
         public void RemoveBloodType(BloodProduct type)
         {
+            this.ValidateListLenght();
             this.BloodProducts.Remove(type);
         }
         public void RemoveBloodType(List<BloodProduct> types) 
         {
-            foreach(var type in types)
+            this.ValidateListLenght();
+            foreach (var type in types)
             {
                 this.BloodProducts.Remove(type);
+            }
+        }
+
+        public void Activate()
+        {
+            this.ValidateListLenght();
+            this.ActiveStatus = true;
+        }
+        public void Deactivate()
+        {
+            this.ActiveStatus = false;
+        }
+
+        private void ValidateListLenght()
+        {
+            if (this.BloodProducts.Count == 0)
+            {
+                throw new InvalidValueException();
             }
         }
     }
