@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.BuildingManagment.Model;
-using HospitalLibrary.BuildingManagment.Repository;
+using HospitalLibrary.BuildingManagment.Repository.Interfaces;
 using HospitalLibrary.BuildingManagment.Service.Interfaces;
 
 namespace HospitalLibrary.BuildingManagment.Service.Implementation
