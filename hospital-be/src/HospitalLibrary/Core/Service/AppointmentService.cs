@@ -104,5 +104,65 @@ namespace HospitalLibrary.Core.Service
         {
             throw new NotImplementedException();
         }
+
+        public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)
+        {
+
+            List<Appointment> appointments = (List<Appointment>) GetAll();
+            appointments.Add(new Appointment { RoomId = dto.TargetId });
+
+            //Should be DateRange but we don't have form-to, only from
+            DateTime start = CheckDate(dto.DateRange.StartTime);
+            DateTime end = CheckDate(dto.DateRange.EndTime);
+            DateRange dr = new DateRange(start, end);
+            dto.Duration = CheckDuration(dto.Duration);
+
+            return GetAvailableDatesForRelocationOrRenovation(appointments, dto, dr);
+        }
+
+        public List<DateTime> GetAvailableDatesForRelocationOrRenovation(List<Appointment> appointments, HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange)
+
+        {
+            List<DateTime> result = new List<DateTime>();
+            DateTime start = dateRange.StartTime;
+            do
+            {
+                
+                foreach (Appointment appointment in appointments)
+
+                {
+                    if (appointment.DateRange.StartTime.AddMinutes(30) > start && (appointment.RoomId.Equals(dto.TargetId) || appointment.RoomId.Equals(dto.SourceId)))
+                    {
+                        if ((start < appointment.DateRange.StartTime.AddMinutes(30)) && (appointment.DateRange.StartTime < start.AddMinutes(dto.Duration)))
+                        {
+                            break;
+                        }
+                        else { if (!result.Contains(start)) { result.Add(start); } }
+                    }
+                }
+                start = dto.DateRange.StartTime.AddMinutes(15);
+            } while (dto.DateRange.EndTime < dateRange.StartTime); ;
+            return result;
+        }
+
+        //Minutes should be 0, 15, 30, 45
+        private DateTime CheckDate(DateTime date)
+        {
+            if (date.Minute % 15 != 0)
+            {
+                date = date.AddMinutes(15 - date.Minute % 15);
+            }
+
+            return date;
+        }
+
+        private int CheckDuration(int duration)
+        {
+            if (duration % 15 != 0)
+            {
+                duration += 15 - duration % 15;
+            }
+            return duration;
+        }
     }
 }
