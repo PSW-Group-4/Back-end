@@ -41,5 +41,9 @@ namespace HospitalLibrary.BuildingManagment.Service.Implementation
         {
             return _buildingRepository.Update(entity);
         }
+
+        public IEnumerable<Floor> GetFloorsByBuildingId(Guid id) {
+            return this.GetById(id).FloorList;
+        }
     }
 }
