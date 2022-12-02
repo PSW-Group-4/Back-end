@@ -25,8 +25,7 @@ namespace HospitalLibrary.Users.Model
         //In managers case it can be null
         public Guid? PersonId { get; set; }
 
-        [System.Text.Json.Serialization.JsonPropertyName("_suspiciousActivities")]
-        private List<SuspiciousActivity> _suspiciousActivities;
+        [Column(TypeName = "jsonb")] private List<SuspiciousActivity> _suspiciousActivities;
 
         public List<SuspiciousActivity> SuspiciousActivities
         {
@@ -35,6 +34,7 @@ namespace HospitalLibrary.Users.Model
                 _suspiciousActivities ??= new List<SuspiciousActivity>();
                 return new List<SuspiciousActivity>(_suspiciousActivities);
             }
+            set{}
 
         }
 
@@ -92,7 +92,7 @@ namespace HospitalLibrary.Users.Model
             Password = user.Password;
             Role = user.Role;
             PersonId = user.PersonId;
-            _suspiciousActivities = user._suspiciousActivities;
+            _suspiciousActivities = user.SuspiciousActivities;
         }
 
 
