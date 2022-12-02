@@ -32,6 +32,8 @@ using IntegrationLibrary.Tenders.Repository;
 using IntegrationLibrary.Tenders.Service;
 using IntegrationLibrary.Tenders.Model;
 using IntegrationAPI.Dtos.Tenders;
+using IntegrationLibrary.BloodSubscriptions.Service;
+using IntegrationLibrary.BloodSubscriptions.Repository;
 using IntegrationLibrary.TenderApplications.Service;
 using IntegrationLibrary.TenderApplications.Repository;
 using IntegrationAPI.Communications.Mail;
@@ -113,10 +115,11 @@ namespace IntegrationAPI
             services.AddScoped<IConsumer<News>, NewsConsumer>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
+            services.AddScoped<IBloodSubscriptionRepository, BloodSubscriptionRepository>();
+            services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
             services.AddScoped<ITenderApplicationService, TenderApplicationService>();
             services.AddScoped<ITenderApplicationRepository, TenderApplicationRepository>();
             services.AddScoped<IProducer<BloodRequest>, BloodRequestProducer>();
-
 
             services.AddControllers();
 

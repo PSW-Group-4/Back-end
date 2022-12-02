@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalLibrary.Users.Model
 {
@@ -27,12 +25,76 @@ namespace HospitalLibrary.Users.Model
         //In managers case it can be null
         public Guid? PersonId { get; set; }
 
+        [Column(TypeName = "jsonb")] private List<SuspiciousActivity> _suspiciousActivities;
+
+        public List<SuspiciousActivity> SuspiciousActivities
+        {
+            get
+            {
+                _suspiciousActivities ??= new List<SuspiciousActivity>();
+                return new List<SuspiciousActivity>(_suspiciousActivities);
+            }
+            set{}
+
+        }
+
+        public void AddSuspiciousActivity(SuspiciousActivity suspiciousActivity)
+        {
+            _suspiciousActivities ??= new List<SuspiciousActivity>();
+            _suspiciousActivities.Add(suspiciousActivity);
+        }
+
+
+        public bool HasEnoughSuspiciousActivities()
+        {
+
+            return Constants.Constants.MinSuspiciousActivityCount <= NumberOfSuspiciousActivitiesInRecentPeriod();
+        }
+
+        public int NumberOfSuspiciousActivitiesInRecentPeriod()
+        {
+            return SuspiciousActivities.Count(suspiciousActivity => suspiciousActivity.ActivityTime >= DateTime.Now.AddDays(-Constants.Constants.SuspiciousActivityPeriodDaysCheck));
+        
+        }
+
+        public void Block()
+        {
+            if (IsBlocked)
+            {
+                throw new UserIsAlreadyBlockedException();
+            }
+
+            if (!HasEnoughSuspiciousActivities())
+            {
+                throw new UserCanNotBeBlocked();
+            }
+
+            IsBlocked = true;
+        }
+
+        public void Unblock()
+        {
+            if (!IsBlocked)
+            {
+                throw new UserIsNotBlockedException();
+            }
+            IsBlocked = false;
+        }
+
+        public bool IsUserSuspicious()
+        {
+            return IsBlocked || HasEnoughSuspiciousActivities();
+        }
+
         internal void Update(User user)
         {
             Username = user.Username;
             Password = user.Password;
             Role = user.Role;
             PersonId = user.PersonId;
+            _suspiciousActivities = user.SuspiciousActivities;
         }
+
+
     }
 }

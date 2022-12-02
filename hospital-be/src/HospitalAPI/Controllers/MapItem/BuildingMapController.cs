@@ -4,6 +4,7 @@ using HospitalAPI.Dtos.MapItem;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers.MapItem
@@ -11,6 +12,7 @@ namespace HospitalAPI.Controllers.MapItem
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager")]
     public class BuildingMapController : ControllerBase
     {
 

@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221202092821_subscriptionUrgency")]
+    partial class subscriptionUrgency
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,16 +150,13 @@ namespace IntegrationLibrary.Migrations
                     b.Property<double>("BloodAmountInMilliliters")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("BloodType")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DoctorId")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsApproved")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsUrgent")
                         .HasColumnType("boolean");
 
                     b.Property<string>("ManagerId")
@@ -168,9 +167,6 @@ namespace IntegrationLibrary.Migrations
 
                     b.Property<string>("RejectionComment")
                         .HasColumnType("text");
-
-                    b.Property<DateTime>("SendOnDate")
-                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 

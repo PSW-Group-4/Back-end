@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221201115144_bloodSubscriptions")]
+    partial class bloodSubscriptions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,16 +150,13 @@ namespace IntegrationLibrary.Migrations
                     b.Property<double>("BloodAmountInMilliliters")
                         .HasColumnType("double precision");
 
-                    b.Property<int>("BloodType")
-                        .HasColumnType("integer");
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("DoctorId")
                         .HasColumnType("text");
 
                     b.Property<bool>("IsApproved")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsUrgent")
                         .HasColumnType("boolean");
 
                     b.Property<string>("ManagerId")
@@ -169,9 +168,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("RejectionComment")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("SendOnDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.HasKey("Id");
 
                     b.ToTable("blood_requests");
@@ -182,9 +178,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("ActiveStatus")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("BloodBankName")
                         .HasColumnType("text");
@@ -198,39 +191,12 @@ namespace IntegrationLibrary.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool>("Urgent")
-                        .HasColumnType("boolean");
-
                     b.Property<double>("Version")
                         .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
                     b.ToTable("BloodSubscription");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
-                {
-                    b.Property<Guid>("ApplicationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("BloodBankId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("PriceInRSD")
-                        .HasColumnType("double precision");
-
-                    b.Property<Guid?>("TenderId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("ApplicationId");
-
-                    b.HasIndex("BloodBankId");
-
-                    b.HasIndex("TenderId");
-
-                    b.ToTable("TenderApplications");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Tenders.Model.Tender", b =>
@@ -245,7 +211,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime?>("Deadline")
+                    b.Property<DateTime>("Deadline")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -346,21 +312,6 @@ namespace IntegrationLibrary.Migrations
                         });
 
                     b.Navigation("BloodType");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
-                {
-                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
-                        .WithMany()
-                        .HasForeignKey("BloodBankId");
-
-                    b.HasOne("IntegrationLibrary.Tenders.Model.Tender", "Tender")
-                        .WithMany()
-                        .HasForeignKey("TenderId");
-
-                    b.Navigation("BloodBank");
-
-                    b.Navigation("Tender");
                 });
 #pragma warning restore 612, 618
         }

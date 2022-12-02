@@ -117,6 +117,11 @@ namespace HospitalLibrary.Settings
              .HasMany(p => p.Allergies)
              .WithMany(a => a.Patients)
              .UsingEntity(j => j.ToTable("PatientAllergies"));
+
+            modelBuilder.Entity<User>()
+                .Ignore(u => u.SuspiciousActivities)  
+                .Property("_suspiciousActivities");
+
         }
     }
 }
