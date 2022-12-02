@@ -11,6 +11,7 @@ namespace HospitalLibrary.Users.Service
     public interface IUserService
     {
         IEnumerable<User> GetAll();
+
         User GetByUsername(string username);
         User Create(User user);
         User Update(User user);
@@ -20,5 +21,10 @@ namespace HospitalLibrary.Users.Service
         string AuthenticatePrivate(string userLoginUsername, string userLoginPassword);
         void ActivateAccount(Guid activationToken, Guid userId);
         bool IsUsernameUnique(string username);
+        void BlockUser(string username);
+        void UnblockUser(string username);
+        IEnumerable<User> GetAllSuspiciousUsers();
+        public void AddSuspiciousActivityToUser(Guid personId, SuspiciousActivity suspiciousActivity);
+
     }
 }

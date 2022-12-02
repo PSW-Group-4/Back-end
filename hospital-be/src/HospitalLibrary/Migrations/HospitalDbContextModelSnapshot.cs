@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using HospitalLibrary.Settings;
+using HospitalLibrary.Users.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -691,6 +692,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<int>("Role")
                         .HasColumnType("integer");
+
+                    b.Property<List<SuspiciousActivity>>("_suspiciousActivities")
+                        .HasColumnType("jsonb");
 
                     b.HasKey("Username");
 
