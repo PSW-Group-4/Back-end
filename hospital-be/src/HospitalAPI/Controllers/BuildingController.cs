@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.BuildingManagment.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
 
 namespace HospitalAPI.Controllers
@@ -22,12 +23,14 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager")]
         public ActionResult GetAll()
         {
             return Ok(_buildingService.GetAll());
         }
 
         [HttpGet("GetFloorsByBuildingId/{id}")]
+        [Authorize(Roles = "Manager")]
         public ActionResult Get([FromRoute] Guid id)
         {
             return Ok(_buildingService.GetFloorsByBuildingId(id));

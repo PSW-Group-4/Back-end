@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.BuildingManagment.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using HospitalAPI.Mapper;
 
 namespace HospitalAPI.Controllers.MapItem
@@ -24,12 +25,14 @@ namespace HospitalAPI.Controllers.MapItem
         }
 
         [HttpGet]
+        [Authorize(Roles = "Manager")]
         public ActionResult GetAll()
         {
             return Ok(_floorService.GetAll());
         }
 
         [HttpGet("GetRoomsByFloorId/{id}")]
+        [Authorize(Roles = "Manager")]
         public ActionResult Get([FromRoute] Guid id)
         {
             return Ok(_floorService.GetRoomsByFloorId(id));
