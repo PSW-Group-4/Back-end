@@ -50,7 +50,6 @@ namespace TestIntegrationApp.Setup
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_bank_news\";");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_requests\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"tenders\";");
 
             context.SaveChanges();
         }

@@ -2,11 +2,11 @@
 {
     public class BloodProductDto
     {
-        public string BloodType { get; set; }
+        public BloodTypeDto BloodType { get; set; }
         public double Amount { get; set; }
-        public BloodProductDto(string bloodType, double amount)
+        public BloodProductDto(BloodTypeDto bloodTypeDto, double amount)
         {
-            BloodType = bloodType;
+            BloodType = bloodTypeDto;
             Amount = amount;
         }
 

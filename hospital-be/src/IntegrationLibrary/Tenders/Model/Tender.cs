@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace IntegrationLibrary.Tenders.Model
 {
@@ -14,6 +15,7 @@ namespace IntegrationLibrary.Tenders.Model
     {
         private IEnumerable<BloodProduct> bloodProducts;
 
+        [JsonInclude]
         public IEnumerable<BloodProduct> BloodProducts
         {
             get
@@ -23,7 +25,7 @@ namespace IntegrationLibrary.Tenders.Model
 
             private set => bloodProducts = value;
         }
-        public DateTime Deadline { get; private set; }
+        public DateTime? Deadline { get; private set; }
 
         private Tender() { }
         private Tender(IEnumerable<BloodProduct> bloodProducts, DateTime deadline)
@@ -35,14 +37,29 @@ namespace IntegrationLibrary.Tenders.Model
             Version = 1.0;
         }
 
-        public bool IsActive()
+        private Tender(IEnumerable<BloodProduct> bloodProducts)
         {
-            return DateTime.Compare(DateTime.Now, Deadline) < 0;
+            Id = Guid.NewGuid();
+            BloodProducts = bloodProducts;
+            CreatedDate = DateTime.Now;
+            Deadline = null;
+            Version = 1.0;
         }
 
-        public static Tender Create(IEnumerable<BloodProduct> bloodProducts, DateTime deadline)
+        public Tender() { }
+        public bool IsActive()
         {
-            if(DateTime.Compare(DateTime.Now, deadline) < 0)
+            return Deadline == null || DateTime.Compare(DateTime.Now, (DateTime)Deadline) < 0;
+        }
+
+        public static Tender Create(IEnumerable<BloodProduct> bloodProducts, DateTime? deadline)
+        {
+            if(deadline == null)
+            {
+                return new Tender(bloodProducts);
+            }
+
+            if(DateTime.Compare(DateTime.Now, (DateTime)deadline) < 0)
             {
                 return new Tender(bloodProducts, deadline);
             } else

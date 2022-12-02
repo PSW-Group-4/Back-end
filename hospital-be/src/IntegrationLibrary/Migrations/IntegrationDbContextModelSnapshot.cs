@@ -198,6 +198,29 @@ namespace IntegrationLibrary.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BloodSubscription");
+					
+            modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
+                {
+                    b.Property<Guid>("ApplicationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("PriceInRSD")
+                        .HasColumnType("double precision");
+
+                    b.Property<Guid?>("TenderId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ApplicationId");
+
+                    b.HasIndex("BloodBankId");
+
+                    b.HasIndex("TenderId");
+
+                    b.ToTable("TenderApplications");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Tenders.Model.Tender", b =>
@@ -212,7 +235,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<DateTime>("Deadline")
+                    b.Property<DateTime?>("Deadline")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<DateTime?>("ModifiedDate")
@@ -313,6 +336,21 @@ namespace IntegrationLibrary.Migrations
                         });
 
                     b.Navigation("BloodType");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId");
+
+                    b.HasOne("IntegrationLibrary.Tenders.Model.Tender", "Tender")
+                        .WithMany()
+                        .HasForeignKey("TenderId");
+
+                    b.Navigation("BloodBank");
+
+                    b.Navigation("Tender");
                 });
 #pragma warning restore 612, 618
         }

@@ -14,5 +14,7 @@ namespace IntegrationLibrary.BloodBanks.Model
         public virtual BloodBank BloodBank { get; set; }
         public ReportFrequencyTitles RequestFrequency { get; set; }
         public Boolean ActiveStatus { get; set; }
+
+        public ReportConfiguration() { }
     }
 }

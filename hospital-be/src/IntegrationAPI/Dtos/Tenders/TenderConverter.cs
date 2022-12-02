@@ -14,19 +14,35 @@ namespace IntegrationAPI.Dtos.Tenders
 
         public TenderDto Convert(Tender entity)
         {
-            IEnumerable<BloodProductDto> bloodProductDtos = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() });
-            return new TenderDto
+            //IEnumerable<BloodProductDto> bloodProductDtos = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() });
+            /*return new TenderDto
             {
                 BloodProducts = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() }),
                 Deadline = entity.Deadline.ToString()
-            };
+            };*/
+            return new TenderDto();
         }
 
         public Tender Convert(TenderDto dto)
         {
-            IEnumerable<BloodProduct> bloodProducts = dto.BloodProducts.Select(dto => new BloodProduct(BloodType.FromString(dto.BloodType), dto.Amount));
+            DateTime? deadline;
+            if(dto.Deadline != null)
+            {
+                deadline = DateTime.Parse(dto.Deadline);
+            } else
+            {
+                deadline = null;
+            }
+            IEnumerable<BloodProduct> bloodProducts = dto.BloodProducts.Select
+                (dto => new BloodProduct(
+                    new BloodType(
+                        (BloodGroup)Enum.Parse(typeof(BloodGroup), dto.BloodType.BloodGroup), 
+                        (RHFactor) Enum.Parse(typeof(RHFactor), dto.BloodType.RhFactor)
+                    ),
+                    dto.Amount));
             return Tender.Create(bloodProducts,
-                DateTime.Parse(dto.Deadline));
+                deadline);
         }
+         
     }
 }
