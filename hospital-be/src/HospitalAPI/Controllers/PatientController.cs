@@ -150,13 +150,18 @@ namespace HospitalAPI.Controllers
 
 
         // WILL BE DELETED LATER, JUST TESTING UNTIL APPOINTMENT CANCELLATION IS FINISHED
-
         [HttpGet("cancel-appointment-test/{PatientId}")]
         public ActionResult CancelAppointmentTest([FromRoute] Guid PatientId)
         {
-            _userService.AddSuspiciousActivityToUser(PatientId, new SuspiciousActivity("Appointment cancellation", DateTime.Now));
-
-            return Ok();
+            try
+            {
+                _userService.AddSuspiciousActivityToUser(PatientId, new SuspiciousActivity("Appointment cancellation", DateTime.Now));
+                return Ok();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("User that is connected to this patient is not found");
+            }
         }
 
 
