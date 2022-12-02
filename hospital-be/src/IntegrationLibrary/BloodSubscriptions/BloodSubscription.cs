@@ -20,6 +20,7 @@ namespace IntegrationLibrary.BloodSubscriptions
         }
         public string BloodBankName { get; private set; }
         public bool ActiveStatus { get; private set; }
+        public bool Urgent { get; private set; }
         public BloodSubscription()
         {
             BloodProducts = new List<BloodProduct>();
@@ -72,6 +73,14 @@ namespace IntegrationLibrary.BloodSubscriptions
             {
                 throw new InvalidValueException();
             }
+        }
+        public void MakeUrgent()
+        {
+            this.Urgent = true;
+        }
+        public void MakeNotUrgent()
+        {
+            this.Urgent = false;
         }
     }
 }

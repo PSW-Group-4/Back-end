@@ -46,7 +46,6 @@ namespace IntegrationLibrary.Tenders.Model
             Version = 1.0;
         }
 
-        public Tender() { }
         public bool IsActive()
         {
             return Deadline == null || DateTime.Compare(DateTime.Now, (DateTime)Deadline) < 0;
@@ -61,7 +60,7 @@ namespace IntegrationLibrary.Tenders.Model
 
             if(DateTime.Compare(DateTime.Now, (DateTime)deadline) < 0)
             {
-                return new Tender(bloodProducts, deadline);
+                return new Tender(bloodProducts, (DateTime)deadline);
             } else
             {
                 throw new DateIsBeforeTodayException();
