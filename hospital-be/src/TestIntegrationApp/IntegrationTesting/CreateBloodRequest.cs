@@ -28,7 +28,7 @@ namespace TestIntegrationApp.IntegrationTesting
             BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
             {
                 BloodType = new BloodType(BloodGroup.A, RHFactor.NEGATIVE),
-                ReasonsWhyBloodIsNeeded = "Reason",
+                Reasons = "Reason",
                 BloodAmountInMilliliters = 100.00,
                 DateTime = DateTime.Now,
             };

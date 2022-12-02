@@ -8,7 +8,8 @@ namespace IntegrationAPI.Dtos.BloodRequests
     {
         public String DoctorId { get; set; }
         public BloodProductDto BloodProduct { get; set; }
-        public String ReasonsWhyBloodIsNeeded { get; set; }
+        public String Reasons { get; set; }
         public DateTime SendOnDate { get; set; }
+        public bool IsUrgent { get; set; }
     }
 }
