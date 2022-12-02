@@ -16,7 +16,7 @@ namespace IntegrationLibrary.BloodRequests.Model
         public Guid Id { get; set; }
         public String DoctorId { get; set; }
         public String Reasons { get; set; }
-        public BloodProduct BloodProduct { get; set; }
+        public virtual BloodProduct BloodProduct { get; set; }
         public Boolean IsApproved { get; set; }
         public String RejectionComment { get; set; }
         public String ManagerId { get; set; }

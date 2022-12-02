@@ -3,7 +3,9 @@ using IntegrationAPI;
 using IntegrationAPI.Communications.Consumer;
 using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
 using IntegrationAPI.Controllers;
+using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
@@ -63,18 +65,26 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
+            BloodTypeDto bloodTypeDto = new("A", "POSITIVE");
+            BloodProductDto bloodProductDto = new(bloodTypeDto, 1000);
+            BloodRequestsCreateDto bloodRequest = new()
             {
-                BloodType = new BloodType(BloodGroup.A, RHFactor.NEGATIVE),
+                BloodProduct = bloodProductDto,
                 Reasons = "Reason",
-                BloodAmountInMilliliters = 100.00,
-                DateTime = DateTime.Now,
+                IsUrgent = true,
+                SendOnDate = DateTime.UtcNow
             };
-            var create = controller.Create(bloodRequest);
-            var request = (((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodRequestEditDto>).First();
-            request.BloodAmountInMilliliters = 200.00;
-            var result = ((OkObjectResult)controller.Update(request))?.Value as BloodRequestEditDto;
-            Assert.True(result.BloodAmountInMilliliters == 200.00);
+            controller.Create(bloodRequest);
+            BloodRequest request = (((OkObjectResult)controller.GetAll())?.Value as BloodRequest);
+            BloodRequestEditDto bloodRequestEditDto = new()
+            {
+                Id = request.Id,
+                BloodBank = "Bankica",
+                IsApproved = true,
+            };
+            request.IsApproved = false;
+            var result = ((OkObjectResult)controller.Manage(bloodRequestEditDto))?.Value as BloodRequestEditDto;
+            Assert.True(result.IsApproved == true);
 
         }
     }

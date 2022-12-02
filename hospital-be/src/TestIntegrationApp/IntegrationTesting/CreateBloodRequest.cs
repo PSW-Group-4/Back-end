@@ -8,6 +8,8 @@ using Xunit;
 using System;
 using IntegrationAPI.Dtos.BloodRequests;
 using IntegrationLibrary.Common;
+using IntegrationAPI.Dtos.BloodProducts;
+using IntegrationAPI.Dtos.BloodTypes;
 
 namespace TestIntegrationApp.IntegrationTesting
 {
@@ -25,12 +27,14 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            BloodTypeDto bloodTypeDto = new BloodTypeDto("A", "POSITIVE");
+            BloodProductDto bloodProductDto = new BloodProductDto(bloodTypeDto, 1000);
             BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
             {
-                BloodType = new BloodType(BloodGroup.A, RHFactor.NEGATIVE),
+                BloodProduct = bloodProductDto,
                 Reasons = "Reason",
-                BloodAmountInMilliliters = 100.00,
-                DateTime = DateTime.Now,
+                IsUrgent = true,
+                SendOnDate = DateTime.UtcNow
             };
             var create = controller.Create(bloodRequest);
             

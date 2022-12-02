@@ -3,6 +3,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
 using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 

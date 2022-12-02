@@ -11,7 +11,6 @@ namespace IntegrationLibrary.Common
 {
     public class BloodProduct
     {
-
         [JsonInclude]
         public BloodType BloodType { get; private set; }
 

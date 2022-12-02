@@ -46,10 +46,11 @@ namespace IntegrationAPI.Controllers
             return Ok(bloodRequests);
         }
 
-        [Route("update"), HttpPost]
-        public ActionResult Update(BloodRequestEditDto bloodRequestDto) {
+        [Route("manage"), HttpPost]
+        public ActionResult Manage(BloodRequestEditDto bloodRequestDto) {
             BloodRequest bloodRequest = _service.GetByBloodRequestId(bloodRequestDto.Id);
             bloodRequest.IsApproved = bloodRequestDto.IsApproved;
+            bloodRequest.ManagerId = bloodRequestDto.ManagerId;
             if(bloodRequestDto.IsApproved)
             {
                 bloodRequest.BloodBank = bloodBankService.GetByName(bloodRequestDto.BloodBank);
