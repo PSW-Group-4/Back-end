@@ -1,8 +1,13 @@
 ﻿using AutoMapper;
+using HospitalAPI.Dtos.Feedback;
+using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
+using HospitalLibrary.Feedbacks.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Data;
 
 namespace HospitalAPI.Controllers
 {
@@ -12,11 +17,13 @@ namespace HospitalAPI.Controllers
     {
         private readonly IDoctorService _doctorService;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public DoctorController(IDoctorService doctorService, IMapper mapper)
+        public DoctorController(IDoctorService doctorService, IMapper mapper, IJwtService jwtService)
         {
             _doctorService = doctorService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         // GET: api/Doctor
@@ -40,6 +47,23 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet("loggedDoctor")]
+        
+        public ActionResult GetLoggedDoctor()
+        {
+            try
+            {
+                Guid DoctorId = (Guid)_jwtService.GetCurrentUser(HttpContext.User).PersonId;
+                var doctor = _doctorService.GetById(DoctorId);
+                return Ok(doctor);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();            }
+
+            
         }
 
 
