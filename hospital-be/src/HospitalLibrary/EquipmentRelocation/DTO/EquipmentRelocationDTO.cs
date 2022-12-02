@@ -1,26 +1,44 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using HospitalAPI.Dtos.Patient;
 namespace HospitalLibrary.EquipmentRelocation.DTO
 
 {
     public class EquipmentRelocationDTO
     {
-        public DateTime relocationStart { get; set; }
-        public int duration { get; set; }
-        public Guid sourceId { get; set; }
-        public Guid targetId { get; set; }
+
+        public DateRange DateRange { get; set; }
+        public int Duration { get; set; }
+        public Guid SourceId { get; set; }
+        public Guid TargetId { get; set; }
         public EquipmentRelocationDTO() { }
 
-        public EquipmentRelocationDTO(DateTime relocationStart, int duration, Guid sourceId, Guid targetId)
+        public EquipmentRelocationDTO(DateRange dateRange, int duration, Guid sourceId, Guid targetId)
         {
-            this.relocationStart = relocationStart;
-            this.duration = duration;
-            this.sourceId = sourceId;
-            this.targetId = targetId;
+            this.DateRange = dateRange;
+            this.Duration = duration;
+            this.SourceId = sourceId;
+            this.TargetId = targetId;
+        }
+
+        //Minutes should be 0, 15, 30, 45
+        public DateRange CheckDateRange(DateRange dateRange)
+        {
+            DateTime start = dateRange.StartTime;
+            DateTime end = dateRange.EndTime;
+            if (start.Minute % 15 != 0)
+            {
+                start = start.AddMinutes(15 - start.Minute % 15);
+            }
+            if (end.Minute % 15 != 0)
+            {
+                end = end.AddMinutes(15 - end.Minute % 15);
+            }
+            return new DateRange(start, end);
         }
     }
 }
