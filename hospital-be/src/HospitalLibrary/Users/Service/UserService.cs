@@ -131,7 +131,11 @@ namespace HospitalLibrary.Users.Service
             {
                 throw new UnauthorizedException();
             }
-            
+            if (user.IsBlocked)
+            {
+                throw new UserIsBlockedException();
+            }
+
             return _jwtService.GenerateToken(user);
         }
 
@@ -170,5 +174,43 @@ namespace HospitalLibrary.Users.Service
           
             return _userRepository.IsUsernameUnique(username);
         }
+
+        public void BlockUser(string username)
+        {
+            User user = _userRepository.GetByUsername(username);
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
+            user.Block();
+            _userRepository.Update(user);
+
+        }
+
+        public void UnblockUser(string username)
+        {
+            User user = _userRepository.GetByUsername(username);
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
+            user.Unblock();
+            _userRepository.Update(user);
+        }
+
+        public IEnumerable<User> GetAllSuspiciousUsers()
+        {
+            return GetAll().Where(u => u.IsUserSuspicious());
+        }
+
+        public void AddSuspiciousActivityToUser(Guid personId,SuspiciousActivity suspiciousActivity)
+        {
+            User user = _userRepository.GetByPersonId(personId);
+            user.AddSuspiciousActivity(suspiciousActivity);
+
+            _userRepository.Update(user);
+        }
+
+       
     }
 }

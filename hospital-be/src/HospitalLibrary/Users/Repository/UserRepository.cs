@@ -68,5 +68,16 @@ namespace HospitalLibrary.Users.Repository
             _context.Users.Remove(User);
             _context.SaveChanges();
         }
+
+        public User GetByPersonId(Guid personId)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.PersonId == personId);
+            if (user == null)
+            {
+                throw new NotFoundException();
+            }
+
+            return user;
+        }
     }
 }
