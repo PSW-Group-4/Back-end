@@ -13,13 +13,6 @@ namespace IntegrationLibrary.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<BloodRequest> builder)
         {
-            builder.OwnsOne(request => request.BloodType, a =>
-            {
-                a.Property(prop => prop.BloodGroup).HasMaxLength(1)
-                .HasColumnName("BloodGroup");
-                a.Property(prop => prop.RHFactor).HasMaxLength(10)
-                .HasColumnName("RhFactor");
-            });
         }
     }
 }
