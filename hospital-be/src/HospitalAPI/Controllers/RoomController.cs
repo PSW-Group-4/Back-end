@@ -6,6 +6,7 @@ using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 
@@ -27,7 +28,7 @@ namespace HospitalAPI.Controllers
 
             // GET: api/Room
             [HttpGet]
-            public ActionResult GetAll()
+        public ActionResult GetAll()
             {
                 return Ok(_roomService.GetAll());
             }

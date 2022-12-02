@@ -9,6 +9,7 @@ using HospitalLibrary.EquipmentRelocation.Service;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Appointments.Service;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalAPI.Controllers
 {
@@ -27,6 +28,7 @@ namespace HospitalAPI.Controllers
 
         
         [HttpGet("Recommend/{relocationStart}/{duration}/{sourceId}/{targetId}")]
+        [Authorize(Roles = "Manager")]
         public ActionResult Recommend([FromRoute] String relocationStart, [FromRoute] int duration, [FromRoute] String sourceId, [FromRoute] String targetId)
         {
             try
