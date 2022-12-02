@@ -2,12 +2,14 @@
 using IntegrationAPI;
 using IntegrationAPI.Communications.Consumer;
 using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
+using IntegrationAPI.Communications.Producer;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationAPI.Dtos.BloodRequests;
 using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodRequests.Repository;
 using IntegrationLibrary.BloodRequests.Service;
@@ -16,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,8 +38,30 @@ namespace TestIntegrationApp.IntegrationTesting
         }
         private static BloodRequestController SetupController(IServiceScope scope)
         {
-            return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(), scope.ServiceProvider.GetRequiredService<IBloodBankService>(), scope.ServiceProvider.GetRequiredService<IProducer<BloodRequest>>());
         }
+
+        [Fact]
+        public void Creates_blood_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            BloodTypeDto bloodTypeDto = new BloodTypeDto("A", "POSITIVE");
+            BloodProductDto bloodProductDto = new BloodProductDto(bloodTypeDto, 1000);
+            BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
+            {
+                BloodProduct = bloodProductDto,
+                Reasons = "Reason",
+                IsUrgent = true,
+                SendOnDate = DateTime.UtcNow
+            };
+            var create = controller.Create(bloodRequest);
+
+            var result = controller.GetAll();
+
+            Assert.NotNull(result);
+        }
+
         [Fact]
         public void Retrieves_all_requests()
         {
@@ -65,6 +90,7 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
+            var service = SetupService(scope);
             BloodTypeDto bloodTypeDto = new("A", "POSITIVE");
             BloodProductDto bloodProductDto = new(bloodTypeDto, 1000);
             BloodRequestsCreateDto bloodRequest = new()
@@ -75,15 +101,15 @@ namespace TestIntegrationApp.IntegrationTesting
                 SendOnDate = DateTime.UtcNow
             };
             controller.Create(bloodRequest);
-            BloodRequest request = (((OkObjectResult)controller.GetAll())?.Value as BloodRequest);
+            var request = (((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodRequest>).First();
             BloodRequestEditDto bloodRequestEditDto = new()
             {
                 Id = request.Id,
                 BloodBank = "Bankica",
                 IsApproved = true,
             };
-            request.IsApproved = false;
-            var result = ((OkObjectResult)controller.Manage(bloodRequestEditDto))?.Value as BloodRequestEditDto;
+            controller.Manage(bloodRequestEditDto);
+            var result = service.GetById(request.Id);
             Assert.True(result.IsApproved == true);
 
         }

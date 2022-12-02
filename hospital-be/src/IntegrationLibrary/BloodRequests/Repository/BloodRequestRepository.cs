@@ -21,9 +21,9 @@ namespace IntegrationLibrary.BloodRequests.Repository
             return _context.BloodRequests.ToList();
         }
 
-        public BloodRequest GetByBloodRequestId()
+        public BloodRequest GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.BloodRequests.Find(id);
         }
 
         public IEnumerable<BloodRequest> GetUnapproved()

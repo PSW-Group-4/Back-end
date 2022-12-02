@@ -26,10 +26,11 @@ namespace IntegrationAPI.Controllers
         private readonly IProducer<BloodRequest> bloodRequestProducer;
         private readonly IBloodBankService bloodBankService;
 
-        public BloodRequestController(IBloodRequestService service, IMapper mapper)
+        public BloodRequestController(IBloodRequestService service, IBloodBankService bloodBankService, IProducer<BloodRequest> bloodRequestProducer)
         {
             _service = service;
-            _mapper = mapper;
+            this.bloodBankService = bloodBankService;
+            this.bloodRequestProducer = bloodRequestProducer;
         }
 
         [HttpGet]
@@ -48,7 +49,7 @@ namespace IntegrationAPI.Controllers
 
         [Route("manage"), HttpPost]
         public ActionResult Manage(BloodRequestEditDto bloodRequestDto) {
-            BloodRequest bloodRequest = _service.GetByBloodRequestId(bloodRequestDto.Id);
+            BloodRequest bloodRequest = _service.GetById(bloodRequestDto.Id);
             bloodRequest.IsApproved = bloodRequestDto.IsApproved;
             bloodRequest.ManagerId = bloodRequestDto.ManagerId;
             if(bloodRequestDto.IsApproved)
