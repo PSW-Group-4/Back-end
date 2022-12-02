@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 
 namespace HospitalLibrary.Core.Service
@@ -13,6 +14,9 @@ namespace HospitalLibrary.Core.Service
         public Doctor getDoctor();
         public List<DateTime> AvailableTerminsForDate(DateTime date);
         public void UpdateDoneAppointments();
+        public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto);
+
+        public List<DateTime> GetAvailableDatesForRelocationOrRenovation(HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange);
 
     }
 }

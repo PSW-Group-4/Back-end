@@ -104,5 +104,48 @@ namespace HospitalLibrary.Core.Service
         {
             throw new NotImplementedException();
         }
+        //Bojana
+        public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)
+        {
+            DateRange dateRange = dto.CheckDateRange(dto.DateRange);
+            dto.Duration = CheckDuration(dto.Duration);
+
+            return GetAvailableDatesForRelocationOrRenovation(dto, dateRange);
+        }
+
+        //Bojana
+        public List<DateTime> GetAvailableDatesForRelocationOrRenovation(HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange)
+
+        {
+            List<Appointment> appointments = (List<Appointment>)GetAll();
+            List<DateTime> result = new List<DateTime>();
+            DateTime start = dateRange.StartTime;
+            do
+            {
+                foreach (Appointment appointment in appointments)
+                {
+                    if (appointment.DateRange.StartTime.AddMinutes(30) > start && (appointment.RoomId.Equals(dto.TargetId) || appointment.RoomId.Equals(dto.SourceId)))
+                    {
+                        if ((start < appointment.DateRange.StartTime.AddMinutes(30)) && (appointment.DateRange.StartTime < start.AddMinutes(dto.Duration)))
+                        {
+                            break;
+                        }
+                        else { if (!result.Contains(start)) { result.Add(start); } }
+                    }
+                }
+                start = dto.DateRange.StartTime.AddMinutes(15);
+            } while (dto.DateRange.EndTime < start); ;
+            return result;
+        }
+
+
+        private int CheckDuration(int duration)
+        {
+            if (duration % 15 != 0)
+            {
+                duration += 15 - duration % 15;
+            }
+            return duration;
+        }
     }
 }
