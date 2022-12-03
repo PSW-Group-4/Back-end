@@ -13,12 +13,12 @@ namespace HospitalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppointmentController : ControllerBase
+    public class MedicalAppointmentController : ControllerBase
     {
         private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IMapper _mapper;
 
-        public AppointmentController(IMedicalAppointmentService medicalAppointmentService,IDoctorService doctorService, IMapper mapper)
+        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService,IDoctorService doctorService, IMapper mapper)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _mapper = mapper;

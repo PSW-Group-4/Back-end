@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 
@@ -10,11 +11,11 @@ namespace HospitalLibrary.Core.Service
 {
     public class AppointmentService : IAppointmentService
     {
-        private readonly IMedicalAppointmentRepository _medicalAppointmentRepository;
+        private readonly IAppointmentRepository _AppointmentRepository;
         private readonly IDoctorService _dctorService;
-        public AppointmentService(IMedicalAppointmentRepository medicalAppointmentRepository, IDoctorService doctorService)
+        public AppointmentService(IAppointmentRepository appointmentRepository, IDoctorService doctorService)
         {
-            _medicalAppointmentRepository = medicalAppointmentRepository;
+            _AppointmentRepository = appointmentRepository;
             _dctorService = doctorService;
         }
         //TODO refactor
@@ -24,7 +25,7 @@ namespace HospitalLibrary.Core.Service
             List<Appointment> appointments = getAll();
             foreach(Appointment appointment in appointments)
             {
-                if (appointment.Schedule.DateTime.Equals(time))
+                if (appointment.DateRange.StartTime.Equals(time))
                     return false;
             }
             return IsDoctorWorkTimeAvailable(time);
@@ -39,9 +40,9 @@ namespace HospitalLibrary.Core.Service
                 return true;
             return false;
         }
-        public List<MedicalAppointment> getAll()
+        public List<Appointment> getAll()
         {
-            return (List<MedicalAppointment>)_medicalAppointmentRepository.GetAll();
+            return (List<Appointment>)_AppointmentRepository.GetAll();
         }
         public Doctor getDoctor()
         {
@@ -57,26 +58,30 @@ namespace HospitalLibrary.Core.Service
         //PETAR
         public List<DateRange> AvailableTerminsForDate(DateTime date)
         {
-            List<DateTime> list = new List<DateTime>();
+            List<DateRange> list = new List<DateRange>();
+            
             DateTime WorkTimeStart = new DateTime(date.Year,date.Month,date.Day, DateTime.Parse(getDoctor().WorkingTimeStart).Hour, DateTime.Parse(getDoctor().WorkingTimeStart).Minute,0);
             DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(getDoctor().WorkingTimeEnd).Hour, DateTime.Parse(getDoctor().WorkingTimeEnd).Minute, 0);
             while (DateTime.Compare(WorkTimeEnd,WorkTimeStart)>0)
             {
-                if(IsAvailable(WorkTimeStart))
-                    list.Add(WorkTimeStart);
+                if (IsAvailable(WorkTimeStart))
+                {
+                    DateRange dateRange = new DateRange(WorkTimeStart, WorkTimeStart.AddMinutes(30));
+                    list.Add(dateRange);
+                }
                 WorkTimeStart = WorkTimeStart.AddMinutes(30);
             }
             return list;
         }
         //PETAR
-        public void UpdateDoneAppointments() 
+        public void CheckIfAppointmentIsDone() 
         {
-            List<MedicalAppointment> appointments = getAll();
-            foreach (MedicalAppointment appointment in appointments)
-                if (!appointment.Schedule.IsDone && (DateTime.Compare(appointment.Schedule.DateTime, DateTime.Now) < 0))
+            List<Appointment> appointments = getAll();
+            foreach (Appointment appointment in appointments)
+                if (!appointment.IsDone && (DateTime.Compare(appointment.DateRange.StartTime, DateTime.Now) < 0))
                 {
-                    appointment.Schedule.IsDone = true;
-                    _medicalAppointmentRepository.Update(appointment);
+                    appointment.IsDone = true;
+                    _AppointmentRepository.Update(appointment);
                 }
         }
 
@@ -147,5 +152,6 @@ namespace HospitalLibrary.Core.Service
             }
             return duration;
         }
+
     }
 }

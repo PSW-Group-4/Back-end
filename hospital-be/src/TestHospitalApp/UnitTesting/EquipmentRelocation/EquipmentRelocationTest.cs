@@ -16,6 +16,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Repository;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Repository;
 
 namespace TestHospitalApp.UnitTesting.EquipmentRelocation
 {
@@ -27,7 +28,7 @@ namespace TestHospitalApp.UnitTesting.EquipmentRelocation
             HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO equipmentRelocation = new HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO(new DateRange(new DateTime(2022, 12, 11, 23, 0, 0), new DateTime(2022, 12, 13, 10, 0, 0)), 37, Guid.Parse("133962ea-c543-497b-81a6-6a2efb54212a"), Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"));
             List<DateTime> result = new List<DateTime>();
             var doctorService = new Mock<IDoctorService>();
-            var mService = new Mock<IMedicalAppointmentRepository>();
+            var mService = new Mock<IAppointmentRepository>();
             var apServ = new Mock<IAppointmentService>();
             AppointmentService service = new AppointmentService(mService.Object, doctorService.Object);
             List<Appointment> appointments = new List<Appointment>();

@@ -82,8 +82,8 @@ namespace HospitalLibrary.Vacations.Service
 
             foreach (MedicalAppointment doctorAppointment in doctorAppointments)
             {
-                if (!((doctorAppointment.Schedule.DateTime<vacation.DateStart && doctorAppointment.Schedule.DateTime < vacation.DateEnd)
-                    || doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateStart && doctorAppointment.Schedule.DateTime.AddMinutes(30)>vacation.DateEnd))
+                if (!((doctorAppointment.DateRange.StartTime<vacation.DateStart && doctorAppointment.DateRange.StartTime < vacation.DateEnd)
+                    || doctorAppointment.DateRange.EndTime > vacation.DateStart && doctorAppointment.DateRange.EndTime > vacation.DateEnd))
                 {
                     canCreateVacation = false;
                     break;
@@ -127,7 +127,7 @@ namespace HospitalLibrary.Vacations.Service
                 IEnumerable<MedicalAppointment> doctorAppointments = _doctorAppointmentService.GetDoctorAppointments(doctor.Id);
                 foreach(MedicalAppointment appointment in doctorAppointments)
                 {
-                    if(appointment.Schedule.DateTime.Date > vacation.DateStart && appointment.Schedule.DateTime.Date < vacation.DateEnd)
+                    if(appointment.DateRange.StartTime.Date > vacation.DateStart && appointment.DateRange.StartTime.Date < vacation.DateEnd)
                     {
                         doctorFound = false;
                         break;
@@ -151,11 +151,11 @@ namespace HospitalLibrary.Vacations.Service
 
             foreach (MedicalAppointment appointment in doctorAppointments)
             {
-                if(appointment.Schedule.DateTime > vacation.DateStart &&
-                    appointment.Schedule.DateTime < vacation.DateEnd)
+                if(appointment.DateRange.StartTime > vacation.DateStart &&
+                    appointment.DateRange.StartTime < vacation.DateEnd)
                 {
                     appointment.DoctorId = availableSwitchDoctor.Id;
-                    appointment.Schedule.RoomId = availableSwitchDoctor.RoomId;
+                    appointment.RoomId = availableSwitchDoctor.RoomId;
                     // updejtuj apojntment
                 }
             }
