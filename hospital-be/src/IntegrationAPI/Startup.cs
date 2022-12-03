@@ -42,6 +42,9 @@ using IntegrationAPI.Communications.Producer;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationAPI.Communications.Consumer.BloodBankNews;
 using IntegrationAPI.Dtos;
+using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
+using HospitalLibrary.BloodSupplies.Model;
+using IntegrationAPI.Communications.Consumer.BankBloodSupply;
 
 namespace IntegrationAPI
 {
@@ -113,6 +116,8 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
             services.AddScoped<IConsumer<News>, NewsConsumer>();
+            services.AddScoped<IConsumer<BloodRequest>, BloodRequestResponseConsumer>();
+            services.AddScoped<IConsumer<BloodSupply>, BloodSupplyConsumer>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IBloodSubscriptionRepository, BloodSubscriptionRepository>();

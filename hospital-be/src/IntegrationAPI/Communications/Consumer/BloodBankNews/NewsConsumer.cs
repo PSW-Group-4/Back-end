@@ -25,8 +25,12 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
 
         public News Consume()
         {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
             var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
-            NewsDto newsDto = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value);
+            NewsDto newsDto = JsonSerializer.Deserialize<NewsDto>(consumer.Message.Value, options);
             News news = _newsConverter.Convert(newsDto);
             return news;
         }

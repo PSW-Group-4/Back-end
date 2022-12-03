@@ -24,8 +24,12 @@ namespace IntegrationAPI.Communications.Consumer.BankBloodSupply
         }
         public BloodSupply Consume()
         {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
             var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
-            BloodSupplyDto dto = JsonSerializer.Deserialize<BloodSupplyDto>(consumer.Message.Value);
+            BloodSupplyDto dto = JsonSerializer.Deserialize<BloodSupplyDto>(consumer.Message.Value, options);
             return _bloodSupplyService.UpdateByType(dto.Type, dto.Amount);
         }
     }

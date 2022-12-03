@@ -14,6 +14,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
         private readonly CancellationTokenSource _cancellationToken;
         private readonly IBloodRequestService _bloodRequestService;
 
+        public BloodRequestResponseConsumer() { }
         public BloodRequestResponseConsumer(IConsumer<Ignore, string> consumerBuilder, CancellationTokenSource cancellationToken, IBloodRequestService bloodRequestService = null)
         {
             _consumerBuilder = consumerBuilder;
@@ -23,8 +24,12 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
 
         public BloodRequest Consume()
         {
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
             var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
-            BloodRequestResponseDto response = JsonSerializer.Deserialize<BloodRequestResponseDto>(consumer.Message.Value);
+            BloodRequestResponseDto response = JsonSerializer.Deserialize<BloodRequestResponseDto>(consumer.Message.Value, options);
             BloodRequest request = _bloodRequestService.GetById(response.RequestId);
             request.Status = (BloodRequestStatus) Enum.Parse(typeof(BloodRequestStatus), response.Status);
             return request;
