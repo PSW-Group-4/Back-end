@@ -2,12 +2,14 @@
 using IntegrationLibrary.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace IntegrationLibrary.BloodSubscriptions
 {
+    [Table("blood_subscriptions")]
     public class BloodSubscription : Entity
     {
         public List<BloodProduct> BloodProducts 

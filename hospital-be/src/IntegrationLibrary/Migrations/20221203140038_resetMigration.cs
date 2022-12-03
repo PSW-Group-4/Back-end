@@ -15,6 +15,10 @@ namespace IntegrationLibrary.Migrations
             migrationBuilder.Sql("DROP TABLE IF EXISTS blood_banks CASCADE");
             migrationBuilder.Sql("DROP TABLE IF EXISTS tenders CASCADE");
             migrationBuilder.Sql("DROP TABLE IF EXISTS TenderApplications CASCADE");
+            migrationBuilder.Sql("DROP TABLE IF EXISTS BloodSubscriptions CASCADE");
+            migrationBuilder.Sql("DROP TABLE IF EXISTS tender_applications CASCADE");
+            migrationBuilder.Sql("DROP TABLE IF EXISTS blood_subscriptions CASCADE");
+
             migrationBuilder.CreateTable(
                 name: "blood_banks",
                 columns: table => new
@@ -32,27 +36,6 @@ namespace IntegrationLibrary.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "blood_requests",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    DoctorId = table.Column<string>(type: "text", nullable: true),
-                    BloodGroup = table.Column<int>(type: "integer", maxLength: 1, nullable: true),
-                    RhFactor = table.Column<int>(type: "integer", maxLength: 10, nullable: true),
-                    ReasonsWhyBloodIsNeeded = table.Column<string>(type: "text", nullable: true),
-                    BloodAmountInMilliliters = table.Column<double>(type: "double precision", nullable: false),
-                    IsApproved = table.Column<bool>(type: "boolean", nullable: false),
-                    RejectionComment = table.Column<string>(type: "text", nullable: true),
-                    ManagerId = table.Column<string>(type: "text", nullable: true),
-                    DateTime = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    IsUrgent = table.Column<bool>(type: "boolean", nullable: false),
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_blood_requests", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "blood_usage",
                 columns: table => new
                 {
@@ -65,6 +48,24 @@ namespace IntegrationLibrary.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_blood_usage", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BloodSubscription",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    BloodProducts = table.Column<string>(type: "text", nullable: true),
+                    BloodBankName = table.Column<string>(type: "text", nullable: true),
+                    ActiveStatus = table.Column<bool>(type: "boolean", nullable: false),
+                    Urgent = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Version = table.Column<double>(type: "double precision", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BloodSubscription", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -120,6 +121,34 @@ namespace IntegrationLibrary.Migrations
                     table.PrimaryKey("PK_blood_banks_config", x => x.Id);
                     table.ForeignKey(
                         name: "FK_blood_banks_config_blood_banks_BloodBankId",
+                        column: x => x.BloodBankId,
+                        principalTable: "blood_banks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "blood_requests",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    DoctorId = table.Column<string>(type: "text", nullable: true),
+                    Reasons = table.Column<string>(type: "text", nullable: true),
+                    BloodProduct_BloodType = table.Column<string>(type: "text", nullable: true),
+                    BloodProduct_Amount = table.Column<double>(type: "double precision", nullable: true),
+                    IsApproved = table.Column<bool>(type: "boolean", nullable: false),
+                    RejectionComment = table.Column<string>(type: "text", nullable: true),
+                    ManagerId = table.Column<string>(type: "text", nullable: true),
+                    SendOnDate = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    IsUrgent = table.Column<bool>(type: "boolean", nullable: false),
+                    Status = table.Column<int>(type: "integer", nullable: false),
+                    BloodBankId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_blood_requests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_blood_requests_blood_banks_BloodBankId",
                         column: x => x.BloodBankId,
                         principalTable: "blood_banks",
                         principalColumn: "Id",
@@ -189,6 +218,11 @@ namespace IntegrationLibrary.Migrations
                 column: "BloodBankId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_blood_requests_BloodBankId",
+                table: "blood_requests",
+                column: "BloodBankId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_blood_usage_report_BloodBankId",
                 table: "blood_usage_report",
                 column: "BloodBankId");
@@ -222,6 +256,9 @@ namespace IntegrationLibrary.Migrations
 
             migrationBuilder.DropTable(
                 name: "blood_usage_report");
+
+            migrationBuilder.DropTable(
+                name: "BloodSubscription");
 
             migrationBuilder.DropTable(
                 name: "TenderApplications");
