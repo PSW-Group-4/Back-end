@@ -12,11 +12,11 @@ namespace IntegrationLibrary.BloodSubscriptions
     [Table("blood_subscriptions")]
     public class BloodSubscription : Entity
     {
-        public List<BloodProduct> BloodProducts 
+        public List<Blood> Blood
         {
             get
             {
-                return new List<BloodProduct>(this.BloodProducts);
+                return new List<Blood>(this.Blood);
             }
             private set { }
         }
@@ -25,37 +25,37 @@ namespace IntegrationLibrary.BloodSubscriptions
         public bool Urgent { get; private set; }
         public BloodSubscription()
         {
-            BloodProducts = new List<BloodProduct>();
+            Blood = new List<Blood>();
         }
         public BloodSubscription(string bloodBankName)
         {
             Id = Guid.NewGuid();
             BloodBankName = bloodBankName;
-            BloodProducts = new List<BloodProduct>();
+            Blood = new List<Blood>();
         }
 
-        public void AddBloodType(BloodProduct type)
+        public void AddBloodType(Blood type)
         {
-            this.BloodProducts.Add(type);
+            this.Blood.Add(type);
         }
-        public void AddBloodType(List<BloodProduct> types) 
+        public void AddBloodType(List<Blood> types) 
         {
-            foreach(BloodProduct type in types)
+            foreach(Blood type in types)
             {
-               this.BloodProducts.Add(type);
+               this.Blood.Add(type);
             }
         }
-        public void RemoveBloodType(BloodProduct type)
+        public void RemoveBloodType(Blood type)
         {
             this.ValidateListLenght();
-            this.BloodProducts.Remove(type);
+            this.Blood.Remove(type);
         }
-        public void RemoveBloodType(List<BloodProduct> types) 
+        public void RemoveBloodType(List<Blood> types) 
         {
             this.ValidateListLenght();
             foreach (var type in types)
             {
-                this.BloodProducts.Remove(type);
+                this.Blood.Remove(type);
             }
         }
 
@@ -71,7 +71,7 @@ namespace IntegrationLibrary.BloodSubscriptions
 
         private void ValidateListLenght()
         {
-            if (this.BloodProducts.Count == 0)
+            if (this.Blood.Count == 0)
             {
                 throw new InvalidValueException();
             }

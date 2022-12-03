@@ -1,19 +1,17 @@
-﻿using Confluent.Kafka;
-using IntegrationLibrary.BloodRequests.Model;
-using System;
+﻿using System;
+using Confluent.Kafka;
 
 namespace IntegrationAPI.Communications.Producer
 {
-    public class BloodRequestProducer : IProducer<BloodRequest>
+    public class Producer : IProducer
     {
         private readonly ProducerConfig config = new ProducerConfig
-        { BootstrapServers = "localhost:9094" };
-        private readonly string topic = "blood.requests.topic";
+            { BootstrapServers = "localhost:9094" };
 
-        public void Send(string message)
+        public void Send(string message, string topic)
         {
             var producer =
-                 new ProducerBuilder<Null, string>(config).Build();
+                new ProducerBuilder<Null, string>(config).Build();
             try
             {
                 producer.ProduceAsync(topic, new Message<Null, string> { Value = message })

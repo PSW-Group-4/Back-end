@@ -1,29 +1,28 @@
-﻿using Confluent.Kafka;
+﻿using System;
+using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Confluent.Kafka;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BloodSupplies.Service;
-using IntegrationAPI.Communications.Consumer.ReceivedBlood;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Threading;
-using System;
-using IntegrationLibrary.BloodRequests.Service;
-using IntegrationLibrary.BloodRequests.Model;
 
-namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
+namespace HospitalAPI.Communications
 {
-    public class BloodRequestResponseListener : IHostedService
+    public class BloodSupplyStateListener: IHostedService
     {
-        private readonly string topic = "blood.requests.responses.topic";
-        private readonly string groupId = "bloodRequestResponses";
+        private readonly string topic = "hospital.blood.supply.topic";
+        private readonly string groupId = "hospitalBlood";
         private readonly string bootstrapServers = "localhost:9094";
         public IServiceScopeFactory _serviceScopeFactory;
 
-        public BloodRequestResponseListener(IServiceScopeFactory serviceScopeFactory)
+        public BloodSupplyStateListener(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
+
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
             var config = new ConsumerConfig
@@ -37,18 +36,18 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    IBloodRequestService bloodRequestService = scope.ServiceProvider.GetRequiredService<IBloodRequestService>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
                         consumerBuilder.Subscribe(topic);
+                        IBloodSupplyService bloodSupplyService = scope.ServiceProvider.GetRequiredService<IBloodSupplyService>();
                         CancellationTokenSource cancelToken = new CancellationTokenSource();
-                        BloodRequestResponseConsumer consumer = new BloodRequestResponseConsumer(consumerBuilder, cancelToken, bloodRequestService);
+                        BloodSupplyStateConsumer bloodSupplyConsumer = new(consumerBuilder, cancelToken, bloodSupplyService);
                         try
                         {
                             while (true)
                             {
-                                BloodRequest response = consumer.Consume();
-                                bloodRequestService.Update(response);
+                                BloodSupply bloodSupply = bloodSupplyConsumer.Consume();
+                                Console.WriteLine("Hospital received blood!");
                             }
                         }
                         catch (OperationCanceledException)
@@ -70,4 +69,5 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
             return Task.CompletedTask;
         }
     }
+
 }

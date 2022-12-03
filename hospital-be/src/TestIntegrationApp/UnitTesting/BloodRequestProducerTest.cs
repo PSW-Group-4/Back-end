@@ -13,9 +13,9 @@ namespace TestIntegrationApp.UnitTesting
         [Fact]
         public void Kafka_Is_Up_And_Message_Is_Sent()
         {
-            BloodRequestProducer producer = new();
+            Producer producer = new();
 
-            var exception = Record.Exception(() => producer.Send("Hello!"));
+            var exception = Record.Exception(() => producer.Send("Hello!", "random.topic"));
 
             Assert.Null(exception);
         }

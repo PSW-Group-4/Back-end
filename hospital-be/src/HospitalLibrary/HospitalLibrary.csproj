@@ -1,42 +1,42 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="iTextSharp" Version="5.5.13.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17" />
-    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.14" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0"/>
+        <PackageReference Include="iTextSharp" Version="5.5.13.3"/>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17"/>
+        <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="6.0.10"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.14"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.17">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10"/>
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Allergies\Service\" />
-    <Folder Include="Constants\" />
-    <Folder Include="GraphicalEditor\Model\" />
-    <Folder Include="GraphicalEditor\Service\" />
-    <Folder Include="GraphicalEditor\Repository\" />
-    <Folder Include="MedicalRecords\Model\" />
-    <Folder Include="MedicalRecords\Service\" />
-    <Folder Include="MedicalRecords\Repository\" />
-    <Folder Include="Settings\Configurations\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Allergies\Service\"/>
+        <Folder Include="Constants\"/>
+        <Folder Include="GraphicalEditor\Model\"/>
+        <Folder Include="GraphicalEditor\Service\"/>
+        <Folder Include="GraphicalEditor\Repository\"/>
+        <Folder Include="MedicalRecords\Model\"/>
+        <Folder Include="MedicalRecords\Service\"/>
+        <Folder Include="MedicalRecords\Repository\"/>
+        <Folder Include="Settings\Configurations\"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj"/>
+    </ItemGroup>
 
 </Project>

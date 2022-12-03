@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.Common
 {
-    public class BloodProduct
+    public class Blood
     {
         [JsonInclude]
         public BloodType BloodType { get; private set; }
@@ -17,29 +17,29 @@ namespace IntegrationLibrary.Common
         [JsonInclude]
         public double Amount { get; private set; }
 
-        public BloodProduct(BloodType bloodType, double amount)
+        public Blood(BloodType bloodType, double amount)
         {
             BloodType = bloodType;
             Amount = amount;
         }
 
-        public BloodProduct(BloodGroup bloodGroup, RHFactor rhFactor, double amount)
+        public Blood(BloodGroup bloodGroup, RHFactor rhFactor, double amount)
         {
             BloodType = new BloodType(bloodGroup, rhFactor);
             Amount = amount;
         }
 
-        public BloodProduct() { }
+        public Blood() { }
 
         public override string ToString()
         {
             return BloodType.ToString() + "," + Amount;
         }
 
-        public static BloodProduct FromString(String input)
+        public static Blood FromString(String input)
         {
             var splitted = input.Split(',');
-            return new BloodProduct(BloodType.FromString(splitted[0]), Double.Parse(splitted[1]));
+            return new Blood(BloodType.FromString(splitted[0]), Double.Parse(splitted[1]));
         }
     }
 }

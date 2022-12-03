@@ -1,11 +1,11 @@
-using HospitalLibrary.BloodSupplies.Service;
-using Microsoft.AspNetCore.Mvc;
 using System;
-using HospitalLibrary.Exceptions;
-using HospitalAPI.Dtos.BloodSupply;
 using AutoMapper;
+using HospitalAPI.Dtos.BloodSupply;
 using HospitalLibrary.BloodSupplies.Model;
+using HospitalLibrary.BloodSupplies.Service;
+using HospitalLibrary.Exceptions;
 using IntegrationLibrary.Common;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
@@ -66,7 +66,7 @@ namespace HospitalAPI.Controllers
             BloodSupply bloodSupply = new()
             {
                 Id = id,
-                BloodType = BloodType.FromString(bloodSupplyDto.Type),
+                BloodType = BloodType.FromString(bloodSupplyDto.BloodType),
                 Amount = bloodSupplyDto.Amount
             };
 

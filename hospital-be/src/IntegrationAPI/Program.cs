@@ -1,5 +1,5 @@
 using HospitalLibrary.BloodSupplies.Model;
-using IntegrationAPI.Communications.Consumer.BankBloodSupply;
+using IntegrationAPI.Communications.Consumer.ReceivedBlood;
 using IntegrationAPI.Communications.Consumer.BloodBankNews;
 using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
 using Microsoft.AspNetCore.Hosting;
@@ -25,7 +25,7 @@ namespace IntegrationAPI
                 {
                     services.AddHostedService<NewsListener>();
                     services.AddHostedService<BloodRequestResponseListener>();
-                    services.AddHostedService<BloodSupplyListener>();
+                    services.AddHostedService<BloodListener>();
                 });
     }
 }

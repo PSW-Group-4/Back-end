@@ -7,20 +7,24 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
+using System.Text.Json;
 using Microsoft.Extensions.Hosting;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BloodSupplies.Service;
+using IntegrationAPI.Communications.Producer;
+using IntegrationAPI.Dtos.BloodSupplies;
+using IntegrationLibrary.Common;
 
-namespace IntegrationAPI.Communications.Consumer.BankBloodSupply
+namespace IntegrationAPI.Communications.Consumer.ReceivedBlood
 {
-    public class BloodSupplyListener : IHostedService
+    public class BloodListener : IHostedService
     {
-        private readonly string topic = "blood.supply.topic";
-        private readonly string groupId = "bloodSupplies";
+        private readonly string topic = "requested.blood.topic";
+        private readonly string groupId = "requestedBlood";
         private readonly string bootstrapServers = "localhost:9094";
         public IServiceScopeFactory _serviceScopeFactory;
 
-        public BloodSupplyListener(IServiceScopeFactory serviceScopeFactory)
+        public BloodListener(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
@@ -39,17 +43,18 @@ namespace IntegrationAPI.Communications.Consumer.BankBloodSupply
             {
                 using (var scope = _serviceScopeFactory.CreateScope())
                 {
-                    IBloodSupplyService bloodSupplyService = scope.ServiceProvider.GetRequiredService<IBloodSupplyService>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
+                        IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
                         consumerBuilder.Subscribe(topic);
                         CancellationTokenSource cancelToken = new CancellationTokenSource();
-                        BloodSupplyConsumer bloodSupplyConsumer = new(consumerBuilder, cancelToken, bloodSupplyService);
+                        BloodConsumer bloodConsumer = new(consumerBuilder, cancelToken, producer);
                         try
                         {
                             while (true)
                             {
-                                BloodSupply bloodSupply = bloodSupplyConsumer.Consume();
+                                Blood receivedBlood = bloodConsumer.Consume();
+                                Console.WriteLine("Received blood!");
                             }
                         }
                         catch (OperationCanceledException)

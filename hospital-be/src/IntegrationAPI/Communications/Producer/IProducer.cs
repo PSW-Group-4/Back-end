@@ -1,7 +1,7 @@
 ﻿namespace IntegrationAPI.Communications.Producer
 {
-    public interface IProducer<Entity>
+    public interface IProducer
     {
-        void Send(string message);
+        void Send(string message, string topic);
     }
 }

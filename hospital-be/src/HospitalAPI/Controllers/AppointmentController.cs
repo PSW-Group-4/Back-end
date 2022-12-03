@@ -1,14 +1,11 @@
-using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.Appointments.Service;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using AutoMapper;
-using HospitalLibrary;
-using HospitalLibrary.SchedulingAppointment.Service;
-using HospitalLibrary.Doctors.Service;
-using System.Collections.Generic;
 using HospitalAPI.Dtos.Appointment;
+using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
@@ -19,7 +16,8 @@ namespace HospitalAPI.Controllers
         private readonly IAppointmentService _appointmentService;
         private readonly IMapper _mapper;
 
-        public AppointmentController(IAppointmentService appointmentService,IDoctorService doctorService, IMapper mapper)
+        public AppointmentController(IAppointmentService appointmentService, IDoctorService doctorService,
+            IMapper mapper)
         {
             _appointmentService = appointmentService;
             _mapper = mapper;
@@ -28,7 +26,7 @@ namespace HospitalAPI.Controllers
         // GET: api/Appointment
         [HttpGet]
         public ActionResult GetAll()
-        { 
+        {
             return Ok(_appointmentService.GetAll());
         }
 

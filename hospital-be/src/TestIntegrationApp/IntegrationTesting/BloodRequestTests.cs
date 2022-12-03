@@ -38,7 +38,9 @@ namespace TestIntegrationApp.IntegrationTesting
         }
         private static BloodRequestController SetupController(IServiceScope scope)
         {
-            return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(), scope.ServiceProvider.GetRequiredService<IBloodBankService>(), scope.ServiceProvider.GetRequiredService<IProducer<BloodRequest>>());
+            return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(),
+                scope.ServiceProvider.GetRequiredService<IBloodBankService>(),
+                scope.ServiceProvider.GetRequiredService<IProducer>());
         }
 
         [Fact]
@@ -47,10 +49,10 @@ namespace TestIntegrationApp.IntegrationTesting
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             BloodTypeDto bloodTypeDto = new BloodTypeDto("A", "POSITIVE");
-            BloodProductDto bloodProductDto = new BloodProductDto(bloodTypeDto, 1000);
+            BloodDto bloodDto = new BloodDto(bloodTypeDto, 1000);
             BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
             {
-                BloodProduct = bloodProductDto,
+                BloodDto = bloodDto,
                 Reasons = "Reason",
                 IsUrgent = true,
                 SendOnDate = DateTime.UtcNow
@@ -92,10 +94,10 @@ namespace TestIntegrationApp.IntegrationTesting
             var controller = SetupController(scope);
             var service = SetupService(scope);
             BloodTypeDto bloodTypeDto = new("A", "POSITIVE");
-            BloodProductDto bloodProductDto = new(bloodTypeDto, 1000);
+            BloodDto bloodDto = new(bloodTypeDto, 1000);
             BloodRequestsCreateDto bloodRequest = new()
             {
-                BloodProduct = bloodProductDto,
+                BloodDto = bloodDto,
                 Reasons = "Reason",
                 IsUrgent = true,
                 SendOnDate = DateTime.UtcNow

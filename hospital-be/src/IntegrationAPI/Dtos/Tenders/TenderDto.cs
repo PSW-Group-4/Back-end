@@ -8,7 +8,7 @@ namespace IntegrationAPI.Dtos.Tenders
 {
     public class TenderDto
     {
-        public IEnumerable<BloodProductDto> BloodProducts { get; set; }
+        public IEnumerable<BloodDto> BloodProducts { get; set; }
         public String Deadline { get; set; }
     }
 }

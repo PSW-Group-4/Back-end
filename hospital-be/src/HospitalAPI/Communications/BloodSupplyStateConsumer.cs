@@ -1,22 +1,21 @@
-﻿using Confluent.Kafka;
+﻿using System.Text.Json;
+using System.Threading;
+using Confluent.Kafka;
+using HospitalAPI.Communications.Consumer;
 using HospitalAPI.Dtos.BloodSupply;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BloodSupplies.Service;
-using IntegrationAPI.Dtos.BloodBankNews;
-using IntegrationLibrary.BloodBankNews.Model;
-using System.Text.Json;
-using System.Threading;
 
-namespace IntegrationAPI.Communications.Consumer.BankBloodSupply
+namespace HospitalAPI.Communications
 {
-    public class BloodSupplyConsumer : IConsumer<BloodSupply>
+    public class BloodSupplyStateConsumer : IConsumer<BloodSupply>
     {
         private readonly IConsumer<Ignore, string> _consumerBuilder;
         private readonly CancellationTokenSource _cancellationToken;
         private readonly IBloodSupplyService _bloodSupplyService;
-        public BloodSupplyConsumer() { }
+        public BloodSupplyStateConsumer() { }
 
-        public BloodSupplyConsumer(IConsumer<Ignore, string> consumerBuilder, CancellationTokenSource cancellationToken, IBloodSupplyService bloodSupplyService)
+        public BloodSupplyStateConsumer(Confluent.Kafka.IConsumer<Ignore, string> consumerBuilder, CancellationTokenSource cancellationToken, IBloodSupplyService bloodSupplyService)
         {
             _consumerBuilder = consumerBuilder;
             _cancellationToken = cancellationToken;
@@ -30,7 +29,7 @@ namespace IntegrationAPI.Communications.Consumer.BankBloodSupply
             };
             var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
             BloodSupplyDto dto = JsonSerializer.Deserialize<BloodSupplyDto>(consumer.Message.Value, options);
-            return _bloodSupplyService.UpdateByType(dto.Type, dto.Amount);
+            return _bloodSupplyService.UpdateByType(dto.BloodType, dto.Amount);
         }
     }
 }

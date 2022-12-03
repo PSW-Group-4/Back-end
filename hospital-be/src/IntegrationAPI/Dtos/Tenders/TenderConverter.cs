@@ -34,8 +34,8 @@ namespace IntegrationAPI.Dtos.Tenders
             {
                 deadline = null;
             }
-            IEnumerable<BloodProduct> bloodProducts = dto.BloodProducts.Select
-                (dto => new BloodProduct(
+            IEnumerable<Blood> bloodProducts = dto.BloodProducts.Select
+                (dto => new Blood(
                     BloodTypeConverter.Convert(dto.BloodType),
                     dto.Amount));;
             return Tender.Create(bloodProducts,

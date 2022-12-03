@@ -114,6 +114,13 @@ namespace HospitalLibrary.Settings
 
             modelBuilder
              .Entity<Patient>()
+             .OwnsOne(bloodSupply => bloodSupply.BloodType, bloodType =>
+             {
+                 bloodType.Property(prop => prop.BloodGroup).HasMaxLength(1)
+                     .HasColumnName("BloodGroup");
+                 bloodType.Property(prop => prop.RHFactor).HasMaxLength(10)
+                     .HasColumnName("RhFactor");
+             })
              .HasMany(p => p.Allergies)
              .WithMany(a => a.Patients)
              .UsingEntity(j => j.ToTable("PatientAllergies"));
@@ -121,6 +128,15 @@ namespace HospitalLibrary.Settings
             modelBuilder.Entity<User>()
                 .Ignore(u => u.SuspiciousActivities)  
                 .Property("_suspiciousActivities");
+            
+            modelBuilder.Entity<BloodSupply>()
+                .OwnsOne(bloodSupply => bloodSupply.BloodType, bloodType =>
+                {
+                    bloodType.Property(prop => prop.BloodGroup).HasMaxLength(1)
+                        .HasColumnName("BloodGroup");
+                    bloodType.Property(prop => prop.RHFactor).HasMaxLength(10)
+                        .HasColumnName("RhFactor");
+                });
 
         }
     }

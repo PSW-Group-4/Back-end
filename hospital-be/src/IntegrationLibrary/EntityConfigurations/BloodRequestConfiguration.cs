@@ -15,7 +15,7 @@ namespace IntegrationLibrary.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<BloodRequest> builder)
         {
-            builder.OwnsOne(request => request.BloodProduct, a =>
+            builder.OwnsOne(request => request.Blood, a =>
             {
                 a.Property(blood => blood.BloodType).HasConversion(
                 bloodType => JsonSerializer.Serialize(bloodType, (JsonSerializerOptions)null),

@@ -23,10 +23,10 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IBloodRequestService _service;
         private readonly IMapper _mapper;
-        private readonly IProducer<BloodRequest> bloodRequestProducer;
+        private readonly IProducer bloodRequestProducer;
         private readonly IBloodBankService bloodBankService;
 
-        public BloodRequestController(IBloodRequestService service, IBloodBankService bloodBankService, IProducer<BloodRequest> bloodRequestProducer)
+        public BloodRequestController(IBloodRequestService service, IBloodBankService bloodBankService, IProducer bloodRequestProducer)
         {
             _service = service;
             this.bloodBankService = bloodBankService;
@@ -55,8 +55,8 @@ namespace IntegrationAPI.Controllers
             if(bloodRequestDto.IsApproved)
             {
                 bloodRequest.BloodBank = bloodBankService.GetByName(bloodRequestDto.BloodBank);
-                BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.BloodProduct.BloodType.ToString(), bloodRequest.BloodProduct.Amount, bloodRequest.SendOnDate, bloodRequest.BloodBank.Name, bloodRequest.IsUrgent);
-                bloodRequestProducer.Send(JsonSerializer.Serialize(messageDto));
+                BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.Blood.BloodType.ToString(), bloodRequest.Blood.Amount, bloodRequest.SendOnDate, bloodRequest.BloodBank.Name, bloodRequest.IsUrgent);
+                bloodRequestProducer.Send(JsonSerializer.Serialize(messageDto), "blood.requests.topic");
             } else
             {
                 bloodRequest.RejectionComment = bloodRequestDto.RejectionComment;
@@ -69,7 +69,7 @@ namespace IntegrationAPI.Controllers
         {
             BloodRequest bloodRequest = new()
             {
-                BloodProduct = BloodProductConverter.Convert(bloodRequestDto.BloodProduct),
+                Blood = BloodConverter.Convert(bloodRequestDto.BloodDto),
                 DoctorId = bloodRequestDto.DoctorId,
                 Reasons = bloodRequestDto.Reasons,
                 IsUrgent = bloodRequestDto.IsUrgent,

@@ -43,9 +43,9 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             using var scope = Factory.Services.CreateScope();
             TenderController tenderController = SetupController(scope);
-            List<BloodProductDto> bloodProductDtos = new()
+            List<BloodDto> bloodProductDtos = new()
             {
-                new BloodProductDto(new BloodTypeDto("A", "POSITIVE"), 5000)
+                new BloodDto(new BloodTypeDto("A", "POSITIVE"), 5000)
             };
 
             TenderDto tenderDto = new()
