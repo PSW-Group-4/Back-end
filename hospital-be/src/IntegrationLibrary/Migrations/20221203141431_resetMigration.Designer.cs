@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221203140038_resetMigration")]
+    [Migration("20221203141431_resetMigration")]
     partial class resetMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -210,7 +210,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BloodSubscription");
+                    b.ToTable("blood_subscriptions");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
@@ -234,7 +234,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("TenderId");
 
-                    b.ToTable("TenderApplications");
+                    b.ToTable("tender_applications");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Tenders.Model.Tender", b =>

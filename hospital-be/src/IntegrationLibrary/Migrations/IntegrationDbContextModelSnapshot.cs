@@ -208,7 +208,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("BloodSubscription");
+                    b.ToTable("blood_subscriptions");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
@@ -232,7 +232,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("TenderId");
 
-                    b.ToTable("TenderApplications");
+                    b.ToTable("tender_applications");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Tenders.Model.Tender", b =>
