@@ -65,6 +65,16 @@ namespace TestIntegrationApp.UnitTesting.BloodTypeVOTests
             var result = a_pos == typeFromString;
             result.ShouldBe(true);
         }
+
+        [Fact]
+        public void Checks_String_Cast_True_2()
+        {
+            string type = "AB-";
+            BloodType typeFromString = BloodType.FromString(type);
+            BloodType ab_neg = new(BloodGroup.AB, RHFactor.NEGATIVE);
+            var result = ab_neg == typeFromString;
+            result.ShouldBe(true);
+        }
         [Fact]
         public void Checks_String_Cast_False()
         {
@@ -77,7 +87,7 @@ namespace TestIntegrationApp.UnitTesting.BloodTypeVOTests
         {
             string type = "AAAAA";
             BloodType typeFromString;
-            Assert.Throws<IndexOutOfRangeException>(() => typeFromString = BloodType.FromString(type));
+            Assert.Throws<EnumToStringCastException>(() => typeFromString = BloodType.FromString(type));
         }
     }
 }
