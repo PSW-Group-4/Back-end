@@ -1,9 +1,10 @@
-﻿using IntegrationAPI.Communications;
+﻿using IntegrationAPI.Communications.Pdf;
 using IntegrationLibrary.BloodReport.Service;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using IntegrationLibrary.BloodReport.Model;
 
 namespace IntegrationAPI.HostedServices
 {
@@ -25,7 +26,7 @@ namespace IntegrationAPI.HostedServices
             //var retVal = _reportService.Create("32db7839-f8a4-4c8b-9486-80f783ed6746");
             //PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, retVal.ReportPath);
             var retVal = _reportService.CreateAllTimeElapsed();
-            foreach(var report in retVal)
+            foreach(ReportPathTransporter report in retVal)
             {
                 PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, report.ReportPath);
             }

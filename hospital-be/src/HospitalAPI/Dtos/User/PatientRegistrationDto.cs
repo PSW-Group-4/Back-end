@@ -1,9 +1,6 @@
 ﻿using HospitalAPI.Dtos.Address;
-using HospitalAPI.Dtos.Patient;
-using HospitalAPI.Dtos.Person;
-using HospitalLibrary.Allergies;
 using HospitalLibrary.Core.Model;
-using HospitalLibrary.Patients.Model;
+using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 

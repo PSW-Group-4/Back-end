@@ -38,14 +38,14 @@ namespace IntegrationLibrary.BloodBanks.Service
             bloodBank.Password = generatedPassword;
             return _repository.Create(bloodBank);
         }
-        public BloodBank GetByApiKey(String ApiKey) {
+        public BloodBank GetByApiKey(string ApiKey) {
             return _repository.GetByApiKey(ApiKey);
         }
         public BloodBank Update(BloodBank bloodBank) {
             bloodBank.Password = _passwordHandler.Hash(bloodBank, bloodBank.Password);
             return _repository.Update(bloodBank);
         }
-        public BloodBank GetByName(String name)
+        public BloodBank GetByName(string name)
         {
             return _repository.GetByName(name);
         }

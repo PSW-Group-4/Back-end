@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
-using HospitalAPI.Dtos.Allergies;
 using HospitalLibrary.Allergies.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers
 {
@@ -11,8 +8,8 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class AllergieController : ControllerBase
     {
-        private readonly IMapper _mapper;
         private readonly IAllergieService _allergieService;
+        private readonly IMapper _mapper;
 
         public AllergieController(IMapper mapper, IAllergieService allergieService)
         {

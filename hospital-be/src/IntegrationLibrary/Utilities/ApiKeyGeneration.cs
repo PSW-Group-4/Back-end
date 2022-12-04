@@ -9,9 +9,9 @@ namespace IntegrationLibrary.Utilities
 {
     public class ApiKeyGeneration
     {
-        public static String generateKey()
+        public static string generateKey()
         {
-            String keyString;
+            string keyString;
             var key = new byte[32];
             using (var generator = RandomNumberGenerator.Create())
                 generator.GetBytes(key);

@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Common;
+﻿using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,13 +14,24 @@ namespace IntegrationLibrary.BloodRequests.Model
     public class BloodRequest
     {
         public Guid Id { get; set; }
-        public String DoctorId { get; set; }
-        public virtual BloodType BloodType { get; set; }
-        public String ReasonsWhyBloodIsNeeded { get; set; }
-        public double BloodAmountInMilliliters { get; set; }
-        public Boolean IsApproved { get; set; }
-        public String RejectionComment { get; set; }
-        public String ManagerId { get; set; }
-        public DateTime DateTime { get; set; }
+        public string DoctorId { get; set; }
+        public string Reasons { get; set; }
+        public virtual Blood Blood { get; set; }
+        public bool IsApproved { get; set; }
+        public string RejectionComment { get; set; }
+        public string ManagerId { get; set; }
+        public DateTime SendOnDate { get; set; }
+        public bool IsUrgent { get; set; }
+        public BloodRequestStatus Status { get; set; }
+        public virtual BloodBank BloodBank { get; set; }
+    }
+
+    public enum BloodRequestStatus
+    {
+        PENDING_RESPONSE,
+        APPROVED_BY_BANK,
+        REJECTED_BY_BANK,
+        FAILED,
+        FULFILLED
     }
 }

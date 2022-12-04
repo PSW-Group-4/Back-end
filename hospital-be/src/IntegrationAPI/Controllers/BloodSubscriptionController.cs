@@ -1,8 +1,8 @@
 ﻿using IntegrationAPI.Authorization;
-using IntegrationLibrary.BloodSubscriptions;
-using IntegrationLibrary.BloodSubscriptions.Service;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using IntegrationLibrary.BloodSubscriptions.Service;
+using IntegrationLibrary.BloodSubscriptions;
 
 namespace IntegrationAPI.Controllers
 {

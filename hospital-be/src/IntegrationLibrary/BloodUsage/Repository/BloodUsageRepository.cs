@@ -37,7 +37,7 @@ namespace IntegrationLibrary.BloodReport.Repository
                     bType = group.Type,
                 }).Select(select => new BloodUsageDto
                 {
-                    BloodType = new BloodType(select.Key.bType.BloodGroup, select.Key.bType.RHFactor),
+                    BloodType = new BloodType(select.Key.bType.BloodGroup, select.Key.bType.RhFactor),
                     Milliliters = select.Sum(ml => ml.Milliliters)
                 }).ToList();    
         } 

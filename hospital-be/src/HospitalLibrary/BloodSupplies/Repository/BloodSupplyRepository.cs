@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.BloodSupplies.Repository;
 using HospitalLibrary.Exceptions;
+using IntegrationLibrary.Common;
 
 namespace HospitalLibrary.BloodSupplies.Repository
 {
@@ -58,6 +59,26 @@ namespace HospitalLibrary.BloodSupplies.Repository
             var bloodSupply = GetById(bloodSupplyId);
             _context.BloodSupply.Remove(bloodSupply);
             _context.SaveChanges();
+        }
+
+        public BloodSupply GetByType(BloodType bloodType)
+        {
+            /*List<BloodSupply> bloodSupplies = _context.BloodSupply.ToList();
+            for (int i = 0; i < _context.BloodSupply.ToList().Count; i++)
+            {
+                if (bloodSupplies[i].BloodType.ToString().Equals(bloodType.ToString()))
+                {
+                    return bloodSupplies[i];
+                }
+            }
+            return null;
+            */
+
+            return _context.BloodSupply.Where(bloodSupply =>
+                bloodSupply.BloodType.BloodGroup.Equals(bloodType.BloodGroup) &&
+                bloodSupply.BloodType.RhFactor.Equals(bloodType.RhFactor)).First();
+
+            return null;
         }
     }
 }

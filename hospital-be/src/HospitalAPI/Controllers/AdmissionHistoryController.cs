@@ -1,13 +1,11 @@
-﻿using AutoMapper;
-using HospitalAPI.Dtos.Admission;
+﻿using System;
+using AutoMapper;
 using HospitalAPI.Dtos.AdmissionHistory;
 using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.AdmissionHistories.Service;
-using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.Admissions.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -16,10 +14,11 @@ namespace HospitalAPI.Controllers
     public class AdmissionHistoryController : ControllerBase
     {
         private readonly IAdmissionHistoryService _admissionService;
-        private readonly IAdmissionService service;
         private readonly IMapper _mapper;
+        private readonly IAdmissionService service;
 
-        public AdmissionHistoryController(IAdmissionHistoryService admissionService, IMapper mapper, IAdmissionService service)
+        public AdmissionHistoryController(IAdmissionHistoryService admissionService, IMapper mapper,
+            IAdmissionService service)
         {
             _admissionService = admissionService;
             _mapper = mapper;
@@ -60,7 +59,7 @@ namespace HospitalAPI.Controllers
                 _admissionService.Create(admission);
                 return CreatedAtAction("GetById", new { id = admission.Id }, admission);
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return null;
             }

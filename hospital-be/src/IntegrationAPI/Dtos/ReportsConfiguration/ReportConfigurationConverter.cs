@@ -14,7 +14,7 @@ namespace IntegrationAPI.Dtos.ReportsConfiguration
         }
         public ReportConfigurationDto Convert(ReportConfiguration entity)
         {
-            var retVal = new ReportConfigurationDto();
+            ReportConfigurationDto retVal = new ReportConfigurationDto();
             retVal.ActiveStatus = entity.ActiveStatus;
             retVal.RequestFrequency = entity.RequestFrequency;
             retVal.BloodBankId = entity.BloodBank.Id.ToString();
@@ -25,7 +25,7 @@ namespace IntegrationAPI.Dtos.ReportsConfiguration
 
         public ReportConfiguration Convert(ReportConfigurationDto dto)
         {
-            var retVal = new ReportConfiguration();
+            ReportConfiguration retVal = new ReportConfiguration();
             retVal.ActiveStatus = dto.ActiveStatus;
             retVal.RequestFrequency = dto.RequestFrequency;
             if (dto.Id.Equals(""))

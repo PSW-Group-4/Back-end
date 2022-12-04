@@ -1,15 +1,10 @@
-﻿using AutoMapper;
-using HospitalLibrary;
-using HospitalLibrary.Exceptions;
-using HospitalLibrary.Patients.Service;
-using HospitalLibrary.SchedulingAppointment.Service;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using HospitalLibrary.EquipmentRelocation.Service;
+﻿using System;
+using AutoMapper;
 using HospitalLibrary.EquipmentRelocation.DTO;
-using HospitalLibrary.Appointments.Service;
-using System.Collections.Generic;
+using HospitalLibrary.EquipmentRelocation.Service;
+using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
@@ -19,6 +14,7 @@ namespace HospitalAPI.Controllers
     {
         private readonly IEquipmentRelocationService _equipmentRelocationService;
         private readonly IMapper _mapper;
+
         public EquipmentRelocationController(IEquipmentRelocationService service, IMapper mapper)
         {
             _equipmentRelocationService = service;
@@ -26,17 +22,18 @@ namespace HospitalAPI.Controllers
         }
 
 
-        
         [HttpGet("Recommend/{relocationStart}/{duration}/{sourceId}/{targetId}")]
         [Authorize(Roles = "Manager")]
-        public ActionResult Recommend([FromRoute] String relocationStart, [FromRoute] int duration, [FromRoute] String sourceId, [FromRoute] String targetId)
+        public ActionResult Recommend([FromRoute] string relocationStart, [FromRoute] int duration,
+            [FromRoute] string sourceId, [FromRoute] string targetId)
         {
             try
             {
-                DateTime dateTime= DateTime.Parse(relocationStart);
-                EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO(dateTime, duration, Guid.Parse(sourceId), Guid.Parse(targetId));
+                var dateTime = DateTime.Parse(relocationStart);
+                var equipmentRelocation =
+                    new EquipmentRelocationDTO(dateTime, duration, Guid.Parse(sourceId), Guid.Parse(targetId));
 
-                List<DateTime> termins = _equipmentRelocationService.RecommendRelocationStart(equipmentRelocation);
+                var termins = _equipmentRelocationService.RecommendRelocationStart(equipmentRelocation);
                 return Ok(termins);
             }
             catch (NotFoundException)
@@ -44,7 +41,5 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
-
-
     }
 }
