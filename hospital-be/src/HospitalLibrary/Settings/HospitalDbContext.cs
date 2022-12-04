@@ -120,7 +120,7 @@ namespace HospitalLibrary.Settings
 
             modelBuilder.Entity<User>()
                 .Ignore(u => u.SuspiciousActivities)  
-                .Property("_suspiciousActivities");
+                .Property("suspicious_activities");
 
         }
     }
