@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.MoveEquipment.Service.Interfaces;
 using HospitalLibrary.MoveEquipment.Model;
+using HospitalLibrary.Vacations.Model;
+
 namespace HospitalAPI.Controllers
 {
     [ApiController]
@@ -29,5 +31,26 @@ namespace HospitalAPI.Controllers
                 return Ok();
 
         }
+
+        /*[HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_moveEquipmentTask.GetAll());
+        }
+
+        [HttpPost]
+        public ActionResult Create2([FromBody] InputCreateData taskDto)
+        {
+            var task = _mapper.Map<MoveEquipmentTask>(taskDto);
+
+            var newTask = _moveEquipmentTask.Create(task);
+
+            if (newTask == null)
+            {
+                return NotFound();
+            }
+            return CreatedAtAction("GetById", new { id = task.Id }, task);
+
+        }*/
     }
 }

@@ -28,6 +28,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Medicines.Model;
+using HospitalLibrary.MoveEquipment.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Treatments.Model;
@@ -117,6 +118,8 @@ namespace HospitalAPI.Mapper
 
 
             CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
+
+            CreateMap<InputCreateData, MoveEquipmentTask>();
 
 
         }
