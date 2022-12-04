@@ -12,13 +12,14 @@ namespace IntegrationLibrary.BloodSubscriptions
     [Table("blood_subscriptions")]
     public class BloodSubscription : Entity
     {
+        private List<Blood> blood;
         public List<Blood> Blood
         {
             get
             {
-                return new List<Blood>(this.Blood);
+                return blood.ToList();
             }
-            private set { }
+            private set => blood = value;
         }
         public string BloodBankName { get; private set; }
         public bool ActiveStatus { get; private set; }
@@ -36,26 +37,26 @@ namespace IntegrationLibrary.BloodSubscriptions
 
         public void AddBloodType(Blood type)
         {
-            this.Blood.Add(type);
+            this.blood.Add(type);
         }
         public void AddBloodType(List<Blood> types) 
         {
             foreach(Blood type in types)
             {
-               this.Blood.Add(type);
+               this.blood.Add(type);
             }
         }
         public void RemoveBloodType(Blood type)
         {
             this.ValidateListLenght();
-            this.Blood.Remove(type);
+            this.blood.Remove(type);
         }
         public void RemoveBloodType(List<Blood> types) 
         {
             this.ValidateListLenght();
-            foreach (var type in types)
+            foreach (Blood type in types)
             {
-                this.Blood.Remove(type);
+                this.blood.Remove(type);
             }
         }
 
@@ -71,7 +72,7 @@ namespace IntegrationLibrary.BloodSubscriptions
 
         private void ValidateListLenght()
         {
-            if (this.Blood.Count == 0)
+            if (this.blood.Count == 0)
             {
                 throw new InvalidValueException();
             }

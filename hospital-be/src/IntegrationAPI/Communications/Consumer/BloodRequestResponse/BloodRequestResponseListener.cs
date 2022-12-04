@@ -43,7 +43,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
                         BloodRequestResponseConsumer consumer = new(consumerBuilder, cancelToken, bloodRequestService);
                         try
                         {
-                            while (true)
+                            while (false)
                             {
                                 BloodRequest response = consumer.Consume();
                                 bloodRequestService.Update(response);

@@ -44,7 +44,7 @@ namespace HospitalAPI.Communications
                         BloodSupplyStateConsumer bloodSupplyConsumer = new(consumerBuilder, cancelToken, bloodSupplyService);
                         try
                         {
-                            while (true)
+                            while (false)
                             {
                                 BloodSupply bloodSupply = bloodSupplyConsumer.Consume();
                                 Console.WriteLine("Hospital received blood!");

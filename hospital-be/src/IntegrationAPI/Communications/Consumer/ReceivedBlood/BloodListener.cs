@@ -44,7 +44,7 @@ namespace IntegrationAPI.Communications.Consumer.ReceivedBlood
                         BloodConsumer bloodConsumer = new(consumerBuilder, cancelToken, producer);
                         try
                         {
-                            while (true)
+                            while (false)
                             {
                                 Blood receivedBlood = bloodConsumer.Consume();
                                 Console.WriteLine("Received blood!");

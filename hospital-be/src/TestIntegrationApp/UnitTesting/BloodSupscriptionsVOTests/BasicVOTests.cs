@@ -21,9 +21,7 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
 
             subscription.AddBloodType(product);
 
-            List<Blood> types = new List<Blood>();
-            types.Add(product);
-            types.Equals(subscription.Blood).ShouldBe(true);
+            Assert.True(subscription.Blood.Count == 1);
 
         }
         [Fact]
@@ -39,9 +37,8 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             types.Add(product2);
 
             subscription.AddBloodType(types);
-
             
-            types.Equals(subscription.Blood).ShouldBe(true);
+            (types.Count == subscription.Blood.Count).ShouldBe(true);
 
         }
         [Fact]
@@ -63,7 +60,7 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             subscription.RemoveBloodType(product);
 
             types.Remove(product);
-            types.Equals(subscription.Blood).ShouldBe(true);
+            (types.Count == subscription.Blood.Count).ShouldBe(true);
 
         }
         [Fact]
@@ -85,12 +82,12 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             forRemoval.Add(product);
             forRemoval.Add(product2);
 
-
             subscription.RemoveBloodType(forRemoval);
 
             types.Remove(product);
             types.Remove(product2);
-            types.Equals(subscription.Blood).ShouldBe(true);
+            
+            (types.Count == subscription.Blood.Count).ShouldBe(true);
 
         }
     }
