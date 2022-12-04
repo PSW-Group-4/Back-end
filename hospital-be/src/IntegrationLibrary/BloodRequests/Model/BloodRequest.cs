@@ -14,12 +14,12 @@ namespace IntegrationLibrary.BloodRequests.Model
     public class BloodRequest
     {
         public Guid Id { get; set; }
-        public String DoctorId { get; set; }
-        public String Reasons { get; set; }
+        public string DoctorId { get; set; }
+        public string Reasons { get; set; }
         public virtual Blood Blood { get; set; }
-        public Boolean IsApproved { get; set; }
-        public String RejectionComment { get; set; }
-        public String ManagerId { get; set; }
+        public bool IsApproved { get; set; }
+        public string RejectionComment { get; set; }
+        public string ManagerId { get; set; }
         public DateTime SendOnDate { get; set; }
         public bool IsUrgent { get; set; }
         public BloodRequestStatus Status { get; set; }

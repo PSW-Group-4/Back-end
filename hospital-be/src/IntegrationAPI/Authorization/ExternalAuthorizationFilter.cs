@@ -52,8 +52,8 @@ namespace IntegrationAPI.Authorization
 
          private async Task<HttpResponseMessage> SendAuthorizationRequest(string jwt)
          {
-             var dto = new IntegrationAuthorizationDto { ExpectedRoles = ExpectedRoles };
-             var httpRequestMessage = new HttpRequestMessage
+             IntegrationAuthorizationDto dto = new IntegrationAuthorizationDto { ExpectedRoles = ExpectedRoles };
+             HttpRequestMessage httpRequestMessage = new HttpRequestMessage
                              {
                                  Method = HttpMethod.Post,
                                  RequestUri = new Uri(_authorizationEndpoint),
@@ -63,7 +63,7 @@ namespace IntegrationAPI.Authorization
                                  },
                                  Content = new StringContent(JsonConvert.SerializeObject(dto), System.Text.Encoding.UTF8, "application/json")
                              };
-             var response = await _httpClient.SendAsync(httpRequestMessage);
+             HttpResponseMessage response = await _httpClient.SendAsync(httpRequestMessage);
              return response;
          }
     }

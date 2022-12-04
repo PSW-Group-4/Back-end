@@ -92,7 +92,7 @@ namespace IntegrationLibrary.BloodReport.Service
             }
             return retVal;
         }
-        private String saveAsPdf(BloodUsageReport bloodUsageReport)
+        private string saveAsPdf(BloodUsageReport bloodUsageReport)
         {
             string html = bloodUsageReport.GenerateHtml();
             return HtmlToPdfConverter.Convert(html, HtmlToPdfConverter.defaultPath, bloodUsageReport.BloodBank.Name);

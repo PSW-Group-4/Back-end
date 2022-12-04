@@ -28,7 +28,7 @@ namespace HospitalLibrary.BloodSupplies.Service
         public BloodSupply GetByType(string type)
         {
             BloodType supposedType = BloodType.FromString(type);
-            return new List<BloodSupply>(_bloodSupplyRepository.GetAll()).Find(blood => blood.BloodType.Equals(supposedType));
+            return _bloodSupplyRepository.GetByType(supposedType);
         }
 
         public BloodSupply Create(BloodSupply bloodSupply)

@@ -28,7 +28,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var config = new ConsumerConfig
+            ConsumerConfig config = new ConsumerConfig
             {
                 GroupId = groupId,
                 BootstrapServers = bootstrapServers,
@@ -37,7 +37,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
 
             try
             {
-                using (var scope = _serviceScopeFactory.CreateScope())
+                using (IServiceScope scope = _serviceScopeFactory.CreateScope())
                 {
                     INewsService newsService = scope.ServiceProvider.GetRequiredService<INewsService>();
                     var newsConverter = scope.ServiceProvider.GetRequiredService<IConverter<News, NewsDto>>();

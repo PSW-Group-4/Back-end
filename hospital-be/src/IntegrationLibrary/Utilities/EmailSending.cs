@@ -18,7 +18,7 @@ namespace IntegrationLibrary.Utilities
             private static String _email = "psw.integrations.g4@gmail.com";
             private static String _password = "mcezencvkdktyarh";
         */
-        public static MimeMessage createTxtEmail(String recipientName, String recipientEmail,String subject,String emailText)
+        public static MimeMessage createTxtEmail(string recipientName, string recipientEmail,string subject,string emailText)
         {
             var message = new MimeMessage();
 
@@ -44,10 +44,10 @@ namespace IntegrationLibrary.Utilities
             }
         }
 
-        public static String CreateEmailText(BloodBank bloodBank)
+        public static string CreateEmailText(BloodBank bloodBank)
         {
             //TODO when the public app is done change add the link to EmailingResources and put it here 
-            return String.Format(Settings.EmailingResources.EmailTemplate, bloodBank.ApiKey, bloodBank.Password, "Our public app URL goes here");
+            return string.Format(Settings.EmailingResources.EmailTemplate, bloodBank.ApiKey, bloodBank.Password, "Our public app URL goes here");
         }
     }
 }

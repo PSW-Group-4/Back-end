@@ -96,6 +96,7 @@ namespace IntegrationAPI
             });
 
 
+            
             services.AddScoped<ExternalAuthorizationFilter>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
@@ -116,9 +117,6 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
-            services.AddScoped<IConsumer<News>, NewsConsumer>();
-            services.AddScoped<IConsumer<BloodRequest>, BloodRequestResponseConsumer>();
-            services.AddScoped<IConsumer<Blood>, BloodConsumer>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
             services.AddScoped<IBloodSubscriptionRepository, BloodSubscriptionRepository>();
@@ -126,10 +124,12 @@ namespace IntegrationAPI
             services.AddScoped<ITenderApplicationService, TenderApplicationService>();
             services.AddScoped<ITenderApplicationRepository, TenderApplicationRepository>();
             services.AddScoped<IProducer, Producer>();
+            services.AddScoped<IConsumer<News>, NewsConsumer>();
+            services.AddScoped<IConsumer<BloodRequest>, BloodRequestResponseConsumer>();
+            services.AddScoped<IConsumer<Blood>, BloodConsumer>();
 
             services.AddControllers();
 
-     
             services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */1 * * * *", TimeZoneInfo.Local));
             services.AddHostedService<ReportSendingTask>();
            

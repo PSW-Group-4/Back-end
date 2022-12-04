@@ -16,7 +16,7 @@ namespace IntegrationLibrary.Common
         B,
         AB
     }
-    public enum RHFactor
+    public enum RhFactor
     {
         POSITIVE,
         NEGATIVE
@@ -26,14 +26,14 @@ namespace IntegrationLibrary.Common
         [JsonInclude]
         public BloodGroup BloodGroup { get; private set; }
         [JsonInclude]
-        public RHFactor RHFactor { get; private set; }
+        public RhFactor RhFactor { get; private set; }
 
         public BloodType() { }
 
-        public BloodType(BloodGroup title, RHFactor rHFactor)
+        public BloodType(BloodGroup title, RhFactor rHFactor)
         {
             BloodGroup = title;
-            RHFactor = rHFactor;
+            RhFactor = rHFactor;
         }
         public static BloodType FromString(string type)
         {
@@ -50,24 +50,24 @@ namespace IntegrationLibrary.Common
                 }
                 //Assumed structure of string type => BloodGroup *space* RHFactor; "A POSITIVE"
                 var parseFlag1 = Enum.TryParse(data[0], true, out BloodGroup bloodGroup);
-                var parseFlag2 = Enum.TryParse(data[1], true, out RHFactor rHFactor);
+                var parseFlag2 = Enum.TryParse(data[1], true, out RhFactor rHFactor);
                 if (parseFlag1 && parseFlag2)
                 {
-                    return new BloodType() { BloodGroup = bloodGroup, RHFactor = rHFactor };
+                    return new BloodType() { BloodGroup = bloodGroup, RhFactor = rHFactor };
                 }
                 throw new EnumToStringCastException();
             }
             else
             {
                 //Assumed structure of string type => BloodGroupRHFactorAsSign; "A+"
-                String bloodGroupExtracted = type[..^1];
-                String rhFactorExtracted = type[^1..];
+                string bloodGroupExtracted = type[..^1];
+                string rhFactorExtracted = type[^1..];
                 rhFactorExtracted = rhFactorExtracted == "+" ? "POSITIVE" : rhFactorExtracted == "-" ? "NEGATIVE" : null;
                 var parseFlag1 = Enum.TryParse(bloodGroupExtracted, true, out BloodGroup bloodGroup);
-                var parseFlag2 = Enum.TryParse(rhFactorExtracted, true, out RHFactor rHFactor);
+                var parseFlag2 = Enum.TryParse(rhFactorExtracted, true, out RhFactor rHFactor);
                 if (parseFlag1 && parseFlag2)
                 {
-                    return new BloodType() { BloodGroup = bloodGroup, RHFactor = rHFactor };
+                    return new BloodType() { BloodGroup = bloodGroup, RhFactor = rHFactor };
                 }
                 throw new EnumToStringCastException();
             }
@@ -76,7 +76,7 @@ namespace IntegrationLibrary.Common
         
         public override string ToString()
         {
-            return BloodGroup.ToString() + " " + RHFactor.ToString();
+            return BloodGroup.ToString() + " " + RhFactor.ToString();
         }
         public override bool Equals(object obj)
         {
@@ -91,7 +91,7 @@ namespace IntegrationLibrary.Common
         protected IEnumerable<object> GetEqualityComponents()
         {
             yield return BloodGroup;
-            yield return RHFactor;
+            yield return RhFactor;
         }
 
         public override int GetHashCode()

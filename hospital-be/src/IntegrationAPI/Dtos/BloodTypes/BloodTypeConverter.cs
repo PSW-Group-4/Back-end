@@ -10,7 +10,7 @@ namespace IntegrationAPI.Dtos.BloodTypes
             return new BloodTypeDto
             {
                 BloodGroup = entity.BloodGroup.ToString(),
-                RhFactor = entity.RHFactor.ToString()
+                RhFactor = entity.RhFactor.ToString()
             };
         }
 
@@ -18,7 +18,7 @@ namespace IntegrationAPI.Dtos.BloodTypes
         {
             return new BloodType(
                         (BloodGroup)Enum.Parse(typeof(BloodGroup), dto.BloodGroup),
-                        (RHFactor)Enum.Parse(typeof(RHFactor), dto.RhFactor)
+                        (RhFactor)Enum.Parse(typeof(RhFactor), dto.RhFactor)
                     );
         }
     }

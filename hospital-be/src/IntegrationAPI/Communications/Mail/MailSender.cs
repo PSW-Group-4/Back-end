@@ -17,7 +17,7 @@ namespace IntegrationAPI.Communications.Mail
 
         public MimeMessage createTxtEmail(string recipientName, string recipientEmail, string subject, string emailText)
         {
-            var message = new MimeMessage();
+            MimeMessage message = new MimeMessage();
 
 
             message.From.Add(new MailboxAddress(IntegrationLibrary.Settings.EmailingResources.SenderName, IntegrationLibrary.Settings.EmailingResources.SenderEmail));
@@ -33,7 +33,7 @@ namespace IntegrationAPI.Communications.Mail
 
         public void sendEmail(MimeMessage message)
         {
-            using (var client = new SmtpClient())
+            using (SmtpClient client = new SmtpClient())
             {
                 client.Connect(IntegrationLibrary.Settings.EmailingResources.SmtpAddress, 587, SecureSocketOptions.StartTls);
                 client.Authenticate(IntegrationLibrary.Settings.EmailingResources.SenderEmail, IntegrationLibrary.Settings.EmailingResources.SenderPassword);

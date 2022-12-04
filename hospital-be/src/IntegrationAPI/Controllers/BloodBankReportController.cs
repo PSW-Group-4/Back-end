@@ -1,4 +1,5 @@
 ﻿using IntegrationAPI.Communications.Pdf;
+using IntegrationLibrary.BloodReport.Model;
 using IntegrationLibrary.BloodReport.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public ActionResult Create(string bloodBankId)
         {
-            var retVal =  _service.Create(bloodBankId);
+            ReportPathTransporter retVal =  _service.Create(bloodBankId);
             sendPdf(retVal.ReportPath);
             return Ok(retVal);
         }

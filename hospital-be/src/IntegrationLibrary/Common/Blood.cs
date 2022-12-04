@@ -23,7 +23,7 @@ namespace IntegrationLibrary.Common
             Amount = amount;
         }
 
-        public Blood(BloodGroup bloodGroup, RHFactor rhFactor, double amount)
+        public Blood(BloodGroup bloodGroup, RhFactor rhFactor, double amount)
         {
             BloodType = new BloodType(bloodGroup, rhFactor);
             Amount = amount;
@@ -36,10 +36,10 @@ namespace IntegrationLibrary.Common
             return BloodType.ToString() + "," + Amount;
         }
 
-        public static Blood FromString(String input)
+        public static Blood FromString(string input)
         {
             var splitted = input.Split(',');
-            return new Blood(BloodType.FromString(splitted[0]), Double.Parse(splitted[1]));
+            return new Blood(BloodType.FromString(splitted[0]), double.Parse(splitted[1]));
         }
     }
 }

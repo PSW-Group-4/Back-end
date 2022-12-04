@@ -23,7 +23,7 @@ namespace HospitalAPI.Communications
         }
         public BloodSupply Consume()
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };

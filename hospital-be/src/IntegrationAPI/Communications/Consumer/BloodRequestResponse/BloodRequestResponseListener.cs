@@ -1,6 +1,4 @@
 ﻿using Confluent.Kafka;
-using HospitalLibrary.BloodSupplies.Model;
-using HospitalLibrary.BloodSupplies.Service;
 using IntegrationAPI.Communications.Consumer.ReceivedBlood;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,7 +24,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var config = new ConsumerConfig
+            ConsumerConfig config = new()
             {
                 GroupId = groupId,
                 BootstrapServers = bootstrapServers,
@@ -35,14 +33,14 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
 
             try
             {
-                using (var scope = _serviceScopeFactory.CreateScope())
+                using (IServiceScope scope = _serviceScopeFactory.CreateScope())
                 {
                     IBloodRequestService bloodRequestService = scope.ServiceProvider.GetRequiredService<IBloodRequestService>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
                         consumerBuilder.Subscribe(topic);
-                        CancellationTokenSource cancelToken = new CancellationTokenSource();
-                        BloodRequestResponseConsumer consumer = new BloodRequestResponseConsumer(consumerBuilder, cancelToken, bloodRequestService);
+                        CancellationTokenSource cancelToken = new();
+                        BloodRequestResponseConsumer consumer = new(consumerBuilder, cancelToken, bloodRequestService);
                         try
                         {
                             while (true)

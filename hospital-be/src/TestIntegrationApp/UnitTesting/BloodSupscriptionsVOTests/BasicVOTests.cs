@@ -15,7 +15,7 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
         [Fact]
         public void Checks_addition()
         {
-            BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
+            BloodType type = new BloodType(BloodGroup.A, RhFactor.POSITIVE);
             Blood product = new Blood(type,150);
             BloodSubscription subscription = new BloodSubscription("TestBB");
 
@@ -29,8 +29,8 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
         [Fact]
         public void Checks_addition_multiple()
         {
-            BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
-            BloodType type2 = new BloodType(BloodGroup.B, RHFactor.POSITIVE);
+            BloodType type = new BloodType(BloodGroup.A, RhFactor.POSITIVE);
+            BloodType type2 = new BloodType(BloodGroup.B, RhFactor.POSITIVE);
             Blood product = new Blood(type, 150);
             Blood product2 = new Blood(type2, 250);
             BloodSubscription subscription = new BloodSubscription("TestBB");
@@ -47,9 +47,9 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
         [Fact]
         public void Checks_removal()
         {
-            BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
-            BloodType type2 = new BloodType(BloodGroup.B, RHFactor.POSITIVE);
-            BloodType type3 = new BloodType(BloodGroup.O, RHFactor.POSITIVE);
+            BloodType type = new BloodType(BloodGroup.A, RhFactor.POSITIVE);
+            BloodType type2 = new BloodType(BloodGroup.B, RhFactor.POSITIVE);
+            BloodType type3 = new BloodType(BloodGroup.O, RhFactor.POSITIVE);
             Blood product = new Blood(type, 150);
             Blood product2 = new Blood(type2, 250);
             Blood product3 = new Blood(type3, 69);
@@ -69,9 +69,9 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
         [Fact]
         public void Checks_removal_multiple()
         {
-            BloodType type = new BloodType(BloodGroup.A, RHFactor.POSITIVE);
-            BloodType type2 = new BloodType(BloodGroup.B, RHFactor.POSITIVE);
-            BloodType type3 = new BloodType(BloodGroup.O, RHFactor.POSITIVE);
+            BloodType type = new BloodType(BloodGroup.A, RhFactor.POSITIVE);
+            BloodType type2 = new BloodType(BloodGroup.B, RhFactor.POSITIVE);
+            BloodType type3 = new BloodType(BloodGroup.O, RhFactor.POSITIVE);
             Blood product = new Blood(type, 150);
             Blood product2 = new Blood(type2, 250);
             Blood product3 = new Blood(type3, 69); ;

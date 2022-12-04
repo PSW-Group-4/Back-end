@@ -25,7 +25,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
 
         public News Consume()
         {
-            var options = new JsonSerializerOptions
+            JsonSerializerOptions options = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             };

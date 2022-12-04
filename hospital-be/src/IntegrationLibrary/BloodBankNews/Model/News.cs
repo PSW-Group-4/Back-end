@@ -13,13 +13,13 @@ namespace IntegrationLibrary.BloodBankNews.Model
     {
         public Guid Id { get; set; }
         public virtual BloodBank BloodBank { get; set; }
-        public String Title { get; set; }
-        public String Body { get; set; }
+        public string Title { get; set; }
+        public string Body { get; set; }
         public DateTime Timestamp { get; set; }
-        public Boolean IsArchived { get; set; }
-        public Boolean IsPublished { get; set; }
+        public bool IsArchived { get; set; }
+        public bool IsPublished { get; set; }
         public News() { }
-        public News(Guid id, BloodBank bloodBank, string title, string body, DateTime timestamp, Boolean isArchived)
+        public News(Guid id, BloodBank bloodBank, string title, string body, DateTime timestamp, bool isArchived)
         {
             Id = id;
             BloodBank = bloodBank;

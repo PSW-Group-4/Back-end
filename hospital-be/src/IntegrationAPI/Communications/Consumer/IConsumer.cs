@@ -2,8 +2,8 @@
 
 namespace IntegrationAPI.Communications.Consumer
 {
-    public interface IConsumer<Entity>
+    public interface IConsumer<TEntity>
     {
-        Entity Consume();
+        TEntity Consume();
     }
 }

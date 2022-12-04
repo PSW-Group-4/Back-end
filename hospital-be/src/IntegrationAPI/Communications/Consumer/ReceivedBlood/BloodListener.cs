@@ -1,53 +1,46 @@
 ﻿using Confluent.Kafka;
-using IntegrationAPI.Dtos.BloodBankNews;
-using IntegrationLibrary.BloodBankNews.Model;
-using IntegrationLibrary.BloodBankNews.Service;
+using IntegrationAPI.Communications.Consumer.ReceivedBlood;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Threading;
 using System;
-using System.Text.Json;
-using Microsoft.Extensions.Hosting;
-using HospitalLibrary.BloodSupplies.Model;
-using HospitalLibrary.BloodSupplies.Service;
 using IntegrationAPI.Communications.Producer;
-using IntegrationAPI.Dtos.BloodSupplies;
 using IntegrationLibrary.Common;
 
 namespace IntegrationAPI.Communications.Consumer.ReceivedBlood
 {
     public class BloodListener : IHostedService
     {
-        private readonly string topic = "requested.blood.topic";
-        private readonly string groupId = "requestedBlood";
-        private readonly string bootstrapServers = "localhost:9094";
-        public IServiceScopeFactory _serviceScopeFactory;
+        private readonly string _topic = "requested.blood.topic";
+        private readonly string _groupId = "requestedBlood";
+        private readonly string _bootstrapServers = "localhost:9094";
+        public IServiceScopeFactory ServiceScopeFactory;
 
         public BloodListener(IServiceScopeFactory serviceScopeFactory)
         {
-            _serviceScopeFactory = serviceScopeFactory;
+            ServiceScopeFactory = serviceScopeFactory;
         }
-
-
+        
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var config = new ConsumerConfig
+            ConsumerConfig config = new()
             {
-                GroupId = groupId,
-                BootstrapServers = bootstrapServers,
+                GroupId = _groupId,
+                BootstrapServers = _bootstrapServers,
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
 
             try
             {
-                using (var scope = _serviceScopeFactory.CreateScope())
+                using (IServiceScope scope = ServiceScopeFactory.CreateScope())
                 {
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
                         IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
-                        consumerBuilder.Subscribe(topic);
-                        CancellationTokenSource cancelToken = new CancellationTokenSource();
+                        consumerBuilder.Subscribe(_topic);
+                        CancellationTokenSource cancelToken = new();
                         BloodConsumer bloodConsumer = new(consumerBuilder, cancelToken, producer);
                         try
                         {

@@ -30,7 +30,7 @@ namespace IntegrationAPI.Dtos.BloodBankNews
 
         public News Convert(NewsDto dto)
         {
-            var bloodBank = _bloodBankService.GetByName(dto.bloodBank);
+            IntegrationLibrary.BloodBanks.Model.BloodBank bloodBank = _bloodBankService.GetByName(dto.bloodBank);
             if(bloodBank == null)
             {
                 throw new NotFoundException();
