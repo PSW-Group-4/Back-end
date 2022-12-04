@@ -206,9 +206,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
 
                     b.ToTable("BloodSupply");
@@ -532,9 +529,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("BloodType")
-                        .HasColumnType("integer");
 
                     b.Property<Guid>("ChoosenDoctorId")
                         .HasColumnType("uuid");
@@ -862,6 +856,34 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Doctor");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.BloodSupplies.Model.BloodSupply", b =>
+                {
+                    b.OwnsOne("IntegrationLibrary.Common.BloodType", "BloodType", b1 =>
+                        {
+                            b1.Property<Guid>("BloodSupplyId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<int>("BloodGroup")
+                                .HasMaxLength(1)
+                                .HasColumnType("integer")
+                                .HasColumnName("BloodGroup");
+
+                            b1.Property<int>("RHFactor")
+                                .HasMaxLength(10)
+                                .HasColumnType("integer")
+                                .HasColumnName("RhFactor");
+
+                            b1.HasKey("BloodSupplyId");
+
+                            b1.ToTable("BloodSupply");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BloodSupplyId");
+                        });
+
+                    b.Navigation("BloodType");
+                });
+
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Floor", b =>
                 {
                     b.HasOne("HospitalLibrary.BuildingManagment.Model.Building", null)
@@ -970,7 +992,32 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("IntegrationLibrary.Common.BloodType", "BloodType", b1 =>
+                        {
+                            b1.Property<Guid>("PatientId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<int>("BloodGroup")
+                                .HasMaxLength(1)
+                                .HasColumnType("integer")
+                                .HasColumnName("BloodGroup");
+
+                            b1.Property<int>("RHFactor")
+                                .HasMaxLength(10)
+                                .HasColumnType("integer")
+                                .HasColumnName("RhFactor");
+
+                            b1.HasKey("PatientId");
+
+                            b1.ToTable("Patients");
+
+                            b1.WithOwner()
+                                .HasForeignKey("PatientId");
+                        });
+
                     b.Navigation("Address");
+
+                    b.Navigation("BloodType");
 
                     b.Navigation("ChoosenDoctor");
                 });

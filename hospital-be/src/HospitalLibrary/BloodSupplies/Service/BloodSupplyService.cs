@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BloodSupplies.Repository;
+using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
 
@@ -26,7 +27,8 @@ namespace HospitalLibrary.BloodSupplies.Service
 
         public BloodSupply GetByType(string type)
         {
-            return new List<BloodSupply>(_bloodSupplyRepository.GetAll()).Find(blood => blood.Type.Equals(type));
+            BloodType supposedType = BloodType.FromString(type);
+            return _bloodSupplyRepository.GetByType(supposedType);
         }
 
         public BloodSupply Create(BloodSupply bloodSupply)
@@ -42,6 +44,12 @@ namespace HospitalLibrary.BloodSupplies.Service
         public void Delete(Guid bloodSupplyId)
         {
             _bloodSupplyRepository.Delete(bloodSupplyId);
+        }
+        public BloodSupply UpdateByType(string type, double amount)
+        {
+            BloodSupply bloodSupply = GetByType(type);
+            bloodSupply.Amount += amount;
+            return _bloodSupplyRepository.Update(bloodSupply);
         }
     }
 }

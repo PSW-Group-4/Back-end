@@ -1,4 +1,3 @@
-
 using HospitalLibrary.Allergies.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BuildingManagment.Model;
@@ -22,9 +21,8 @@ using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Treatments.Model;
-
-
-
+using HospitalLibrary.Utility;
+using IntegrationLibrary.Common;
 
 
 namespace HospitalLibrary.Settings
@@ -76,52 +74,69 @@ namespace HospitalLibrary.Settings
 
         public DbSet<BloodSupply> BloodSupply { get; set; }
 
-        public DbSet<RoomSchedule> RoomSchedules {get; set;}
-        public DbSet<MoveEquipmentTask> MoveEquipmentTasks {get; set;}
-        public DbSet<EquipmentToMove> EquipmentToMoves {get; set;}
+        public DbSet<RoomSchedule> RoomSchedules { get; set; }
+        public DbSet<MoveEquipmentTask> MoveEquipmentTasks { get; set; }
+        public DbSet<EquipmentToMove> EquipmentToMoves { get; set; }
 
         // Medicine
         public DbSet<Medicine> Medicines { get; set; }
 
 
-
         //public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
 
         public DbSet<Treatment> Treatments { get; set; }
-        
-
-        
 
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             modelBuilder
                 .Entity<RoomsEquipment>()
-                .HasKey(re => new {re.DoctorRoomId, re.EquipmentId});
-                
+                .HasKey(re => new { re.DoctorRoomId, re.EquipmentId });
+
             modelBuilder.Entity<RoomsEquipment>()
                 .HasOne<Equipment>(re => re.Equipment)
                 .WithMany(e => e.RoomsEquipment)
                 .HasForeignKey(re => re.EquipmentId);
-            
+
             modelBuilder.Entity<RoomsEquipment>()
                 .HasOne<DoctorRoom>(dc => dc.DoctorRoom)
                 .WithMany(dr => dr.RoomsEquipment)
                 .HasForeignKey(re => re.DoctorRoomId);
 
             modelBuilder
-             .Entity<Patient>()
-             .HasMany(p => p.Allergies)
-             .WithMany(a => a.Patients)
-             .UsingEntity(j => j.ToTable("PatientAllergies"));
+                .Entity<Patient>()
+                .HasMany(p => p.Allergies)
+                .WithMany(a => a.Patients)
+                .UsingEntity(j => j.ToTable("PatientAllergies"));
+
+            modelBuilder
+                .Entity<Patient>()
+                .OwnsOne(p => p.BloodType, bloodType =>
+                {
+                    bloodType.Property(prop => prop.BloodGroup).HasMaxLength(1)
+                        .HasColumnName("BloodGroup");
+                    bloodType.Property(prop => prop.RhFactor).HasMaxLength(10)
+                        .HasColumnName("RhFactor");
+                });
 
             modelBuilder.Entity<User>()
-                .Ignore(u => u.SuspiciousActivities)  
+                .Ignore(u => u.SuspiciousActivities)
                 .Property("_suspiciousActivities");
 
+            modelBuilder.Entity<BloodSupply>()
+                .OwnsOne(bloodSupply => bloodSupply.BloodType, bloodType =>
+                {
+                    bloodType.Property(prop => prop.BloodGroup).HasMaxLength(1)
+                        .HasColumnName("BloodGroup");
+                    bloodType.Property(prop => prop.RhFactor).HasMaxLength(10)
+                        .HasColumnName("RhFactor");
+                });
         }
     }
 }

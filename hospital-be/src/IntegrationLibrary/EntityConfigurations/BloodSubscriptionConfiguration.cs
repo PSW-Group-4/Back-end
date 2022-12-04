@@ -15,9 +15,9 @@ namespace IntegrationLibrary.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<BloodSubscription> builder)
         {
-            builder.Property(tender => tender.BloodProducts).HasConversion(
+            builder.Property(bloodSubscription => bloodSubscription.Blood).HasConversion(
                 bloodProducts => JsonSerializer.Serialize(bloodProducts, (JsonSerializerOptions)null),
-                json => JsonSerializer.Deserialize<List<BloodProduct>>(json, (JsonSerializerOptions)null));
+                json => JsonSerializer.Deserialize<List<Blood>>(json, (JsonSerializerOptions)null));
         }
     }
 }

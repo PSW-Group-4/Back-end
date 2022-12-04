@@ -2,58 +2,61 @@
 using IntegrationLibrary.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace IntegrationLibrary.BloodSubscriptions
 {
+    [Table("blood_subscriptions")]
     public class BloodSubscription : Entity
     {
-        public List<BloodProduct> BloodProducts 
+        private List<Blood> blood;
+        public List<Blood> Blood
         {
             get
             {
-                return new List<BloodProduct>(this.BloodProducts);
+                return blood.ToList();
             }
-            private set { }
+            private set => blood = value;
         }
         public string BloodBankName { get; private set; }
         public bool ActiveStatus { get; private set; }
         public bool Urgent { get; private set; }
         public BloodSubscription()
         {
-            BloodProducts = new List<BloodProduct>();
+            Blood = new List<Blood>();
         }
         public BloodSubscription(string bloodBankName)
         {
             Id = Guid.NewGuid();
             BloodBankName = bloodBankName;
-            BloodProducts = new List<BloodProduct>();
+            Blood = new List<Blood>();
         }
 
-        public void AddBloodType(BloodProduct type)
+        public void AddBloodType(Blood type)
         {
-            this.BloodProducts.Add(type);
+            this.blood.Add(type);
         }
-        public void AddBloodType(List<BloodProduct> types) 
+        public void AddBloodType(List<Blood> types) 
         {
-            foreach(BloodProduct type in types)
+            foreach(Blood type in types)
             {
-               this.BloodProducts.Add(type);
+               this.blood.Add(type);
             }
         }
-        public void RemoveBloodType(BloodProduct type)
+        public void RemoveBloodType(Blood type)
         {
             this.ValidateListLenght();
-            this.BloodProducts.Remove(type);
+            this.blood.Remove(type);
         }
-        public void RemoveBloodType(List<BloodProduct> types) 
+        public void RemoveBloodType(List<Blood> types) 
         {
             this.ValidateListLenght();
-            foreach (var type in types)
+            foreach (Blood type in types)
             {
-                this.BloodProducts.Remove(type);
+                this.blood.Remove(type);
             }
         }
 
@@ -69,7 +72,7 @@ namespace IntegrationLibrary.BloodSubscriptions
 
         private void ValidateListLenght()
         {
-            if (this.BloodProducts.Count == 0)
+            if (this.blood.Count == 0)
             {
                 throw new InvalidValueException();
             }

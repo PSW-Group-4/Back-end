@@ -25,7 +25,7 @@ namespace IntegrationAPI.Controllers
         {
             var retVal = new List<ReportConfigurationDto>();
             var reportConfigurations = _service.GetAll();
-            foreach (var reportConfiguration in reportConfigurations)
+            foreach (ReportConfiguration reportConfiguration in reportConfigurations)
             {
                 retVal.Add(_converter.Convert(reportConfiguration));
             }
@@ -34,13 +34,13 @@ namespace IntegrationAPI.Controllers
         [HttpPut]
         public ActionResult Update(ReportConfigurationDto dto)
         {
-            var config = _converter.Convert(dto);
+            ReportConfiguration config = _converter.Convert(dto);
             return Ok(_service.Update(config));
         }
         [HttpPost]
         public ActionResult Create(ReportConfigurationDto dto)
         {
-            var config = _converter.Convert(dto);
+            ReportConfiguration config = _converter.Convert(dto);
             return Ok(_service.Create(config));
         }
     }

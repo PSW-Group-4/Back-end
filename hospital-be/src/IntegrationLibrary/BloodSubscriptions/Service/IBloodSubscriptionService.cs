@@ -12,6 +12,6 @@ namespace IntegrationLibrary.BloodSubscriptions.Service
         public BloodSubscription GetById(Guid id);
         public BloodSubscription Create(BloodSubscription subscription);
         public BloodSubscription Update(BloodSubscription subscription);
-        public BloodSubscription GetByBbTitle(String title);
+        public BloodSubscription GetByBbTitle(string title);
     }
 }

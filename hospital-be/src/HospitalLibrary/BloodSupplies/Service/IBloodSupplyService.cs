@@ -12,5 +12,6 @@ namespace HospitalLibrary.BloodSupplies.Service
         BloodSupply Create(BloodSupply bloodSupply);
         BloodSupply Update(BloodSupply bloodSupply);
         void Delete(Guid bloodSupplyId);
+        BloodSupply UpdateByType(string type, double amount);
     }
 }
