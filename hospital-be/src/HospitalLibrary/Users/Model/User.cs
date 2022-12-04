@@ -25,14 +25,14 @@ namespace HospitalLibrary.Users.Model
         //In managers case it can be null
         public Guid? PersonId { get; set; }
 
-        [Column(TypeName = "jsonb")] private List<SuspiciousActivity> _suspiciousActivities;
+        [Column(TypeName = "jsonb")] private List<SuspiciousActivity> suspicious_activities;
 
         public List<SuspiciousActivity> SuspiciousActivities
         {
             get
             {
-                _suspiciousActivities ??= new List<SuspiciousActivity>();
-                return new List<SuspiciousActivity>(_suspiciousActivities);
+                suspicious_activities ??= new List<SuspiciousActivity>();
+                return new List<SuspiciousActivity>(suspicious_activities);
             }
             set{}
 
@@ -40,8 +40,8 @@ namespace HospitalLibrary.Users.Model
 
         public void AddSuspiciousActivity(SuspiciousActivity suspiciousActivity)
         {
-            _suspiciousActivities ??= new List<SuspiciousActivity>();
-            _suspiciousActivities.Add(suspiciousActivity);
+            suspicious_activities ??= new List<SuspiciousActivity>();
+            suspicious_activities.Add(suspiciousActivity);
         }
 
 
@@ -92,7 +92,7 @@ namespace HospitalLibrary.Users.Model
             Password = user.Password;
             Role = user.Role;
             PersonId = user.PersonId;
-            _suspiciousActivities = user.SuspiciousActivities;
+            suspicious_activities = user.SuspiciousActivities;
         }
 
 

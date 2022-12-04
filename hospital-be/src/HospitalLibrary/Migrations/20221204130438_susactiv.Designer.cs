@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20221202104023_SuspiciousActivity")]
-    partial class SuspiciousActivity
+    [Migration("20221204130438_susactiv")]
+    partial class susactiv
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -695,7 +695,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("Role")
                         .HasColumnType("integer");
 
-                    b.Property<List<SuspiciousActivity>>("_suspiciousActivities")
+                    b.Property<List<SuspiciousActivity>>("suspicious_activities")
                         .HasColumnType("jsonb");
 
                     b.HasKey("Username");

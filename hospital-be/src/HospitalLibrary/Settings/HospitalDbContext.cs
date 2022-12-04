@@ -126,8 +126,8 @@ namespace HospitalLibrary.Settings
                 });
 
             modelBuilder.Entity<User>()
-                .Ignore(u => u.SuspiciousActivities)
-                .Property("_suspiciousActivities");
+                .Ignore(u => u.SuspiciousActivities)  
+                .Property("suspicious_activities");
 
             modelBuilder.Entity<BloodSupply>()
                 .OwnsOne(bloodSupply => bloodSupply.BloodType, bloodType =>
