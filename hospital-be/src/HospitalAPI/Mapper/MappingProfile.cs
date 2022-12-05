@@ -13,7 +13,10 @@ using HospitalAPI.Dtos.MapItem;
 using HospitalAPI.Dtos.Medicine;
 using HospitalAPI.Dtos.Patient;
 using HospitalAPI.Dtos.Person;
+using HospitalAPI.Dtos.Prescription;
+using HospitalAPI.Dtos.Report;
 using HospitalAPI.Dtos.Rooms;
+using HospitalAPI.Dtos.Symptom;
 using HospitalAPI.Dtos.Treatment;
 using HospitalAPI.Dtos.User;
 using HospitalAPI.Dtos.Vacation;
@@ -29,7 +32,10 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Reports.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
@@ -105,6 +111,15 @@ namespace HospitalAPI.Mapper
 
             CreateMap<MedicineRequestDto, Medicine>();
             CreateMap<Medicine, MedicineRequestDto>();
+
+            CreateMap<SymptomRequestDto, Symptom>();
+            CreateMap<Symptom, SymptomRequestDto>();
+
+            CreateMap<PrescriptionRequestDto, Prescription>();
+            CreateMap<Prescription, PrescriptionRequestDto>();
+
+            CreateMap<ReportRequestDto, Report>();
+            CreateMap<Report, ReportRequestDto>();
 
             CreateMap<TreatmentRequestDto, Treatment>();
             CreateMap<Treatment, TreatmentRequestDto>();

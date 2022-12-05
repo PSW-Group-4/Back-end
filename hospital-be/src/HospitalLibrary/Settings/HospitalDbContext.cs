@@ -23,7 +23,9 @@ using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Utility;
 using IntegrationLibrary.Common;
-
+using HospitalLibrary.Symptoms.Model;
+using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Reports.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -81,6 +83,14 @@ namespace HospitalLibrary.Settings
         // Medicine
         public DbSet<Medicine> Medicines { get; set; }
 
+        // Symptoms
+        public DbSet<Symptom> Symptoms { get; set; }
+
+        // Prescriptions
+        public DbSet<Prescription> Prescriptions { get; set; }
+
+        // Reports
+        public DbSet<Report> Reports { get; set; }
 
         //public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
 

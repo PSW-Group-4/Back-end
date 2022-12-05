@@ -1,8 +1,6 @@
-﻿using System;
+﻿using HospitalLibrary.Prescriptions.Model;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Medicines.Model
 {
@@ -10,10 +8,12 @@ namespace HospitalLibrary.Medicines.Model
     {
         public Guid Id { get; set; }
         public String Name { get; set; }
+        public virtual List<Prescription> Prescriptions { get; set; }
 
         public void Update(Medicine medicine)
         {
             Name = medicine.Name;
+            Prescriptions = medicine.Prescriptions;
         }
     }
 }
