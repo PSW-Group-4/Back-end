@@ -15,8 +15,8 @@ namespace HospitalLibrary.Reports.Model
         public Guid DoctorId { get; set; }
         public virtual Doctor Doctor { get; set; }
         public string Text { get; set; }
-        public List<Symptom> Symptoms { get; set; }
-        public List<Prescription> Prescriptions { get; set; }
+        public virtual List<Symptom> Symptoms { get; set; }
+        public virtual List<Prescription> Prescriptions { get; set; }
         public DateTime DateTime { get; set; }
 
         public void Update(Report report)
