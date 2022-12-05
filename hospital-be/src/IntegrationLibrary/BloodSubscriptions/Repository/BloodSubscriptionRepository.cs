@@ -30,6 +30,11 @@ namespace IntegrationLibrary.BloodSubscriptions.Repository
             return _context.BloodSubscription.ToList();
         }
 
+        public IEnumerable<BloodSubscription> GetAllLastMonth()
+        {
+            return _context.BloodSubscription.Where(sub => sub.CreatedDate.Month == DateTime.Now.Month-1).ToList();
+        }
+
         public BloodSubscription GetByBbTitle(string title)
         {
             BloodSubscription subscription = _context.BloodSubscription.Where(sub => sub.BloodBankName == title).First();

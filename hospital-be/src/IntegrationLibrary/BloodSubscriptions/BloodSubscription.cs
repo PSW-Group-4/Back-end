@@ -31,6 +31,7 @@ namespace IntegrationLibrary.BloodSubscriptions
         public BloodSubscription(string bloodBankName)
         {
             Id = Guid.NewGuid();
+            CreatedDate = DateTime.Now;
             BloodBankName = bloodBankName;
             Blood = new List<Blood>();
         }
