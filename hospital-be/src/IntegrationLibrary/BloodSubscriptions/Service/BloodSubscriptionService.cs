@@ -24,6 +24,11 @@ namespace IntegrationLibrary.BloodSubscriptions.Service
            return _repository.GetAll();
         }
 
+        public IEnumerable<BloodSubscription> GetAllLastMonth()
+        {
+            return _repository.GetAllLastMonth();
+        }
+
         public BloodSubscription GetByBbTitle(string title)
         {
            return _repository.GetByBbTitle(title);  
