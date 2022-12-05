@@ -18,9 +18,9 @@ namespace IntegrationLibrary.BloodBanks.Model
         public List<BloodUsageDto> BloodUsage { get; set; }
         public DateTime timeOfCreation { get; set; }
 
-        public String GenerateHtml()
+        public string GenerateHtml()
         {
-            String html = "<h1>Blood Usage Report</h1>" +
+            string html = "<h1>Blood Usage Report</h1>" +
                 Environment.NewLine + "<h2>Bank: {0}</h2>" +
                 Environment.NewLine + "<h2>Date: {1}</h2>" +
                 Environment.NewLine + "<h2>Frequency: {2}</h2>" +
@@ -31,13 +31,13 @@ namespace IntegrationLibrary.BloodBanks.Model
                 Environment.NewLine + "\t\t<th>RH factor</th>" +
                 Environment.NewLine + "\t\t<th>Amount(ml)</th>" +
                 Environment.NewLine + "\t</tr>";
-            html = String.Format(html,this.BloodBank.Name,this.timeOfCreation.ToString(),this.ReportConfiguration.RequestFrequency.ToString());
+            html = string.Format(html,this.BloodBank.Name,this.timeOfCreation.ToString(),this.ReportConfiguration.RequestFrequency.ToString());
 
             foreach (BloodUsageDto bloodUsage in BloodUsage)
             {
                 html += Environment.NewLine + "\t<tr>" +
-                        Environment.NewLine + "\t\t<td>" + bloodUsage.Type.ToString() + "</td>" +
-                        Environment.NewLine + "\t\t<td>" + bloodUsage.RHFactor.ToString() + "</td>" +
+                        Environment.NewLine + "\t\t<td>" + bloodUsage.BloodType.BloodGroup.ToString() + "</td>" +
+                        Environment.NewLine + "\t\t<td>" + bloodUsage.BloodType.RhFactor.ToString() + "</td>" +
                         Environment.NewLine + "\t\t<td>" + bloodUsage.Milliliters.ToString() + "</td>" +
                         Environment.NewLine + "\t</tr>";
             }

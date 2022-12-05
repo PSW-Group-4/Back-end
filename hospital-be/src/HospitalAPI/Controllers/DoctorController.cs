@@ -1,8 +1,9 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
+using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using System;
 
 namespace HospitalAPI.Controllers
 {
@@ -11,19 +12,20 @@ namespace HospitalAPI.Controllers
     public class DoctorController : ControllerBase
     {
         private readonly IDoctorService _doctorService;
+        private readonly IJwtService _jwtService;
         private readonly IMapper _mapper;
 
-        public DoctorController(IDoctorService doctorService, IMapper mapper)
+        public DoctorController(IDoctorService doctorService, IMapper mapper, IJwtService jwtService)
         {
             _doctorService = doctorService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         // GET: api/Doctor
         [HttpGet]
         public ActionResult GetAll()
         {
-
             return Ok(_doctorService.GetAll());
         }
 
@@ -42,6 +44,21 @@ namespace HospitalAPI.Controllers
             }
         }
 
+        [HttpGet("loggedDoctor")]
+        public ActionResult GetLoggedDoctor()
+        {
+            try
+            {
+                var DoctorId = (Guid)_jwtService.GetCurrentUser(HttpContext.User).PersonId;
+                var doctor = _doctorService.GetById(DoctorId);
+                return Ok(doctor);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
 
         // GET api/Doctor/doctorsWithLeastPatients
         [HttpGet("doctorsWithLeastPatients")]
@@ -49,6 +66,5 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_doctorService.DoctorsWithLeastPatients());
         }
-
     }
 }

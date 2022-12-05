@@ -1,12 +1,10 @@
-using HospitalLibrary.BloodConsumptionRecords.Model;
-using HospitalLibrary.BloodConsumptionRecords.Service;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using AutoMapper;
-using HospitalLibrary;
-using System.Collections.Generic;
 using HospitalAPI.Dtos.BloodConsumptionRecord;
+using HospitalLibrary.BloodConsumptionRecords.Model;
+using HospitalLibrary.BloodConsumptionRecords.Service;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
@@ -17,7 +15,8 @@ namespace HospitalAPI.Controllers
         private readonly IBloodConsumptionRecordService _bloodConsumptionRecordService;
         private readonly IMapper _mapper;
 
-        public BloodConsumptionRecordController(IBloodConsumptionRecordService bloodConsumptionRecordService, IMapper mapper)
+        public BloodConsumptionRecordController(IBloodConsumptionRecordService bloodConsumptionRecordService,
+            IMapper mapper)
         {
             _bloodConsumptionRecordService = bloodConsumptionRecordService;
             _mapper = mapper;
@@ -55,7 +54,8 @@ namespace HospitalAPI.Controllers
 
         // PUT api/BloodConsumptionRecord/1
         [HttpPut("{id}")]
-        public ActionResult Update([FromRoute] Guid id, [FromBody] BloodConsumptionRecordRequestDto bloodConsumptionRecordRequestDto)
+        public ActionResult Update([FromRoute] Guid id,
+            [FromBody] BloodConsumptionRecordRequestDto bloodConsumptionRecordRequestDto)
         {
             var bloodConsumptionRecord = _mapper.Map<BloodConsumptionRecord>(bloodConsumptionRecordRequestDto);
             bloodConsumptionRecord.Id = id;

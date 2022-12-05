@@ -1,50 +1,52 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="IronPdf" Version="2022.11.10347" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="NETCore.MailKit" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.17" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0"/>
+        <PackageReference Include="IronPdf" Version="2022.11.10347"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="5.0.17"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.17">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="NETCore.MailKit" Version="2.1.0"/>
+        <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.17"/>
+        <PackageReference Include="Newtonsoft.Json" Version="11.0.2"/>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10"/>
+        <PackageReference Include="System.Text.Json" Version="5.0.1"/>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Settings\EmailingResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>EmailingResources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Settings\PdfSenderResources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>PdfSenderResources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+    <ItemGroup>
+        <Compile Update="Settings\EmailingResources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>EmailingResources.resx</DependentUpon>
+        </Compile>
+        <Compile Update="Settings\PdfSenderResources.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>PdfSenderResources.resx</DependentUpon>
+        </Compile>
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Settings\EmailingResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>EmailingResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Settings\PdfSenderResources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>PdfSenderResources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+    <ItemGroup>
+        <EmbeddedResource Update="Settings\EmailingResources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>EmailingResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+        <EmbeddedResource Update="Settings\PdfSenderResources.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>PdfSenderResources.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="BloodReport\Service\" />
-    <Folder Include="Migrations\" />
-    <Folder Include="Reports\" />
-  </ItemGroup>
+    <ItemGroup>
+        <Folder Include="BloodReport\Service\"/>
+        <Folder Include="Migrations\"/>
+        <Folder Include="Reports\"/>
+    </ItemGroup>
 
 </Project>

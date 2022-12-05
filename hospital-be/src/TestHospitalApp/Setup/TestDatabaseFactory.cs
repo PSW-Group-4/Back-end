@@ -22,6 +22,9 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Users.Model;
+using IntegrationLibrary.Common;
+using HospitalLibrary.Symptoms.Model;
+using HospitalLibrary.Medicines.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -76,6 +79,12 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomSchedules\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSymptom\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"MedicinePrescription\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Symptoms\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Prescriptions\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Medicines\" RESTART IDENTITY CASCADE;");
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -123,16 +132,16 @@ namespace TestHospitalApp.Setup
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
 
-            BloodSupply bloodSupply1 = new BloodSupply { Type = "A+", Amount = 200.00 };
+            BloodSupply bloodSupply1 = new BloodSupply { BloodType = BloodType.FromString("A+"), Amount = 200.00 };
             context.BloodSupply.Add(bloodSupply1);
 
-            BloodSupply bloodSupply2 = new BloodSupply { Type = "B+", Amount = 0.00 };
+            BloodSupply bloodSupply2 = new BloodSupply { BloodType = BloodType.FromString("B+"), Amount = 0.00 };
             context.BloodSupply.Add(bloodSupply2);
 
             Patient patient = new Patient
             {
                 Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),
-                BloodType = BloodType.A_POS,
+                BloodType = BloodType.FromString("A+"),
                 ChoosenDoctorId = doctor.Id,
                 Name = "Petar",
                 Surname = "Popovic",
@@ -147,7 +156,7 @@ namespace TestHospitalApp.Setup
             Patient patient2 = new Patient
             {
                 Id = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"),
-                BloodType = BloodType.A_POS,
+                BloodType = BloodType.FromString("A+"),
                 ChoosenDoctorId = doctor.Id,
                 Name = "Test",
                 Surname = "Test",
@@ -161,6 +170,21 @@ namespace TestHospitalApp.Setup
 
             context.Patients.Add(patient);
             context.Patients.Add(patient2);
+
+
+            //Symptoms
+            Symptom symptom1 = new Symptom { Name = "Povišena temperatura" };
+            Symptom symptom2 = new Symptom { Name = "Suv kašalj" };
+
+            context.Symptoms.Add(symptom1);
+            context.Symptoms.Add(symptom2);
+
+            //Medicines
+            Medicine medicine1 = new Medicine { Name = "Aspirin" };
+            Medicine medicine2 = new Medicine { Name = "Brufen" };
+
+            context.Medicines.Add(medicine1);
+            context.Medicines.Add(medicine2);
 
             Admission admission = new Admission
             {

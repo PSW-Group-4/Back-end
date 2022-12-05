@@ -21,7 +21,7 @@ namespace IntegrationAPI.HostedServices
             var next = _expression.GetNextOccurrence(DateTimeOffset.Now, _timeZoneInfo);
             if (next.HasValue)
             {
-                var delay = next.Value - DateTimeOffset.Now;
+                TimeSpan delay = next.Value - DateTimeOffset.Now;
                 if (delay.TotalMilliseconds <= 0)   // prevent non-positive values from being passed into Timer
                 {
                     await ScheduleJob(cancellationToken);

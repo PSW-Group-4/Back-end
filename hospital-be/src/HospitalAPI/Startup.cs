@@ -42,6 +42,8 @@ using HospitalLibrary.BloodSupplies.Service;
 using HospitalLibrary.Admissions.Repository;
 using HospitalLibrary.Admissions.Service;
 using System;
+using HospitalAPI.Communications;
+using HospitalAPI.Communications.Consumer;
 using HospitalLibrary.Allergies.Service;
 using HospitalLibrary.AcountActivation.Repository;
 using HospitalLibrary.AcountActivation.Service;
@@ -54,10 +56,17 @@ using HospitalLibrary.AdmissionHistories.Repository;
 using HospitalLibrary.AdmissionHistories.Service;
 using HospitalLibrary.MedicalReport.Services;
 using HospitalAPI.HostedService;
+using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Treatments.Repository;
 using HospitalLibrary.Treatments.Service;
+using HospitalLibrary.Prescriptions.Repository;
+using HospitalLibrary.Prescriptions.Service;
+using HospitalLibrary.Symptoms.Repository;
+using HospitalLibrary.Symptoms.Service;
+using HospitalLibrary.Reports.Repository;
+using HospitalLibrary.Reports.Service;
 
 namespace HospitalAPI
 {
@@ -225,6 +234,19 @@ namespace HospitalAPI
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IMedicineService, MedicineService>();
 
+            //Prescriptions
+            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
+
+            //Symptoms
+            services.AddScoped<ISymptomRepository, SymptomRepository>();
+            services.AddScoped<ISymptomService, SymptomService>();
+
+            //Reports
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IReportService, ReportService>();
+
+            //Treatment
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
             services.AddScoped<ITreatmentService, TreatmentService>();
 
@@ -232,6 +254,8 @@ namespace HospitalAPI
             //Hosted Service
             services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */15 * * * *", TimeZoneInfo.Local));
             services.AddHostedService<ReportSendingTask>();
+
+            services.AddScoped<IConsumer<BloodSupply>, BloodSupplyStateConsumer>();
 
         }
 

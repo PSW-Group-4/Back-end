@@ -3,10 +3,10 @@ using IntegrationLibrary.BloodBanks.Service;
 using AutoMapper;
 using System.Collections.Generic;
 using IntegrationLibrary.BloodBanks.Model;
-using IntegrationAPI.Communications;
 using System;
 using IntegrationAPI.Authorization;
 using IntegrationAPI.Dtos.BloodBank;
+using IntegrationAPI.Communications.Mail;
 
 namespace IntegrationAPI.Controllers
 {
@@ -35,7 +35,7 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         public ActionResult Create(BloodBankRegisterDto bloodBankDto)
         {
-            var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
+            BloodBank bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Create(bloodBank);
             _mailSender.sendEmail(_mailSender.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, IntegrationLibrary.Settings.EmailingResources.EmailSubjectBB, _mailSender.CreateEmailText(bloodBank)));
             return Ok(bloodBank);
@@ -43,13 +43,13 @@ namespace IntegrationAPI.Controllers
         [HttpGet("{ApiKey}")]
         public ActionResult GetByApiKey(string ApiKey)
         {
-            var bloodBank = _service.GetByApiKey(ApiKey);
+            BloodBank bloodBank = _service.GetByApiKey(ApiKey);
             return Ok(bloodBank);
         }
         [HttpPost ("{id}")]
         public ActionResult Update(String Id, BloodBankEditDto bloodBankDto)
         {
-            var bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
+            BloodBank bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Update(bloodBank);
             return Ok(bloodBank);
         }

@@ -1,28 +1,46 @@
-﻿using IntegrationLibrary.BloodBanks.Model;
+﻿using AutoMapper;
+using IntegrationAPI.Dtos.BloodTypes;
+using IntegrationLibrary.Common;
 using IntegrationLibrary.Tenders.Model;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IntegrationAPI.Dtos.Tenders
 {
     public class TenderConverter : IConverter<Tender, TenderDto>
     {
+
+        public TenderConverter() { }
+
         public TenderDto Convert(Tender entity)
         {
-            return new TenderDto
+            //IEnumerable<BloodProductDto> bloodProductDtos = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() });
+            /*return new TenderDto
             {
-                Amount = entity.Amount,
-                BloodType = entity.BloodType.ToString(),
-                RHFactor = entity.RHFactor.ToString(),
+                BloodProducts = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() }),
                 Deadline = entity.Deadline.ToString()
-            };
+            };*/
+            return new TenderDto();
         }
 
         public Tender Convert(TenderDto dto)
         {
-            return Tender.Create((BloodType)Enum.Parse(typeof(BloodType), dto.BloodType),
-                (RHFactor)Enum.Parse(typeof(RHFactor), dto.RHFactor),
-                dto.Amount,
-                DateTime.Parse(dto.Deadline));
+            DateTime? deadline;
+            if(dto.Deadline != null)
+            {
+                deadline = DateTime.Parse(dto.Deadline);
+            } else
+            {
+                deadline = null;
+            }
+            IEnumerable<Blood> bloodProducts = dto.BloodProducts.Select
+                (dto => new Blood(
+                    BloodTypeConverter.Convert(dto.BloodType),
+                    dto.Amount));;
+            return Tender.Create(bloodProducts,
+                deadline);
         }
+         
     }
 }

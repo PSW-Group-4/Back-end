@@ -1,14 +1,24 @@
 ﻿using AutoMapper;
 using IntegrationAPI;
+using IntegrationAPI.Communications.Consumer;
+using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
+using IntegrationAPI.Communications.Producer;
 using IntegrationAPI.Controllers;
+using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationAPI.Dtos.BloodTypes;
+using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodRequests.Repository;
 using IntegrationLibrary.BloodRequests.Service;
+using IntegrationLibrary.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +28,7 @@ using Xunit;
 
 namespace TestIntegrationApp.IntegrationTesting
 {
-   public class BloodRequestTests : BaseIntegrationTest
+    public class BloodRequestTests : BaseIntegrationTest
     {
         public BloodRequestTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
@@ -28,8 +38,32 @@ namespace TestIntegrationApp.IntegrationTesting
         }
         private static BloodRequestController SetupController(IServiceScope scope)
         {
-            return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new BloodRequestController(scope.ServiceProvider.GetRequiredService<IBloodRequestService>(),
+                scope.ServiceProvider.GetRequiredService<IBloodBankService>(),
+                scope.ServiceProvider.GetRequiredService<IProducer>());
         }
+
+        [Fact]
+        public void Creates_blood_request()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var controller = SetupController(scope);
+            BloodTypeDto bloodTypeDto = new BloodTypeDto("A", "POSITIVE");
+            BloodDto bloodDto = new BloodDto(bloodTypeDto, 1000);
+            BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
+            {
+                BloodDto = bloodDto,
+                Reasons = "Reason",
+                IsUrgent = true,
+                SendOnDate = DateTime.UtcNow
+            };
+            var create = controller.Create(bloodRequest);
+
+            var result = controller.GetAll();
+
+            Assert.NotNull(result);
+        }
+
         [Fact]
         public void Retrieves_all_requests()
         {
@@ -58,21 +92,28 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
-            BloodRequestsCreateDto bloodRequest = new BloodRequestsCreateDto
+            var service = SetupService(scope);
+            BloodTypeDto bloodTypeDto = new("A", "POSITIVE");
+            BloodDto bloodDto = new(bloodTypeDto, 1000);
+            BloodRequestsCreateDto bloodRequest = new()
             {
-                BloodType = BloodType.A,
-                RHFactor = RHFactor.NEGATIVE,
-                ReasonsWhyBloodIsNeeded = "Reason",
-                BloodAmountInMilliliters = 100.00,
-                DateTime = DateTime.Now,
+                BloodDto = bloodDto,
+                Reasons = "Reason",
+                IsUrgent = true,
+                SendOnDate = DateTime.UtcNow
             };
-            var create = controller.Create(bloodRequest);
-            var request = (((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodRequestEditDto>).First();
-            request.BloodAmountInMilliliters = 200.00;
-            var result = ((OkObjectResult)controller.Update(request))?.Value as BloodRequestEditDto;
-            Assert.True(result.BloodAmountInMilliliters == 200.00);
+            controller.Create(bloodRequest);
+            var request = (((OkObjectResult)controller.GetAll())?.Value as IEnumerable<BloodRequest>).First();
+            BloodRequestEditDto bloodRequestEditDto = new()
+            {
+                Id = request.Id,
+                BloodBank = "Bankica",
+                IsApproved = true,
+            };
+            controller.Manage(bloodRequestEditDto);
+            var result = service.GetById(request.Id);
+            Assert.True(result.IsApproved == true);
 
         }
-       
     }
 }

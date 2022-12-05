@@ -13,6 +13,8 @@ namespace IntegrationLibrary.BloodBanks.Model
         public Guid Id { get; set; }
         public virtual BloodBank BloodBank { get; set; }
         public ReportFrequencyTitles RequestFrequency { get; set; }
-        public Boolean ActiveStatus { get; set; }
+        public bool ActiveStatus { get; set; }
+
+        public ReportConfiguration() { }
     }
 }

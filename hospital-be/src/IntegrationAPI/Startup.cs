@@ -1,8 +1,6 @@
 using System;
 using IntegrationAPI.Authorization;
-using IntegrationAPI.Communications;
 using IntegrationAPI.Mappers;
-using IntegrationAPI.Dtos;
 using IntegrationLibrary.BloodBankNews.Repository;
 using IntegrationLibrary.BloodBankNews.Service;
 using IntegrationLibrary.BloodBanks.Model;
@@ -34,6 +32,20 @@ using IntegrationLibrary.Tenders.Repository;
 using IntegrationLibrary.Tenders.Service;
 using IntegrationLibrary.Tenders.Model;
 using IntegrationAPI.Dtos.Tenders;
+using IntegrationLibrary.BloodSubscriptions.Service;
+using IntegrationLibrary.BloodSubscriptions.Repository;
+using IntegrationLibrary.TenderApplications.Service;
+using IntegrationLibrary.TenderApplications.Repository;
+using IntegrationAPI.Communications.Mail;
+using IntegrationAPI.Communications.Consumer;
+using IntegrationAPI.Communications.Producer;
+using IntegrationLibrary.BloodRequests.Model;
+using IntegrationAPI.Communications.Consumer.BloodBankNews;
+using IntegrationAPI.Dtos;
+using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
+using HospitalLibrary.BloodSupplies.Model;
+using IntegrationAPI.Communications.Consumer.ReceivedBlood;
+using IntegrationLibrary.Common;
 
 namespace IntegrationAPI
 {
@@ -84,6 +96,7 @@ namespace IntegrationAPI
             });
 
 
+            
             services.AddScoped<ExternalAuthorizationFilter>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
@@ -104,14 +117,19 @@ namespace IntegrationAPI
             services.AddScoped<IBbReportService, BbReportService>();
             services.AddScoped<IBbReportRepository, BbReportRepository>();
             services.AddScoped<IConverter<ReportConfiguration, ReportConfigurationDto>, ReportConfigurationConverter>();
-            services.AddScoped<IConsumer<News>, NewsConsumer>();
             services.AddScoped<ITenderRepository, TenderRepository>();
             services.AddScoped<ITenderService, TenderService>();
-
+            services.AddScoped<IBloodSubscriptionRepository, BloodSubscriptionRepository>();
+            services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
+            services.AddScoped<ITenderApplicationService, TenderApplicationService>();
+            services.AddScoped<ITenderApplicationRepository, TenderApplicationRepository>();
+            services.AddScoped<IProducer, Producer>();
+            services.AddScoped<IConsumer<News>, NewsConsumer>();
+            services.AddScoped<IConsumer<BloodRequest>, BloodRequestResponseConsumer>();
+            services.AddScoped<IConsumer<Blood>, BloodConsumer>();
 
             services.AddControllers();
 
-     
             services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */1 * * * *", TimeZoneInfo.Local));
             services.AddHostedService<ReportSendingTask>();
            

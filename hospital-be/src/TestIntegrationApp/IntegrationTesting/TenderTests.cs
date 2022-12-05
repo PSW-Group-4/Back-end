@@ -2,6 +2,8 @@
 using IntegrationAPI.Communications;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos;
+using IntegrationAPI.Dtos.BloodProducts;
+using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationAPI.Dtos.Tenders;
 using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodRequests.Repository;
@@ -41,12 +43,14 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             using var scope = Factory.Services.CreateScope();
             TenderController tenderController = SetupController(scope);
+            List<BloodDto> bloodProductDtos = new()
+            {
+                new BloodDto(new BloodTypeDto("A", "POSITIVE"), 5000)
+            };
 
             TenderDto tenderDto = new()
             {
-                BloodType = "AB",
-                RHFactor = "NEGATIVE",
-                Amount = 5000.0,
+                BloodProducts = bloodProductDtos,
                 Deadline = DateTime.Now.AddDays(3).ToString(),
             };
 

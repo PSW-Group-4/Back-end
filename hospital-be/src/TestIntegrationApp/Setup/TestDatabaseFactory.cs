@@ -48,9 +48,7 @@ namespace TestIntegrationApp.Setup
         {
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_bank_news\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"blood_requests\";");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"tenders\";");
+            context.Database.ExecuteSqlRaw("INSERT INTO public.blood_banks(\r\n\t\"Id\", \"Name\", \"ServerAddress\", \"EmailAddress\", \"Password\", \"ApiKey\")\r\n\tVALUES ('37ae7862-f847-4a39-b39f-f8ff31452b5e', 'Bankica', 'localhost', 'isaproject202223@gmail.com', 'password', 'apikey');");
 
             context.SaveChanges();
         }

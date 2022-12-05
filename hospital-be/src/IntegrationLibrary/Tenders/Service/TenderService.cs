@@ -26,5 +26,9 @@ namespace IntegrationLibrary.Tenders.Service
         {
             return _repository.GetAll();
         }
+        public Tender GetById(Guid Id) 
+        {
+            return _repository.GetById(Id);
+        }
     }
 }

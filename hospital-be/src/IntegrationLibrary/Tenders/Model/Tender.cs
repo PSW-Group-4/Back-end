@@ -2,39 +2,65 @@
 using IntegrationLibrary.Common;
 using IntegrationLibrary.Exceptions;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace IntegrationLibrary.Tenders.Model
 {
     [Table("tenders")]
     public class Tender : Entity
     {
-        public BloodType BloodType { get; private set; }
-        public RHFactor RHFactor { get; private set; }
-        public double Amount { get; private set; }
-        public DateTime Deadline { get; private set; }
+        private IEnumerable<Blood> blood;
 
-        private Tender(BloodType bloodType, RHFactor rHFactor, double amount, DateTime deadline)
+        [JsonInclude]
+        public IEnumerable<Blood> Blood
+        {
+            get
+            {
+                return blood.ToList();
+            }
+
+            private set => blood = value;
+        }
+        public DateTime? Deadline { get; private set; }
+
+        private Tender() { }
+        private Tender(IEnumerable<Blood> blood, DateTime deadline)
         {
             Id = Guid.NewGuid();
-            BloodType = bloodType;
-            RHFactor = rHFactor;
-            Amount = amount;
+            Blood = blood;
             CreatedDate = DateTime.Now;
             Deadline = deadline;
             Version = 1.0;
         }
 
-        public bool IsActive()
+        private Tender(IEnumerable<Blood> blood)
         {
-            return DateTime.Compare(DateTime.Now, Deadline) < 0;
+            Id = Guid.NewGuid();
+            Blood = blood;
+            CreatedDate = DateTime.Now;
+            Deadline = null;
+            Version = 1.0;
         }
 
-        public static Tender Create(BloodType bloodType, RHFactor rHFactor, double amount, DateTime deadline)
+        public bool IsActive()
         {
-            if(DateTime.Compare(DateTime.Now, deadline) < 0)
+            return Deadline == null || DateTime.Compare(DateTime.Now, (DateTime)Deadline) < 0;
+        }
+
+        public static Tender Create(IEnumerable<Blood> blood, DateTime? deadline)
+        {
+            if(deadline == null)
             {
-                return new Tender(bloodType, rHFactor, amount, deadline);
+                return new Tender(blood);
+            }
+
+            if(DateTime.Compare(DateTime.Now, (DateTime)deadline) < 0)
+            {
+                return new Tender(blood, (DateTime)deadline);
             } else
             {
                 throw new DateIsBeforeTodayException();
