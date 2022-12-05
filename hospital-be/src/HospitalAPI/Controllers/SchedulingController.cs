@@ -7,6 +7,8 @@ using System;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using System.Collections.Generic;
+using HospitalLibrary.Core.Model;
+using HospitalAPI.Dtos.Appointment;
 
 namespace HospitalAPI.Controllers
 {
@@ -55,5 +57,17 @@ namespace HospitalAPI.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_appointmentService.GetAll());
+        }
+
+        [HttpPost]
+        public ActionResult Create(AppointmentDto appDto)
+        {
+            var app = _mapper.Map<Appointment>(appDto);
+            return Ok(_appointmentService.Create(app));
+        }
     }
 }

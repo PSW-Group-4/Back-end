@@ -133,6 +133,8 @@ namespace HospitalAPI.Mapper
 
             CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
 
+            CreateMap<AppointmentDto, Appointment>();
+
 
         }
 

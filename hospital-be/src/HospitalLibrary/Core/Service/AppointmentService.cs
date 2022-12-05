@@ -122,9 +122,10 @@ namespace HospitalLibrary.Core.Service
         public List<DateTime> GetAvailableDatesForRelocationOrRenovation(HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange)
 
         {
-            List<Appointment> appointments = (List<Appointment>)GetAll();
+            IEnumerable<Appointment> appointments = GetAll();
             List<DateTime> result = new List<DateTime>();
             DateTime start = dateRange.StartTime;
+            Boolean shouldAdd = true;
             do
             {
                 foreach (Appointment appointment in appointments)
@@ -133,13 +134,17 @@ namespace HospitalLibrary.Core.Service
                     {
                         if ((start < appointment.DateRange.StartTime.AddMinutes(30)) && (appointment.DateRange.StartTime < start.AddMinutes(dto.Duration)))
                         {
+                            shouldAdd = false;
                             break;
                         }
-                        else { if (!result.Contains(start)) { result.Add(start); } }
                     }
                 }
+                if (!result.Contains(start) && shouldAdd == true)
+                {
+                     result.Add(start);
+                }
                 start = dto.DateRange.StartTime.AddMinutes(15);
-            } while (dto.DateRange.EndTime < start); ;
+            } while (dto.DateRange.EndTime > start); ;
             return result;
         }
 
