@@ -22,6 +22,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Users.Model;
+using HospitalLibrary.Symptoms.Model;
+using HospitalLibrary.Medicines.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -76,6 +78,12 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomSchedules\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSymptom\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"MedicinePrescription\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Symptoms\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Prescriptions\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Medicines\" RESTART IDENTITY CASCADE;");
 
             Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
@@ -161,6 +169,21 @@ namespace TestHospitalApp.Setup
 
             context.Patients.Add(patient);
             context.Patients.Add(patient2);
+
+
+            //Symptoms
+            Symptom symptom1 = new Symptom { Name = "Povišena temperatura" };
+            Symptom symptom2 = new Symptom { Name = "Suv kašalj" };
+
+            context.Symptoms.Add(symptom1);
+            context.Symptoms.Add(symptom2);
+
+            //Medicines
+            Medicine medicine1 = new Medicine { Name = "Aspirin" };
+            Medicine medicine2 = new Medicine { Name = "Brufen" };
+
+            context.Medicines.Add(medicine1);
+            context.Medicines.Add(medicine2);
 
             Admission admission = new Admission
             {
