@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
+using HospitalAPI.Dtos.Person;
 using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -59,6 +62,20 @@ namespace HospitalAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Patient")]
+        [HttpGet("specialties")]
+        public ActionResult GetAllSpecialties()
+        {
+            return Ok(_doctorService.GetAllSpecialties());
+        }
+        
+        [Authorize(Roles = "Patient")]
+        [HttpGet("specialties/{specialty}")]
+        public ActionResult GetDoctorsWithSpecialty([FromRoute] string specialty)
+        {
+            var doctors = _doctorService.GetDoctorsWithSpecialty(specialty);
+            return Ok(_mapper.Map<IEnumerable<PersonFullnameDto>>(doctors));
+        }
 
         // GET api/Doctor/doctorsWithLeastPatients
         [HttpGet("doctorsWithLeastPatients")]

@@ -62,6 +62,16 @@ namespace HospitalLibrary.Doctors.Service
             return (from doc in _doctorRepository.GetAll().Where(d => d.Speciality == Constants.Constants.GeneralPractitioner) where NumberOfPatientsDoctorHas(doc.Id) <= maxPatientCountOffset + minimum select new ChooseDoctorDTO(doc.Id, doc.Name, doc.Surname, NumberOfPatientsDoctorHas(doc.Id))).ToList();
         }
 
+        public IEnumerable<string> GetAllSpecialties()
+        {
+            return _doctorRepository.GetAllSpecialties();
+        }
+
+        public IEnumerable<Doctor> GetDoctorsWithSpecialty(string specialty)
+        {
+            return _doctorRepository.GetDoctorsWithSpecialty(specialty);
+        }
+
         private int NumberOfPatientsDoctorWithLeastPatientHas(int maximum)
         {
             return _doctorRepository.GetAll().Where(d => d.Speciality == Constants.Constants.GeneralPractitioner).ToList().Select(doctor => NumberOfPatientsDoctorHas(doctor.Id)).Prepend(maximum).Min();

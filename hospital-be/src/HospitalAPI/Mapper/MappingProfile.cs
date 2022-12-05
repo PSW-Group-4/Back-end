@@ -45,6 +45,7 @@ namespace HospitalAPI.Mapper
 
             CreateMap<PersonRequestDto, Person>();
             CreateMap<Person, PersonRequestDto>();
+            CreateMap<Person, PersonFullnameDto>();
 
             CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
