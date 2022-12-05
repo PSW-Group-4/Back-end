@@ -16,6 +16,12 @@ delete from "Buildings";
 delete from "Allergies";
 delete from "Addresses";
 delete from "AgeGroups";
+delete from "MedicinePrescription";
+delete from "ReportSymptom";
+delete from "Symptoms";
+delete from "Medicines";
+delete from "Prescriptions";
+delete from "Reports";
 delete from "Admissions";
 insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
 	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
@@ -660,6 +666,22 @@ INSERT INTO public."RoomMaps"("Id", "RoomId", "CoordinateX", "CoordinateY", "Hei
 			('a7120f41-2893-4041-88cb-55beb585583a', 'be5d6557-f0fa-42fb-bff0-823923d6dfd9', 250, 120, 80, 80)
 			;
 
+INSERT INTO public."Symptoms" ("Id","Name") VALUES
+	 ('3009ecda-0e29-43d4-9830-ec020050492d','Povišena temperatura'),
+	 ('61eb64fb-bf37-4388-a232-cdb80aec27f9','Suv kašalj');
+	 
+INSERT INTO public."Medicines" ("Id","Name") VALUES
+	 ('6dabfcb9-3bf6-4025-bc28-ff8111bb547a','Aspirin'),
+	 ('ebe60544-acf3-4171-bb5f-e3370b945157','Brufen');
+	 
+INSERT INTO public."Reports" ("Id","PatientId", "DoctorId", "Text", "DateTime") VALUES
+	 ('9f557c4c-4689-4208-88a6-78eabfa131eb','123a835d-0998-4e5e-b55f-d1ec6f8f1ad2', '5c036fba-1118-4f4b-b153-90d75e60625e', 'Report 1', '2022-11-15 10:00:00'),
+	 ('8bd4cf4e-24bb-4ad8-89ce-b651a525e5f6','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17', '7875c605-4989-465c-8cbc-2f93f2b1612e', 'Report 2', '2022-10-25 13:00:00');
+	 
+INSERT INTO public."Prescriptions" ("Id","ReportId", "DateTime") VALUES
+	 ('9b4bf7c4-d894-4d17-ae89-1ef24b50a1b9','9f557c4c-4689-4208-88a6-78eabfa131eb', '2022-11-15 10:00:00'),
+	 ('d4f66ae9-7bf1-4014-8e50-458ecf6983a4','8bd4cf4e-24bb-4ad8-89ce-b651a525e5f6', '2022-10-25 13:00:00');
+			
 INSERT INTO public."Admissions" ("Id","PatientId","Reason","RoomId","arrivalDate") VALUES
 	 ('1412c639-c5e1-47a1-b29b-1fe925536612','11942a9c-850e-489a-8434-98704889d8ed','Povisen secer pa mora da se oporavi','54c6de76-bc71-4615-8c73-4ebf9546444f','2022-11-11 11:11:00'),
 	 ('15f4c4e0-08b2-44ef-9e1b-0f14164d59d2','c1db258b-3034-4ba5-98bd-4f68137bac94','Srcani zastoj u prednjoj komori','d4857133-ef89-4e5e-865f-b49c83ecec23','2022-09-09 10:10:00');
