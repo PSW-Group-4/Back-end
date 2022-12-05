@@ -1,16 +1,15 @@
-﻿using HospitalLibrary.Patients.Model;
+﻿using AutoMapper;
+using HospitalAPI.Dtos.Patient;
+using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Exceptions;
+using HospitalLibrary.Patients.Model;
 using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Users.Model;
+using HospitalLibrary.Users.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using AutoMapper;
-using HospitalAPI.Dtos.Patient;
-using HospitalLibrary;
-using HospitalLibrary.Exceptions;
-using Microsoft.AspNetCore.Authorization;
-using System.Data;
 using System.Linq;
-using HospitalLibrary.Core.Service.Interfaces;
-using HospitalLibrary.Users.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -21,12 +20,14 @@ namespace HospitalAPI.Controllers
         private readonly IPatientService _patientService;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
+        private readonly IUserService _userService;
 
-        public PatientController(IPatientService patientService, IMapper mapper, IJwtService jwtService)
+        public PatientController(IPatientService patientService, IMapper mapper, IJwtService jwtService, IUserService userService)
         {
             _patientService = patientService;
             _mapper = mapper;
             _jwtService = jwtService;
+            _userService = userService;
         }
 
         // GET: api/Patient
@@ -84,7 +85,7 @@ namespace HospitalAPI.Controllers
 
         // POST api/Patient
         [HttpPost]
-        public ActionResult Create([FromBody]PatientRequestDto patientDto)
+        public ActionResult Create([FromBody] PatientRequestDto patientDto)
         {
             var patient = _mapper.Map<Patient>(patientDto);
             _patientService.Create(patient);
@@ -93,17 +94,17 @@ namespace HospitalAPI.Controllers
 
         // PUT api/Patient/2
         [HttpPut("{id}")]
-        public ActionResult Update([FromRoute]Guid id,[FromBody] PatientRequestDto patientDto)
+        public ActionResult Update([FromRoute] Guid id, [FromBody] PatientRequestDto patientDto)
         {
             var patient = _mapper.Map<Patient>(patientDto);
             patient.Id = id;
-            
+
             try
             {
                 var result = _patientService.Update(patient);
                 return Ok(result);
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return NotFound();
             }
@@ -111,7 +112,7 @@ namespace HospitalAPI.Controllers
 
         // DELETE api/Patient/2
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute]Guid id)
+        public ActionResult Delete([FromRoute] Guid id)
         {
             try
             {
@@ -145,6 +146,24 @@ namespace HospitalAPI.Controllers
         public ActionResult DoctorsPatientsByAgeGroup([FromRoute] Guid DoctorId)
         {
             return Ok(_patientService.DoctorsPatientsByAgeGroup(DoctorId));
-        }   
+        }
+
+
+        // WILL BE DELETED LATER, JUST TESTING UNTIL APPOINTMENT CANCELLATION IS FINISHED
+        [HttpGet("cancel-appointment-test/{PatientId}")]
+        public ActionResult CancelAppointmentTest([FromRoute] Guid PatientId)
+        {
+            try
+            {
+                _userService.AddSuspiciousActivityToUser(PatientId, new SuspiciousActivity("Appointment cancellation", DateTime.Now));
+                return Ok();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("User that is connected to this patient is not found");
+            }
+        }
+
+
     }
 }

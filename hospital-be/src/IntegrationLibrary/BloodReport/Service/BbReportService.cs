@@ -5,7 +5,7 @@ using IntegrationLibrary.BloodReport.Model;
 using IntegrationLibrary.BloodUsages.Model;
 using IntegrationLibrary.BloodUsages.Service;
 using IntegrationLibrary.ReportConfigurations.Service;
-using IntegrationLibrary.Utilities;
+using IntegrationLibrary.Utilities.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -92,10 +92,10 @@ namespace IntegrationLibrary.BloodReport.Service
             }
             return retVal;
         }
-        private String saveAsPdf(BloodUsageReport bloodUsageReport)
+        private string saveAsPdf(BloodUsageReport bloodUsageReport)
         {
             string html = bloodUsageReport.GenerateHtml();
-            return HtmlToPdfConvertor.Convert(html, HtmlToPdfConvertor.defaultPath, bloodUsageReport.BloodBank.Name);
+            return HtmlToPdfConverter.Convert(html, HtmlToPdfConverter.defaultPath, bloodUsageReport.BloodBank.Name);
         }
         private List<BloodUsageDto> getUsageSinceLast(BloodUsageReport bloodUsageReport)
         {

@@ -13,34 +13,34 @@ namespace IntegrationLibrary.Tenders.Model
     [Table("tenders")]
     public class Tender : Entity
     {
-        private IEnumerable<BloodProduct> bloodProducts;
+        private IEnumerable<Blood> blood;
 
         [JsonInclude]
-        public IEnumerable<BloodProduct> BloodProducts
+        public IEnumerable<Blood> Blood
         {
             get
             {
-                return bloodProducts.ToList();
+                return blood.ToList();
             }
 
-            private set => bloodProducts = value;
+            private set => blood = value;
         }
         public DateTime? Deadline { get; private set; }
 
         private Tender() { }
-        private Tender(IEnumerable<BloodProduct> bloodProducts, DateTime deadline)
+        private Tender(IEnumerable<Blood> blood, DateTime deadline)
         {
             Id = Guid.NewGuid();
-            BloodProducts = bloodProducts;
+            Blood = blood;
             CreatedDate = DateTime.Now;
             Deadline = deadline;
             Version = 1.0;
         }
 
-        private Tender(IEnumerable<BloodProduct> bloodProducts)
+        private Tender(IEnumerable<Blood> blood)
         {
             Id = Guid.NewGuid();
-            BloodProducts = bloodProducts;
+            Blood = blood;
             CreatedDate = DateTime.Now;
             Deadline = null;
             Version = 1.0;
@@ -51,16 +51,16 @@ namespace IntegrationLibrary.Tenders.Model
             return Deadline == null || DateTime.Compare(DateTime.Now, (DateTime)Deadline) < 0;
         }
 
-        public static Tender Create(IEnumerable<BloodProduct> bloodProducts, DateTime? deadline)
+        public static Tender Create(IEnumerable<Blood> blood, DateTime? deadline)
         {
             if(deadline == null)
             {
-                return new Tender(bloodProducts);
+                return new Tender(blood);
             }
 
             if(DateTime.Compare(DateTime.Now, (DateTime)deadline) < 0)
             {
-                return new Tender(bloodProducts, (DateTime)deadline);
+                return new Tender(blood, (DateTime)deadline);
             } else
             {
                 throw new DateIsBeforeTodayException();

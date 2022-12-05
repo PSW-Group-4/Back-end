@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using HospitalLibrary.EquipmentRelocation.DTO;
 using HospitalLibrary.Users.Model;
+using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Medicines.Model;
 
@@ -131,16 +132,16 @@ namespace TestHospitalApp.Setup
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
 
-            BloodSupply bloodSupply1 = new BloodSupply { Type = "A+", Amount = 200.00 };
+            BloodSupply bloodSupply1 = new BloodSupply { BloodType = BloodType.FromString("A+"), Amount = 200.00 };
             context.BloodSupply.Add(bloodSupply1);
 
-            BloodSupply bloodSupply2 = new BloodSupply { Type = "B+", Amount = 0.00 };
+            BloodSupply bloodSupply2 = new BloodSupply { BloodType = BloodType.FromString("B+"), Amount = 0.00 };
             context.BloodSupply.Add(bloodSupply2);
 
             Patient patient = new Patient
             {
                 Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),
-                BloodType = BloodType.A_POS,
+                BloodType = BloodType.FromString("A+"),
                 ChoosenDoctorId = doctor.Id,
                 Name = "Petar",
                 Surname = "Popovic",
@@ -155,7 +156,7 @@ namespace TestHospitalApp.Setup
             Patient patient2 = new Patient
             {
                 Id = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"),
-                BloodType = BloodType.A_POS,
+                BloodType = BloodType.FromString("A+"),
                 ChoosenDoctorId = doctor.Id,
                 Name = "Test",
                 Surname = "Test",

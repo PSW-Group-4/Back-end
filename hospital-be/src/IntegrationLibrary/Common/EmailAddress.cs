@@ -6,8 +6,8 @@ namespace IntegrationLibrary.Common
 {
     public class EmailAddress : IComparable<EmailAddress>, IEquatable<EmailAddress>
     {
-        public String LocalPart { get; private set; }
-        public String Domain { get; private set; }
+        public string LocalPart { get; private set; }
+        public string Domain { get; private set; }
 
         private EmailAddress(string localPart, string domain)
         {LocalPart = localPart;
@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Common
             
         }
 
-        public static EmailAddress Create(String input)
+        public static EmailAddress Create(string input)
         {
             if(IsValid(input))
             {
@@ -26,7 +26,7 @@ namespace IntegrationLibrary.Common
             }
         }
 
-        public static bool IsValid(String input)
+        public static bool IsValid(string input)
         {
             return Regex.IsMatch(input.Trim(), @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase);
         }
@@ -48,12 +48,12 @@ namespace IntegrationLibrary.Common
 
         public int CompareTo(EmailAddress other)
         {
-            return String.Compare(ToString(), other.ToString(), StringComparison.OrdinalIgnoreCase);
+            return string.Compare(ToString(), other.ToString(), StringComparison.OrdinalIgnoreCase);
         }
 
         public int CompareTo(string other)
         {
-            return String.Compare(ToString(), other, StringComparison.OrdinalIgnoreCase);
+            return string.Compare(ToString(), other, StringComparison.OrdinalIgnoreCase);
         }
 
         public override bool Equals(object obj)
@@ -66,9 +66,9 @@ namespace IntegrationLibrary.Common
             return HashCode.Combine(LocalPart, Domain);
         }
         public static bool operator ==(EmailAddress leftHandValue, EmailAddress rightHandValue) => leftHandValue.Equals(rightHandValue);
-        public static bool operator ==(EmailAddress leftHandValue, String rightHandValue) => leftHandValue.Equals(rightHandValue);
+        public static bool operator ==(EmailAddress leftHandValue, string rightHandValue) => leftHandValue.Equals(rightHandValue);
         public static bool operator !=(EmailAddress leftHandValue, EmailAddress rightHandValue) => !leftHandValue.Equals(rightHandValue);
-        public static bool operator !=(EmailAddress leftHandValue, String rightHandValue) => !leftHandValue.Equals(rightHandValue);
+        public static bool operator !=(EmailAddress leftHandValue, string rightHandValue) => !leftHandValue.Equals(rightHandValue);
 
         public static bool operator <(EmailAddress left, EmailAddress right)
         {

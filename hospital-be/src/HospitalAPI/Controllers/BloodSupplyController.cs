@@ -1,10 +1,11 @@
-using HospitalLibrary.BloodSupplies.Service;
-using Microsoft.AspNetCore.Mvc;
 using System;
-using HospitalLibrary.Exceptions;
-using HospitalAPI.Dtos.BloodSupply;
 using AutoMapper;
+using HospitalAPI.Dtos.BloodSupply;
 using HospitalLibrary.BloodSupplies.Model;
+using HospitalLibrary.BloodSupplies.Service;
+using HospitalLibrary.Exceptions;
+using IntegrationLibrary.Common;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
@@ -62,8 +63,12 @@ namespace HospitalAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromRoute] Guid id, [FromBody] BloodSupplyDto bloodSupplyDto)
         {
-            var bloodSupply = _mapper.Map<BloodSupply>(bloodSupplyDto);
-            bloodSupply.Id = id;
+            BloodSupply bloodSupply = new()
+            {
+                Id = id,
+                BloodType = BloodType.FromString(bloodSupplyDto.BloodType),
+                Amount = bloodSupplyDto.Amount
+            };
 
             try
             {
