@@ -39,5 +39,10 @@ namespace IntegrationLibrary.BloodRequests.Service
         {
             return _repository.Update(bloodRequest);
         }
+
+        public IEnumerable<BloodRequest> GetAllUrgentApprovedNotSent()
+        {
+            return _repository.GetAllUrgentApprovedNotSent();
+        }
     }
 }

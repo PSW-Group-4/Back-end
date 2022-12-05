@@ -1,54 +1,58 @@
-﻿using IntegrationLibrary.BloodRequests.Service;
+﻿using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationLibrary.BloodRequests.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Diagnostics;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using IntegrationAPI.HostedServices;
 
 namespace IntegrationAPI.Communications.Producer.BloodSubscription
 {
-    public class BloodRequestProducer : IHostedService
+    public class BloodRequestProducer : BaseTaskScheduler
     {
-        private readonly string _topic = "blood.subscriptions.topic";
- 
+        private readonly string _topic = "blood.requests.topic";
+
+        private readonly IBloodRequestService _requestService;
         public IServiceScopeFactory ServiceScopeFactory;
+        public IProducer _producer;
 
-        public Task StartAsync(CancellationToken cancellationToken)
+        public BloodRequestProducer(IServiceScopeFactory factory, ITaskSettings<BloodRequestProducer> config) : base(config.CronExpression, config.TimeZoneInfo)
         {
-            try
-            {
-                using (IServiceScope scope = ServiceScopeFactory.CreateScope())
-                {
-                    IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
-                    IBloodRequestService _requestService = scope.ServiceProvider.GetService<IBloodRequestService>();
+            ServiceScopeFactory = factory;
+            _requestService = ServiceScopeFactory.CreateScope().ServiceProvider.GetService<IBloodRequestService>();
+            _producer = ServiceScopeFactory.CreateScope().ServiceProvider.GetService<IProducer>();
+        }
 
-                    foreach (var requests in _requestService.GetAll()) // change this 
-                    {
-                        try
-                        {
-                            // convert to DTO
-                            // serialise and send
-                            //producer.Send(JsonSerializer.Serialize(dto), _topic);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine(ex.ToString());
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
+        public override Task StartAsync(CancellationToken cancellationToken)
+        {
+            return base.StartAsync(cancellationToken);
+        }
+
+        public override Task DoWork(CancellationToken cancellationToken)
+        {
+
+            foreach (var request in _requestService.GetAllUrgentApprovedNotSent())
             {
-                Debug.WriteLine(ex.Message);
+                try
+                {
+                    var dto = BloodRequestSendConverter.Convert(request);
+                    _producer.Send(JsonSerializer.Serialize(dto), _topic);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine(ex.ToString());
+                }
             }
 
             return Task.CompletedTask;
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public override Task StopAsync(CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
+            return base.StopAsync(cancellationToken);
         }
     }
 }

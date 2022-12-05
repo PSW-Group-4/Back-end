@@ -137,6 +137,8 @@ namespace IntegrationAPI
             // @ 2 am every 1st in month @"0 2 1 * *"
             //services.AddSingleton<ITaskSettings<SubscriptionScheduler>>(new TaskSettings<SubscriptionScheduler>(@" */1 * * * *", TimeZoneInfo.Local));
             //services.AddHostedService<SubscriptionScheduler>();
+            services.AddSingleton<ITaskSettings<BloodRequestProducer>>(new TaskSettings<BloodRequestProducer>(@" */1 * * * *", TimeZoneInfo.Local));
+            services.AddHostedService<BloodRequestProducer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

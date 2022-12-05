@@ -28,6 +28,7 @@ namespace IntegrationLibrary.BloodRequests.Model
 
     public enum BloodRequestStatus
     {
+        TO_BE_SENT,
         PENDING_RESPONSE,
         APPROVED_BY_BANK,
         REJECTED_BY_BANK,
