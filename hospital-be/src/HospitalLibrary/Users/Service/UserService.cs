@@ -200,7 +200,7 @@ namespace HospitalLibrary.Users.Service
 
         public IEnumerable<User> GetAllSuspiciousUsers()
         {
-            return GetAll().Where(u => u.IsUserSuspicious());
+            return GetAll().Where(u => u.IsUserSuspicious()).OrderBy(u=>u.Username);
         }
 
         public void AddSuspiciousActivityToUser(Guid personId,SuspiciousActivity suspiciousActivity)
