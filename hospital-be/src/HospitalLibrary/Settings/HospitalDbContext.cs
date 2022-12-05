@@ -26,6 +26,7 @@ using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
+using HospitalLibrary.EntityConfigurations;
 
 namespace HospitalLibrary.Settings
 {
@@ -104,6 +105,7 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
 
             modelBuilder
                 .Entity<RoomsEquipment>()

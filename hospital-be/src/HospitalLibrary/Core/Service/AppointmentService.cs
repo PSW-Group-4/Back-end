@@ -11,11 +11,11 @@ namespace HospitalLibrary.Core.Service
 {
     public class AppointmentService : IAppointmentService
     {
-        private readonly IAppointmentRepository _AppointmentRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
         private readonly IDoctorService _dctorService;
         public AppointmentService(IAppointmentRepository appointmentRepository, IDoctorService doctorService)
         {
-            _AppointmentRepository = appointmentRepository;
+            _appointmentRepository = appointmentRepository;
             _dctorService = doctorService;
         }
         //TODO refactor
@@ -42,7 +42,7 @@ namespace HospitalLibrary.Core.Service
         }
         public List<Appointment> getAll()
         {
-            return (List<Appointment>)_AppointmentRepository.GetAll();
+            return (List<Appointment>)_appointmentRepository.GetAll();
         }
         public Doctor getDoctor()
         {
@@ -81,33 +81,33 @@ namespace HospitalLibrary.Core.Service
                 if (!appointment.IsDone && (DateTime.Compare(appointment.DateRange.StartTime, DateTime.Now) < 0))
                 {
                     appointment.IsDone = true;
-                    _AppointmentRepository.Update(appointment);
+                    _appointmentRepository.Update(appointment);
                 }
         }
 
         public IEnumerable<Appointment> GetAll()
         {
-            throw new NotImplementedException();
+            return _appointmentRepository.GetAll();
         }
 
         public Appointment GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _appointmentRepository.GetById(id);
         }
 
         public Appointment Create(Appointment entity)
         {
-            throw new NotImplementedException();
+            return _appointmentRepository.Create(entity);
         }
 
         public Appointment Update(Appointment entity)
         {
-            throw new NotImplementedException();
+            return _appointmentRepository.Update(entity);
         }
 
         public void Delete(Guid entityId)
         {
-            throw new NotImplementedException();
+            _appointmentRepository.Delete(entityId);
         }
         //Bojana
         public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)

@@ -1,5 +1,6 @@
 ﻿using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Core.Model;
 
 using System;
 

@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using HospitalAPI.Dtos.Appointment;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
-using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 

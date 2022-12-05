@@ -3,15 +3,15 @@ using HospitalLibrary.RoomsAndEqipment.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.Model;
 
-namespace HospitalLibrary.Appointments.Model
+namespace HospitalLibrary.Core.Model
 {
     public class Appointment
     {
         public Guid Id {get; set;}
-        public DateRange DateRange { get; set; }
+        public virtual DateRange DateRange { get; set; }
         public Guid RoomId { get; set; }
+        public String Discriminator {get; private set;}
         public virtual Room Room { get; set; }
         public bool IsDone { get; set; }
 
