@@ -1,5 +1,6 @@
 ﻿using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationLibrary.Common;
+using System;
 using System.Collections.Generic;
 
 namespace IntegrationAPI.Dtos.BloodProducts
@@ -20,6 +21,16 @@ namespace IntegrationAPI.Dtos.BloodProducts
         {
             var retVal = new List<BloodDto>();
             foreach (var bloodItem in blood)
+            {
+                retVal.Add(Convert(bloodItem));
+            }
+            return retVal;
+        }
+
+        internal static List<Blood> Convert(List<BloodDto> bloodDto)
+        {
+            var retVal = new List<Blood>();
+            foreach (var bloodItem in bloodDto)
             {
                 retVal.Add(Convert(bloodItem));
             }

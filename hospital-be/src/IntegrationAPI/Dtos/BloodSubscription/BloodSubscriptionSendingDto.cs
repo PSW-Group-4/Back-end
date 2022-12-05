@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace IntegrationAPI.Dtos.BloodSubscription
 {
-    public class BloodSubscriptionDto
+    public class BloodSubscriptionSendingDto
     {
         public List<BloodDto> blood { get; set; }
         public string bloodBank { get; set; }

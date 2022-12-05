@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using IntegrationLibrary.BloodSubscriptions.Service;
 using IntegrationLibrary.BloodSubscriptions;
+using IntegrationAPI.Dtos.BloodSubscription;
 
 namespace IntegrationAPI.Controllers
 {
@@ -22,6 +23,13 @@ namespace IntegrationAPI.Controllers
         {
             IEnumerable<BloodSubscription> bloodSubscriptions = _service.GetAll();
             return Ok(bloodSubscriptions);
+        }
+        [HttpPost]
+        public ActionResult Create(BloodSubscriptionCreatingDto dto)
+        {
+            BloodSubscription subscription = SubscriptionConverter.Convert(dto);
+            _service.Create(subscription);
+            return Ok(subscription);
         }
 
     }

@@ -13,6 +13,6 @@ namespace IntegrationLibrary.BloodSubscriptions.Service
         public BloodSubscription Create(BloodSubscription subscription);
         public BloodSubscription Update(BloodSubscription subscription);
         public BloodSubscription GetByBbTitle(string title);
-        public IEnumerable<BloodSubscription> GetAllLastMonth();
+        public IEnumerable<BloodSubscription> GetNotUrgentLastMonth();
     }
 }

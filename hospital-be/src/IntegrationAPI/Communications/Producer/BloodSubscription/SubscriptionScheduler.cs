@@ -31,11 +31,11 @@ namespace IntegrationAPI.Communications.Producer.BloodSubscription
             using (IServiceScope scope = ServiceScopeFactory.CreateScope())
             {
                 IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
-                foreach (var subscription in _subscriptionService.GetAllLastMonth())
+                foreach (var subscription in _subscriptionService.GetNotUrgentLastMonth())
                 {
                     try
                     {
-                        BloodSubscriptionDto dto = SubscriptionConverter.Convert(subscription);
+                        BloodSubscriptionSendingDto dto = SubscriptionConverter.Convert(subscription);
                         producer.Send(JsonSerializer.Serialize(dto), _topic);
                     }
                     catch (Exception ex)
