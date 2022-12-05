@@ -97,6 +97,7 @@ namespace HospitalLibrary.Core.Service
 
         public Appointment Create(Appointment entity)
         {
+            entity.IsDone = false;
             return _appointmentRepository.Create(entity);
         }
 
