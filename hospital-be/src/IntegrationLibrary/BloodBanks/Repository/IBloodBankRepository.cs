@@ -12,10 +12,10 @@ namespace IntegrationLibrary.BloodBanks.Repository
         public IEnumerable<BloodBank> GetAll();
         public BloodBank GetById(Guid id);
         public BloodBank Create(BloodBank bank);
-        public IEnumerable<String> GetApiKeys();
-        public BloodBank GetByApiKey(String ApiKey);
+        public IEnumerable<string> GetApiKeys();
+        public BloodBank GetByApiKey(string ApiKey);
         public BloodBank Update(BloodBank bloodBank);
-        public BloodBank GetByName(String name);
+        public BloodBank GetByName(string name);
 
 
 

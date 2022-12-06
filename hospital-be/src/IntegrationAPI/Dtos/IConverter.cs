@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace IntegrationAPI.Dtos
 {
-    public interface IConverter<Entity, Dto>
+    public interface IConverter<TEntity, TDto>
     {
-        public Dto Convert(Entity entity);
-        public Entity Convert(Dto dto);
+        public TDto Convert(TEntity entity);
+        public TEntity Convert(TDto dto);
     }
 }

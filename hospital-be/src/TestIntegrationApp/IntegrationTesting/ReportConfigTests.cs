@@ -1,5 +1,5 @@
 ﻿using IntegrationAPI;
-using IntegrationAPI.Communications;
+using IntegrationAPI.Communications.Pdf;
 using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.BloodReport.Service;

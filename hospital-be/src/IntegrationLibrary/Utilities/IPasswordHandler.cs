@@ -10,8 +10,8 @@ namespace IntegrationLibrary.Utilities
 {
     public interface IPasswordHandler
     {
-        public String Generate();
-        public String Hash(BloodBank bloodBank, String password);
-        public PasswordVerificationResult Verify(BloodBank bloodBank, String providedPassword);
+        public string Generate();
+        public string Hash(BloodBank bloodBank, string password);
+        public PasswordVerificationResult Verify(BloodBank bloodBank, string providedPassword);
     }
 }

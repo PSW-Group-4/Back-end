@@ -1,4 +1,6 @@
+using HospitalAPI.Communications;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace HospitalAPI
@@ -15,6 +17,10 @@ namespace HospitalAPI
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureServices(services =>
+                {
+                    services.AddHostedService<BloodSupplyStateListener>();
                 });
     }
 }

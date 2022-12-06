@@ -1,19 +1,10 @@
-﻿using AutoMapper;
-using HospitalAPI.Dtos.Appointment;
-using HospitalLibrary;
-using HospitalLibrary.Admissions.Service;
-using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.Doctors.Service;
-using HospitalLibrary.Exceptions;
-using Microsoft.AspNetCore.Mvc;
-using HospitalAPI.Dtos.Admission;
-using System;
-using HospitalLibrary.Admissions.Model;
-using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+﻿using System;
+using AutoMapper;
 using HospitalAPI.Dtos.Bed;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.RoomsAndEqipment.Model;
-using HospitalAPI.Dtos.Patient;
-using HospitalLibrary.Patients.Model;
+using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
@@ -36,6 +27,7 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_bedService.GetAll());
         }
+
         [HttpGet("{id}")]
         public ActionResult GetById([FromRoute] Guid id)
         {
@@ -52,14 +44,13 @@ namespace HospitalAPI.Controllers
 
         //POST: api/Bed
         [HttpPost]
-
         public ActionResult Create([FromBody] BedDto bedDto)
         {
             var bed = _mapper.Map<Bed>(bedDto);
             _bedService.Create(bed);
             return CreatedAtAction("GetById", new { id = bed.Id }, bed);
-
         }
+
         //PUT: api/Bed/FreeBed
         [HttpPut("/FreeBed")]
         public ActionResult FreeBed([FromBody] BedDto bedDto)
@@ -77,6 +68,7 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
         //PUT: api/Bed/CaptureBed
         [HttpPut("/CaptureBed")]
         public ActionResult CaptureBed([FromBody] BedDto bedDto)
@@ -96,10 +88,9 @@ namespace HospitalAPI.Controllers
         }
 
 
-
         //DELETE: api/Bed/222
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute]Guid id)
+        public ActionResult Delete([FromRoute] Guid id)
         {
             try
             {

@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.Utilities;
+﻿using IntegrationLibrary.Utilities.Converters;
 using Shouldly;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace TestIntegrationApp.UnitTesting.BloodUsageTests
         {
             string testHtml = System.IO.File.ReadAllText(Directory.GetCurrentDirectory().ToString() + @"./UnitTesting/BloodUsageTests/BRHtmlTest.txt");
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).ToString() + Path.DirectorySeparatorChar + "Reports" + Path.DirectorySeparatorChar;
-            string pdfPath = HtmlToPdfConvertor.Convert(testHtml, path,"TestBank");
+            string pdfPath = HtmlToPdfConverter.Convert(testHtml, path,"TestBank");
 
             bool exists = System.IO.File.Exists(pdfPath);
             exists.ShouldBe(true);

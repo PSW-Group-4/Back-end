@@ -1,10 +1,8 @@
-﻿using AutoMapper;
-using HospitalLibrary;
+﻿using System;
+using AutoMapper;
 using HospitalLibrary.Appointments.Service;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
 {
@@ -12,7 +10,6 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class DoctorAppointmentController : ControllerBase
     {
-
         private readonly IDoctorAppointmentService _doctorAppointmentService;
         private readonly IMapper _mapper;
 

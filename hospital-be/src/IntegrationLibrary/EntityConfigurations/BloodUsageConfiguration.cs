@@ -17,7 +17,7 @@ namespace IntegrationLibrary.EntityConfigurations
             {
                 a.Property(prop => prop.BloodGroup).HasMaxLength(1)
                 .HasColumnName("BloodTypeTitle");
-                a.Property(prop => prop.RHFactor).HasMaxLength(10)
+                a.Property(prop => prop.RhFactor).HasMaxLength(10)
                 .HasColumnName("RhFactor");
             });
         }

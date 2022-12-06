@@ -38,3 +38,4 @@ INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Ro
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('egrane11', '5vrOh5', true, false, 0, '58c0bccf-acef-43e9-9edc-2201ef6fd2c8');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jmuffitt12', 'MZDWUH', true, false, 0, '53021651-422e-4ace-9398-59559e6ebeb8');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('mpryer13', 'Okpfoyk2Qk', true, false, 0, 'e6fbebce-dd68-45e4-9e38-c66b98cc8197');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role") VALUES ('manager1', 'manager1', true, false, 2);

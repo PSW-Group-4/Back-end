@@ -8,6 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationAPI.Communications.Producer;
+using System.Text.Json;
+using IntegrationLibrary.Common;
+using IntegrationAPI.Dtos.BloodTypes;
+using IntegrationAPI.Dtos.BloodProducts;
+using IntegrationLibrary.BloodBanks.Service;
 
 namespace IntegrationAPI.Controllers
 {
@@ -17,12 +23,14 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IBloodRequestService _service;
         private readonly IMapper _mapper;
+        private readonly IProducer bloodRequestProducer;
+        private readonly IBloodBankService bloodBankService;
 
-        public BloodRequestController(IBloodRequestService service, IMapper mapper) 
+        public BloodRequestController(IBloodRequestService service, IBloodBankService bloodBankService, IProducer bloodRequestProducer)
         {
-
-             _service = service;
-             _mapper = mapper;
+            _service = service;
+            this.bloodBankService = bloodBankService;
+            this.bloodRequestProducer = bloodRequestProducer;
         }
 
         [HttpGet]
@@ -31,21 +39,42 @@ namespace IntegrationAPI.Controllers
             IEnumerable<BloodRequest> bloodRequests = _service.GetAll();
             return Ok(bloodRequests);
         }
+
         [Route("unapproved"), HttpGet]
-        public ActionResult GetUnapproved() {
+        public ActionResult GetUnapproved()
+        {
             IEnumerable<BloodRequest> bloodRequests = _service.GetUnapproved();
             return Ok(bloodRequests);
         }
-        [Route("update"), HttpPost]
-        public ActionResult Update(BloodRequestEditDto bloodRequestDto) {
-           var bloodRequest = _mapper.Map<BloodRequest>(bloodRequestDto);
+
+        [Route("manage"), HttpPost]
+        public ActionResult Manage(BloodRequestEditDto bloodRequestDto) {
+            BloodRequest bloodRequest = _service.GetById(bloodRequestDto.Id);
+            bloodRequest.IsApproved = bloodRequestDto.IsApproved;
+            bloodRequest.ManagerId = bloodRequestDto.ManagerId;
+            if(bloodRequestDto.IsApproved)
+            {
+                bloodRequest.BloodBank = bloodBankService.GetByName(bloodRequestDto.BloodBank);
+                BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.Blood.BloodType.ToString(), bloodRequest.Blood.Amount, bloodRequest.SendOnDate, bloodRequest.BloodBank.Name, bloodRequest.IsUrgent);
+                bloodRequestProducer.Send(JsonSerializer.Serialize(messageDto), "blood.requests.topic");
+            } else
+            {
+                bloodRequest.RejectionComment = bloodRequestDto.RejectionComment;
+            }
             return Ok(_service.Update(bloodRequest));
         }
 
         [HttpPost]
         public ActionResult Create([FromBody] BloodRequestsCreateDto bloodRequestDto)
         {
-            var bloodRequest = _mapper.Map<BloodRequest>(bloodRequestDto);
+            BloodRequest bloodRequest = new()
+            {
+                Blood = BloodConverter.Convert(bloodRequestDto.BloodDto),
+                DoctorId = bloodRequestDto.DoctorId,
+                Reasons = bloodRequestDto.Reasons,
+                IsUrgent = bloodRequestDto.IsUrgent,
+                SendOnDate = bloodRequestDto.SendOnDate
+            };
             return Ok(_service.Create(bloodRequest));
         }
     }
