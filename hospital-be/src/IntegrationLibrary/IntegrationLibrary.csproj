@@ -45,7 +45,6 @@
 
     <ItemGroup>
         <Folder Include="BloodReport\Service\" />
-        <Folder Include="BloodSubscriptionReponces\Service\" />
         <Folder Include="Migrations\" />
         <Folder Include="Reports\" />
     </ItemGroup>
