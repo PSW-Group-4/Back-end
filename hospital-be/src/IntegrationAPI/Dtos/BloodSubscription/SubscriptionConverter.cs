@@ -7,15 +7,15 @@ namespace IntegrationAPI.Dtos.BloodSubscription
         public static BloodSubscriptionSendingDto Convert(IntegrationLibrary.BloodSubscriptions.BloodSubscription subscription)
         {
             var retVal = new BloodSubscriptionSendingDto();
-            retVal.bloodBank = subscription.BloodBankName;
-            retVal.blood = BloodConverter.Convert(subscription.Blood);
+            retVal.BloodBank = subscription.BloodBankName;
+            retVal.Blood = BloodConverter.Convert(subscription.Blood);
             retVal.SubscriptionId = subscription.Id;
             return retVal;
         }
 
         public static IntegrationLibrary.BloodSubscriptions.BloodSubscription Convert(BloodSubscriptionCreatingDto dto)
         {
-            var retVal = new IntegrationLibrary.BloodSubscriptions.BloodSubscription(dto.BloodBank);
+            var retVal = new IntegrationLibrary.BloodSubscriptions.BloodSubscription(dto.BloodBank, dto.DeliveryDay);
             if(dto.ActiveStatus == true)
             {
                 retVal.Activate();
@@ -33,11 +33,11 @@ namespace IntegrationAPI.Dtos.BloodSubscription
             }
             if(dto.Urgent == true)
             {
-                retVal.MakeUrgent();
+                retVal.MakeSent();
             }
             else
             {
-                retVal.MakeNotUrgent();
+                retVal.MakeNotSent();
             }
             return retVal;
         }

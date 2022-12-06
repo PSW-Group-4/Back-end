@@ -6,8 +6,10 @@ namespace IntegrationAPI.Dtos.BloodSubscription
 {
     public class BloodSubscriptionSendingDto
     {
-        public List<BloodDto> blood { get; set; }
-        public string bloodBank { get; set; }
+        public List<BloodDto> Blood { get; set; }
+        public string BloodBank { get; set; }
         public Guid SubscriptionId { get; set; }
+        
+        public int DeliveryDay { get; set; }  
     }
 }

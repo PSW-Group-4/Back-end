@@ -31,12 +31,14 @@ namespace IntegrationAPI.Communications.Producer.BloodSubscription
             using (IServiceScope scope = ServiceScopeFactory.CreateScope())
             {
                 IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
-                foreach (var subscription in _subscriptionService.GetNotUrgentLastMonth())
+                foreach (var subscription in _subscriptionService.GetActiveNotSent())
                 {
                     try
                     {
                         BloodSubscriptionSendingDto dto = SubscriptionConverter.Convert(subscription);
                         producer.Send(JsonSerializer.Serialize(dto), _topic);
+                        subscription.MakeSent();
+                        _subscriptionService.Update(subscription);
                     }
                     catch (Exception ex)
                     {
