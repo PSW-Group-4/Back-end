@@ -51,12 +51,10 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
             return _moveEquipmentTaskRepository.Update(entity);
         }
 
-        //TODO
         public void CreateMoveEquipment(InputCreateData data) 
         {
-            DateRange dr = new DateRange(data.Date, data.Date.AddMinutes(data.Duration));
-            MoveEquipmentAppointment appSource = new MoveEquipmentAppointment(MoveEquipmentAppointment.TypeOfMovement.Give, Guid.Parse(data.Source), uint.Parse(data.Amount.ToString()), Guid.Parse(data.Source), dr);
-            MoveEquipmentAppointment appDest = new MoveEquipmentAppointment(MoveEquipmentAppointment.TypeOfMovement.Get, Guid.Parse(data.Destination), uint.Parse(data.Amount.ToString()), Guid.Parse(data.Source), dr);
+            MoveEquipmentAppointment appSource = new MoveEquipmentAppointment(MoveEquipmentAppointment.TypeOfMovement.Give, Guid.Parse(data.Equipment), uint.Parse(data.Amount.ToString()), Guid.Parse(data.Source), new DateRange(data.Date, data.Date.AddMinutes(data.Duration)));
+            MoveEquipmentAppointment appDest = new MoveEquipmentAppointment(MoveEquipmentAppointment.TypeOfMovement.Get, Guid.Parse(data.Equipment), uint.Parse(data.Amount.ToString()), Guid.Parse(data.Destination), new DateRange(data.Date, data.Date.AddMinutes(data.Duration)));
             this.Create(appSource);
             this.Create(appDest);
         }

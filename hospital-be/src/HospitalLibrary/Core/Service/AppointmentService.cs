@@ -121,17 +121,15 @@ namespace HospitalLibrary.Core.Service
 
         //Bojana
         public List<DateTime> GetAvailableDatesForRelocationOrRenovation(HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange)
-
         {
-            IEnumerable<Appointment> appointments = GetAll();
             List<DateTime> result = new List<DateTime>();
             DateTime start = dateRange.StartTime;
             Boolean shouldAdd = true;
             do
             {
-                foreach (Appointment appointment in appointments)
+                foreach (Appointment appointment in GetAll())
                 {
-                    if (appointment.DateRange.StartTime.AddMinutes(30) > start && (appointment.RoomId.Equals(dto.TargetId) || appointment.RoomId.Equals(dto.SourceId)))
+                    if (appointment.RoomId.Equals(dto.TargetId) || appointment.RoomId.Equals(dto.SourceId))
                     {
                         if ((start < appointment.DateRange.StartTime.AddMinutes(30)) && (appointment.DateRange.StartTime < start.AddMinutes(dto.Duration)))
                         {
@@ -144,7 +142,7 @@ namespace HospitalLibrary.Core.Service
                 {
                      result.Add(start);
                 }
-                start = dto.DateRange.StartTime.AddMinutes(15);
+                start = start.AddMinutes(15);
             } while (dto.DateRange.EndTime > start); ;
             return result;
         }
