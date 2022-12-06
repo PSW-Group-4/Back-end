@@ -6,6 +6,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
+using System.Linq;
 
 namespace HospitalLibrary.Core.Service
 {
@@ -111,50 +112,36 @@ namespace HospitalLibrary.Core.Service
             _appointmentRepository.Delete(entityId);
         }
         //Bojana
-        public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)
+        public IEnumerable<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto)
         {
-            DateRange dateRange = dto.CheckDateRange(dto.DateRange);
-            dto.Duration = CheckDuration(dto.Duration);
-
-            return GetAvailableDatesForRelocationOrRenovation(dto, dateRange);
+            IEnumerable<DateTime> sourceDates = GetAvailableDates(dto.SourceId, dto.DateRange, dto.Duration);
+            IEnumerable<DateTime> targetDates = GetAvailableDates(dto.TargetId, dto.DateRange, dto.Duration);
+            return sourceDates.Intersect(targetDates);
         }
 
-        //Bojana
-        public List<DateTime> GetAvailableDatesForRelocationOrRenovation(HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange)
+        public IEnumerable<DateTime> GetAvailableDates(Guid roomId, DateRange dateRange, int duration)
         {
             List<DateTime> result = new List<DateTime>();
-            DateTime start = dateRange.StartTime;
-            Boolean shouldAdd = true;
+            DateRange start = new DateRange(dateRange.StartTime, dateRange.StartTime.AddMinutes(duration));
+            Boolean shouldAdd; 
             do
             {
+                shouldAdd = true;
                 foreach (Appointment appointment in GetAll())
                 {
-                    if (appointment.RoomId.Equals(dto.TargetId) || appointment.RoomId.Equals(dto.SourceId))
+                    if (appointment.RoomId.Equals(roomId) && appointment.DateRange.OverlapsWith(start))
                     {
-                        if ((start < appointment.DateRange.StartTime.AddMinutes(30)) && (appointment.DateRange.StartTime < start.AddMinutes(dto.Duration)))
-                        {
-                            shouldAdd = false;
-                            break;
-                        }
+                        shouldAdd = false;
+                        break;
                     }
                 }
-                if (!result.Contains(start) && shouldAdd == true)
+                if (!result.Contains(start.StartTime) && shouldAdd == true)
                 {
-                     result.Add(start);
+                     result.Add(start.StartTime);
                 }
-                start = start.AddMinutes(15);
-            } while (dto.DateRange.EndTime > start); ;
+                start = new DateRange(start.StartTime.AddMinutes(15), start.EndTime.AddMinutes(15));
+            } while (dateRange.EndTime >= start.EndTime);
             return result;
-        }
-
-
-        private int CheckDuration(int duration)
-        {
-            if (duration % 15 != 0)
-            {
-                duration += 15 - duration % 15;
-            }
-            return duration;
         }
 
     }

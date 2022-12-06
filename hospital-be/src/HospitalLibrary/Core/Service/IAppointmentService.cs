@@ -14,9 +14,8 @@ namespace HospitalLibrary.Core.Service
         public Doctor getDoctor();
         public List<DateTime> AvailableTerminsForDate(DateTime date);
         public void CheckIfAppointmentIsDone();
-        public List<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto);
-
-        public List<DateTime> GetAvailableDatesForRelocationOrRenovation(HospitalLibrary.EquipmentRelocation.DTO.EquipmentRelocationDTO dto, DateRange dateRange);
+        public IEnumerable<DateTime> RecommendStartForRelocationOrRenovation(EquipmentRelocation.DTO.EquipmentRelocationDTO dto);
+        public IEnumerable<DateTime> GetAvailableDates(Guid roomId, DateRange dateRange, int duration);
 
     }
 }

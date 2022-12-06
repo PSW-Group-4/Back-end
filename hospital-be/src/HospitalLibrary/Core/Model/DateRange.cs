@@ -13,5 +13,14 @@ namespace HospitalLibrary.Core.Model
             this.StartTime = startTime;
             this.EndTime = endTime;
         }
+
+        public Boolean OverlapsWith(DateRange dateRange) {
+            // starts in interval
+            // ends in interval
+            // overshadows interval
+            return  (this.StartTime <= dateRange.StartTime && this.EndTime > dateRange.StartTime) ||
+                    (this.StartTime < dateRange.EndTime && this.EndTime >= dateRange.EndTime) ||
+                    (this.StartTime >= dateRange.StartTime && this.EndTime < dateRange.EndTime);
+        }
     }
 }

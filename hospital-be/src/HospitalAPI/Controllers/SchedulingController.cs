@@ -48,7 +48,7 @@ namespace HospitalAPI.Controllers
                 DateTime dateTime = DateTime.Parse(relocationStart);
                 EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO(new HospitalLibrary.Core.Model.DateRange(dateTime, dateTime.AddDays(2)), duration, Guid.Parse(sourceId), Guid.Parse(targetId));
 
-                List<DateTime> termins = _appointmentService.RecommendStartForRelocationOrRenovation(equipmentRelocation);
+                IEnumerable<DateTime> termins = _appointmentService.RecommendStartForRelocationOrRenovation(equipmentRelocation);
                 return Ok(termins);
             }
             catch (NotFoundException)

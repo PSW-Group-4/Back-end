@@ -38,7 +38,7 @@ namespace TestHospitalApp.UnitTesting.EquipmentRelocation
 
             apServ.Setup(x => x.GetAll()).Returns(appointments);
 
-            result = service.RecommendStartForRelocationOrRenovation(equipmentRelocation);
+            result = service.RecommendStartForRelocationOrRenovation(equipmentRelocation).ToList();
 
             result.ShouldNotBeEmpty();
         }

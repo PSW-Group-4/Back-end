@@ -19,14 +19,14 @@ namespace HospitalLibrary.EquipmentRelocation.DTO
 
         public EquipmentRelocationDTO(DateRange dateRange, int duration, Guid sourceId, Guid targetId)
         {
-            this.DateRange = dateRange;
-            this.Duration = duration;
+            this.DateRange = this.CheckDateRange(dateRange);
+            this.Duration = this.CheckDuration(duration);
             this.SourceId = sourceId;
             this.TargetId = targetId;
         }
 
         //Minutes should be 0, 15, 30, 45
-        public DateRange CheckDateRange(DateRange dateRange)
+        private DateRange CheckDateRange(DateRange dateRange)
         {
             DateTime start = dateRange.StartTime;
             DateTime end = dateRange.EndTime;
@@ -39,6 +39,14 @@ namespace HospitalLibrary.EquipmentRelocation.DTO
                 end = end.AddMinutes(15 - end.Minute % 15);
             }
             return new DateRange(start, end);
+        }
+        private int CheckDuration(int duration)
+        {
+            if (duration % 15 != 0)
+            {
+                duration += 15 - duration % 15;
+            }
+            return duration;
         }
     }
 }
