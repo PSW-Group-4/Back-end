@@ -16,7 +16,7 @@ using IntegrationLibrary.Common;
 using System.Text.Json;
 using IntegrationLibrary.BloodSubscriptions;
 using IntegrationLibrary.TenderApplications.Model;
-
+using IntegrationLibrary.BloodSubscriptionReponces.Model;
 
 namespace IntegrationLibrary.Settings
 {
@@ -31,6 +31,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<Tender> Tenders { get; set; }
         public DbSet<BloodSubscription> BloodSubscription { get; set; }
         public DbSet<TenderApplication> TenderApplications { get; set; }
+        public DbSet<BloodSubscriptionRepsponce> BloodSubscriptionRepsponce { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
