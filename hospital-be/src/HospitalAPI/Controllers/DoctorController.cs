@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using AutoMapper;
 using HospitalAPI.Dtos.Person;
 using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Authorization;
@@ -30,6 +31,14 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_doctorService.GetAll());
+        }
+
+        //Vraca samo puno ime svih doktora
+        [Authorize(Roles = "Patient")]
+        [HttpGet("basicInfo")]
+        public ActionResult GetAllBasicInfo()
+        {
+            return Ok(_mapper.Map<IEnumerable<PersonFullnameDto>>(_doctorService.GetAll()));
         }
 
         // GET api/Doctor/2
