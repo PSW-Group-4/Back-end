@@ -5,6 +5,7 @@ using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse;
 
 namespace IntegrationAPI
 {
@@ -26,6 +27,7 @@ namespace IntegrationAPI
                     services.AddHostedService<BloodListener>();
                     services.AddHostedService<NewsListener>();
                     services.AddHostedService<BloodRequestResponseListener>();
+                    services.AddHostedService<BloodSubscriptionResponceListener>();
                 });
     }
 }

@@ -10,6 +10,7 @@ namespace IntegrationAPI.Dtos.BloodSubscription
             retVal.BloodBank = subscription.BloodBankName;
             retVal.Blood = BloodConverter.Convert(subscription.Blood);
             retVal.SubscriptionId = subscription.Id;
+            retVal.DeliveryDay = subscription.DeliveryDay;
             return retVal;
         }
 
