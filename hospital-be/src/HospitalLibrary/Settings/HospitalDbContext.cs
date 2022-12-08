@@ -119,6 +119,8 @@ namespace HospitalLibrary.Settings
                 .WithMany(dr => dr.RoomsEquipment)
                 .HasForeignKey(re => re.DoctorRoomId);
 
+
+
             modelBuilder
                 .Entity<Patient>()
                 .HasMany(p => p.Allergies)

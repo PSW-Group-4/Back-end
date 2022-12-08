@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using HospitalLibrary.Settings;
-using HospitalLibrary.Users.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -205,6 +204,9 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -530,6 +532,9 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<int>("BloodType")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("ChoosenDoctorId")
                         .HasColumnType("uuid");
 
@@ -741,9 +746,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<int>("Role")
                         .HasColumnType("integer");
-
-                    b.Property<List<SuspiciousActivity>>("suspicious_activities")
-                        .HasColumnType("jsonb");
 
                     b.HasKey("Username");
 
@@ -1101,8 +1103,6 @@ namespace HospitalLibrary.Migrations
                         });
 
                     b.Navigation("Address");
-
-                    b.Navigation("BloodType");
 
                     b.Navigation("ChoosenDoctor");
                 });

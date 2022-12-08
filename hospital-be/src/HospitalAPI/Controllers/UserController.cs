@@ -50,15 +50,13 @@ namespace HospitalAPI.Controllers
                 var patient = _mapper.Map<Patient>(registrationDto);
                 var user = _mapper.Map<User>(registrationDto.UserLoginDto);
 
-                if (!_patientService.isEmailUnique(patient.Email))
+                if (!_patientService.isEmailUnique(patient.Email.Address))
                 {
-                    Console.WriteLine("puca ovde kod maila");
                     return Conflict("Email not unique");
                 }
 
                 if (!_userService.IsUsernameUnique(user.Username))
                 {
-                    Console.WriteLine("puca ovde kod usernamea");
                     return Conflict("Username taken");
                 }
 
@@ -76,6 +74,10 @@ namespace HospitalAPI.Controllers
             catch (NotFoundException)
             {
                 return NotFound();
+            }
+            catch (ValueObjectValidationFailedException exception)
+            {
+                return BadRequest(exception.Message);
             }
         }
 

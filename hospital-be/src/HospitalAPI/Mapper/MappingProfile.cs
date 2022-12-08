@@ -91,8 +91,13 @@ namespace HospitalAPI.Mapper
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
             CreateMap<BloodSupplyDto, BloodSupply>();
-
-            CreateMap<PatientRegistrationDto, Patient>();
+/*
+            CreateMap<Feedback, FeedbackPatientResponseDto>().ForMember(dest => dest.PatientFullname,
+                opt => opt.MapFrom(src => ResolveFeedbackPatientFullName(src)));
+ */
+            CreateMap<PatientRegistrationDto, Patient>()
+                .ForMember(dest => dest.Email,
+                    opt => opt.MapFrom(src => new Email(src.Email)));
             CreateMap<UserLoginDto, User>();
             CreateMap<UserDto, User>();
 

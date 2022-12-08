@@ -17,7 +17,7 @@ namespace HospitalLibrary.Core.Model
         public Guid AddressId { get; set; }
         public virtual Address Address { get; set; }
         public string Jmbg { get; set; }
-        public string Email { get; set; }
+        public Email Email { get; set; }
         public string PhoneNumber { get; set; }
 
         public void Update(Person person)
