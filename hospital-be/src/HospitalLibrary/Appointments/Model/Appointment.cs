@@ -1,6 +1,6 @@
 ﻿using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Patients.Model;
-
+using HospitalLibrary.Reports.Model;
 using System;
 
 namespace HospitalLibrary.Appointments.Model
@@ -14,7 +14,6 @@ namespace HospitalLibrary.Appointments.Model
         public virtual Patient Patient { get; set; }
         public Guid ScheduleId { get; set; }
         public virtual RoomSchedule Schedule { get; set; }
-        
 
         public void Update(Appointment appointment)
         {
