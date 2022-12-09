@@ -104,7 +104,7 @@ namespace TestHospitalApp.Setup
                 WorkingTimeEnd = "12:00",
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = "12345",
+                Jmbg = new Jmbg("1807000730038"),
                 Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
@@ -121,7 +121,7 @@ namespace TestHospitalApp.Setup
                 WorkingTimeEnd = "12:00",
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = "12345",
+                Jmbg = new Jmbg("1807000730038"),
                 Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
@@ -148,7 +148,7 @@ namespace TestHospitalApp.Setup
                 Birthdate = DateTime.Now,
                 Gender = Gender.Male,
                 AddressId = address.Id,
-                Jmbg = "12312313",
+                Jmbg = new Jmbg("1807000730038"),
                 Email = new Email("mail@gmail.krompir"),
                 PhoneNumber = "066413242"
             };
@@ -163,7 +163,7 @@ namespace TestHospitalApp.Setup
                 Birthdate = DateTime.Now,
                 Gender = Gender.Male,
                 AddressId = address.Id,
-                Jmbg = "12312312",
+                Jmbg = new Jmbg("1807000730038"),
                 Email = new Email("mail2@gmail.krompir"),
                 PhoneNumber = "066413242"
             };

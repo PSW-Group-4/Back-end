@@ -50,6 +50,10 @@ namespace HospitalAPI.Mapper
             CreateMap<Address, AddressRequestDto>();
 
             CreateMap<PersonRequestDto, Person>();
+            CreateMap<Person, PersonRequestDto>();
+            CreateMap<Person, PersonFullnameDto>().ForMember(dest => dest.Fullname,
+                opt => opt.MapFrom(src => src.Surname + " " + src.Name));
+
             CreateMap<Person, PersonRequestDto>().ForMember( p => p.Email,
                 opt => opt.MapFrom(src => src.Email.Address ));
             CreateMap<PatientRequestDto, Patient>()

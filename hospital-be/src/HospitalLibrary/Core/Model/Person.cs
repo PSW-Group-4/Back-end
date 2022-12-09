@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -16,8 +18,11 @@ namespace HospitalLibrary.Core.Model
         public Gender Gender { get; set; }
         public Guid AddressId { get; set; }
         public virtual Address Address { get; set; }
-        public string Jmbg { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public virtual Jmbg Jmbg { get; set; }
         public Email Email { get; set; }
+
         public string PhoneNumber { get; set; }
 
         public void Update(Person person)
