@@ -26,6 +26,7 @@ using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
+using HospitalLibrary.Consiliums.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -95,6 +96,9 @@ namespace HospitalLibrary.Settings
         //public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
 
         public DbSet<Treatment> Treatments { get; set; }
+
+        // Consilium
+        public DbSet<Consilium> Consiliums { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
