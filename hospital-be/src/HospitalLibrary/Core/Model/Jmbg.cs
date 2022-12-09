@@ -72,5 +72,16 @@ namespace HospitalLibrary.Core.Model
 
             return returnValue;
         }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Jmbg jmbg &&
+                   JmbgValue == jmbg.JmbgValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(JmbgValue);
+        }
     }
 }
