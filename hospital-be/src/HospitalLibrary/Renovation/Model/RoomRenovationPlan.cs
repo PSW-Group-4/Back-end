@@ -77,7 +77,7 @@ namespace HospitalLibrary.Renovation.Model
         }
 
         private void ValidateNumber() {
-            if (Number == 0) {
+            if (Number <= 0) {
                 throw new InvalidValueException();
             }
         }
