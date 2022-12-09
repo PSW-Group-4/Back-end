@@ -12,6 +12,6 @@ namespace HospitalLibrary.Consiliums.Service
         IEnumerable<Consilium> GetAll();
         Consilium GetById(Guid id);
         IEnumerable<Consilium> GetDoctorsConsiliums(Guid DoctorId);
-        ConsiliumRequest Create(ConsiliumRequest consiliumRequest);
+        Consilium Create(ConsiliumRequest consiliumRequest);
     }
 }
