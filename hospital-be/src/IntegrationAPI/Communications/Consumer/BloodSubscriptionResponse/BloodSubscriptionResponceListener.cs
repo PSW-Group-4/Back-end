@@ -45,8 +45,19 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
                         {
                             while (true)
                             {
+                                //TODO: Update BloodSubscriptionRepsponce so it only consumes id and message simple 2 column table
                                 BloodSubscriptionRepsponce response = consumer.Consume();
-                                responceService.Create(response);
+                                if(response != null)
+                                {
+                                    //"DELIVERY-SUCCESS:A_POSITIVE"
+                                    if (response.Message.Split(":")[0].Equals("DELIVERY - SUCCESS"))
+                                    {
+                                        //TODO: fetch subscription, get its blood type and amount  
+                                        //and update hospital blood supply
+                                    }
+                                    responceService.Create(response);
+                                }
+                                
                             }
                         }
                         catch (OperationCanceledException)
