@@ -46,9 +46,24 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                var address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
-                var patient = _mapper.Map<Patient>(registrationDto);
-                var user = _mapper.Map<User>(registrationDto.UserLoginDto);
+                Address address;
+                Patient patient;
+                User user;
+                //Auto mapper doesnt allow any exceptions to go out from him, instead he wraps it in his own exception
+                //I am here unwrapping my custom exceptions
+                try
+                {
+                    address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
+                    patient = _mapper.Map<Patient>(registrationDto);
+                    user = _mapper.Map<User>(registrationDto.UserLoginDto);
+                }
+                catch(AutoMapperMappingException autoMapperException)
+                {
+                    throw autoMapperException.InnerException; 
+                    // this will break your call stack
+                    // you may not know where the error is called and rather
+                    // want to clone the InnerException or throw a brand new Exception
+                }
 
                 if (!_patientService.isEmailUnique(patient.Email.Address))
                 {

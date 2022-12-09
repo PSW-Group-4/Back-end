@@ -5,15 +5,17 @@ using HospitalLibrary.Settings;
 using HospitalLibrary.Users.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221209112800_AddedEmailValueObject")]
+    partial class AddedEmailValueObject
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -579,18 +581,23 @@ namespace HospitalLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AppointmentId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppointmentId");
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Reports");
                 });
@@ -1150,13 +1157,21 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
                 {
-                    b.HasOne("HospitalLibrary.Appointments.Model.Appointment", "Appointment")
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
                         .WithMany()
-                        .HasForeignKey("AppointmentId")
+                        .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Appointment");
+                    b.HasOne("HospitalLibrary.Patients.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.Bed", b =>

@@ -136,6 +136,16 @@ namespace HospitalLibrary.Settings
                     bloodType.Property(prop => prop.RhFactor).HasMaxLength(10)
                         .HasColumnName("RhFactor");
                 });
+            
+            // modelBuilder
+            //     .Entity<Patient>()
+            //     .OwnsOne(p => p.Email, email =>
+            //     {
+            //         email.Property(prop => prop.Address)
+            //             .HasColumnName("EmailAddress");
+            //     });
+            
+            
 
             modelBuilder.Entity<User>()
                 .Ignore(u => u.SuspiciousActivities)  

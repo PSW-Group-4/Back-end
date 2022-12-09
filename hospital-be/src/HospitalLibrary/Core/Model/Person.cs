@@ -7,7 +7,7 @@ namespace HospitalLibrary.Core.Model
         Male,
         Female
     }
-    public class Person
+    public  class Person
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

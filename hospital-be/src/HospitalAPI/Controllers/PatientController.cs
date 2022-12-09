@@ -9,6 +9,7 @@ using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HospitalAPI.Controllers
@@ -34,7 +35,8 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_patientService.GetAll());
+            var patients = _patientService.GetAll();
+            return Ok(_mapper.Map<IEnumerable<PatientGetResponseDto>>(patients));
         }
 
         // GET: api/Patient/info
