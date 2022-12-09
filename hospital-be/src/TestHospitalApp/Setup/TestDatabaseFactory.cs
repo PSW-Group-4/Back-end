@@ -105,7 +105,6 @@ namespace TestHospitalApp.Setup
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
                 Jmbg = new Jmbg("1807000730038"),
-                Jmbg = "12345",
                 Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
