@@ -23,6 +23,7 @@ using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Symptoms.Service;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Medicines.Model;
+using HospitalAPI.Dtos.Prescription;
 
 namespace TestHospitalApp.IntegrationTesting
 {
@@ -56,12 +57,12 @@ namespace TestHospitalApp.IntegrationTesting
             List<Symptom> symptoms = ((OkObjectResult)symptomController.GetAll())?.Value as List<Symptom>;
             List<Medicine> medicines = ((OkObjectResult)medicineController.GetAll())?.Value as List<Medicine>;
 
-            Prescription prescription = new Prescription
+            PrescriptionRequestDto prescription = new PrescriptionRequestDto
             {
                 Medicines = new List<Medicine>(medicines.GetRange(0, 2))
             };
 
-            List<Prescription> prescriptions = new List<Prescription>();
+            List<PrescriptionRequestDto> prescriptions = new List<PrescriptionRequestDto>();
             prescriptions.Add(prescription);
 
             ReportRequestDto reportRequest = new ReportRequestDto
