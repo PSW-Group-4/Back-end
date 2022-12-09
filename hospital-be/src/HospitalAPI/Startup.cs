@@ -63,6 +63,16 @@ using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Treatments.Repository;
 using HospitalLibrary.Treatments.Service;
+using HospitalLibrary.BuildingManagment.Repository.Interfaces;
+using HospitalLibrary.BuildingManagment.Repository.Implementation;
+using HospitalLibrary.BuildingManagment.Service.Interfaces;
+using HospitalLibrary.BuildingManagment.Service.Implementation;
+using HospitalLibrary.Prescriptions.Repository;
+using HospitalLibrary.Prescriptions.Service;
+using HospitalLibrary.Symptoms.Repository;
+using HospitalLibrary.Symptoms.Service;
+using HospitalLibrary.Reports.Repository;
+using HospitalLibrary.Reports.Service;
 
 namespace HospitalAPI
 {
@@ -192,7 +202,12 @@ namespace HospitalAPI
             //Bed
             services.AddScoped<IBedService, BedService>();
             services.AddScoped<IBedRepository, BedRepository>();
+            //Building managment
+            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
 
+            services.AddScoped<IFloorService, FloorService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
             //MapItems
             services.AddScoped<IBuildingMapService, BuildingMapService>();
             services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();
@@ -230,6 +245,19 @@ namespace HospitalAPI
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IMedicineService, MedicineService>();
 
+            //Prescriptions
+            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
+
+            //Symptoms
+            services.AddScoped<ISymptomRepository, SymptomRepository>();
+            services.AddScoped<ISymptomService, SymptomService>();
+
+            //Reports
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IReportService, ReportService>();
+
+            //Treatment
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
             services.AddScoped<ITreatmentService, TreatmentService>();
 

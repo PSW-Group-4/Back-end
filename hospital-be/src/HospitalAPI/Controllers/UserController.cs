@@ -198,7 +198,7 @@ namespace HospitalAPI.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        // [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager")]
         public ActionResult GetAllSuspiciousUsers()
         {
             return Ok(_userService.GetAllSuspiciousUsers().Select(sp => new SuspiciousUserDTO(sp.Username, sp.IsBlocked, sp.NumberOfSuspiciousActivitiesInRecentPeriod())).ToList());
@@ -206,7 +206,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPatch("block-user/{username}")]
 
-        // [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager")]
         public ActionResult BlockUser([FromRoute] string username)
         {
             try
@@ -231,7 +231,7 @@ namespace HospitalAPI.Controllers
 
         [HttpPatch("unblock-user/{username}")]
 
-        // [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager")]
         public ActionResult UnblockUser([FromRoute] string username)
         {
             try

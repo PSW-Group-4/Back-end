@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.BuildingManagment.Model;
 using HospitalLibrary.Core.Repository;
 
-namespace HospitalLibrary.BuildingManagment.Repository
+namespace HospitalLibrary.BuildingManagment.Repository.Interfaces
 {
     public interface IBuildingRepository : IRepositoryBase<Building>
     {

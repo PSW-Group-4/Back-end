@@ -1,0 +1,84 @@
+﻿using HospitalAPI;
+using HospitalAPI.Controllers;
+using HospitalLibrary.BloodConsumptionRecords.Service;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using TestHospitalApp.Setup;
+using AutoMapper;
+using Xunit;
+using HospitalAPI.Dtos.BloodConsumptionRecord;
+using HospitalLibrary.BloodSupplies.Service;
+using Shouldly;
+using Microsoft.AspNetCore.Mvc;
+using HospitalLibrary.BloodSupplies.Model;
+using HospitalLibrary.BloodConsumptionRecords.Model;
+using HospitalLibrary.Reports.Service;
+using HospitalAPI.Dtos.Report;
+using HospitalLibrary.Symptoms.Model;
+using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Symptoms.Service;
+using HospitalLibrary.Medicines.Service;
+using HospitalLibrary.Medicines.Model;
+using HospitalAPI.Dtos.Prescription;
+
+namespace TestHospitalApp.IntegrationTesting
+{
+    public class CreateReport : BaseIntegrationTest
+    {
+        public CreateReport(TestDatabaseFactory<Startup> factory) : base(factory) { }
+
+        private static ReportController SetupReportController(IServiceScope scope)
+        {
+            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+        }
+
+        private static SymptomController SetupSymptomController(IServiceScope scope)
+        {
+            return new SymptomController(scope.ServiceProvider.GetRequiredService<ISymptomService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+        }
+
+        private static MedicineController SetupMedicineController(IServiceScope scope)
+        {
+            return new MedicineController(scope.ServiceProvider.GetRequiredService<IMedicineService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+        }
+
+        [Fact]
+        public void Creates_report()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var reportController = SetupReportController(scope);
+            var symptomController = SetupSymptomController(scope);
+            var medicineController = SetupMedicineController(scope);
+
+            List<Symptom> symptoms = ((OkObjectResult)symptomController.GetAll())?.Value as List<Symptom>;
+            List<Medicine> medicines = ((OkObjectResult)medicineController.GetAll())?.Value as List<Medicine>;
+
+            PrescriptionRequestDto prescription = new PrescriptionRequestDto
+            {
+                Medicines = new List<Medicine>(medicines.GetRange(0, 2))
+            };
+
+            List<PrescriptionRequestDto> prescriptions = new List<PrescriptionRequestDto>();
+            prescriptions.Add(prescription);
+
+            ReportRequestDto reportRequest = new ReportRequestDto
+            {
+                PatientId = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                Text = "Create report test",
+                Symptoms = new List<Symptom>(symptoms.GetRange(0, 2)),
+                Prescriptions = prescriptions,
+                DateTime = DateTime.Now,
+            };
+            var create = reportController.Create(reportRequest);
+
+            var result = reportController.GetAll();
+
+            Assert.NotNull(result);
+        }
+    }
+}
