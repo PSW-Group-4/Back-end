@@ -10,35 +10,36 @@ namespace HospitalLibrary.Core.Model
 {
     public class Jmbg
     {
-        public string jmbg { get; private set; }
+        public string JmbgValue { get; private set; }
 
-        public Jmbg(string jmbg)
+        public Jmbg(string jmbgValue)
         {
-            Validate(jmbg);
+            JmbgValue = jmbgValue;
+            Validate(jmbgValue);
         }
 
-        private void Validate(string jmbg)
+        private void Validate(string jmbgValue)
         {
-            if (!IsDigit(jmbg)) 
+            if (!IsDigit(jmbgValue)) 
             {
                 throw new ValueObjectValidationFailedException();
             }
 
-            if (!IsCorrectLength(jmbg))
+            if (!IsCorrectLength(jmbgValue))
             {
                 throw new ValueObjectValidationFailedException();
             }
 
-            if (!IsChecksumValid(jmbg))
+            if (!IsChecksumValid(jmbgValue))
             {
                 throw new ValueObjectValidationFailedException();
             }
                 
         }
 
-        private bool IsDigit(string jmbg)
+        private bool IsDigit(string jmbgValue)
         {
-            return jmbg.All(char.IsDigit);
+            return jmbgValue.All(char.IsDigit);
         }
 
         private bool IsCorrectLength(string jmbg)
