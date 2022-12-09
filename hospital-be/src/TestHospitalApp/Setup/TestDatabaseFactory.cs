@@ -105,7 +105,8 @@ namespace TestHospitalApp.Setup
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
                 Jmbg = new Jmbg("1807000730038"),
-                Email = "doctor@test.com",
+                Jmbg = "12345",
+                Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
                 LicenceNum = "12345",
@@ -122,7 +123,7 @@ namespace TestHospitalApp.Setup
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
                 Jmbg = new Jmbg("1807000730038"),
-                Email = "doctor@test.com",
+                Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
                 LicenceNum = "12345",
@@ -149,7 +150,7 @@ namespace TestHospitalApp.Setup
                 Gender = Gender.Male,
                 AddressId = address.Id,
                 Jmbg = new Jmbg("1807000730038"),
-                Email = "mail@gmail.krompir",
+                Email = new Email("mail@gmail.krompir"),
                 PhoneNumber = "066413242"
             };
 
@@ -164,7 +165,7 @@ namespace TestHospitalApp.Setup
                 Gender = Gender.Male,
                 AddressId = address.Id,
                 Jmbg = new Jmbg("1807000730038"),
-                Email = "mail2@gmail.krompir",
+                Email = new Email("mail2@gmail.krompir"),
                 PhoneNumber = "066413242"
             };
 
@@ -234,6 +235,7 @@ namespace TestHospitalApp.Setup
 
             Appointment appointment = new Appointment
             {
+                Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
                 DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),   
                 PatientId = patient.Id,
                 Schedule = new RoomSchedule{

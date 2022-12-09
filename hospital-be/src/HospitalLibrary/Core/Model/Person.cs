@@ -9,7 +9,7 @@ namespace HospitalLibrary.Core.Model
         Male,
         Female
     }
-    public class Person
+    public  class Person
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -21,7 +21,8 @@ namespace HospitalLibrary.Core.Model
 
         [Column(TypeName = "jsonb")]
         public virtual Jmbg Jmbg { get; set; }
-        public string Email { get; set; }
+        public Email Email { get; set; }
+
         public string PhoneNumber { get; set; }
 
         public void Update(Person person)
