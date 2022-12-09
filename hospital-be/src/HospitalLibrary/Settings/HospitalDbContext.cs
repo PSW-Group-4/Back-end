@@ -27,6 +27,7 @@ using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.EntityConfigurations;
+using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.Settings
 {
@@ -96,6 +97,7 @@ namespace HospitalLibrary.Settings
         //public DbSet<EquipmentRelocationDTO> EquipmentRelocations { get; set; }
 
         public DbSet<Treatment> Treatments { get; set; }
+        public DbSet<RenovationAppointment> RenovationAppointments {get; set;}
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
@@ -105,21 +107,6 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-            modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
-
-            modelBuilder
-                .Entity<RoomsEquipment>()
-                .HasKey(re => new {re.RoomId, re.EquipmentId});
-                
-            modelBuilder.Entity<RoomsEquipment>()
-                .HasOne<Equipment>(re => re.Equipment)
-                .WithMany(e => e.RoomsEquipment)
-                .HasForeignKey(re => re.EquipmentId);
-
-            modelBuilder.Entity<RoomsEquipment>()
-                .HasOne<Room>(dc => dc.Room)
-                .WithMany(dr => dr.RoomsEquipment)
-                .HasForeignKey(re => re.RoomId);
 
             modelBuilder
                 .Entity<Patient>()

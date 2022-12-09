@@ -50,6 +50,7 @@ namespace TestHospitalApp.UnitTesting.VOTest
         {
             Should.Throw<InvalidValueException>(() => new RoomRenovationPlan("","Test",0));
         }
+        [Fact]
         public void Room_Renovation_Plan_Fail_4()
         {
             Should.Throw<InvalidValueException>(() => new RoomRenovationPlan("Test","Test",-5));
