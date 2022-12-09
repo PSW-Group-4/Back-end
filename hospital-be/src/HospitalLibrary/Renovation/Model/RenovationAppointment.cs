@@ -12,17 +12,20 @@ namespace HospitalLibrary.Renovation.Model
         public enum TypeOfRenovation { Merge, Split }
 
         public TypeOfRenovation Type {get; private set;}
+
+        public IEnumerable<RoomRenovationPlan> _RoomRenovationPlans;
         public IEnumerable<RoomRenovationPlan> RoomRenovationPlans {
-            get { return new List<RoomRenovationPlan>(RoomRenovationPlans); }
-            private set { RoomRenovationPlans = value; }
+            get { return new List<RoomRenovationPlan>(_RoomRenovationPlans); }
+            private set {_RoomRenovationPlans = value;}
         }
 
         public RenovationAppointment() {}
 
-        public RenovationAppointment(TypeOfRenovation type, IEnumerable<RoomRenovationPlan> plans, DateRange dateRange) {
+        public RenovationAppointment(TypeOfRenovation type, IEnumerable<RoomRenovationPlan> plans, DateRange dateRange, Guid RoomId) {
             this.Type = type;
-            this.RoomRenovationPlans = plans;
+            this.RoomRenovationPlans = plans.ToList();
             this.DateRange = dateRange;
+            this.RoomId = RoomId;
             Validate();
         }
 
@@ -36,6 +39,10 @@ namespace HospitalLibrary.Renovation.Model
 
         public IEnumerable<RoomRenovationPlan> GetOldRoomPlans() {
             return from plan in RoomRenovationPlans where plan.Type == RoomRenovationPlan.TypeOfPlan.Old select plan;
+        }
+
+        public IEnumerable<RoomRenovationPlan> GetAllPlans() {
+            return new List<RoomRenovationPlan>(RoomRenovationPlans);
         }
 
         private void ValidateListLength() {

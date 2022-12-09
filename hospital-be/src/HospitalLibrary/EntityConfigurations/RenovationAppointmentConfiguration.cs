@@ -17,7 +17,7 @@ namespace HospitalLibrary.EntityConfigurations
             var valueComparer = new ValueComparer<IEnumerable<RoomRenovationPlan>>(
                 (c1, c2) => c1.SequenceEqual(c2),
                 c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
-                c => c.ToList());
+                c => c);
 
             builder.Property(appointment => appointment.RoomRenovationPlans)
                 .HasConversion(

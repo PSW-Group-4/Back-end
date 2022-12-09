@@ -47,7 +47,11 @@ namespace HospitalLibrary.Renovation.Service.Implementation
             plans.Add(data.Room1);
             plans.Add(data.Room2);
             plans.Add(data.Room3);
-            RenovationAppointment appointment = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, data.DateRange);
+            RenovationAppointment appointment = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, data.DateRange, data.Room1.Id);
+            if(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type) == RenovationAppointment.TypeOfRenovation.Merge) {
+                RenovationAppointment appointment2 = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, data.DateRange, data.Room2.Id);
+                this.Create(appointment2);
+            }
             this.Create(appointment);
         }
     }
