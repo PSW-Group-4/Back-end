@@ -9,6 +9,6 @@ namespace HospitalLibrary.Renovation.Service.Interfaces
 {
     public interface IRenovationAppointmentService : ICrudService<RenovationAppointment>
     {
-        
+        public void CreateRenovation(RenovationDataDto data);
     }
 }

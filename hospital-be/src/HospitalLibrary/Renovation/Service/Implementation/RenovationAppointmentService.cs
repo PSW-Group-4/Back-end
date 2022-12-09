@@ -41,5 +41,14 @@ namespace HospitalLibrary.Renovation.Service.Implementation
         {
             return _renovationAppointmentRepository.Update(entity);
         }
+
+        public void CreateRenovation(RenovationDataDto data) {
+            List<RoomRenovationPlan> plans = new List<RoomRenovationPlan>();
+            plans.Add(data.Room1);
+            plans.Add(data.Room2);
+            plans.Add(data.Room3);
+            RenovationAppointment appointment = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, data.DateRange);
+            this.Create(appointment);
+        }
     }
 }
