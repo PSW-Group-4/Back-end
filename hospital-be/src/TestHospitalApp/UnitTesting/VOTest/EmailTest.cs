@@ -40,6 +40,30 @@ namespace TestHospitalApp.UnitTesting.VOTest
                 Email email = new Email(emailAddress);
             });
         }
+        
+        [Fact]
+        public void Emails_are_equal()
+        {
+            Email email1 = new Email("john@gmail.com");
+            Email email2 = new Email("john@gmail.com");
+
+            var result = email1.Equals(email2);
+            
+            result.ShouldBeTrue();
+
+        }
+
+        [Fact]
+        public void Emails_are_not_equal()
+        {
+            Email email1 = new Email("john@gmail.com");
+            Email email2 = new Email("helen@gmail.com");
+
+            var result = email1.Equals(email2);
+            
+            result.ShouldBeFalse();
+
+        }
 
     }
 }
