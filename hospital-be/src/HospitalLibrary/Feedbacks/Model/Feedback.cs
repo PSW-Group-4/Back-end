@@ -2,6 +2,7 @@
 using HospitalLibrary.Patients.Model;
 using Microsoft.AspNetCore.JsonPatch;
 using System;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HospitalLibrary.Feedbacks.Model
 {
@@ -17,10 +18,10 @@ namespace HospitalLibrary.Feedbacks.Model
         public string Text { get; private set; }
         public bool IsAnonimous { get; private set; }
         public bool IsDesiredPublic { get;  private set; }
-        public Status Status { get; private set; }
+        public Status Status { get; set; }
         public Guid PatientId { get; private set; }
-        public virtual Patient Patient { get;  set; }
-        public DateTime Date { get;  set; }
+        public virtual Patient Patient { get; private set; }
+        public DateTime Date { get; private  set; }
 
         public Feedback SetUp(Feedback feedback, Patient patient)
         {
@@ -56,20 +57,22 @@ namespace HospitalLibrary.Feedbacks.Model
 
         public Feedback Publish(Feedback feedback, JsonPatchDocument feedbackModel)
         {
+            Status newStatus = (Status)Int32.Parse(feedbackModel.Operations[0].value.ToString());
             Status current = feedback.Status;
-            feedbackModel.ApplyTo(feedback);
 
-            if (IsAlreadyPublishedOrHidden(current, feedback))
+            if (IsAlreadyPublishedOrHidden(current, newStatus))
             {
                 throw new FeedbackAlreadyPublishedOrHidden();
             }
 
+            feedback.Status = newStatus;
+
             return feedback;
         }
 
-        private bool IsAlreadyPublishedOrHidden(Status current, Feedback feedback)
+        private bool IsAlreadyPublishedOrHidden(Status current, Status newStatus)
         {
-            return current == feedback.Status;
+            return current == newStatus;
         }
     }
 }
