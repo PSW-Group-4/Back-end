@@ -12,10 +12,10 @@ namespace HospitalAPI.Controllers
     [Route("api/[controller]")]
     public class MoveEquipmentTaskController : ControllerBase
     {
-        private readonly IMoveEquipmentTaskService _moveEquipmentTask;
+        private readonly IMoveEquipmentAppointmentService _moveEquipmentTask;
         private readonly IMapper _mapper;
         
-        public MoveEquipmentTaskController(IMoveEquipmentTaskService moveEquipmentTask, IMapper mapper)
+        public MoveEquipmentTaskController(IMoveEquipmentAppointmentService moveEquipmentTask, IMapper mapper)
             {
                 _moveEquipmentTask = moveEquipmentTask;
                 _mapper = mapper;

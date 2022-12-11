@@ -9,6 +9,6 @@ namespace HospitalLibrary.BuildingManagment.Service.Interfaces
 {
     public interface IBuildingService : IServiceBase<Building>
     {
-        
+        public IEnumerable<Floor> GetFloorsByBuildingId(Guid id);
     }
 }

@@ -23,17 +23,18 @@
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Allergies\Service\" />
-        <Folder Include="Constants\" />
-        <Folder Include="GraphicalEditor\Model\" />
-        <Folder Include="GraphicalEditor\Service\" />
-        <Folder Include="GraphicalEditor\Repository\" />
-        <Folder Include="MedicalRecords\Model\" />
-        <Folder Include="MedicalRecords\Service\" />
-        <Folder Include="MedicalRecords\Repository\" />
-        <Folder Include="Settings\Configurations\" />
-    </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Allergies\Service\" />
+    <Folder Include="Constants\" />
+    <Folder Include="GraphicalEditor\Model\" />
+    <Folder Include="GraphicalEditor\Service\" />
+    <Folder Include="GraphicalEditor\Repository\" />
+    <Folder Include="MedicalRecords\Model\" />
+    <Folder Include="MedicalRecords\Service\" />
+    <Folder Include="MedicalRecords\Repository\" />
+    <Folder Include="SchedulingAppointment\Service" />
+    <Folder Include="Settings\Configurations\" />
+  </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />

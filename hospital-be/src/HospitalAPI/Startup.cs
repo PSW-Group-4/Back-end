@@ -20,7 +20,6 @@ using HospitalLibrary.RoomsAndEqipment.Repository.Implementation;
 using HospitalLibrary.RoomsAndEqipment.Repository.Interfaces;
 using HospitalLibrary.RoomsAndEqipment.Service.Implementation;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
-using HospitalLibrary.SchedulingAppointment.Service;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Users.Repository;
 using HospitalLibrary.Users.Service;
@@ -56,13 +55,22 @@ using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.AdmissionHistories.Repository;
 using HospitalLibrary.AdmissionHistories.Service;
 using HospitalLibrary.MedicalReport.Services;
-using HospitalLibrary.EquipmentRelocation.Service;
 using HospitalAPI.HostedService;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Treatments.Repository;
 using HospitalLibrary.Treatments.Service;
+using HospitalLibrary.BuildingManagment.Repository.Interfaces;
+using HospitalLibrary.BuildingManagment.Repository.Implementation;
+using HospitalLibrary.BuildingManagment.Service.Interfaces;
+using HospitalLibrary.BuildingManagment.Service.Implementation;
+using HospitalLibrary.Prescriptions.Repository;
+using HospitalLibrary.Prescriptions.Service;
+using HospitalLibrary.Symptoms.Repository;
+using HospitalLibrary.Symptoms.Service;
+using HospitalLibrary.Reports.Repository;
+using HospitalLibrary.Reports.Service;
 
 namespace HospitalAPI
 {
@@ -167,8 +175,8 @@ namespace HospitalAPI
             services.AddScoped<IDoctorService, DoctorService>();
 
             //Appointment
-            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
-            services.AddScoped<IAppointmentService, AppointmentService>();
+            services.AddScoped<IMedicalAppointmentRepository, MedicalAppointmentRepository>();
+            services.AddScoped<IMedicalAppointmentService, MedicalAppointmentService>();
             services.AddScoped<IDoctorAppointmentService, DoctorAppointmentService>();
 
             //BloodConsumptionRecord
@@ -192,7 +200,12 @@ namespace HospitalAPI
             //Bed
             services.AddScoped<IBedService, BedService>();
             services.AddScoped<IBedRepository, BedRepository>();
+            //Building managment
+            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
 
+            services.AddScoped<IFloorService, FloorService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
             //MapItems
             services.AddScoped<IBuildingMapService, BuildingMapService>();
             services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();
@@ -203,7 +216,7 @@ namespace HospitalAPI
             services.AddScoped<IRoomMapService, RoomMapService>();
             services.AddScoped<IRoomMapRepository, RoomMapRepository>();
 
-            services.AddScoped<ISchedulingService, SchedulingService>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
             //Doctor Vacations
             services.AddScoped<IVacationRepository, VacationRepository>();
@@ -212,11 +225,11 @@ namespace HospitalAPI
             services.AddScoped<IAdmissionRepository, AdmissionRepository>();
             services.AddScoped<IAdmissionService, AdmissionService>();
 
-            services.AddScoped<IRoomScheduleRepository, RoomScheduleRepository>();
-            services.AddScoped<IRoomScheduleService, RoomScheduleService>();
+            services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+            services.AddScoped<IAppointmentService, AppointmentService>();
 
-            services.AddScoped<IMoveEquipmentTaskRepository, MoveEquipmentTaskRepository>();
-            services.AddScoped<IMoveEquipmentTaskService, MoveEquipmentTaskService>();
+            services.AddScoped<IMoveEquipmentAppointmentRepository, MoveEquipmentAppointmentRepository>();
+            services.AddScoped<IMoveEquipmentAppointmentService, MoveEquipmentAppointmentService>();
 
             services.AddScoped<IEquipmentToMoveRepository, EquipmentToMoveRepository>();
             services.AddScoped<IEquipmentToMoveService, EquipmentToMoveService>();
@@ -230,11 +243,22 @@ namespace HospitalAPI
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IMedicineService, MedicineService>();
 
+            //Prescriptions
+            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+            services.AddScoped<IPrescriptionService, PrescriptionService>();
+
+            //Symptoms
+            services.AddScoped<ISymptomRepository, SymptomRepository>();
+            services.AddScoped<ISymptomService, SymptomService>();
+
+            //Reports
+            services.AddScoped<IReportRepository, ReportRepository>();
+            services.AddScoped<IReportService, ReportService>();
+
+            //Treatment
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
             services.AddScoped<ITreatmentService, TreatmentService>();
 
-            //EquipmentRelocation
-            services.AddScoped<IEquipmentRelocationService, EquipmentRelocationService>();
 
             //Hosted Service
             services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */15 * * * *", TimeZoneInfo.Local));
