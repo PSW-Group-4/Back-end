@@ -175,20 +175,5 @@ namespace HospitalLibrary.Vacations.Service
             }
             return doctorVacations;
         }
-
-        public bool IsDoctorOnVacation(Guid doctorId, DateTime date)
-        {
-
-            IEnumerable<Vacation> doctorVacations = GetDoctorVacationsFromSpecificStatus(VacationStatus.Approved, doctorId);
-            foreach (Vacation v in doctorVacations)
-            {
-                if(DateTime.Compare(date, v.DateStart) > 0
-                && DateTime.Compare(date, v.DateEnd) < 0)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }

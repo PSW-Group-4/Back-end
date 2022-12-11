@@ -8,6 +8,7 @@ using MimeKit;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Vacations.Service;
+using HospitalLibrary.Vacations.Repository;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -15,12 +16,14 @@ namespace HospitalLibrary.Appointments.Service
     {
         private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IDoctorRepository _doctorRepository;
-        private readonly IVacationService _vacationServie;
+        //private readonly IVacationService _vacationService;
+        private readonly IVacationRepository _vacationRepository;
 
-        public DoctorAppointmentService(IMedicalAppointmentService medicalAppointmentService, IDoctorRepository doctorRepository)
+        public DoctorAppointmentService(IMedicalAppointmentService medicalAppointmentService, IDoctorRepository doctorRepository, IVacationRepository vacationRepository)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _doctorRepository = doctorRepository;
+            _vacationRepository = vacationRepository;
         }
 
         public IEnumerable<MedicalAppointment> GetDoctorAppointments(Guid id)
@@ -115,11 +118,17 @@ namespace HospitalLibrary.Appointments.Service
                 return false;
             }
             // da li je doktor na godisnjem
-            if (_vacationServie.IsDoctorOnVacation(doctorId, time))
+            //if (_vacationService.IsDoctorOnVacation(doctorId, time))
+            if(_vacationRepository.IsDoctorOnVacation(doctorId, time))
             {
                 return false;
             }
             // da li doktor tad ima pregled
+            if (IsDoctorOnMedicalAppointment(doctor, time))
+            {
+                return false;
+            }
+            // da li doktor na sastanku
             if (IsDoctorOnMedicalAppointment(doctor, time))
             {
                 return false;
