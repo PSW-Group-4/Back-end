@@ -71,6 +71,8 @@ using HospitalLibrary.Symptoms.Repository;
 using HospitalLibrary.Symptoms.Service;
 using HospitalLibrary.Reports.Repository;
 using HospitalLibrary.Reports.Service;
+using HospitalLibrary.Consiliums.Repository;
+using HospitalLibrary.Consiliums.Service;
 
 namespace HospitalAPI
 {
@@ -265,6 +267,10 @@ namespace HospitalAPI
             services.AddHostedService<ReportSendingTask>();
 
             services.AddScoped<IConsumer<BloodSupply>, BloodSupplyStateConsumer>();
+
+            //Consilium
+            services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
+            services.AddScoped<IConsiliumService, ConsiliumService>();
 
         }
 

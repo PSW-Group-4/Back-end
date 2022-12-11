@@ -71,7 +71,7 @@ namespace HospitalAPI.Controllers
             }
         }
 
-        [Authorize(Roles = "Patient")]
+        [Authorize(Roles = "Patient,Doctor")]
         [HttpGet("specialties")]
         public ActionResult GetAllSpecialties()
         {
