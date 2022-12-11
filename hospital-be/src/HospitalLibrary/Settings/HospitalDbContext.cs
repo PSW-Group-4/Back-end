@@ -26,6 +26,7 @@ using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
+using HospitalLibrary.EntityConfigurations;
 
 namespace HospitalLibrary.Settings
 {
@@ -56,7 +57,7 @@ namespace HospitalLibrary.Settings
         public DbSet<PatientRoom> PatientRooms { get; set; }
 
         public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<MedicalAppointment> MedicalAppointments { get; set; }
 
         public DbSet<BloodConsumptionRecord> BloodConsumptionRecords { get; set; }
 
@@ -76,9 +77,9 @@ namespace HospitalLibrary.Settings
 
         public DbSet<BloodSupply> BloodSupply { get; set; }
 
-        public DbSet<RoomSchedule> RoomSchedules { get; set; }
-        public DbSet<MoveEquipmentTask> MoveEquipmentTasks { get; set; }
-        public DbSet<EquipmentToMove> EquipmentToMoves { get; set; }
+        public DbSet<Appointment> Appointments {get; set;}
+        public DbSet<MoveEquipmentAppointment> MoveEquipmentTasks {get; set;}
+        public DbSet<EquipmentToMove> EquipmentToMoves {get; set;}
 
         // Medicine
         public DbSet<Medicine> Medicines { get; set; }
@@ -104,20 +105,21 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new AppointmentConfiguration());
 
             modelBuilder
                 .Entity<RoomsEquipment>()
-                .HasKey(re => new { re.DoctorRoomId, re.EquipmentId });
-
+                .HasKey(re => new {re.RoomId, re.EquipmentId});
+                
             modelBuilder.Entity<RoomsEquipment>()
                 .HasOne<Equipment>(re => re.Equipment)
                 .WithMany(e => e.RoomsEquipment)
                 .HasForeignKey(re => re.EquipmentId);
 
             modelBuilder.Entity<RoomsEquipment>()
-                .HasOne<DoctorRoom>(dc => dc.DoctorRoom)
+                .HasOne<Room>(dc => dc.Room)
                 .WithMany(dr => dr.RoomsEquipment)
-                .HasForeignKey(re => re.DoctorRoomId);
+                .HasForeignKey(re => re.RoomId);
 
 
 

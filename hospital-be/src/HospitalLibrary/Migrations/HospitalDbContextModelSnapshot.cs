@@ -119,57 +119,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Allergies");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Appointments.Model.Appointment", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("DoctorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PatientId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ScheduleId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PatientId");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.ToTable("Appointments");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Appointments.Model.RoomSchedule", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("Duration")
-                        .HasColumnType("integer");
-
-                    b.Property<bool>("IsDone")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("RoomId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("RoomSchedules");
-                });
-
             modelBuilder.Entity("HospitalLibrary.BloodConsumptionRecords.Model.BloodConsumptionRecord", b =>
                 {
                     b.Property<Guid>("Id")
@@ -355,6 +304,31 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("Appointments");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Appointment");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -463,37 +437,11 @@ namespace HospitalLibrary.Migrations
                     b.Property<Guid>("EquipmentId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("MoveEquipmentTaskId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid?>("MoveEquipmentTaskId1")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("EquipmentId");
 
-                    b.HasIndex("MoveEquipmentTaskId");
-
-                    b.HasIndex("MoveEquipmentTaskId1");
-
                     b.ToTable("EquipmentToMoves");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.MoveEquipment.Model.MoveEquipmentTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("RoomScheduleId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomScheduleId");
-
-                    b.ToTable("MoveEquipmentTasks");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Patients.Model.AgeGroup", b =>
@@ -662,7 +610,7 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.RoomsEquipment", b =>
                 {
-                    b.Property<Guid>("DoctorRoomId")
+                    b.Property<Guid>("RoomId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("EquipmentId")
@@ -671,7 +619,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric(20,0)");
 
-                    b.HasKey("DoctorRoomId", "EquipmentId");
+                    b.HasKey("RoomId", "EquipmentId");
 
                     b.HasIndex("EquipmentId");
 
@@ -809,6 +757,38 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("ReportSymptom");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Appointments.Model.MedicalAppointment", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Model.Appointment");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasDiscriminator().HasValue("MedicalAppointment");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MoveEquipment.Model.MoveEquipmentAppointment", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Model.Appointment");
+
+                    b.Property<Guid?>("EquipmentToMoveId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasIndex("EquipmentToMoveId");
+
+                    b.HasDiscriminator().HasValue("MoveEquipmentAppointment");
+                });
+
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.CafeteriaRoom", b =>
                 {
                     b.HasBaseType("HospitalLibrary.RoomsAndEqipment.Model.Room");
@@ -887,44 +867,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Treatments");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Appointments.Model.Appointment", b =>
-                {
-                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Patients.Model.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Appointments.Model.RoomSchedule", "Schedule")
-                        .WithMany()
-                        .HasForeignKey("ScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Patient");
-
-                    b.Navigation("Schedule");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Appointments.Model.RoomSchedule", b =>
-                {
-                    b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Room");
-                });
-
             modelBuilder.Entity("HospitalLibrary.BloodConsumptionRecords.Model.BloodConsumptionRecord", b =>
                 {
                     b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
@@ -998,6 +940,40 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Room");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
+                {
+                    b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsOne("HospitalLibrary.Core.Model.DateRange", "DateRange", b1 =>
+                        {
+                            b1.Property<Guid>("AppointmentId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime>("EndTime")
+                                .HasColumnType("timestamp without time zone")
+                                .HasColumnName("EndTime");
+
+                            b1.Property<DateTime>("StartTime")
+                                .HasColumnType("timestamp without time zone")
+                                .HasColumnName("StartTime");
+
+                            b1.HasKey("AppointmentId");
+
+                            b1.ToTable("Appointments");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AppointmentId");
+                        });
+
+                    b.Navigation("DateRange");
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Doctors.Model.Doctor", b =>
                 {
                     b.HasOne("HospitalLibrary.Core.Model.Address", "Address")
@@ -1055,26 +1031,7 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.MoveEquipment.Model.MoveEquipmentTask", null)
-                        .WithMany("EquipmentToGet")
-                        .HasForeignKey("MoveEquipmentTaskId");
-
-                    b.HasOne("HospitalLibrary.MoveEquipment.Model.MoveEquipmentTask", null)
-                        .WithMany("EquipmentToGive")
-                        .HasForeignKey("MoveEquipmentTaskId1");
-
                     b.Navigation("Equipment");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.MoveEquipment.Model.MoveEquipmentTask", b =>
-                {
-                    b.HasOne("HospitalLibrary.Appointments.Model.RoomSchedule", "RoomSchedule")
-                        .WithMany()
-                        .HasForeignKey("RoomScheduleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("RoomSchedule");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Patients.Model.Patient", b =>
@@ -1180,21 +1137,21 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.RoomsEquipment", b =>
                 {
-                    b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.DoctorRoom", "DoctorRoom")
-                        .WithMany("RoomsEquipment")
-                        .HasForeignKey("DoctorRoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.Equipment", "Equipment")
                         .WithMany("RoomsEquipment")
                         .HasForeignKey("EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DoctorRoom");
+                    b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.Room", "Room")
+                        .WithMany("RoomsEquipment")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Equipment");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Treatments.Model.Treatment", b =>
@@ -1253,6 +1210,34 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Appointments.Model.MedicalAppointment", b =>
+                {
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Patients.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MoveEquipment.Model.MoveEquipmentAppointment", b =>
+                {
+                    b.HasOne("HospitalLibrary.MoveEquipment.Model.EquipmentToMove", "EquipmentToMove")
+                        .WithMany()
+                        .HasForeignKey("EquipmentToMoveId");
+
+                    b.Navigation("EquipmentToMove");
+                });
+
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Building", b =>
                 {
                     b.Navigation("FloorList");
@@ -1261,13 +1246,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Floor", b =>
                 {
                     b.Navigation("RoomList");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.MoveEquipment.Model.MoveEquipmentTask", b =>
-                {
-                    b.Navigation("EquipmentToGet");
-
-                    b.Navigation("EquipmentToGive");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
@@ -1280,7 +1258,7 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("RoomsEquipment");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.DoctorRoom", b =>
+            modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.Room", b =>
                 {
                     b.Navigation("RoomsEquipment");
                 });

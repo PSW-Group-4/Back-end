@@ -46,6 +46,9 @@ using IntegrationAPI.Communications.Consumer.BloodRequestResponse;
 using HospitalLibrary.BloodSupplies.Model;
 using IntegrationAPI.Communications.Consumer.ReceivedBlood;
 using IntegrationLibrary.Common;
+using IntegrationAPI.Communications.Producer.BloodSubscription;
+using IntegrationLibrary.BloodSubscriptionReponces.Service;
+using IntegrationLibrary.BloodSubscriptionReponces.Repository;
 
 namespace IntegrationAPI
 {
@@ -127,13 +130,18 @@ namespace IntegrationAPI
             services.AddScoped<IConsumer<News>, NewsConsumer>();
             services.AddScoped<IConsumer<BloodRequest>, BloodRequestResponseConsumer>();
             services.AddScoped<IConsumer<Blood>, BloodConsumer>();
+            services.AddScoped<IBloodSubscriptionResponceRepository, BloodSubscriptionResponceRepository>();
+            services.AddScoped<IBloodSubscriptionResponceService, BloodSubscriptionResponceService>();
+
 
             services.AddControllers();
 
             services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */1 * * * *", TimeZoneInfo.Local));
             services.AddHostedService<ReportSendingTask>();
-           
-                //@"* 0 4 * * *"
+
+            // @ 2 am every 1st in month @"0 2 1 * *"
+            //services.AddSingleton<ITaskSettings<SubscriptionScheduler>>(new TaskSettings<SubscriptionScheduler>(@" */1 * * * *", TimeZoneInfo.Local));
+            //services.AddHostedService<SubscriptionScheduler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

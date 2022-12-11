@@ -7,6 +7,7 @@ using HospitalAPI.Dtos.Appointment;
 using HospitalAPI.Dtos.Bed;
 using HospitalAPI.Dtos.BloodConsumptionRecord;
 using HospitalAPI.Dtos.BloodSupply;
+using HospitalAPI.Dtos.DateRange;
 using HospitalAPI.Dtos.Doctor;
 using HospitalAPI.Dtos.Feedback;
 using HospitalAPI.Dtos.MapItem;
@@ -90,7 +91,8 @@ namespace HospitalAPI.Mapper
             //CreateMap<PatientRoom, PatientRoomRequestDto>().IncludeBase<Room, RoomRequestDto>();
             CreateMap<PatientRoomRequestDto, PatientRoom>().IncludeBase<RoomRequestDto, Room>();
 
-            CreateMap<AppointmentRequestDto, Appointment>();
+            CreateMap<AppointmentRequestDto, MedicalAppointment>().ForMember(dest=> dest.DateRange,
+                opt => opt.MapFrom(src => new DateRange(src.StartTime,src.StartTime.AddMinutes(30))));
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
@@ -145,6 +147,9 @@ namespace HospitalAPI.Mapper
 
 
             CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
+
+            CreateMap<AppointmentDto, Appointment>();
+            CreateMap<DateRangeDto, DateRange>();
 
 
         }
