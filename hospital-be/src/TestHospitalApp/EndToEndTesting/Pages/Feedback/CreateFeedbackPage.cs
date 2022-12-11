@@ -11,7 +11,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Feedback
     public class CreateFeedbackPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/patient/createFeedback.html";
+        public const string URI = "http://localhost:53107/patient/createFeedback";
         private IWebElement TextElement => driver.FindElement(By.Id("feedbackText"));
         private IWebElement AnonymousCheckboxElement => driver.FindElement(By.Id("anonymous"));
         private IWebElement PublicCheckboxElement => driver.FindElement(By.Id("public"));
@@ -64,24 +64,21 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Feedback
             SendButtonElement.Click();
         }
 
-        //Dodao u odnosu na primer, mozda ne radi
         public void WaitForErrorMessage()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 10));
             wait.Until(driver => driver.FindElement(By.Id("errorMessage")).Displayed);
         }
 
-        //Dodao
         public string GetErrorMessage()
         {
-            return driver.FindElement(By.Id("errorMessage")).ToString();
+            return driver.FindElement(By.Id("errorMessage")).Text;
         }
 
         public void WaitForSendFeedback()
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 20));
-            //Menjao u odnosu na primer, mozda ne radi
-            wait.Until(driver => driver.Url == ManagerFeedbackPage.URI);
+            wait.Until(driver => driver.Url != URI);
         }
 
         public void Navigate() => driver.Navigate().GoToUrl(URI);
@@ -93,7 +90,6 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Feedback
             {
                 try
                 {
-                    var test = TextElement.Text;
                     return TextElement.Text.Equals("");
                 }
                 catch (StaleElementReferenceException)

@@ -7,10 +7,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestHospitalApp.EndToEndTesting.Pages;
+using TestHospitalApp.EndToEndTesting.Pages.Login;
 using Xunit;
 
-namespace TestHospitalApp.EndToEndTesting
+namespace TestHospitalApp.EndToEndTesting.Tests.Login
 {
     public class E2eTestClass : IDisposable
     {
@@ -30,9 +30,9 @@ namespace TestHospitalApp.EndToEndTesting
 
             Driver = new ChromeDriver(options);
 
-            
+
             LoginPage = new LoginPage(Driver);      // create ProductsPage
-            LoginPage.Navigate();
+            LoginPage.NavigatePrivate();
         }
         public void Dispose()
         {
@@ -45,7 +45,7 @@ namespace TestHospitalApp.EndToEndTesting
         {
             LoginPage.EnterUsernameAndPassword("gtorbeck1", "U0LHHu3X60");
             LoginPage.PressLoginButton();
-            
+
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
             //wait.IgnoreExceptionTypes(typeof(NoSuchElementException));
             wait.Until(drv => drv.FindElement(By.ClassName("grid")));

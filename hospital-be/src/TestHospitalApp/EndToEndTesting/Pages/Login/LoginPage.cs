@@ -5,12 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestHospitalApp.EndToEndTesting.Pages
+namespace TestHospitalApp.EndToEndTesting.Pages.Login
 {
     public class LoginPage
     {
         private readonly IWebDriver driver;
-        public const string URI = @"http://localhost:4200/loginPage";
+        public readonly string privateURI = @"http://localhost:4200/login";
+        public readonly string publicURI = @"http://localhost:53107/loginPage";
 
         private IWebElement UsernameInput => driver.FindElement(By.Id("username"));
         private IWebElement PasswordInput => driver.FindElement(By.Id("password"));
@@ -32,6 +33,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages
             LoginButton.Click();
         }
 
-        public void Navigate() => driver.Navigate().GoToUrl(URI);
+        public void NavigatePrivate() => driver.Navigate().GoToUrl(privateURI);
+        public void NavigatePublic() => driver.Navigate().GoToUrl(publicURI);
     }
 }
