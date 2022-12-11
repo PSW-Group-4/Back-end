@@ -30,11 +30,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Feedback
             {
                 try
                 {
-                    if (Rows.Count > 1)
-                    {
-                        return LastRowPatient.Displayed;
-                    }
-                    return Table.Displayed;
+                    return LastRowPatient.Displayed;
                 }
                 catch (StaleElementReferenceException)
                 {
