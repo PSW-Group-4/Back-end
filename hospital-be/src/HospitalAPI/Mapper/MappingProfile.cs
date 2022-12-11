@@ -91,7 +91,8 @@ namespace HospitalAPI.Mapper
             //CreateMap<PatientRoom, PatientRoomRequestDto>().IncludeBase<Room, RoomRequestDto>();
             CreateMap<PatientRoomRequestDto, PatientRoom>().IncludeBase<RoomRequestDto, Room>();
 
-            CreateMap<AppointmentRequestDto, MedicalAppointment>();
+            CreateMap<AppointmentRequestDto, MedicalAppointment>().ForMember(dest=> dest.DateRange,
+                opt => opt.MapFrom(src => new DateRange(src.StartTime,src.StartTime.AddMinutes(30))));
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
