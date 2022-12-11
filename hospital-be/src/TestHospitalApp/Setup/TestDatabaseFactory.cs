@@ -234,6 +234,7 @@ namespace TestHospitalApp.Setup
 
             MedicalAppointment medicalAppointment = new MedicalAppointment
             {
+                RoomId = room.Id,
                 DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),   
                 PatientId = patient.Id
             };
