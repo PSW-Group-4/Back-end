@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221206100802_subscriptionDeliveryDate")]
+    partial class subscriptionDeliveryDate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,34 +181,6 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("blood_requests");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionRepsponce", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Message")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid?>("SubscriptionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<double>("Version")
-                        .HasColumnType("double precision");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SubscriptionId");
-
-                    b.ToTable("blood_subscription_responces");
-                });
-
             modelBuilder.Entity("IntegrationLibrary.BloodSubscriptions.BloodSubscription", b =>
                 {
                     b.Property<Guid>("Id")
@@ -231,7 +205,7 @@ namespace IntegrationLibrary.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<bool>("Sent")
+                    b.Property<bool>("Urgent")
                         .HasColumnType("boolean");
 
                     b.Property<double>("Version")
@@ -381,15 +355,6 @@ namespace IntegrationLibrary.Migrations
                     b.Navigation("Blood");
 
                     b.Navigation("BloodBank");
-                });
-
-            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionRepsponce", b =>
-                {
-                    b.HasOne("IntegrationLibrary.BloodSubscriptions.BloodSubscription", "Subscription")
-                        .WithMany()
-                        .HasForeignKey("SubscriptionId");
-
-                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>

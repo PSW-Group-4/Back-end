@@ -1,4 +1,5 @@
-﻿using IntegrationLibrary.Exceptions;
+﻿using IntegrationLibrary.BloodSubscriptionReponces.Model;
+using IntegrationLibrary.Exceptions;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,37 +8,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.BloodSubscriptions.Repository
+namespace IntegrationLibrary.BloodSubscriptionReponces.Repository
 {
-    public class BloodSubscriptionRepository : IBloodSubscriptionRepository
+    public class BloodSubscriptionResponceRepository : IBloodSubscriptionResponceRepository
     {
         private readonly IntegrationDbContext _context;
 
-        public BloodSubscriptionRepository(IntegrationDbContext context)
+        public BloodSubscriptionResponceRepository(IntegrationDbContext context)
         {
             _context = context;
         }
 
-        public BloodSubscription Create(BloodSubscription subscription)
+        public BloodSubscriptionRepsponce Create(BloodSubscriptionRepsponce subscription)
         {
-            _context.BloodSubscription.Add(subscription);
+            _context.BloodSubscriptionRepsponce.Add(subscription);
             _context.SaveChanges();
             return subscription;
         }
 
-        public IEnumerable<BloodSubscription> GetAll()
+        public IEnumerable<BloodSubscriptionRepsponce> GetAll()
         {
-            return _context.BloodSubscription.ToList();
+            return _context.BloodSubscriptionRepsponce.ToList();
         }
 
-        public IEnumerable<BloodSubscription> GetActiveNotSent()
+        public BloodSubscriptionRepsponce GetById(Guid id)
         {
-            return _context.BloodSubscription.Where(sub => sub.Sent == false && sub.ActiveStatus== true).ToList();
-        }
-
-        public BloodSubscription GetByBbTitle(string title)
-        {
-            BloodSubscription subscription = _context.BloodSubscription.Where(sub => sub.BloodBankName == title).First();
+            var subscription = _context.BloodSubscriptionRepsponce.Find(id);
             if (subscription == null)
             {
                 throw new NotFoundException();
@@ -48,9 +44,9 @@ namespace IntegrationLibrary.BloodSubscriptions.Repository
             }
         }
 
-        public BloodSubscription GetById(Guid id)
+        public BloodSubscriptionRepsponce GetBySubscriptionId(Guid id)
         {
-            BloodSubscription subscription = _context.BloodSubscription.Find(id);
+            var subscription = _context.BloodSubscriptionRepsponce.Where(sub=> sub.Subscription.Id == id).FirstOrDefault(); 
             if (subscription == null)
             {
                 throw new NotFoundException();
@@ -61,9 +57,9 @@ namespace IntegrationLibrary.BloodSubscriptions.Repository
             }
         }
 
-        public BloodSubscription Update(BloodSubscription subscription)
+        public BloodSubscriptionRepsponce Update(BloodSubscriptionRepsponce subscription)
         {
-            var local = _context.Set<BloodSubscription>()
+            var local = _context.Set<BloodSubscriptionRepsponce>()
                  .Local
                  .FirstOrDefault(entry => entry.Id.Equals(subscription.Id));
             // check if local is not null 
