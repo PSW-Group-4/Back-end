@@ -54,32 +54,35 @@ namespace HospitalLibrary.Consiliums.Service
 
         private Consilium ConsiliumWithDoctors(ConsiliumRequest consiliumRequest)
         {
-            bool doctorsFound = false;
-            DateTime terminFound = consiliumRequest.DateStart;
-            for (DateTime termin = consiliumRequest.DateStart; termin.AddMinutes(30 * consiliumRequest.Duration) <= consiliumRequest.DateEnd; termin.AddMinutes(30))
+            
+            List<Guid> doctorIds = new List<Guid>();
+            for (DateTime termin = consiliumRequest.DateStart; termin <= consiliumRequest.DateEnd.AddMinutes(-30 * consiliumRequest.Duration); termin = termin.AddMinutes(30))
             {
-                foreach(Guid doctorId in consiliumRequest.DoctorsId)
+                bool badTermin = false;
+                foreach (Guid doctorId in consiliumRequest.DoctorsId)   
                 {
-                    /*for (DateTime allTermins = termin; allTermins <= termin.AddMinutes(30 * consiliumRequest.Duration); allTermins.AddMinutes(30))
+                    for (DateTime longerTermin = termin; longerTermin < termin.AddMinutes(30 * consiliumRequest.Duration - 1); longerTermin = longerTermin.AddMinutes(30))
                     {
-                        if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, allTermins)))
+                        if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, termin)))
                         {
-                            doctorsFound = false;
+                            badTermin = true;
                             break;
                         }
-                    }*/
-                    if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, termin)))
+
+                    }
+                    if (badTermin)
                     {
-                        doctorsFound = false;
                         break;
                     }
-                    doctorsFound = true;
+                    else
+                    {
+                        doctorIds.Add(doctorId);
+                        if (doctorIds.Count == consiliumRequest.DoctorsId.Count)
+                        {
+                            return CreateConsilium(termin, consiliumRequest);
+                        }
+                    }
                 }
-                terminFound = termin;
-            }
-            if (doctorsFound)
-            {
-                return CreateConsilium(terminFound, consiliumRequest);
             }
             return null;
         }

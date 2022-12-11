@@ -113,7 +113,7 @@ namespace HospitalLibrary.Appointments.Service
         {
             Doctor doctor = _doctorRepository.GetById(doctorId);
             // da li je u radnom vremenu termin
-            if (IsInDoctorWorkingTime(doctor, time))
+            if (!IsInDoctorWorkingTime(doctor, time))
             {
                 return false;
             }
@@ -151,7 +151,7 @@ namespace HospitalLibrary.Appointments.Service
             DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(doctor.WorkingTimeStart).Hour, DateTime.Parse(doctor.WorkingTimeStart).Minute, 0);
             DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(doctor.WorkingTimeEnd).Hour, DateTime.Parse(doctor.WorkingTimeEnd).Minute, 0);
 
-            if (DateTime.Compare(date, WorkTimeStart) > 0
+            if (DateTime.Compare(date, WorkTimeStart) >= 0
                 && DateTime.Compare(date, WorkTimeEnd) < 0)
             {
                 return true;
