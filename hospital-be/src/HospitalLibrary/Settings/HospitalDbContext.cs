@@ -121,6 +121,8 @@ namespace HospitalLibrary.Settings
                 .WithMany(dr => dr.RoomsEquipment)
                 .HasForeignKey(re => re.RoomId);
 
+
+
             modelBuilder
                 .Entity<Patient>()
                 .HasMany(p => p.Allergies)
@@ -136,6 +138,16 @@ namespace HospitalLibrary.Settings
                     bloodType.Property(prop => prop.RhFactor).HasMaxLength(10)
                         .HasColumnName("RhFactor");
                 });
+            
+            // modelBuilder
+            //     .Entity<Patient>()
+            //     .OwnsOne(p => p.Email, email =>
+            //     {
+            //         email.Property(prop => prop.Address)
+            //             .HasColumnName("EmailAddress");
+            //     });
+            
+            
 
             modelBuilder.Entity<User>()
                 .Ignore(u => u.SuspiciousActivities)  

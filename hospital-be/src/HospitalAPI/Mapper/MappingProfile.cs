@@ -52,7 +52,11 @@ namespace HospitalAPI.Mapper
 
             CreateMap<PersonRequestDto, Person>();
             CreateMap<Person, PersonRequestDto>();
+            CreateMap<Person, PersonFullnameDto>().ForMember(dest => dest.Fullname,
+                opt => opt.MapFrom(src => src.Surname + " " + src.Name));
 
+            CreateMap<Person, PersonRequestDto>().ForMember( p => p.Email,
+                opt => opt.MapFrom(src => src.Email.Address ));
             CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
             CreateMap<FeedbackRequestDto, Feedback>();
@@ -92,8 +96,17 @@ namespace HospitalAPI.Mapper
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
             CreateMap<BloodSupplyDto, BloodSupply>();
+            CreateMap<Feedback, FeedbackPatientResponseDto>().ForMember(dest => dest.PatientFullname,
+                opt => opt.MapFrom(src => ResolveFeedbackPatientFullName(src)));
 
+
+            CreateMap<Person, PersonGetResponseDto>().ForMember( p => p.Email,
+                opt => opt.MapFrom(src => src.Email.Address ));
+            
             CreateMap<PatientRegistrationDto, Patient>();
+            CreateMap<Patient, PatientGetResponseDto>()
+                .IncludeBase<Person, PersonGetResponseDto>();
+            
             CreateMap<UserLoginDto, User>();
             CreateMap<UserDto, User>();
 

@@ -80,7 +80,7 @@ namespace TestHospitalApp.IntegrationTesting.AcountActivationEmailTests
                 Surname = "surname",
                 Birthdate = DateTime.Now,
                 Gender = Gender.Male,
-                Jmbg = "1231231231321",
+                Jmbg = new Jmbg("1807000730038"),
                 Email = "testemail123@gmail.com",
                 PhoneNumber = "123123123",
                 BloodType = BloodType.FromString("A+"),

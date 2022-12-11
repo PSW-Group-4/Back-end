@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.BuildingManagment.Model;
-using HospitalLibrary.BuildingManagment.Repository;
+using HospitalLibrary.BuildingManagment.Repository.Interfaces;
 using HospitalLibrary.BuildingManagment.Service.Interfaces;
 
 namespace HospitalLibrary.BuildingManagment.Service.Implementation
@@ -40,6 +40,10 @@ namespace HospitalLibrary.BuildingManagment.Service.Implementation
         public Building Update(Building entity)
         {
             return _buildingRepository.Update(entity);
+        }
+
+        public IEnumerable<Floor> GetFloorsByBuildingId(Guid id) {
+            return this.GetById(id).FloorList;
         }
     }
 }

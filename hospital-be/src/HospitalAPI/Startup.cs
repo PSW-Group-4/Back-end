@@ -61,6 +61,10 @@ using HospitalLibrary.Medicines.Repository;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Treatments.Repository;
 using HospitalLibrary.Treatments.Service;
+using HospitalLibrary.BuildingManagment.Repository.Interfaces;
+using HospitalLibrary.BuildingManagment.Repository.Implementation;
+using HospitalLibrary.BuildingManagment.Service.Interfaces;
+using HospitalLibrary.BuildingManagment.Service.Implementation;
 using HospitalLibrary.Prescriptions.Repository;
 using HospitalLibrary.Prescriptions.Service;
 using HospitalLibrary.Symptoms.Repository;
@@ -196,7 +200,12 @@ namespace HospitalAPI
             //Bed
             services.AddScoped<IBedService, BedService>();
             services.AddScoped<IBedRepository, BedRepository>();
+            //Building managment
+            services.AddScoped<IBuildingService, BuildingService>();
+            services.AddScoped<IBuildingRepository, BuildingRepository>();
 
+            services.AddScoped<IFloorService, FloorService>();
+            services.AddScoped<IFloorRepository, FloorRepository>();
             //MapItems
             services.AddScoped<IBuildingMapService, BuildingMapService>();
             services.AddScoped<IBuildingMapRepository, BuildingMapRepository>();

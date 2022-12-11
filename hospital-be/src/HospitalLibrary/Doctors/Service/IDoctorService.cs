@@ -13,6 +13,8 @@ namespace HospitalLibrary.Doctors.Service
         void Delete(Guid doctorId);
 
         IEnumerable<ChooseDoctorDTO> DoctorsWithLeastPatients();
+        public IEnumerable<string> GetAllSpecialties();
+        public IEnumerable<Doctor> GetDoctorsWithSpecialty(string specialty);
 
     }
 }
