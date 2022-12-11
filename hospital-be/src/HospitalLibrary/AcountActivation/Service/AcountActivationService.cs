@@ -50,7 +50,7 @@ namespace HospitalLibrary.AcountActivation.Service
             var varifyUrl = "http://localhost:4200/loginPage?token=" + info.ActivationToken + "&id=" + info.PersonId;
             Patient patient = _patientService.GetById(info.PersonId);
             string recipientName = patient.Name + " " + patient.Surname;
-            string recipientEmail = patient.Email;
+            string recipientEmail = patient.Email.Address;
             string subject = "Account activation";
             string emailText = "Please click the following link to activate your account: " + varifyUrl;
 

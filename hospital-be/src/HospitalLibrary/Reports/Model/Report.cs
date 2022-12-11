@@ -1,5 +1,4 @@
-﻿using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Patients.Model;
+﻿using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Symptoms.Model;
 using System;
@@ -10,10 +9,8 @@ namespace HospitalLibrary.Reports.Model
     public class Report
     {
         public Guid Id { get; set; }
-        public Guid PatientId { get; set; }
-        public virtual Patient Patient { get; set; }
-        public Guid DoctorId { get; set; }
-        public virtual Doctor Doctor { get; set; }
+        public Guid MedicalAppointmentId { get; set; }
+        public virtual MedicalAppointment MedicalAppointment { get; set; }
         public string Text { get; set; }
         public virtual List<Symptom> Symptoms { get; set; }
         public virtual List<Prescription> Prescriptions { get; set; }

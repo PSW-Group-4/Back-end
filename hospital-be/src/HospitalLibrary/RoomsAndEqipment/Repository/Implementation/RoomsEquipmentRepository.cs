@@ -48,7 +48,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Repository.Implementation
 
         public RoomsEquipment Update(RoomsEquipment room)
         {
-            var updatingRoom = _context.RoomsEquipment.SingleOrDefault(p => p.DoctorRoomId == room.DoctorRoomId);
+            var updatingRoom = _context.RoomsEquipment.SingleOrDefault(p => p.RoomId == room.RoomId);
             if (updatingRoom == null)
             {
                 throw new NotFoundException();

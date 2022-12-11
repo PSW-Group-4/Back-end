@@ -23,6 +23,7 @@ using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Symptoms.Service;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Medicines.Model;
+using HospitalAPI.Dtos.Prescription;
 
 namespace TestHospitalApp.IntegrationTesting
 {
@@ -56,18 +57,17 @@ namespace TestHospitalApp.IntegrationTesting
             List<Symptom> symptoms = ((OkObjectResult)symptomController.GetAll())?.Value as List<Symptom>;
             List<Medicine> medicines = ((OkObjectResult)medicineController.GetAll())?.Value as List<Medicine>;
 
-            Prescription prescription = new Prescription
+            PrescriptionRequestDto prescription = new PrescriptionRequestDto
             {
                 Medicines = new List<Medicine>(medicines.GetRange(0, 2))
             };
 
-            List<Prescription> prescriptions = new List<Prescription>();
+            List<PrescriptionRequestDto> prescriptions = new List<PrescriptionRequestDto>();
             prescriptions.Add(prescription);
 
             ReportRequestDto reportRequest = new ReportRequestDto
             {
-                PatientId = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),
-                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                AppointmentId = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
                 Text = "Create report test",
                 Symptoms = new List<Symptom>(symptoms.GetRange(0, 2)),
                 Prescriptions = prescriptions,

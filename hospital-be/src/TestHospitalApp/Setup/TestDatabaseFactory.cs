@@ -104,8 +104,8 @@ namespace TestHospitalApp.Setup
                 WorkingTimeEnd = "12:00",
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = "12345",
-                Email = "doctor@test.com",
+                Jmbg = new Jmbg("1807000730038"),
+                Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
                 LicenceNum = "12345",
@@ -121,8 +121,8 @@ namespace TestHospitalApp.Setup
                 WorkingTimeEnd = "12:00",
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = "12345",
-                Email = "doctor@test.com",
+                Jmbg = new Jmbg("1807000730038"),
+                Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
                 Speciality = "Surgeon",
                 LicenceNum = "12345",
@@ -148,8 +148,8 @@ namespace TestHospitalApp.Setup
                 Birthdate = DateTime.Now,
                 Gender = Gender.Male,
                 AddressId = address.Id,
-                Jmbg = "12312313",
-                Email = "mail@gmail.krompir",
+                Jmbg = new Jmbg("1807000730038"),
+                Email = new Email("mail@gmail.krompir"),
                 PhoneNumber = "066413242"
             };
 
@@ -163,8 +163,8 @@ namespace TestHospitalApp.Setup
                 Birthdate = DateTime.Now,
                 Gender = Gender.Male,
                 AddressId = address.Id,
-                Jmbg = "12312312",
-                Email = "mail2@gmail.krompir",
+                Jmbg = new Jmbg("1807000730038"),
+                Email = new Email("mail2@gmail.krompir"),
                 PhoneNumber = "066413242"
             };
 
@@ -232,15 +232,12 @@ namespace TestHospitalApp.Setup
             context.Vacations.Add(vacationWFA);
             context.Vacations.Add(vacationA);
 
-            Appointment appointment = new Appointment
+            MedicalAppointment medicalAppointment = new MedicalAppointment
             {
+                RoomId = room.Id,
+                Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
                 DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),   
-                PatientId = patient.Id,
-                Schedule = new RoomSchedule{
-                    DateTime = new DateTime(2022, 12, 10, 0, 0, 0),
-                    RoomId = room.Id,
-                }
-                
+                PatientId = patient.Id
             };
 
             // BEDS
@@ -278,7 +275,7 @@ namespace TestHospitalApp.Setup
             context.Beds.Add(bed2);
             context.Beds.Add(bed3);
 
-            context.Appointments.Add(appointment);
+            context.MedicalAppointments.Add(medicalAppointment);
 
             // PATIENT ROOMS
 
@@ -295,25 +292,21 @@ namespace TestHospitalApp.Setup
 
             context.Rooms.Add(patientRoom);
 
-            RoomSchedule schedule = new RoomSchedule
+            Appointment schedule = new Appointment
             {
                 Id = new Guid("95a7ac4d-4f11-4530-995b-436f484599e7"),
-                DateTime = new DateTime(2022, 12, 24, 11, 00, 00),
                 IsDone = false,
-                RoomId = room.Id,
-                Duration = 30
+                RoomId = room.Id
             };
-            RoomSchedule schedule2 = new RoomSchedule
+            Appointment schedule2 = new Appointment
             {
                 Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
-                DateTime = new DateTime(2022, 12, 25, 12, 00, 00),
                 IsDone = true,
-                RoomId = room.Id,
-                Duration = 30
+                RoomId = room.Id
             };
 
-            context.RoomSchedules.Add(schedule);
-            context.RoomSchedules.Add(schedule2);
+            context.Appointments.Add(schedule);
+            context.Appointments.Add(schedule2);
 
             //Users
             initUsers(context);
