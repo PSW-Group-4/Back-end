@@ -12,7 +12,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Feedback
     public class ManagerFeedbackPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:4200/manager/feedbacks";
+        public const string URI = "http://localhost:59198/manager/feedbacks";
         private IWebElement Table => driver.FindElement(By.Id("feedbacksTable"));
         private ReadOnlyCollection<IWebElement> Rows =>
             Table.FindElements(By.TagName("tr"));
@@ -30,8 +30,11 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Feedback
             {
                 try
                 {
-                    var patient = LastRowPatient;
-                    return patient.Displayed;
+                    if (Rows.Count > 1)
+                    {
+                        return LastRowPatient.Displayed;
+                    }
+                    return Table.Displayed;
                 }
                 catch (StaleElementReferenceException)
                 {

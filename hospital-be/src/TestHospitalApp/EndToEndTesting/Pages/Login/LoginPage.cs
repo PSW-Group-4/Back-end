@@ -10,8 +10,8 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Login
     public class LoginPage
     {
         private readonly IWebDriver driver;
-        public readonly string privateURI = @"http://localhost:4200/login";
-        public readonly string publicURI = @"http://localhost:53107/loginPage";
+        public readonly string privateURI = @"http://localhost:59198/login";
+        public readonly string publicURI = @"http://localhost:4200/loginPage";
 
         private IWebElement UsernameInput => driver.FindElement(By.Id("username"));
         private IWebElement PasswordInput => driver.FindElement(By.Id("password"));

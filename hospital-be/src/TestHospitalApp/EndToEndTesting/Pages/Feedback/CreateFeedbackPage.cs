@@ -11,7 +11,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Feedback
     public class CreateFeedbackPage
     {
         private readonly IWebDriver driver;
-        public const string URI = "http://localhost:53107/patient/createFeedback";
+        public const string URI = "http://localhost:4200/patient/createFeedback";
         private IWebElement TextElement => driver.FindElement(By.Id("feedbackText"));
         private IWebElement AnonymousCheckboxElement => driver.FindElement(By.Id("anonymous"));
         private IWebElement PublicCheckboxElement => driver.FindElement(By.Id("public"));
