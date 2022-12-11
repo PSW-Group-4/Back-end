@@ -43,7 +43,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
                         BloodSubscriptionResponceConsumer consumer = new(consumerBuilder, cancelToken);
                         try
                         {
-                            while (true)
+                            while (false)
                             {
                                 //TODO: Update BloodSubscriptionRepsponce so it only consumes id and message simple 2 column table
                                 BloodSubscriptionRepsponce response = consumer.Consume();
