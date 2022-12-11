@@ -78,7 +78,7 @@ namespace HospitalLibrary.Consiliums.Service
             Consilium consilium = new Consilium()
             {
                 Reason = consiliumRequest.Reason,
-                DoctorsId = consiliumRequest.DoctorsId,
+                //DoctorsId = consiliumRequest.DoctorsId,
                 // ostale stvari koje ja ne znam sta su hahahah
 
             };

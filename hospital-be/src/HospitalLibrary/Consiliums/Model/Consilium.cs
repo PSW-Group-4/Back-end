@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using System;
@@ -13,8 +14,9 @@ namespace HospitalLibrary.Consiliums.Model
     {
         public Guid Id { get; set; }
         public String Reason { get; set; }
-        public List<Guid> DoctorsId { get; set; }
-        public virtual List<Doctor> Doctors { get; set; }
+        // treba manytomany
+        //public List<Guid> DoctorsId { get; set; }
+        //public virtual List<Doctor> Doctors { get; set; }
 
     }
 }

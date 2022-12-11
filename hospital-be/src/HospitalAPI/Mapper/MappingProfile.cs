@@ -7,6 +7,7 @@ using HospitalAPI.Dtos.Appointment;
 using HospitalAPI.Dtos.Bed;
 using HospitalAPI.Dtos.BloodConsumptionRecord;
 using HospitalAPI.Dtos.BloodSupply;
+using HospitalAPI.Dtos.Consilium;
 using HospitalAPI.Dtos.DateRange;
 using HospitalAPI.Dtos.Doctor;
 using HospitalAPI.Dtos.Feedback;
@@ -28,6 +29,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptionRecords.Model;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BuildingManagmentMap.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
@@ -151,6 +153,7 @@ namespace HospitalAPI.Mapper
             CreateMap<AppointmentDto, Appointment>();
             CreateMap<DateRangeDto, DateRange>();
 
+            CreateMap<ConsiliumRequestDto, ConsiliumRequest>();
 
         }
 
