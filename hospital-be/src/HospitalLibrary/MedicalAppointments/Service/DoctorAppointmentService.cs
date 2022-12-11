@@ -7,6 +7,7 @@ using IntegrationLibrary.Utilities;
 using MimeKit;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Vacations.Service;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -14,6 +15,7 @@ namespace HospitalLibrary.Appointments.Service
     {
         private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IVacationService _vacationServie;
 
         public DoctorAppointmentService(IMedicalAppointmentService medicalAppointmentService, IDoctorRepository doctorRepository)
         {
@@ -66,12 +68,6 @@ namespace HospitalLibrary.Appointments.Service
             return doctorsOldAppointments;
         }
 
-        public Doctor getDoctor()
-        {
-            Guid id = new Guid("487d0767-1f8b-4a09-a593-4f076bdb9881");
-            return _doctorRepository.GetById(id);
-        }
-
         public void deleteAppointmentEndSendNotification(Guid appointmentId)
         {
             MedicalAppointment medicalAppointment = _medicalAppointmentService.GetById(appointmentId);
@@ -86,30 +82,19 @@ namespace HospitalLibrary.Appointments.Service
             MimeMessage emailMessage = EmailSending.createTxtEmail(recipientName,recipientEmail,subject,emailText );
             EmailSending.sendEmail(emailMessage);
         }
-        //TODO refactor
+        
         //PETAR
-        public bool IsDoctorAvailable(DateTime time)
-        {
-            IEnumerable<MedicalAppointment> appointments = _medicalAppointmentService.GetAll();
-            foreach (MedicalAppointment appointment in appointments)
-            {
-                if (appointment.DateRange.StartTime.Equals(time))
-                    return false;
-            }
-            return IsDoctorWorkTimeAvailable(time);
-        }
-        //PETAR
-        public List<DateRange> AvailableTerminsForDate(DateTime date,Guid patientId)
+        public List<DateRange> AvailableTerminsForDate(DateTime date,Guid patientId, Guid doctorId)
         {
             List<DateRange> list = new List<DateRange>();
 
-            DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(getDoctor().WorkingTimeStart).Hour, DateTime.Parse(getDoctor().WorkingTimeStart).Minute, 0);
-            DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(getDoctor().WorkingTimeEnd).Hour, DateTime.Parse(getDoctor().WorkingTimeEnd).Minute, 0);
+            DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Minute, 0);
+            DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeEnd).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeEnd).Minute, 0);
             
             while (DateTime.Compare(WorkTimeEnd, WorkTimeStart) > 0)
             {
                 DateRange terminRange = new DateRange(WorkTimeStart, WorkTimeEnd);
-                if (IsDoctorAvailable(WorkTimeStart) && _medicalAppointmentService.IsPatientFree(patientId, terminRange))
+                if (IsDoctorAvailable(doctorId, WorkTimeStart) && _medicalAppointmentService.IsPatientFree(patientId, terminRange))
                 {
                     DateRange dateRange = new DateRange(WorkTimeStart, WorkTimeStart.AddMinutes(30));
                     list.Add(dateRange);
@@ -118,8 +103,70 @@ namespace HospitalLibrary.Appointments.Service
             }
             return list;
         }
+
+        //TODO refactor
+        //PETAR
+        public bool IsDoctorAvailable(Guid doctorId, DateTime time)
+        {
+            Doctor doctor = _doctorRepository.GetById(doctorId);
+            // da li je u radnom vremenu termin
+            if (IsInDoctorWorkingTime(doctor, time))
+            {
+                return false;
+            }
+            // da li je doktor na godisnjem
+            if (_vacationServie.IsDoctorOnVacation(doctorId, time))
+            {
+                return false;
+            }
+            // da li doktor tad ima pregled
+            if (IsDoctorOnMedicalAppointment(doctor, time))
+            {
+                return false;
+            }
+            return true;
+
+            /*
+            IEnumerable<MedicalAppointment> appointments = _medicalAppointmentService.GetAll();
+            foreach (MedicalAppointment appointment in appointments)
+            {
+                if (appointment.DateRange.StartTime.Equals(time))
+                    return false;
+            }
+            return IsDoctorWorkTimeAvailable(time);*/
+        }
+
+
+        private bool IsInDoctorWorkingTime(Doctor doctor, DateTime date)
+        {
+            DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(doctor.WorkingTimeStart).Hour, DateTime.Parse(doctor.WorkingTimeStart).Minute, 0);
+            DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(doctor.WorkingTimeEnd).Hour, DateTime.Parse(doctor.WorkingTimeEnd).Minute, 0);
+
+            if (DateTime.Compare(date, WorkTimeStart) > 0
+                && DateTime.Compare(date, WorkTimeEnd) < 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        private bool IsDoctorOnMedicalAppointment(Doctor doctor, DateTime date)
+        {
+            IEnumerable<MedicalAppointment> allDoctorsAppointments = GetDoctorAppointments(doctor.Id);
+            foreach (MedicalAppointment appointment in allDoctorsAppointments)
+            {
+                if(DateTime.Compare(date, appointment.DateRange.StartTime) >= 0
+                && DateTime.Compare(date, appointment.DateRange.EndTime) < 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+
+
         //TODO izbaci
-        public bool IsDoctorWorkTimeAvailable(DateTime time)
+        /*public bool IsDoctorWorkTimeAvailable(DateTime time)
         {
             Doctor doctor = getDoctor();
             DateTime WorkTimeStart = DateTime.Parse(doctor.WorkingTimeStart);
@@ -127,6 +174,6 @@ namespace HospitalLibrary.Appointments.Service
             if ((WorkTimeStart.Hour <= time.Hour) && (WorkTimeEnd.Hour > time.Hour))
                 return true;
             return false;
-        }
+        }*/
     }
 }

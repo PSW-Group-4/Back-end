@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Consiliums.Model;
+﻿using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
@@ -14,10 +15,12 @@ namespace HospitalLibrary.Consiliums.Service
     {
         private readonly IConsiliumRepository _consiliumRepository;
         private readonly IDoctorService _doctorService;
-        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorService doctorService)
+        private readonly IDoctorAppointmentService _doctorAppointmentService;
+        public ConsiliumService(IConsiliumRepository consiliumRepository, IDoctorService doctorService, IDoctorAppointmentService doctorAppointmentService)
         {
             _consiliumRepository = consiliumRepository;
             _doctorService = doctorService;
+            _doctorAppointmentService = doctorAppointmentService;
         }
         // PETAR TODO
         public IEnumerable<Consilium> GetDoctorsConsiliums(Guid DoctorId)
@@ -53,11 +56,19 @@ namespace HospitalLibrary.Consiliums.Service
         {
             bool doctorsFound = false;
             DateTime terminFound = consiliumRequest.DateStart;
-            for (DateTime termin = consiliumRequest.DateStart; termin <= consiliumRequest.DateEnd.AddMinutes(consiliumRequest.Duration); termin.AddMinutes(30))
+            for (DateTime termin = consiliumRequest.DateStart; termin.AddMinutes(30 * consiliumRequest.Duration) <= consiliumRequest.DateEnd; termin.AddMinutes(30))
             {
                 foreach(Guid doctorId in consiliumRequest.DoctorsId)
                 {
-                    if (!DoctorAvailable(termin, consiliumRequest))
+                    /*for (DateTime allTermins = termin; allTermins <= termin.AddMinutes(30 * consiliumRequest.Duration); allTermins.AddMinutes(30))
+                    {
+                        if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, allTermins)))
+                        {
+                            doctorsFound = false;
+                            break;
+                        }
+                    }*/
+                    if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, termin)))
                     {
                         doctorsFound = false;
                         break;
@@ -85,37 +96,6 @@ namespace HospitalLibrary.Consiliums.Service
             return _consiliumRepository.Create(consilium);
         }
 
-        private bool DoctorAvailable(DateTime termin, ConsiliumRequest consiliumRequest)
-        {
-            // da li je u radnom vremenu termin
-            if (IsInDoctorWorkingTime(DateTime.Now))
-            {
-                return false;
-            }
-            // da li je doktor na godisnjem
-            if (IsDoctorOnVacation(DateTime.Now))
-            {
-                return false;
-            }
-            // da li doktor tad ima pregled
-            if (IsDoctorOnMedicalAppointment(DateTime.Now))
-            {
-                return false;
-            }
-            return true;
-        }
-        private bool IsInDoctorWorkingTime(object p)
-        {
-            throw new NotImplementedException();
-        }
-        private bool IsDoctorOnVacation(DateTime now)
-        {
-            throw new NotImplementedException();
-        }
-        private bool IsDoctorOnMedicalAppointment(object p)
-        {
-            throw new NotImplementedException();
-        }
 
         private Consilium ConsiliumWithSpecialities(ConsiliumRequest consiliumRequest)
         {
