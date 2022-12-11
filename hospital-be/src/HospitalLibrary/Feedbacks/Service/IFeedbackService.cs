@@ -7,7 +7,7 @@ namespace HospitalLibrary.Feedbacks.Service
 {
     public interface IFeedbackService : ICrudService<Feedback> 
     {
-        public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel);
+        //public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel);
         public IEnumerable<Feedback> GetAllPublished();
     }
 }
