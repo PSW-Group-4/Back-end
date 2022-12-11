@@ -9,8 +9,8 @@ namespace HospitalLibrary.Reports.Model
     public class Report
     {
         public Guid Id { get; set; }
-        public Guid AppointmentId { get; set; }
-        public virtual Appointment Appointment { get; set; }
+        public Guid MedicalAppointmentId { get; set; }
+        public virtual MedicalAppointment MedicalAppointment { get; set; }
         public string Text { get; set; }
         public virtual List<Symptom> Symptoms { get; set; }
         public virtual List<Prescription> Prescriptions { get; set; }

@@ -9,15 +9,15 @@ using HospitalLibrary.Settings;
 
 namespace HospitalLibrary.MoveEquipment.Repository.Implementation
 {
-    public class MoveEquipmentTaskRepository : IMoveEquipmentTaskRepository
+    public class MoveEquipmentAppointmentRepository : IMoveEquipmentAppointmentRepository
     {
-          private readonly HospitalDbContext _context;
+        private readonly HospitalDbContext _context;
 
-        public MoveEquipmentTaskRepository(HospitalDbContext context)
+        public MoveEquipmentAppointmentRepository(HospitalDbContext context)
         {
             _context = context;
         }
-        public MoveEquipmentTask Create(MoveEquipmentTask entity)
+        public MoveEquipmentAppointment Create(MoveEquipmentAppointment entity)
         {
             _context.MoveEquipmentTasks.Add(entity);
             _context.SaveChanges();
@@ -31,12 +31,12 @@ namespace HospitalLibrary.MoveEquipment.Repository.Implementation
             _context.SaveChanges();
         }
 
-        public IEnumerable<MoveEquipmentTask> GetAll()
+        public IEnumerable<MoveEquipmentAppointment> GetAll()
         {
             return _context.MoveEquipmentTasks.ToList();
         }
 
-        public MoveEquipmentTask GetById(Guid id)
+        public MoveEquipmentAppointment GetById(Guid id)
         {
             var result =  _context.MoveEquipmentTasks.Find(id);
             if (result == null)
@@ -46,7 +46,7 @@ namespace HospitalLibrary.MoveEquipment.Repository.Implementation
             return result;
         }
 
-        public MoveEquipmentTask Update(MoveEquipmentTask entity)
+        public MoveEquipmentAppointment Update(MoveEquipmentAppointment entity)
         {
             var updatingEntity = _context.MoveEquipmentTasks.SingleOrDefault(e => e.Id == entity.Id);
             if (updatingEntity == null)

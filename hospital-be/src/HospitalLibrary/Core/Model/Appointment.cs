@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HospitalLibrary.Appointments.Model
+namespace HospitalLibrary.Core.Model
 {
-    public class RoomSchedule
+    public class Appointment
     {
         public Guid Id {get; set;}
-        public DateTime DateTime { get; set; }
-        public bool IsDone { get; set; }
+        public  DateRange DateRange { get; set; }
         public Guid RoomId { get; set; }
+        public String Discriminator {get; private set;}
         public virtual Room Room { get; set; }
-        public int Duration {get; set;}
+        public bool IsDone { get; set; }
 
-        public void Update(RoomSchedule schedule)
+        public void Update(Appointment schedule)
         {
-            DateTime = schedule.DateTime;
             IsDone = schedule.IsDone;
         }
     }

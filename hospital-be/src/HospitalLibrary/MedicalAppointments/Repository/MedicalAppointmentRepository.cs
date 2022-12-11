@@ -8,23 +8,23 @@ using HospitalLibrary.Exceptions;
 
 namespace HospitalLibrary.Appointments.Repository
 {
-    public class AppointmentRepository : IAppointmentRepository
+    public class MedicalAppointmentRepository : IMedicalAppointmentRepository
     {
         private readonly HospitalDbContext _context;
 
-        public AppointmentRepository(HospitalDbContext context)
+        public MedicalAppointmentRepository(HospitalDbContext context)
         {
             _context = context;
         }
 
-        public IEnumerable<Appointment> GetAll()
+        public IEnumerable<MedicalAppointment> GetAll()
         {
-            return _context.Appointments.ToList();
+            return _context.MedicalAppointments.ToList();
         }
 
-        public Appointment GetById(Guid id)
+        public MedicalAppointment GetById(Guid id)
         {
-            var result = _context.Appointments.Find(id);
+            var result = _context.MedicalAppointments.Find(id);
             if (result == null)
             {
                 throw new NotFoundException();
@@ -32,22 +32,20 @@ namespace HospitalLibrary.Appointments.Repository
             return result;
         }
 
-        public Appointment Create(Appointment appointment)
+        public MedicalAppointment Create(MedicalAppointment medicalAppointment)
         {
-            _context.Appointments.Add(appointment);
+            _context.MedicalAppointments.Add(medicalAppointment);
             _context.SaveChanges();
-            return appointment;
+            return medicalAppointment;
         }
 
-        public Appointment Update(Appointment appointment)
+        public MedicalAppointment Update(MedicalAppointment medicalAppointment)
         {
-            var updatingAppointment = _context.Appointments.SingleOrDefault(a => a.Id == appointment.Id);
+            var updatingAppointment = _context.MedicalAppointments.SingleOrDefault(a => a.Id == medicalAppointment.Id);
             if (updatingAppointment == null)
             {
                 throw new NotFoundException();
             }
-
-            updatingAppointment.Update(appointment);
 
             _context.SaveChanges();
             return updatingAppointment;
@@ -56,7 +54,7 @@ namespace HospitalLibrary.Appointments.Repository
         public void Delete(Guid appointmentId)
         {
             var appointment = GetById(appointmentId);
-            _context.Appointments.Remove(appointment);
+            _context.MedicalAppointments.Remove(appointment);
             _context.SaveChanges();
         }
     }

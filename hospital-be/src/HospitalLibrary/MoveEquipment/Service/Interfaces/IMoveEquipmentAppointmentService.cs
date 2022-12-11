@@ -7,7 +7,7 @@ using HospitalLibrary.MoveEquipment.Model;
 
 namespace HospitalLibrary.MoveEquipment.Service.Interfaces
 {
-    public interface IMoveEquipmentTaskService : ICrudService<MoveEquipmentTask>
+    public interface IMoveEquipmentAppointmentService : ICrudService<MoveEquipmentAppointment>
     {
         public void CreateMoveEquipment(InputCreateData data);
 
