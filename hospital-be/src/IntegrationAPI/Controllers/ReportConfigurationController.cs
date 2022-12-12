@@ -11,10 +11,10 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class ReportConfigurationController : ControllerBase
     {
-        private readonly IBbReportConfigService _service;
+        private readonly IReportConfigurationService _service;
         private readonly IConverter<ReportConfiguration, ReportConfigurationDto> _converter;
 
-        public ReportConfigurationController(IBbReportConfigService service, IConverter<ReportConfiguration, ReportConfigurationDto> converter)
+        public ReportConfigurationController(IReportConfigurationService service, IConverter<ReportConfiguration, ReportConfigurationDto> converter)
         {
             _service = service;
             _converter = converter;

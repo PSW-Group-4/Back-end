@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.BloodReport.Repository
 {
-    public class BbReportConfigRepository : IBbReportConfigRepository
+    public class ReportConfigurationRepository : IReportConfigurationRepository
     {
         private readonly IntegrationDbContext _context;
 
-        public BbReportConfigRepository(IntegrationDbContext context)
+        public ReportConfigurationRepository(IntegrationDbContext context)
         {
             _context = context;
         }
