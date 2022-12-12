@@ -12,6 +12,6 @@ namespace IntegrationLibrary.ManagerBloodRequests.Service
         public IEnumerable<ManagerRequest> GetAll();
         public ManagerRequest GetById(Guid id);
         public ManagerRequest Create(ManagerRequest bloodRequest);
-        public ManagerRequest Update(ManagerRequest bloodRequest);
+        public ManagerRequest Update(ManagerRequest bloodRequest);  
     }
 }
