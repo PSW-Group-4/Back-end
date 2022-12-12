@@ -31,6 +31,7 @@ namespace HospitalLibrary.Renovation.Model
 
         private void Validate() {
             ValidateListLength();
+            ValidateListEntries();
         }
 
         public IEnumerable<RoomRenovationPlan> GetNewRoomPlans() {
@@ -48,6 +49,12 @@ namespace HospitalLibrary.Renovation.Model
         private void ValidateListLength() {
             if(this.RoomRenovationPlans.ToList().Count != 3) {
                 throw new InvalidValueException();
+            }
+        }
+
+        private void ValidateListEntries() {
+            foreach (RoomRenovationPlan plan in this.RoomRenovationPlans) {
+                plan.Validate();
             }
         }
 

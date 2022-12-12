@@ -15,6 +15,8 @@ namespace HospitalLibrary.Renovation.Model
         public TypeOfPlan Type {get; private set;}
         public int Number {get; private set;}
 
+        public RoomRenovationPlan() {
+        }
         public RoomRenovationPlan(Guid id) {
             this.Id = id;
             this.Type = TypeOfPlan.Old;
@@ -29,7 +31,7 @@ namespace HospitalLibrary.Renovation.Model
             this.Validate();
         }
 
-        private void Validate() {
+        public void Validate() {
             if (Type == TypeOfPlan.New) {
                 ValidateForNewPlan();
             }

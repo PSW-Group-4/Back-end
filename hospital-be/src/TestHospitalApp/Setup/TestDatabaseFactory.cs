@@ -324,6 +324,10 @@ namespace TestHospitalApp.Setup
             //Users
             initUsers(context);
 
+            // Rooms
+            initRooms(context);
+            // Relocation Appointments
+            initRenovation(context);
 
             context.SaveChanges();
 
@@ -366,7 +370,7 @@ namespace TestHospitalApp.Setup
             context.Add(userInactive);
             context.Add(managerUser);
         }
-            private static void initRenovation(HospitalDbContext context)
+        private static void initRenovation(HospitalDbContext context)
         {
             List<RoomRenovationPlan> plans1 = new List<RoomRenovationPlan>();
             plans1.Add(new RoomRenovationPlan(new Guid("fbcf2919-ef1c-49fe-9556-f99188bdbad9")));
@@ -385,6 +389,13 @@ namespace TestHospitalApp.Setup
                 new Guid("fbcf2919-ef1c-49fe-9556-f99188bdbad9")
             );
 
+            RenovationAppointment renovation2 = new RenovationAppointment(
+                RenovationAppointment.TypeOfRenovation.Merge,
+                plans1,
+                new DateRange(DateTime.Now.AddDays(4), DateTime.Now.AddDays(5)),
+                new Guid("18e98c94-5081-4020-ac91-d00f995c7e4f")
+            );
+
             List<RoomRenovationPlan> plans2 = new List<RoomRenovationPlan>();
             plans2.Add(new RoomRenovationPlan(new Guid("e2689a81-c248-4686-a807-5e6796a90857")));
             plans2.Add(new RoomRenovationPlan(
@@ -398,15 +409,16 @@ namespace TestHospitalApp.Setup
                 23
                 ));
 
-            RenovationAppointment renovation2 = new RenovationAppointment(
+             RenovationAppointment renovation3 = new RenovationAppointment(
                 RenovationAppointment.TypeOfRenovation.Split,
                 plans2,
                 new DateRange(DateTime.Now.AddDays(4), DateTime.Now.AddDays(5)),
-                new Guid("18e98c94-5081-4020-ac91-d00f995c7e4f")
+                new Guid("e2689a81-c248-4686-a807-5e6796a90857")
             );
 
             context.RenovationAppointments.Add(renovation1);
             context.RenovationAppointments.Add(renovation2);
+            context.RenovationAppointments.Add(renovation3);
         }
         private static void initRooms(HospitalDbContext context)
         {   
@@ -444,8 +456,6 @@ namespace TestHospitalApp.Setup
                 22,
                 list3
             );
-            Floor floor = new Floor {Id = new Guid(), Name="dasdas"};
-            context.Floors.Add(floor);
 
             context.Rooms.Add(room);
             context.Rooms.Add(room2);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Renovation.Service.Interfaces;
 using HospitalLibrary.Renovation.Repository.Interfaces;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Renovation.Service.Implementation
 {
@@ -47,12 +48,12 @@ namespace HospitalLibrary.Renovation.Service.Implementation
             plans.Add(data.Room1);
             plans.Add(data.Room2);
             plans.Add(data.Room3);
-            RenovationAppointment appointment = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, data.DateRange, data.Room1.Id);
+            RenovationAppointment appointment = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, new DateRange(data.StartTime, data.EndTime), data.Room1.Id);
+            this.Create(appointment);
             if(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type) == RenovationAppointment.TypeOfRenovation.Merge) {
-                RenovationAppointment appointment2 = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, data.DateRange, data.Room2.Id);
+                RenovationAppointment appointment2 = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, new DateRange(data.StartTime, data.EndTime), data.Room2.Id);
                 this.Create(appointment2);
             }
-            this.Create(appointment);
         }
     }
 }

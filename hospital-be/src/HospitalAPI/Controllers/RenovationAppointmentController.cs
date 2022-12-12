@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Renovation.Service.Interfaces;
 using AutoMapper;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalAPI.Controllers
 {
@@ -17,10 +18,15 @@ namespace HospitalAPI.Controllers
         private readonly IMapper _mapper;
         
         public RenovationAppointmentController(IRenovationAppointmentService renovationAppointment, IMapper mapper)
-            {
-                _renovationAppointment = renovationAppointment;
-                _mapper = mapper;
-            }
+        {
+            _renovationAppointment = renovationAppointment;
+            _mapper = mapper;
+        }
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_renovationAppointment.GetAll());
+        }
 
         [HttpPost]
         public ActionResult Create([FromBody] RenovationDataDto taskDto)
@@ -28,7 +34,20 @@ namespace HospitalAPI.Controllers
                 RenovationDataDto data = taskDto;
                 _renovationAppointment.CreateRenovation(data);
                 return Ok();
+        }
 
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] Guid id)
+        {
+            try
+            {
+                _renovationAppointment.Delete(id);
+                return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

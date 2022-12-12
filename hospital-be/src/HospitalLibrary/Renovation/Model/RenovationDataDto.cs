@@ -11,7 +11,8 @@ namespace HospitalLibrary.Renovation.Model
         public RoomRenovationPlan Room1 {get; set;}
         public RoomRenovationPlan Room2 {get; set;}
         public RoomRenovationPlan Room3 {get; set;}
-        public HospitalLibrary.Core.Model.DateRange DateRange {get; set;}
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set ; }
         public String Type {get; set;}
     }
 }
