@@ -60,5 +60,6 @@ namespace HospitalLibrary.Vacations.Repository
             _context.Vacations.Remove(vacation);
             _context.SaveChanges();
         }
+
     }
 }

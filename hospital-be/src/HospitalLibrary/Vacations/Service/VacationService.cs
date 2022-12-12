@@ -4,6 +4,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Repository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -171,6 +172,21 @@ namespace HospitalLibrary.Vacations.Service
                 if (vacation.DoctorId.Equals(DoctorId) && vacation.VacationStatus.Equals(vacationStatus))
                 {
                     doctorVacations.Add(vacation);
+                }
+            }
+            return doctorVacations;
+        }
+
+        public IEnumerable<Vacation> GetAllPast(Guid doctorId)
+        {
+            IEnumerable<Vacation> vacations = GetAll();
+            List<Vacation> doctorVacations = new List<Vacation>();
+
+            foreach(Vacation v in vacations)
+            {
+                if(v.DoctorId.Equals(doctorId) && v.DateEnd < DateTime.Now && v.VacationStatus.Equals(VacationStatus.Approved)) //Ne valja
+                {
+                    doctorVacations.Add(v);
                 }
             }
             return doctorVacations;

@@ -5,6 +5,7 @@ using HospitalLibrary.Vacations.Model;
 using HospitalLibrary.Vacations.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace HospitalAPI.Controllers
 {
@@ -98,6 +99,21 @@ namespace HospitalAPI.Controllers
             try
             {
                 var vacation = _vacationtService.GetDoctorVacationsFromSpecificStatus(vacationStatus,id);
+                return Ok(vacation);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+
+        [HttpGet("pastVacations/{doctorId}")]
+        public ActionResult GetDoctorPastVacations([FromRoute] Guid doctorId)
+        {
+            try
+            {
+                var vacation = _vacationtService.GetAllPast(doctorId);
                 return Ok(vacation);
             }
             catch (NotFoundException)
