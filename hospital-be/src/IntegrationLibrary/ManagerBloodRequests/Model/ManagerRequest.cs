@@ -16,5 +16,10 @@ namespace IntegrationLibrary.ManagerBloodRequests.Model
         public virtual Blood Blood { get; set; }
         public string ManagerId { get; set; }
         public virtual BloodBank BloodBank { get; set; }
+
+        public ManagerRequest()
+        {
+           Id = Guid.NewGuid();
+        }
     }
 }
