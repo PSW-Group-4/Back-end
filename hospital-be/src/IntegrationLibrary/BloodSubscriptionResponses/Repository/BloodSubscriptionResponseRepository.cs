@@ -1,58 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using IntegrationLibrary.BloodSubscriptionResponses.Model;
 using IntegrationLibrary.Exceptions;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 
-namespace IntegrationLibrary.BloodSubscriptions.Repository
+namespace IntegrationLibrary.BloodSubscriptionResponses.Repository
 {
-    public class BloodSubscriptionRepository : IBloodSubscriptionRepository
+    public class BloodSubscriptionResponseRepository : IBloodSubscriptionResponseRepository
     {
         private readonly IntegrationDbContext _context;
 
-        public BloodSubscriptionRepository(IntegrationDbContext context)
+        public BloodSubscriptionResponseRepository(IntegrationDbContext context)
         {
             _context = context;
         }
 
-        public BloodSubscription Create(BloodSubscription subscription)
+        public BloodSubscriptionResponse Create(BloodSubscriptionResponse subscription)
         {
-            _context.BloodSubscription.Add(subscription);
+            _context.BloodSubscriptionRepsponce.Add(subscription);
             _context.SaveChanges();
             return subscription;
         }
 
-        public IEnumerable<BloodSubscription> GetAll()
+        public IEnumerable<BloodSubscriptionResponse> GetAll()
         {
-            return _context.BloodSubscription.ToList();
+            return _context.BloodSubscriptionRepsponce.ToList();
         }
 
-        public IEnumerable<BloodSubscription> GetActiveNotSent()
+        public BloodSubscriptionResponse GetById(Guid id)
         {
-            return _context.BloodSubscription.Where(sub => sub.Sent == false && sub.ActiveStatus == true).ToList();
-        }
-
-        public BloodSubscription GetByBbTitle(string title)
-        {
-            BloodSubscription subscription =
-                _context.BloodSubscription.Where(sub => sub.BloodBankName == title).First();
+            BloodSubscriptionResponse subscription = _context.BloodSubscriptionRepsponce.Find(id);
             if (subscription == null)
                 throw new NotFoundException();
             return subscription;
         }
 
-        public BloodSubscription GetById(Guid id)
+        public BloodSubscriptionResponse GetBySubscriptionId(Guid id)
         {
-            BloodSubscription subscription = _context.BloodSubscription.Find(id);
+            BloodSubscriptionResponse subscription = _context.BloodSubscriptionRepsponce
+                .Where(sub => sub.Subscription.Id == id).FirstOrDefault();
             if (subscription == null)
                 throw new NotFoundException();
             return subscription;
         }
 
-        public BloodSubscription Update(BloodSubscription subscription)
+        public BloodSubscriptionResponse Update(BloodSubscriptionResponse subscription)
         {
-            BloodSubscription local = _context.Set<BloodSubscription>()
+            BloodSubscriptionResponse local = _context.Set<BloodSubscriptionResponse>()
                 .Local
                 .FirstOrDefault(entry => entry.Id.Equals(subscription.Id));
             // check if local is not null 

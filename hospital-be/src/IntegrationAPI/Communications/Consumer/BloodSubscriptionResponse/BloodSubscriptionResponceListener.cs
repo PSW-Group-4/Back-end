@@ -1,12 +1,11 @@
 ﻿using Confluent.Kafka;
-using IntegrationLibrary.BloodSubscriptionReponces.Model;
-using IntegrationLibrary.BloodSubscriptionReponces.Service;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using IntegrationLibrary.BloodSubscriptionResponses.Service;
 
 namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
 {
@@ -35,7 +34,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
             {
                 using (IServiceScope scope = _serviceScopeFactory.CreateScope())
                 {
-                    IBloodSubscriptionResponceService responceService = scope.ServiceProvider.GetRequiredService<IBloodSubscriptionResponceService>();
+                    IBloodSubscriptionResponseService responseService = scope.ServiceProvider.GetRequiredService<IBloodSubscriptionResponseService>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
                         consumerBuilder.Subscribe(topic);
@@ -45,8 +44,8 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
                         {
                             while (false)
                             {
-                                //TODO: Update BloodSubscriptionRepsponce so it only consumes id and message simple 2 column table
-                                BloodSubscriptionRepsponce response = consumer.Consume();
+                                //TODO: Update BloodSubscriptionResponse so it only consumes id and message simple 2 column table
+                                IntegrationLibrary.BloodSubscriptionResponses.Model.BloodSubscriptionResponse response = consumer.Consume();
                                 if(response != null)
                                 {
                                     //"DELIVERY-SUCCESS:A_POSITIVE"
@@ -55,7 +54,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
                                         //TODO: fetch subscription, get its blood type and amount  
                                         //and update hospital blood supply
                                     }
-                                    responceService.Create(response);
+                                    responseService.Create(response);
                                 }
                                 
                             }
