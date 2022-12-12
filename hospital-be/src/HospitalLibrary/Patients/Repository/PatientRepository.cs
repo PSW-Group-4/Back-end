@@ -87,7 +87,7 @@ namespace HospitalLibrary.Patients.Repository
 
         public Patient GetByEmail(string email)
         {
-           return _context.Patients.SingleOrDefault(p => p.Email.Equals(email));
+           return _context.Patients.SingleOrDefault(p => p.Email.Address.Equals(email));
         }
     }
 }

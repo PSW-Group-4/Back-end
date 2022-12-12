@@ -24,6 +24,11 @@ namespace IntegrationLibrary.BloodSubscriptions.Service
            return _repository.GetAll();
         }
 
+        public IEnumerable<BloodSubscription> GetActiveNotSent()
+        {
+            return _repository.GetActiveNotSent();
+        }
+
         public BloodSubscription GetByBbTitle(string title)
         {
            return _repository.GetByBbTitle(title);  

@@ -26,6 +26,7 @@ using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.EntityConfigurations;
 using HospitalLibrary.Renovation.Model;
 
@@ -99,6 +100,9 @@ namespace HospitalLibrary.Settings
         public DbSet<Treatment> Treatments { get; set; }
         public DbSet<RenovationAppointment> RenovationAppointments {get; set;}
 
+        // Consilium
+        public DbSet<Consilium> Consiliums { get; set; }
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
         {
@@ -107,6 +111,8 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+
 
             modelBuilder
                 .Entity<Patient>()
@@ -123,6 +129,16 @@ namespace HospitalLibrary.Settings
                     bloodType.Property(prop => prop.RhFactor).HasMaxLength(10)
                         .HasColumnName("RhFactor");
                 });
+            
+            // modelBuilder
+            //     .Entity<Patient>()
+            //     .OwnsOne(p => p.Email, email =>
+            //     {
+            //         email.Property(prop => prop.Address)
+            //             .HasColumnName("EmailAddress");
+            //     });
+            
+            
 
             modelBuilder.Entity<User>()
                 .Ignore(u => u.SuspiciousActivities)  

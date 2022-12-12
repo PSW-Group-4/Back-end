@@ -64,9 +64,14 @@ namespace HospitalLibrary.Doctors.Repository
             _context.SaveChanges();
         }
 
-      
+        public IEnumerable<string> GetAllSpecialties()
+        {
+            return _context.Doctors.Select(d => d.Speciality).Distinct().OrderBy(specialty => specialty);
+        }
 
-
-
+        public IEnumerable<Doctor> GetDoctorsWithSpecialty(string specialty)
+        {
+            return _context.Doctors.Where(d => d.Speciality == specialty).OrderBy(d => d.Surname);
+        }
     }
 }

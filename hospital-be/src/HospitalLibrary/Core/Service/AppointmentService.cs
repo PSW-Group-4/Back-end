@@ -19,61 +19,11 @@ namespace HospitalLibrary.Core.Service
             _appointmentRepository = appointmentRepository;
             _dctorService = doctorService;
         }
-        //TODO refactor
-        //PETAR
-        public bool IsAvailable(DateTime time)
-        {
-            List<Appointment> appointments = getAll();
-            foreach(Appointment appointment in appointments)
-            {
-                if (appointment.DateRange.StartTime.Equals(time))
-                    return false;
-            }
-            return IsDoctorWorkTimeAvailable(time);
-        }
-        //TODO izbaci
-        public bool IsDoctorWorkTimeAvailable(DateTime time)
-        {
-            Doctor doctor = getDoctor();
-            DateTime WorkTimeStart = DateTime.Parse(doctor.WorkingTimeStart);
-            DateTime WorkTimeEnd = DateTime.Parse(doctor.WorkingTimeEnd);
-            if ((WorkTimeStart.Hour <= time.Hour) && (WorkTimeEnd.Hour > time.Hour))
-                return true;
-            return false;
-        }
         public List<Appointment> getAll()
         {
             return (List<Appointment>)_appointmentRepository.GetAll();
         }
-        public Doctor getDoctor()
-        {
-            Guid id = new Guid("487d0767-1f8b-4a09-a593-4f076bdb9881");
-            return _dctorService.GetById(id);
-        }
 
-        List<DateTime> IAppointmentService.AvailableTerminsForDate(DateTime date)
-        {
-            throw new NotImplementedException();
-        }
-
-        //PETAR
-        public List<DateRange> AvailableTerminsForDate(DateTime date)
-        {
-            List<DateRange> list = new List<DateRange>();
-            
-            DateTime WorkTimeStart = new DateTime(date.Year,date.Month,date.Day, DateTime.Parse(getDoctor().WorkingTimeStart).Hour, DateTime.Parse(getDoctor().WorkingTimeStart).Minute,0);
-            DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(getDoctor().WorkingTimeEnd).Hour, DateTime.Parse(getDoctor().WorkingTimeEnd).Minute, 0);
-            while (DateTime.Compare(WorkTimeEnd,WorkTimeStart)>0)
-            {
-                if (IsAvailable(WorkTimeStart))
-                {
-                    DateRange dateRange = new DateRange(WorkTimeStart, WorkTimeStart.AddMinutes(30));
-                    list.Add(dateRange);
-                }
-                WorkTimeStart = WorkTimeStart.AddMinutes(30);
-            }
-            return list;
-        }
         //PETAR
         public void CheckIfAppointmentIsDone() 
         {

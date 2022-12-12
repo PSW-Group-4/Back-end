@@ -67,24 +67,6 @@ namespace HospitalAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<FeedbackPatientResponseDto>>(_feedbackService.GetAllPublished()));
         }
 
-
-        //TODO "Change to patch"
-        //GET api/feedback/publish/2
-        /*[HttpGet("publish/{id}")]
-        public ActionResult Publish([FromRoute]Guid id)
-        {
-            try
-            {
-                var feedback = _feedbackService.GetById(id);
-                _feedbackService.Publish(feedback);
-                return Ok(feedback);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }*/
-
         //PATCH api/feedback/publish/2
         [HttpPatch("publishhide/{id}")]
         public ActionResult PublishHide([FromRoute] Guid id, [FromBody] JsonPatchDocument feedbackModel)
@@ -92,12 +74,18 @@ namespace HospitalAPI.Controllers
             try
             {
                 var feedback = _feedbackService.GetById(id);
-                _feedbackService.PublishHide(feedback, feedbackModel);
+                feedback.Publish(feedback, feedbackModel);
+                _feedbackService.Update(feedback);
+
                 return Ok(feedback);
             }
             catch (NotFoundException)
             {
                 return NotFound();
+            }
+            catch(FeedbackAlreadyPublishedOrHidden)
+            {
+                return BadRequest();
             }
         }
         

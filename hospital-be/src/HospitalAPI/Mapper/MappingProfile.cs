@@ -7,6 +7,7 @@ using HospitalAPI.Dtos.Appointment;
 using HospitalAPI.Dtos.Bed;
 using HospitalAPI.Dtos.BloodConsumptionRecord;
 using HospitalAPI.Dtos.BloodSupply;
+using HospitalAPI.Dtos.Consilium;
 using HospitalAPI.Dtos.DateRange;
 using HospitalAPI.Dtos.Doctor;
 using HospitalAPI.Dtos.Feedback;
@@ -28,6 +29,7 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptionRecords.Model;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BuildingManagmentMap.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
@@ -52,7 +54,11 @@ namespace HospitalAPI.Mapper
 
             CreateMap<PersonRequestDto, Person>();
             CreateMap<Person, PersonRequestDto>();
+            CreateMap<Person, PersonFullnameDto>().ForMember(dest => dest.Fullname,
+                opt => opt.MapFrom(src => src.Surname + " " + src.Name));
 
+            CreateMap<Person, PersonRequestDto>().ForMember( p => p.Email,
+                opt => opt.MapFrom(src => src.Email.Address ));
             CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
             CreateMap<FeedbackRequestDto, Feedback>();
@@ -87,13 +93,23 @@ namespace HospitalAPI.Mapper
             //CreateMap<PatientRoom, PatientRoomRequestDto>().IncludeBase<Room, RoomRequestDto>();
             CreateMap<PatientRoomRequestDto, PatientRoom>().IncludeBase<RoomRequestDto, Room>();
 
-            CreateMap<AppointmentRequestDto, MedicalAppointment>();
+            CreateMap<AppointmentRequestDto, MedicalAppointment>().ForMember(dest=> dest.DateRange,
+                opt => opt.MapFrom(src => new DateRange(src.StartTime,src.StartTime.AddMinutes(30))));
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
             CreateMap<BloodSupplyDto, BloodSupply>();
+            CreateMap<Feedback, FeedbackPatientResponseDto>().ForMember(dest => dest.PatientFullname,
+                opt => opt.MapFrom(src => ResolveFeedbackPatientFullName(src)));
 
+
+            CreateMap<Person, PersonGetResponseDto>().ForMember( p => p.Email,
+                opt => opt.MapFrom(src => src.Email.Address ));
+            
             CreateMap<PatientRegistrationDto, Patient>();
+            CreateMap<Patient, PatientGetResponseDto>()
+                .IncludeBase<Person, PersonGetResponseDto>();
+            
             CreateMap<UserLoginDto, User>();
             CreateMap<UserDto, User>();
 
@@ -137,6 +153,7 @@ namespace HospitalAPI.Mapper
             CreateMap<AppointmentDto, Appointment>();
             CreateMap<DateRangeDto, DateRange>();
 
+            CreateMap<ConsiliumRequestDto, ConsiliumRequest>();
 
         }
 

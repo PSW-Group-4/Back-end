@@ -2,6 +2,7 @@
 using HospitalLibrary.BloodConsumptionRecords.Repository;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BloodSupplies.Service;
+using IntegrationLibrary.BloodUsages.Service;
 using System;
 using System.Collections.Generic;
 
@@ -40,6 +41,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Service
             supplyToUpdate.Amount = supplyToUpdate.Amount - bloodConsumptionRecord.Amount;
             _bloodSupplyService.Update(supplyToUpdate);
 
+            //_bloodUsageService.Create(ConsumptionUsageConverter.Convert(bloodConsumptionRecord));
             return _bloodConsumptionRecordRepository.Create(bloodConsumptionRecord);
         }
 

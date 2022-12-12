@@ -1,4 +1,6 @@
 ﻿using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.EquipmentRelocation.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,6 @@ namespace HospitalLibrary.Appointments.Service
         IEnumerable<MedicalAppointment> GetDoctorsOldAppointments(Guid id);
         IEnumerable<MedicalAppointment> GetDoctorsCurrentAppointments(Guid id);
         void deleteAppointmentEndSendNotification(Guid id);
+        List<DateRange> AvailableTerminsForDate(DateTime date, Guid patientId);
     }
 }

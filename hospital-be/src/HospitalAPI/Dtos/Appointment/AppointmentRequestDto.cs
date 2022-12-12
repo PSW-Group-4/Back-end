@@ -1,3 +1,4 @@
+using HospitalAPI.Dtos.DateRange;
 using System;
 
 namespace HospitalAPI.Dtos.Appointment
@@ -7,6 +8,6 @@ namespace HospitalAPI.Dtos.Appointment
         public Guid DoctorId { get; set; }
         public Guid PatientId { get; set; }
         public Guid RoomId { get; set; }
-        public DateTime DateTime { get; set; }
+        public DateTime StartTime { get; set; }
     }
 }

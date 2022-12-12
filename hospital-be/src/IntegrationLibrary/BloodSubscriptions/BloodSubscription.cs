@@ -22,22 +22,35 @@ namespace IntegrationLibrary.BloodSubscriptions
             private set => blood = value;
         }
         public string BloodBankName { get; private set; }
+        public int DeliveryDay { get; private set; }
         public bool ActiveStatus { get; private set; }
-        public bool Urgent { get; private set; }
+        public bool Sent { get; private set; }
         public BloodSubscription()
         {
             Blood = new List<Blood>();
         }
-        public BloodSubscription(string bloodBankName)
+        public BloodSubscription(string bloodBankName, int deliveryDay)
         {
             Id = Guid.NewGuid();
+            CreatedDate = DateTime.Now;
             BloodBankName = bloodBankName;
             Blood = new List<Blood>();
+            if (ValidateDeliveryDay(deliveryDay)) 
+            {
+                DeliveryDay = deliveryDay;
+            }
+            else
+            {
+                DeliveryDay = 5;
+            }
+            Sent = false;
         }
 
         public void AddBloodType(Blood type)
         {
             this.blood.Add(type);
+            MakeNotSent();
+
         }
         public void AddBloodType(List<Blood> types) 
         {
@@ -45,11 +58,13 @@ namespace IntegrationLibrary.BloodSubscriptions
             {
                this.blood.Add(type);
             }
+            MakeNotSent();
         }
         public void RemoveBloodType(Blood type)
         {
             this.ValidateListLenght();
             this.blood.Remove(type);
+            MakeNotSent();
         }
         public void RemoveBloodType(List<Blood> types) 
         {
@@ -58,16 +73,19 @@ namespace IntegrationLibrary.BloodSubscriptions
             {
                 this.blood.Remove(type);
             }
+            MakeNotSent();
         }
 
         public void Activate()
         {
             this.ValidateListLenght();
             this.ActiveStatus = true;
+            MakeNotSent();
         }
         public void Deactivate()
         {
             this.ActiveStatus = false;
+            MakeNotSent();
         }
 
         private void ValidateListLenght()
@@ -77,13 +95,21 @@ namespace IntegrationLibrary.BloodSubscriptions
                 throw new InvalidValueException();
             }
         }
-        public void MakeUrgent()
+        private Boolean ValidateDeliveryDay(int deliveryDay)
         {
-            this.Urgent = true;
+            if(deliveryDay < 1 || deliveryDay > 25)
+            {
+                return false;
+            }
+            return true;
         }
-        public void MakeNotUrgent()
+        public void MakeSent()
         {
-            this.Urgent = false;
+            this.Sent = true;
+        }
+        public void MakeNotSent()
+        {
+            this.Sent = false;
         }
     }
 }

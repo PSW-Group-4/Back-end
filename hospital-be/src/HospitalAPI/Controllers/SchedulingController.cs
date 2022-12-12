@@ -9,6 +9,7 @@ using HospitalLibrary.EquipmentRelocation.DTO;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Model;
 using HospitalAPI.Dtos.Appointment;
+using HospitalLibrary.Appointments.Service;
 
 namespace HospitalAPI.Controllers
 {
@@ -16,22 +17,24 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class SchedulingController : ControllerBase
     {
-        private readonly IAppointmentService _appointmentService;
+        private readonly IDoctorAppointmentService _appointmentService;
+        private readonly IAppointmentService appointment;
         private readonly IMapper _mapper;
 
-        public SchedulingController(IAppointmentService patientService, IMapper mapper)
+        public SchedulingController(IDoctorAppointmentService patientService,IAppointmentService appointment, IMapper mapper)
         {
             _appointmentService = patientService;
+            this.appointment = appointment;
             _mapper = mapper;
         }
 
         // GET api/Available/2
         [HttpGet("{date}")]
-        public ActionResult GetAvailableTermins([FromRoute]DateTime date)
+        public ActionResult GetAvailableTermins([FromRoute]DateTime date, Guid patientId)
         {
             try
             {
-                var termins = _appointmentService.AvailableTerminsForDate(date);
+                var termins = _appointmentService.AvailableTerminsForDate(date, patientId);
                 return Ok(termins);
             }
             catch (NotFoundException)
@@ -48,7 +51,7 @@ namespace HospitalAPI.Controllers
                 DateTime dateTime = DateTime.Parse(relocationStart);
                 EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO(new HospitalLibrary.Core.Model.DateRange(dateTime, dateTime.AddDays(2)), duration, Guid.Parse(sourceId), Guid.Parse(targetId));
 
-                IEnumerable<DateTime> termins = _appointmentService.RecommendStartForRelocationOrRenovation(equipmentRelocation);
+                IEnumerable<DateTime> termins = appointment.RecommendStartForRelocationOrRenovation(equipmentRelocation);
                 return Ok(termins);
             }
             catch (NotFoundException)
@@ -60,14 +63,14 @@ namespace HospitalAPI.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
-            return Ok(_appointmentService.GetAll());
+            return Ok(appointment.GetAll());
         }
 
         [HttpPost]
         public ActionResult Create(AppointmentDto appDto)
         {
             var app = _mapper.Map<Appointment>(appDto);
-            return Ok(_appointmentService.Create(app));
+            return Ok(appointment.Create(app));
         }
     }
 }

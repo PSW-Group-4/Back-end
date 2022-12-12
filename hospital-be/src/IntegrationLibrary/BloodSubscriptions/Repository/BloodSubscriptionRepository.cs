@@ -30,6 +30,11 @@ namespace IntegrationLibrary.BloodSubscriptions.Repository
             return _context.BloodSubscription.ToList();
         }
 
+        public IEnumerable<BloodSubscription> GetActiveNotSent()
+        {
+            return _context.BloodSubscription.Where(sub => sub.Sent == false && sub.ActiveStatus== true).ToList();
+        }
+
         public BloodSubscription GetByBbTitle(string title)
         {
             BloodSubscription subscription = _context.BloodSubscription.Where(sub => sub.BloodBankName == title).First();

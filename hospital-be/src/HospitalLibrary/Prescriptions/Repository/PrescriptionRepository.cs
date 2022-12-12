@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Exceptions;
+using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Settings;
 using System;
@@ -32,6 +33,12 @@ namespace HospitalLibrary.Prescriptions.Repository
 
         public Prescription Create(Prescription prescription)
         {
+            List<Medicine> medicines = new List<Medicine>(prescription.Medicines);
+            prescription.Medicines.Clear();
+            foreach (Medicine medicine in medicines)
+            {
+                prescription.Medicines.Add(_context.Medicines.SingleOrDefault(m => m.Id.Equals(medicine.Id)));
+            }
             _context.Prescriptions.Add(prescription);
             _context.SaveChanges();
             return prescription;

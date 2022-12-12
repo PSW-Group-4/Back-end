@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using AutoMapper;
+using HospitalAPI.Dtos.Person;
 using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalAPI.Controllers
@@ -27,6 +31,14 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAll()
         {
             return Ok(_doctorService.GetAll());
+        }
+
+        //Vraca samo puno ime svih doktora
+        [Authorize(Roles = "Patient")]
+        [HttpGet("basicInfo")]
+        public ActionResult GetAllBasicInfo()
+        {
+            return Ok(_mapper.Map<IEnumerable<PersonFullnameDto>>(_doctorService.GetAll()));
         }
 
         // GET api/Doctor/2
@@ -59,6 +71,20 @@ namespace HospitalAPI.Controllers
             }
         }
 
+        [Authorize(Roles = "Patient,Doctor")]
+        [HttpGet("specialties")]
+        public ActionResult GetAllSpecialties()
+        {
+            return Ok(_doctorService.GetAllSpecialties());
+        }
+        
+        [Authorize(Roles = "Patient")]
+        [HttpGet("specialties/{specialty}")]
+        public ActionResult GetDoctorsWithSpecialty([FromRoute] string specialty)
+        {
+            var doctors = _doctorService.GetDoctorsWithSpecialty(specialty);
+            return Ok(_mapper.Map<IEnumerable<PersonFullnameDto>>(doctors));
+        }
 
         // GET api/Doctor/doctorsWithLeastPatients
         [HttpGet("doctorsWithLeastPatients")]
