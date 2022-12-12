@@ -18,22 +18,22 @@ namespace IntegrationLibrary.ManagerBloodRequests.Service
         }
         public ManagerRequest Create(ManagerRequest bloodRequest)
         {
-            throw new NotImplementedException();
+            return _repository.Create(bloodRequest);
         }
 
         public IEnumerable<ManagerRequest> GetAll()
         {
-            throw new NotImplementedException();
+            return _repository.GetAll();
         }
 
         public ManagerRequest GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _repository.GetById(id);
         }
 
         public ManagerRequest Update(ManagerRequest bloodRequest)
         {
-            throw new NotImplementedException();
+            return _repository.Update(bloodRequest);    
         }
     }
 }
