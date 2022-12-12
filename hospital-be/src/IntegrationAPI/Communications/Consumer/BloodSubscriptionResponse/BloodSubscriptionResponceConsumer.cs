@@ -75,6 +75,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
                     }
 
                 }
+                //Thats just a confirmation Subscribe-success -> save and exit
             }
             return response;
         }
