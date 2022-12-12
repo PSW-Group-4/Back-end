@@ -35,5 +35,12 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             RoomId = Room.Id;
             Amount = amount;
         }
+
+        public RoomsEquipment(Guid equipment, Guid room, ulong amount)
+        {
+            EquipmentId = equipment;
+            RoomId = room;
+            Amount = amount;
+        }
     }
 }
