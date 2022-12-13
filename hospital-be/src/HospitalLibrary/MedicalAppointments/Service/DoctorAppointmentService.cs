@@ -9,6 +9,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Vacations.Service;
 using HospitalLibrary.Vacations.Repository;
+using HospitalLibrary.Consiliums.Repository;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -18,12 +19,14 @@ namespace HospitalLibrary.Appointments.Service
         private readonly IDoctorRepository _doctorRepository;
         //private readonly IVacationService _vacationService;
         private readonly IVacationRepository _vacationRepository;
+        private readonly IConsiliumRepository _consiliumRepository;
 
-        public DoctorAppointmentService(IMedicalAppointmentService medicalAppointmentService, IDoctorRepository doctorRepository, IVacationRepository vacationRepository)
+        public DoctorAppointmentService(IMedicalAppointmentService medicalAppointmentService, IDoctorRepository doctorRepository, IVacationRepository vacationRepository, IConsiliumRepository consiliumRepository)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _doctorRepository = doctorRepository;
             _vacationRepository = vacationRepository;
+            _consiliumRepository = consiliumRepository;
         }
 
         public IEnumerable<MedicalAppointment> GetDoctorAppointments(Guid id)
@@ -129,7 +132,7 @@ namespace HospitalLibrary.Appointments.Service
                 return false;
             }
             // da li doktor na sastanku
-            if (IsDoctorOnMedicalAppointment(doctor, time))
+            if (_consiliumRepository.IsDoctorOnConsilium(doctorId, time))
             {
                 return false;
             }

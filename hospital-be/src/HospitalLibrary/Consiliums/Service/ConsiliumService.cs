@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Consiliums.Repository;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
 using System;
@@ -89,9 +90,22 @@ namespace HospitalLibrary.Consiliums.Service
 
         private Consilium CreateConsilium(DateTime terminFound, ConsiliumRequest consiliumRequest)
         {
+            DateRange dr = new DateRange(terminFound, terminFound.AddMinutes(30 * consiliumRequest.Duration));
+            List<Doctor> doctors = new List<Doctor>();
+            List<Guid> doctorIds = new List<Guid>();
+            foreach(Guid d in consiliumRequest.DoctorsId)
+            {
+                doctors.Add(_doctorService.GetById(d));
+            }
+
             Consilium consilium = new Consilium()
             {
                 Reason = consiliumRequest.Reason,
+                IsDone = false,
+                RoomId = new Guid("f563b764-f837-4b70-ab6b-5c7be7f706b8"),
+                DateRange = dr,
+                Doctors = doctors
+                
                 //DoctorsId = consiliumRequest.DoctorsId,
                 // ostale stvari koje ja ne znam sta su hahahah
 
