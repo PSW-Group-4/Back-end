@@ -67,7 +67,7 @@ namespace TestHospitalApp.IntegrationTesting
 
             ReportRequestDto reportRequest = new ReportRequestDto
             {
-                AppointmentId = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+                MedicalAppointmentId = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
                 Text = "Create report test",
                 Symptoms = new List<Symptom>(symptoms.GetRange(0, 2)),
                 Prescriptions = prescriptions,
