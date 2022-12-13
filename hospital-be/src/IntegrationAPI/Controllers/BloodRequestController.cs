@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using IntegrationAPI.Dtos.BloodRequests;
 using IntegrationAPI.Communications.Producer;
 using System.Text.Json;
+using IntegrationAPI.Authorization;
 using IntegrationLibrary.Common;
 using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationAPI.Dtos.BloodProducts;
@@ -34,6 +35,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpGet]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager, Doctor")]
         public ActionResult GetAll()
         {
             IEnumerable<BloodRequest> bloodRequests = _service.GetAll();
@@ -41,6 +43,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [Route("unapproved"), HttpGet]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult GetUnapproved()
         {
             IEnumerable<BloodRequest> bloodRequests = _service.GetUnapproved();
@@ -48,6 +51,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [Route("manage"), HttpPost]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Manage(BloodRequestEditDto bloodRequestDto) {
             BloodRequest bloodRequest = _service.GetById(bloodRequestDto.Id);
             bloodRequest.IsApproved = bloodRequestDto.IsApproved;
@@ -65,6 +69,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Doctor")]
         public ActionResult Create([FromBody] BloodRequestsCreateDto bloodRequestDto)
         {
             BloodRequest bloodRequest = new()
