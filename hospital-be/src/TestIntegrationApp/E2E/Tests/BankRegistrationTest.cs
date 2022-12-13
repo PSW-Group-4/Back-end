@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using TestHospitalApp.EndToEndTesting.Pages.Login;
 using TestIntegrationApp.E2E.Pages;
 using Xunit;
 
@@ -28,6 +29,7 @@ namespace TestIntegrationApp.E2E.Tests
 
         public IWebDriver Driver { get; set; }
         public BankRegistrationPage Page { get; set; }
+        public LoginPage LoginPage { get; set; }
 
         public void Dispose()
         {
@@ -38,6 +40,7 @@ namespace TestIntegrationApp.E2E.Tests
         [Fact]
         public void Registration_success()
         {
+            LoginPrivate();
             Page.EnterInformation("Bankicaa", "isaproject202223@gmail.com", "localhost:8080");
             Page.PressSubmitButton();
 
@@ -45,7 +48,33 @@ namespace TestIntegrationApp.E2E.Tests
 
             wait.Until(drv => drv.FindElement(By.ClassName("table-title")));
 
-            Assert.Equal(@"http://localhost:4200/bloodBanks", Driver.Url);
+            Assert.Equal(@"http://localhost:4200/manager/bloodBanks", Driver.Url);
+        }
+        
+        private ChromeOptions GetOptions()
+        {
+            ChromeOptions options = new();
+            options.AddArguments("start-maximized");
+            options.AddArguments("disable-infobars");
+            options.AddArguments("--disable-extensions");
+            options.AddArguments("--disable-gpu");
+            options.AddArguments("--disable-dev-shm-usage");
+            options.AddArguments("--no-sandbox");
+            options.AddArguments("--disable-notifications");
+
+            return options;
+        }
+        private void LoginPrivate() 
+        { 
+            Driver = new ChromeDriver(GetOptions());
+
+            LoginPage = new LoginPage(Driver);
+            Driver.Navigate().GoToUrl("http://localhost:4200/login");
+            LoginPage.EnterUsernameAndPassword("manager1", "manager1");
+            LoginPage.PressLoginButton();
+
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(2));
+            wait.Until(driver => driver.Url != LoginPage.privateURI);
         }
     }
 }

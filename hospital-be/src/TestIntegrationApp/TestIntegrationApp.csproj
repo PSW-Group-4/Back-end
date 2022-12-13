@@ -37,6 +37,7 @@
     <ItemGroup>
         <ProjectReference Include="..\IntegrationAPI\IntegrationAPI.csproj" />
         <ProjectReference Include="..\IntegrationLibrary\IntegrationLibrary.csproj" />
+        <ProjectReference Include="..\TestHospitalApp\TestHospitalApp.csproj" />
     </ItemGroup>
 
     <ItemGroup>
