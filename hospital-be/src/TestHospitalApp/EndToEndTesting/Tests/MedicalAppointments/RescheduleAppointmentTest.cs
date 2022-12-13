@@ -32,7 +32,6 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
 
             LoginPrivate(options);
 
-                  // create ProductsPage
             MedicalAppointmentPage.Navigate();
         }
 
@@ -46,7 +45,6 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
         { 
             Driver = new ChromeDriver(options);
             MedicalAppointmentPage = new MedicalAppointmentPage(Driver);
-            rowCount = MedicalAppointmentPage.GetRowsCount();
             loginPage = new LoginPage(Driver);
             MedicalAppointmentPage.NavigateStart();
             loginPage.EnterUsernameAndPassword("pele", "pele");
@@ -60,6 +58,7 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
         public void Login_with_valids_username_and_password()
         {
             MedicalAppointmentPage.EnsurePageIsDisplayed();
+            rowCount = MedicalAppointmentPage.GetRowsCount();
             MedicalAppointmentPage.UpdateButtonPressed();
             MedicalAppointmentPage.ChooseDate("12/15/2022");
             MedicalAppointmentPage.ChooseTermin();
