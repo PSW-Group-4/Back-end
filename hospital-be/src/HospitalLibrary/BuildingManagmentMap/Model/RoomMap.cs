@@ -20,5 +20,10 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
             base.Update(map);
             Room = map.Room;
         }
+
+        // Expects rooms to be on a same floor
+        public Boolean IsAdjacentTo(RoomMap roomMap) {
+            return this.MapLocation.IsAdjacentTo(roomMap.MapLocation);
+        }
     }
 }

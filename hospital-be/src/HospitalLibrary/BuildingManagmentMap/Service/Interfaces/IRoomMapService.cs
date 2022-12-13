@@ -10,5 +10,6 @@ namespace HospitalLibrary.BuildingManagmentMap.Service.Interfaces
     public interface IRoomMapService : ICrudService<RoomMap>
     {
         IEnumerable<RoomMap> GetRoomMapsByFloorId(Guid id);
+        
     }
 }
