@@ -35,5 +35,14 @@ namespace HospitalAPI.Controllers
         {
             return Ok(_moveEquipmentTask.GetAll());
         }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete([FromRoute] Guid id)
+        {
+            
+            _moveEquipmentTask.Delete(id);
+            return NoContent();
+            
+        }
     }
 }
