@@ -49,6 +49,8 @@ using IntegrationLibrary.Common;
 using IntegrationAPI.Communications.Producer.BloodSubscription;
 using IntegrationLibrary.BloodSubscriptionReponces.Service;
 using IntegrationLibrary.BloodSubscriptionReponces.Repository;
+using IntegrationLibrary.ManagerBloodRequests.Repository;
+using IntegrationLibrary.ManagerBloodRequests.Service;
 
 namespace IntegrationAPI
 {
@@ -133,7 +135,8 @@ namespace IntegrationAPI
             services.AddScoped<IBloodSubscriptionResponceRepository, BloodSubscriptionResponceRepository>();
             services.AddScoped<IBloodSubscriptionResponceService, BloodSubscriptionResponceService>();
 
-
+            services.AddScoped<IManagerRequestRepository, ManagerRequestRepository>();
+            services.AddScoped<IManagerRequestService, ManagerRequestService>();
             services.AddControllers();
 
             services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */1 * * * *", TimeZoneInfo.Local));

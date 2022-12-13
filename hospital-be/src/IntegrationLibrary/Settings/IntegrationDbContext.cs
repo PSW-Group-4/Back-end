@@ -17,6 +17,7 @@ using System.Text.Json;
 using IntegrationLibrary.BloodSubscriptions;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.BloodSubscriptionReponces.Model;
+using IntegrationLibrary.ManagerBloodRequests.Model;
 
 namespace IntegrationLibrary.Settings
 {
@@ -33,6 +34,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<TenderApplication> TenderApplications { get; set; }
         public DbSet<BloodSubscriptionRepsponce> BloodSubscriptionRepsponce { get; set; }
         public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
+        public DbSet<ManagerRequest> ManagerBloodRequests { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
@@ -40,6 +42,7 @@ namespace IntegrationLibrary.Settings
             modelBuilder.ApplyConfiguration(new BloodRequestConfiguration());
             modelBuilder.ApplyConfiguration(new TenderConfiguration());
             modelBuilder.ApplyConfiguration(new BloodSubscriptionConfiguration());
+            modelBuilder.ApplyConfiguration(new ManagerRequestConfiguration());
         }
     }
 }
