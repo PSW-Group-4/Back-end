@@ -59,19 +59,9 @@ namespace HospitalLibrary.Consiliums.Service
             List<Guid> doctorIds = new List<Guid>();
             for (DateTime termin = consiliumRequest.DateStart; termin <= consiliumRequest.DateEnd.AddMinutes(-30 * consiliumRequest.Duration); termin = termin.AddMinutes(30))
             {
-                bool badTermin = false;
                 foreach (Guid doctorId in consiliumRequest.DoctorsId)   
                 {
-                    for (DateTime longerTermin = termin; longerTermin < termin.AddMinutes(30 * consiliumRequest.Duration - 1); longerTermin = longerTermin.AddMinutes(30))
-                    {
-                        if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, termin)))
-                        {
-                            badTermin = true;
-                            break;
-                        }
-
-                    }
-                    if (badTermin)
+                    if (!(IsLongerTerminGoodForDoctor(doctorId, termin, consiliumRequest)))
                     {
                         break;
                     }
@@ -88,11 +78,22 @@ namespace HospitalLibrary.Consiliums.Service
             return null;
         }
 
+        private bool IsLongerTerminGoodForDoctor(Guid doctorId, DateTime termin, ConsiliumRequest consiliumRequest)
+        {
+            for (DateTime longerTermin = termin; longerTermin < termin.AddMinutes(30 * consiliumRequest.Duration - 1); longerTermin = longerTermin.AddMinutes(30))
+            {
+                if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, termin)))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private Consilium CreateConsilium(DateTime terminFound, ConsiliumRequest consiliumRequest)
         {
             DateRange dr = new DateRange(terminFound, terminFound.AddMinutes(30 * consiliumRequest.Duration));
             List<Doctor> doctors = new List<Doctor>();
-            List<Guid> doctorIds = new List<Guid>();
             foreach(Guid d in consiliumRequest.DoctorsId)
             {
                 doctors.Add(_doctorService.GetById(d));
@@ -116,7 +117,66 @@ namespace HospitalLibrary.Consiliums.Service
 
         private Consilium ConsiliumWithSpecialities(ConsiliumRequest consiliumRequest)
         {
-            throw new NotImplementedException();
+            List<Doctor> Doctors = GetAllDoctorFromSpecialities(consiliumRequest.Specialities);
+            int MustSpecialityCount = consiliumRequest.Specialities.Count;
+            List<Doctor> availableDoctors = new List<Doctor>();
+            List<String> availableSpecialitites = new List<String>();
+
+            for (DateTime termin = consiliumRequest.DateStart; termin <= consiliumRequest.DateEnd.AddMinutes(-30 * consiliumRequest.Duration); termin = termin.AddMinutes(30))
+            {
+                foreach (Doctor doctor in Doctors)
+                {
+                    if (!(IsLongerTerminGoodForDoctor(doctor.Id, termin, consiliumRequest)))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        availableDoctors.Add(doctor);
+                        availableSpecialitites.Add(doctor.Speciality);
+                        if (MustSpecialityCount == availableSpecialitites.Distinct().Count())
+                        {
+                            return CreateConsiliumWithSpecialitites(termin, consiliumRequest, availableDoctors);
+                        }
+                    }
+                }
+            }
+            return null;
+        }
+
+        private Consilium CreateConsiliumWithSpecialitites(DateTime terminFound, ConsiliumRequest consiliumRequest, List<Doctor> availableDoctors)
+        {
+            DateRange dr = new DateRange(terminFound, terminFound.AddMinutes(30 * consiliumRequest.Duration));
+
+            Consilium consilium = new Consilium()
+            {
+                Reason = consiliumRequest.Reason,
+                IsDone = false,
+                RoomId = new Guid("f563b764-f837-4b70-ab6b-5c7be7f706b8"),
+                DateRange = dr,
+                Doctors = availableDoctors
+
+                //DoctorsId = consiliumRequest.DoctorsId,
+                // ostale stvari koje ja ne znam sta su hahahah
+
+            };
+            return _consiliumRepository.Create(consilium);
+        }
+
+        private List<Doctor> GetAllDoctorFromSpecialities(List<string> specialitites)
+        {
+            List<Doctor> AllDoctors = new List<Doctor>();
+            List<Doctor> AllDoctorsTest = new List<Doctor>();
+            foreach (string specialitite in specialitites)
+            {
+                List<Doctor> SpecialityDoctors = _doctorService.GetDoctorsWithSpecialty(specialitite).ToList();
+                AllDoctorsTest.AddRange(SpecialityDoctors);
+                foreach(Doctor doctor in SpecialityDoctors)
+                {
+                    AllDoctors.Add(doctor);
+                }
+            }
+            return AllDoctors;
         }
 
         public IEnumerable<Consilium> GetAll()
