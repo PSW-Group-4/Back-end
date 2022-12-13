@@ -1,14 +1,10 @@
-﻿using AutoMapper;
-using HospitalAPI.Dtos.Appointment;
-using HospitalLibrary;
+﻿using System;
+using AutoMapper;
+using HospitalAPI.Dtos.Admission;
+using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.Admissions.Service;
-using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.Doctors.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
-using HospitalAPI.Dtos.Admission;
-using System;
-using HospitalLibrary.Admissions.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -51,12 +47,13 @@ namespace HospitalAPI.Controllers
         [HttpPost]
         public ActionResult Create([FromBody] AdmissionRequestDto admissionDto)
         {
-            try { 
-            var admission = _mapper.Map<Admission>(admissionDto);
-            _admissionService.Create(admission);
-            return CreatedAtAction("GetById", new { id = admission.Id }, admission);
+            try
+            {
+                var admission = _mapper.Map<Admission>(admissionDto);
+                _admissionService.Create(admission);
+                return CreatedAtAction("GetById", new { id = admission.Id }, admission);
             }
-            catch(NotFoundException)
+            catch (NotFoundException)
             {
                 return NotFound();
             }
@@ -81,7 +78,6 @@ namespace HospitalAPI.Controllers
         [HttpPut("{treatmentId}/{admissionId}")]
         public ActionResult UpdateTreatment([FromRoute] Guid treatmentId, [FromRoute] Guid admissionId)
         {
-
             //var admission = _mapper.Map<Admission>(admissionUpdateTreatmentDto);
             var admission = _admissionService.GetById(admissionId);
             try
@@ -95,5 +91,4 @@ namespace HospitalAPI.Controllers
             }
         }
     }
-    
 }

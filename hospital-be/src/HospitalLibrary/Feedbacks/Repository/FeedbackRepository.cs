@@ -51,12 +51,12 @@ namespace HospitalLibrary.Feedbacks.Repository
             return result;
         }
 
-        public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel)
+        /*public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel)
         {
             feedbackModel.ApplyTo(feedback);
             _context.SaveChanges();
             return feedback;
-        }
+        }*/
 
         public Feedback Update(Feedback feedback)
         {

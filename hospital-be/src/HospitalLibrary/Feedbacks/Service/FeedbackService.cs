@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Feedbacks.Model;
+﻿using HospitalLibrary.Exceptions;
+using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Feedbacks.Repository;
 using HospitalLibrary.Patients.Repository;
 using Microsoft.AspNetCore.JsonPatch;
@@ -19,20 +20,8 @@ namespace HospitalLibrary.Feedbacks.Service
         }
 
         public Feedback Create(Feedback feedback)
-        {
-            feedback.Date = DateTime.Now;
-
-            feedback.Patient = _patientRepository.GetById(feedback.PatientId);
-            if (feedback.IsDesiredPublic)
-            {
-                feedback.Status = Status.Pending;
-            }
-            else
-            {
-                feedback.Status = Status.Hidden;
-            }
-            
-            return _feedbackRepository.Create(feedback);
+        {   
+            return _feedbackRepository.Create(feedback.SetUp(feedback, _patientRepository.GetById(feedback.PatientId)));
         }
 
         public void Delete(Guid feedbackId)
@@ -55,10 +44,15 @@ namespace HospitalLibrary.Feedbacks.Service
             return _feedbackRepository.Update(feedback);
         }
 
-        public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel)
+        /*public Feedback PublishHide(Feedback feedback, JsonPatchDocument feedbackModel)
         {
-            return _feedbackRepository.PublishHide(feedback, feedbackModel);
-        }
+            if (feedback.IsAlreadyPublishedOrHidden(feedback, feedbackModel))
+            {
+                throw new FeedbackAlreadyPublishedOrHidden();
+            }
+
+            return Update(feedback);
+        }*/
 
         public IEnumerable<Feedback> GetAllPublished()
         {

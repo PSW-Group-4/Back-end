@@ -7,13 +7,18 @@ using HospitalAPI.Dtos.Appointment;
 using HospitalAPI.Dtos.Bed;
 using HospitalAPI.Dtos.BloodConsumptionRecord;
 using HospitalAPI.Dtos.BloodSupply;
+using HospitalAPI.Dtos.Consilium;
+using HospitalAPI.Dtos.DateRange;
 using HospitalAPI.Dtos.Doctor;
 using HospitalAPI.Dtos.Feedback;
 using HospitalAPI.Dtos.MapItem;
 using HospitalAPI.Dtos.Medicine;
 using HospitalAPI.Dtos.Patient;
 using HospitalAPI.Dtos.Person;
+using HospitalAPI.Dtos.Prescription;
+using HospitalAPI.Dtos.Report;
 using HospitalAPI.Dtos.Rooms;
+using HospitalAPI.Dtos.Symptom;
 using HospitalAPI.Dtos.Treatment;
 using HospitalAPI.Dtos.User;
 using HospitalAPI.Dtos.Vacation;
@@ -24,12 +29,16 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodConsumptionRecords.Model;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BuildingManagmentMap.Model;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Reports.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
@@ -45,7 +54,11 @@ namespace HospitalAPI.Mapper
 
             CreateMap<PersonRequestDto, Person>();
             CreateMap<Person, PersonRequestDto>();
+            CreateMap<Person, PersonFullnameDto>().ForMember(dest => dest.Fullname,
+                opt => opt.MapFrom(src => src.Surname + " " + src.Name));
 
+            CreateMap<Person, PersonRequestDto>().ForMember( p => p.Email,
+                opt => opt.MapFrom(src => src.Email.Address ));
             CreateMap<PatientRequestDto, Patient>()
                 .IncludeBase<PersonRequestDto, Person>();
             CreateMap<FeedbackRequestDto, Feedback>();
@@ -80,13 +93,23 @@ namespace HospitalAPI.Mapper
             //CreateMap<PatientRoom, PatientRoomRequestDto>().IncludeBase<Room, RoomRequestDto>();
             CreateMap<PatientRoomRequestDto, PatientRoom>().IncludeBase<RoomRequestDto, Room>();
 
-            CreateMap<AppointmentRequestDto, Appointment>();
+            CreateMap<AppointmentRequestDto, MedicalAppointment>().ForMember(dest=> dest.DateRange,
+                opt => opt.MapFrom(src => new DateRange(src.StartTime,src.StartTime.AddMinutes(30))));
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
             CreateMap<BloodSupplyDto, BloodSupply>();
+            CreateMap<Feedback, FeedbackPatientResponseDto>().ForMember(dest => dest.PatientFullname,
+                opt => opt.MapFrom(src => ResolveFeedbackPatientFullName(src)));
 
+
+            CreateMap<Person, PersonGetResponseDto>().ForMember( p => p.Email,
+                opt => opt.MapFrom(src => src.Email.Address ));
+            
             CreateMap<PatientRegistrationDto, Patient>();
+            CreateMap<Patient, PatientGetResponseDto>()
+                .IncludeBase<Person, PersonGetResponseDto>();
+            
             CreateMap<UserLoginDto, User>();
             CreateMap<UserDto, User>();
 
@@ -106,6 +129,15 @@ namespace HospitalAPI.Mapper
             CreateMap<MedicineRequestDto, Medicine>();
             CreateMap<Medicine, MedicineRequestDto>();
 
+            CreateMap<SymptomRequestDto, Symptom>();
+            CreateMap<Symptom, SymptomRequestDto>();
+
+            CreateMap<PrescriptionRequestDto, Prescription>();
+            CreateMap<Prescription, PrescriptionRequestDto>();
+
+            CreateMap<ReportRequestDto, Report>();
+            CreateMap<Report, ReportRequestDto>();
+
             CreateMap<TreatmentRequestDto, Treatment>();
             CreateMap<Treatment, TreatmentRequestDto>();
 
@@ -118,6 +150,10 @@ namespace HospitalAPI.Mapper
 
             CreateMap<AdmissionHistoryRequestDto, AdmissionHistory>();
 
+            CreateMap<AppointmentDto, Appointment>();
+            CreateMap<DateRangeDto, DateRange>();
+
+            CreateMap<ConsiliumRequestDto, ConsiliumRequest>();
 
         }
 

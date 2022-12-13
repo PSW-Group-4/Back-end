@@ -6,8 +6,7 @@ namespace HospitalLibrary.Doctors.Repository
 {
     public interface IDoctorRepository : IRepositoryBase<Doctor>
     {
-      
-     
+        public IEnumerable<string> GetAllSpecialties();
+        public IEnumerable<Doctor> GetDoctorsWithSpecialty(string specialty);
     }
-
 }

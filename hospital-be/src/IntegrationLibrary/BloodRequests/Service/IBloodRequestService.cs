@@ -10,9 +10,10 @@ namespace IntegrationLibrary.BloodRequests.Service
     public interface IBloodRequestService
     {
         public IEnumerable<BloodRequest> GetAll();
-        public BloodRequest GetByBloodRequestId(Guid id);
+        public BloodRequest GetById(Guid id);
         public IEnumerable<BloodRequest> GetUnapproved();
         public BloodRequest Create(BloodRequest bloodRequest);
         public BloodRequest Update(BloodRequest bloodRequest);
+        public IEnumerable<BloodRequest> GetAllUrgentApprovedNotSent();
     }
 }

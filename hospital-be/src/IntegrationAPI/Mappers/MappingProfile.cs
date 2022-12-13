@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using IntegrationAPI.Dtos.BloodBank;
+using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationAPI.Dtos.BloodRequests;
-using IntegrationAPI.Dtos.Tenders;
 using IntegrationLibrary.BloodBankNews.Model;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.BloodRequests.Model;
@@ -17,7 +17,7 @@ namespace IntegrationAPI.Mappers
             CreateMap<BloodBankEditDto, BloodBank>();
             CreateMap<BloodRequestEditDto, BloodRequest>();
             CreateMap<BloodRequestsCreateDto, BloodRequest>();
-            CreateMap<BloodProductDto, BloodProduct>();
+            CreateMap<BloodDto, IntegrationLibrary.Common.Blood>();
         }
     }
 }

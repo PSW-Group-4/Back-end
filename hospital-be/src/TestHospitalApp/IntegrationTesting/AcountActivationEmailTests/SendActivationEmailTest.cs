@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Common;
 using TestHospitalApp.Setup;
 using Xunit;
 
@@ -79,10 +80,10 @@ namespace TestHospitalApp.IntegrationTesting.AcountActivationEmailTests
                 Surname = "surname",
                 Birthdate = DateTime.Now,
                 Gender = Gender.Male,
-                Jmbg = "1231231231321",
+                Jmbg = new Jmbg("1807000730038"),
                 Email = "testemail123@gmail.com",
                 PhoneNumber = "123123123",
-                BloodType = BloodType.A_POS,
+                BloodType = BloodType.FromString("A+"),
                 AllergieIds = new List<Guid>(),
                 ChoosenDoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")
             };

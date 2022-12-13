@@ -1,10 +1,7 @@
-﻿using AutoMapper;
-using IntegrationAPI.Dtos.TenderApplications;
-using IntegrationLibrary.BloodBanks.Repository;
+﻿using IntegrationAPI.Dtos.TenderApplications;
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.TenderApplications.Service;
-using IntegrationLibrary.Tenders.Repository;
 using IntegrationLibrary.Tenders.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -19,15 +16,13 @@ namespace IntegrationAPI.Controllers
     public class TenderApplicationController : ControllerBase
     {
         private readonly ITenderApplicationService _service;
-        private readonly IMapper _mapper;
         private readonly ITenderService _tenderService;
         private readonly IBloodBankService _bloodBankService;
-        public TenderApplicationController(ITenderApplicationService service, IMapper mapper, ITenderService tenderService, IBloodBankService bloodBankService)
+        public TenderApplicationController(ITenderApplicationService service, ITenderService tenderService, IBloodBankService bloodBankService)
         {
             _tenderService = tenderService;
             _bloodBankService = bloodBankService;
             _service = service;
-            _mapper = mapper;
         }
         [HttpGet]
         public ActionResult GetAll()

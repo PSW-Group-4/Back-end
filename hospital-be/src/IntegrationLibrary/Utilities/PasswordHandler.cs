@@ -38,16 +38,16 @@ namespace IntegrationLibrary.Utilities
                 _password[counter] = charSet[_random.Next(charSet.Length - 1)];
             }
 
-            return String.Join(null, _password);
+            return string.Join(null, _password);
         }
 
         
-        public string Hash(BloodBank bloodBank, String password)
+        public string Hash(BloodBank bloodBank, string password)
         {
             return _passwordHasher.HashPassword(bloodBank, password);
         }
 
-        public PasswordVerificationResult Verify(BloodBank bloodBank, String providedPassword)
+        public PasswordVerificationResult Verify(BloodBank bloodBank, string providedPassword)
         {
             return _passwordHasher.VerifyHashedPassword(bloodBank, bloodBank.Password, providedPassword);
         }

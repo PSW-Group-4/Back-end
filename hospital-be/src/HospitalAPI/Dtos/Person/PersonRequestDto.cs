@@ -11,7 +11,7 @@ namespace HospitalAPI.Dtos.Person
         public DateTime Birthdate { get; set; }
         public Gender Gender { get; set; }
         public  AddressRequestDto Address { get; set; }
-        public string Jmbg { get; set; }
+        public Jmbg Jmbg { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
     }

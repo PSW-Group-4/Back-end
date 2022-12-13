@@ -1,5 +1,5 @@
 ﻿using IntegrationAPI;
-using IntegrationAPI.Communications;
+using IntegrationAPI.Communications.Consumer;
 using IntegrationAPI.Controllers;
 using IntegrationAPI.Dtos;
 using IntegrationAPI.Dtos.BloodBankNews;

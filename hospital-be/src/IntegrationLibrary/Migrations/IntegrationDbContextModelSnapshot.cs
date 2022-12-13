@@ -145,11 +145,8 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<double>("BloodAmountInMilliliters")
-                        .HasColumnType("double precision");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<Guid?>("BloodBankId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("DoctorId")
                         .HasColumnType("text");
@@ -157,18 +154,92 @@ namespace IntegrationLibrary.Migrations
                     b.Property<bool>("IsApproved")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsUrgent")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("ManagerId")
                         .HasColumnType("text");
 
-                    b.Property<string>("ReasonsWhyBloodIsNeeded")
+                    b.Property<string>("Reasons")
                         .HasColumnType("text");
 
                     b.Property<string>("RejectionComment")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("SendOnDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("BloodBankId");
+
                     b.ToTable("blood_requests");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionRepsponce", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid?>("SubscriptionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<double>("Version")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SubscriptionId");
+
+                    b.ToTable("blood_subscription_responces");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptions.BloodSubscription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("ActiveStatus")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Blood")
+                        .HasColumnType("text");
+
+                    b.Property<string>("BloodBankName")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("DeliveryDay")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("Sent")
+                        .HasColumnType("boolean");
+
+                    b.Property<double>("Version")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("blood_subscriptions");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
@@ -192,7 +263,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("TenderId");
 
-                    b.ToTable("TenderApplications");
+                    b.ToTable("tender_applications");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.Tenders.Model.Tender", b =>
@@ -201,7 +272,7 @@ namespace IntegrationLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("BloodProducts")
+                    b.Property<string>("Blood")
                         .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDate")
@@ -242,7 +313,7 @@ namespace IntegrationLibrary.Migrations
                                 .HasColumnType("integer")
                                 .HasColumnName("BloodTypeTitle");
 
-                            b1.Property<int>("RHFactor")
+                            b1.Property<int>("RhFactor")
                                 .HasMaxLength(10)
                                 .HasColumnType("integer")
                                 .HasColumnName("RhFactor");
@@ -284,20 +355,20 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("IntegrationLibrary.BloodRequests.Model.BloodRequest", b =>
                 {
-                    b.OwnsOne("IntegrationLibrary.Common.BloodType", "BloodType", b1 =>
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId");
+
+                    b.OwnsOne("IntegrationLibrary.Common.Blood", "Blood", b1 =>
                         {
                             b1.Property<Guid>("BloodRequestId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<int>("BloodGroup")
-                                .HasMaxLength(1)
-                                .HasColumnType("integer")
-                                .HasColumnName("BloodGroup");
+                            b1.Property<double>("Amount")
+                                .HasColumnType("double precision");
 
-                            b1.Property<int>("RHFactor")
-                                .HasMaxLength(10)
-                                .HasColumnType("integer")
-                                .HasColumnName("RhFactor");
+                            b1.Property<string>("BloodType")
+                                .HasColumnType("text");
 
                             b1.HasKey("BloodRequestId");
 
@@ -307,7 +378,18 @@ namespace IntegrationLibrary.Migrations
                                 .HasForeignKey("BloodRequestId");
                         });
 
-                    b.Navigation("BloodType");
+                    b.Navigation("Blood");
+
+                    b.Navigation("BloodBank");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionRepsponce", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodSubscriptions.BloodSubscription", "Subscription")
+                        .WithMany()
+                        .HasForeignKey("SubscriptionId");
+
+                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>

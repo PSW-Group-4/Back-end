@@ -6,12 +6,14 @@ using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalAPI.Controllers.MapItem
 {
 
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Manager")]
     public class RoomMapController : ControllerBase
     {
         private readonly IRoomMapService _roomMapService;

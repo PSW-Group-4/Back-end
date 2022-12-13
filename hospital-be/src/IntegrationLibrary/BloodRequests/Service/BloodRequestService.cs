@@ -20,9 +20,9 @@ namespace IntegrationLibrary.BloodRequests.Service
             return _repository.GetAll();
         }
 
-        public BloodRequest GetByBloodRequestId(Guid id)
+        public BloodRequest GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return _repository.GetById(id);
         }
 
         public IEnumerable<BloodRequest> GetUnapproved()
@@ -38,6 +38,11 @@ namespace IntegrationLibrary.BloodRequests.Service
         public BloodRequest Update(BloodRequest bloodRequest)
         {
             return _repository.Update(bloodRequest);
+        }
+
+        public IEnumerable<BloodRequest> GetAllUrgentApprovedNotSent()
+        {
+            return _repository.GetAllUrgentApprovedNotSent();
         }
     }
 }
