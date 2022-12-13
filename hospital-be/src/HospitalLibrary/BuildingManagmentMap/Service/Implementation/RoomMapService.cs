@@ -61,8 +61,8 @@ namespace HospitalLibrary.BuildingManagmentMap.Service.Implementation
             return returnValue;
         }
 
-        public Boolean AreAdjecent(Guid roomMap1, Guid roomMap2) {
-            return this.GetById(roomMap1).IsAdjacentTo(this.GetById(roomMap2));
+        public Boolean AreAdjecent(Guid room1, Guid room2) {
+            return this.GetRoomMapFromRoomId(room1).IsAdjacentTo(this.GetRoomMapFromRoomId(room2));
         }
 
         public RoomMap GetRoomMapFromRoomId(Guid roomId) {
