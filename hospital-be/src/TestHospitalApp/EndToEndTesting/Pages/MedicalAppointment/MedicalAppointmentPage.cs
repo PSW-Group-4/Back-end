@@ -14,18 +14,36 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
         private readonly IWebDriver driver;
         public const string URI = @"http://localhost:4200/doctor/appointments";
         public const string LoginURI = @"http://localhost:4200/login";
+        private IWebElement AddButton => driver.FindElement(By.Id("addAppointment"));
         private IWebElement Table => driver.FindElement(By.Id("medicalAppointmentTable"));
         private ReadOnlyCollection<IWebElement> Rows =>
             Table.FindElements(By.TagName("tr"));
         private IWebElement LastRowUpdateButton => driver.FindElement(By.XPath("//table[@id='medicalAppointmentTable']/tbody/tr[last()]/td[6]"));
-        private IWebElement dateBox => driver.FindElement(By.Id("datePick"));
-        private IWebElement terminBox => driver.FindElement(By.XPath("//mat-select[@id='terminPick']"));
-        private IWebElement terminBoxOpt => driver.FindElement(By.XPath("//mat-option[@id='terminPickOption']"));
-        private IWebElement editClick => driver.FindElement(By.Id("editClick"));
-        private IWebElement finishClick => driver.FindElement(By.Id("finishBtn"));
+        private IWebElement PatientBox => driver.FindElement(By.XPath("//mat-select[@id='patientChoose']"));
+        private IWebElement PatientBoxOpt => driver.FindElement(By.XPath("//mat-option[@id='patientPickOption']"));
+        private IWebElement DateBox => driver.FindElement(By.Id("datePick"));
+        private IWebElement TerminBox => driver.FindElement(By.XPath("//mat-select[@id='terminPick']"));
+        private IWebElement TerminBoxOpt => driver.FindElement(By.XPath("//mat-option[@id='terminPickOption']"));
+        private IWebElement AddClick => driver.FindElement(By.Id("addClick"));
+        private IWebElement EditClick => driver.FindElement(By.Id("editClick"));
+        private IWebElement FinishAddClick => driver.FindElement(By.Id("finishAddBtn"));
+        private IWebElement FinishClick => driver.FindElement(By.Id("finishBtn"));
         public MedicalAppointmentPage(IWebDriver driver)
         {
             this.driver = driver;
+        }
+
+        public bool AddButtonPressed()
+        {
+            try
+            {
+                AddButton.Click();
+            }
+            catch(NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
         }
 
         public bool UpdateButtonPressed()
@@ -42,13 +60,50 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
             return true;
         }
 
+        public void EnsureAddPageIsDisplayed()
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return AddButton.Displayed;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public bool ChoosePatient()
+        {
+            try
+            {
+                WebDriverWait waitSelect = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(2));
+                waitSelect.Until((e) =>{ return IsElementHasTrueAriaDisabledAttribute(e, PatientBox); });
+                PatientBox.Click();
+                WebDriverWait waitOption = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+                waitOption.Until(e => e.FindElement(By.Id("patientPickOption"))).Click();
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool ChooseDate(string date)
         {
             try
             {
-                dateBox.SendKeys(Keys.Control + "a");
-                dateBox.SendKeys(Keys.Delete);
-                dateBox.SendKeys(date);
+                DateBox.Clear();
+                DateBox.SendKeys(Keys.Control + "a");
+                DateBox.SendKeys(date);
             }
             catch (NoSuchElementException)
             {
@@ -61,8 +116,37 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
         {
             try
             {
-                terminBox.Click();
-                terminBoxOpt.Click();
+                WebDriverWait waitSelect = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(2));
+                waitSelect.Until((e) => { return IsElementHasTrueAriaDisabledAttribute(e, TerminBox); });
+                TerminBox.Click();
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+                wait.Until(e => e.FindElement(By.Id("terminPickOption"))).Click();
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CreateButtonPressed()
+        {
+            try
+            {
+                AddClick.Click();
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool FinishAddButtonPressed()
+        {
+            try
+            {
+                FinishAddClick.Click();
             }
             catch (NoSuchElementException)
             {
@@ -75,7 +159,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
         {
             try
             {
-                editClick.Click();
+                EditClick.Click();
             }
             catch (NoSuchElementException)
             {
@@ -87,7 +171,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
         {
             try
             {
-                finishClick.Click();
+                FinishClick.Click();
             }
             catch (NoSuchElementException)
             {
@@ -98,17 +182,57 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
 
         public int GetRowsCount()
         {
-            return Rows.Count;
+            return driver.FindElement(By.Id("medicalAppointmentTable")).FindElements(By.TagName("tr")).Count;
         }
 
         public void EnsurePageIsDisplayed()
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return LastRowUpdateButton.Displayed;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public void EnsureAddEndPageIsDisplayed()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
             wait.Until(condition =>
             {
                 try
                 {
-                    return LastRowUpdateButton.Displayed;
+                    return FinishAddClick.Displayed;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public void EnsureAddEndPageIsNotDisplayed()
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return driver.FindElements(By.Id("finishAddBtn")).Count == 0;
                 }
                 catch (StaleElementReferenceException)
                 {
@@ -128,7 +252,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
             {
                 try
                 {
-                    return finishClick.Displayed;
+                    return FinishClick.Displayed;
                 }
                 catch (StaleElementReferenceException)
                 {
@@ -141,6 +265,17 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
             });
         }
 
+        public IWebElement IsElementHasTrueAriaDisabledAttribute(IWebDriver webdriver, IWebElement element)
+        {
+            if (element.GetAttribute("aria-disabled").Equals("false"))
+            {
+                return element;
+            }
+
+            return null;
+        }
+
+        public void RefreshPage() => driver.Navigate().Refresh();
         public void Navigate() => driver.Navigate().GoToUrl(URI);
         public void NavigateStart() => driver.Navigate().GoToUrl(LoginURI);
     }
