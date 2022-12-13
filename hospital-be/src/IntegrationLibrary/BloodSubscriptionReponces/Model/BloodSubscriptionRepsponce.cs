@@ -15,7 +15,9 @@ namespace IntegrationLibrary.BloodSubscriptionReponces.Model
         public virtual BloodSubscription Subscription {get; private set; }
         public string Message { get; private set; }
 
-        public BloodSubscriptionRepsponce() { }
+        public BloodSubscriptionRepsponce() { 
+            this.CreatedDate = DateTime.Now;    
+        }
         public void SetMessage(String message) {
 
             Message = ValidateMessage(message) ? message : throw new ArgumentException();

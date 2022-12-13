@@ -12,11 +12,8 @@ namespace HospitalLibrary.Consiliums.Model
 {
     public class Consilium : Appointment
     {
-        public Guid Id { get; set; }
         public String Reason { get; set; }
-        // treba manytomany
-        //public List<Guid> DoctorsId { get; set; }
-        //public virtual List<Doctor> Doctors { get; set; }
+        public virtual List<Doctor> Doctors { get; set; }
 
     }
 }
