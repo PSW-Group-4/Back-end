@@ -4,6 +4,7 @@ using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Service;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,17 @@ namespace HospitalLibrary.Consiliums.Service
         // PETAR TODO
         public IEnumerable<Consilium> GetDoctorsConsiliums(Guid DoctorId)
         {
-            throw new NotImplementedException();
+            IEnumerable<Consilium> allConsiliums = _consiliumRepository.GetAll();
+            List<Consilium> docConsiliums = new List<Consilium>();
+            foreach(Consilium consilium in allConsiliums)
+            {
+                foreach(Doctor doc in consilium.Doctors)
+                {
+                    if (doc.Id.Equals(DoctorId))
+                        docConsiliums.Add(consilium);
+                }
+            }
+            return docConsiliums;
         }
 
         // DJOLE TODO
