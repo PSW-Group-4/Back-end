@@ -60,11 +60,11 @@ namespace HospitalAPI.Controllers
 
         // GET api/Consilium/GetByDoctor/doctorID
         [HttpGet("GetByDoctor/{id}")]
-        public ActionResult GetDoctorsConsiliums([FromRoute] Guid doctorId)
+        public ActionResult GetDoctorsConsiliums([FromRoute] Guid id)
         {
             try
             {
-                var consilium = _consiliumService.GetDoctorsConsiliums(doctorId);
+                var consilium = _consiliumService.GetDoctorsConsiliums(id);
                 return Ok(consilium);
             }
             catch (NotFoundException)
