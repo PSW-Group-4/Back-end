@@ -5,7 +5,7 @@ using IntegrationLibrary.Common;
 
 namespace IntegrationLibrary.BloodSubscriptionResponses.Model
 {
-    [Table("blood_subscription_responces")]
+    [Table("blood_subscription_responses")]
     public class BloodSubscriptionResponse : Entity
     {
         public virtual BloodSubscription Subscription { get; private set; }

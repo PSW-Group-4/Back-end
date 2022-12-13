@@ -1,6 +1,6 @@
-﻿namespace IntegrationAPI.Dtos.BloodSubscription
+﻿namespace IntegrationAPI.Dtos.BloodSubscriptionResponse
 {
-    public class BloodSubscriptionResponceDto
+    public class BloodSubscriptionResponseDto
     {
         public string SubscriptionId { get; set; }
         public string MessageString { get; set; }

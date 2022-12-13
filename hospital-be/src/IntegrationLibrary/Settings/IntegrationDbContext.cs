@@ -5,6 +5,7 @@ using IntegrationLibrary.BloodRequests.Model;
 using IntegrationLibrary.BloodSubscriptionResponses.Model;
 using IntegrationLibrary.BloodSubscriptions;
 using IntegrationLibrary.EntityConfigurations;
+using IntegrationLibrary.ManagerBloodRequests.Model;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.Tenders.Model;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +28,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<BloodSubscription> BloodSubscription { get; set; }
         public DbSet<TenderApplication> TenderApplications { get; set; }
         public DbSet<ManagerRequest> ManagerBloodRequests { get; set; }
-        public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
-        public DbSet<BloodSubscriptionResponse> BloodSubscriptionRepsponce { get; set; }
+        public DbSet<BloodSubscriptionResponse> BloodSubscriptionResponses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

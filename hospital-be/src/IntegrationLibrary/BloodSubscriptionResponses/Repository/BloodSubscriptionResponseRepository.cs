@@ -19,19 +19,19 @@ namespace IntegrationLibrary.BloodSubscriptionResponses.Repository
 
         public BloodSubscriptionResponse Create(BloodSubscriptionResponse subscription)
         {
-            _context.BloodSubscriptionRepsponce.Add(subscription);
+            _context.BloodSubscriptionResponses.Add(subscription);
             _context.SaveChanges();
             return subscription;
         }
 
         public IEnumerable<BloodSubscriptionResponse> GetAll()
         {
-            return _context.BloodSubscriptionRepsponce.ToList();
+            return _context.BloodSubscriptionResponses.ToList();
         }
 
         public BloodSubscriptionResponse GetById(Guid id)
         {
-            BloodSubscriptionResponse subscription = _context.BloodSubscriptionRepsponce.Find(id);
+            BloodSubscriptionResponse subscription = _context.BloodSubscriptionResponses.Find(id);
             if (subscription == null)
                 throw new NotFoundException();
             return subscription;
@@ -39,7 +39,7 @@ namespace IntegrationLibrary.BloodSubscriptionResponses.Repository
 
         public BloodSubscriptionResponse GetBySubscriptionId(Guid id)
         {
-            BloodSubscriptionResponse subscription = _context.BloodSubscriptionRepsponce
+            BloodSubscriptionResponse subscription = _context.BloodSubscriptionResponses
                 .Where(sub => sub.Subscription.Id == id).FirstOrDefault();
             if (subscription == null)
                 throw new NotFoundException();
