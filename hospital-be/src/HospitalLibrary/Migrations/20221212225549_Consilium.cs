@@ -103,7 +103,7 @@ namespace HospitalLibrary.Migrations
                 });
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Reports_Appointment_AppointmentId",
+                name: "FK_Reports_Appointment_MedicalAppointmentId",
                 table: "Reports",
                 column: "AppointmentId",
                 principalTable: "Appointment",

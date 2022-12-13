@@ -55,7 +55,7 @@ namespace HospitalAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(consiliumRequest);
+            return Ok(thisConsilium);
         }
 
         // GET api/Consilium/GetByDoctor/doctorID
