@@ -60,7 +60,7 @@ namespace HospitalAPI.Controllers
         public ActionResult Update([FromRoute] Guid id, [FromBody] AppointmentRequestDto appointmentDto)
         {
             var appointment = _mapper.Map<MedicalAppointment>(appointmentDto);
-
+            appointment.Id = id;
             try
             {
                 var result = _medicalAppointmentService.Update(appointment);

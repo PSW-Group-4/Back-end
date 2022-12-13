@@ -242,6 +242,28 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("blood_subscriptions");
                 });
 
+            modelBuilder.Entity("IntegrationLibrary.ManagerBloodRequests.Model.ManagerRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Blood")
+                        .HasColumnType("text");
+
+                    b.Property<Guid?>("BloodBankId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ManagerId")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BloodBankId");
+
+                    b.ToTable("manager_blood_requests");
+                });
+
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
                 {
                     b.Property<Guid>("ApplicationId")
@@ -390,6 +412,15 @@ namespace IntegrationLibrary.Migrations
                         .HasForeignKey("SubscriptionId");
 
                     b.Navigation("Subscription");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.ManagerBloodRequests.Model.ManagerRequest", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "BloodBank")
+                        .WithMany()
+                        .HasForeignKey("BloodBankId");
+
+                    b.Navigation("BloodBank");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>

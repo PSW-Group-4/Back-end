@@ -52,3 +52,11 @@ INSERT INTO "Doctors" ("Id", "LicenceNum", "Speciality", "WorkingTimeStart", "Wo
 
 INSERT INTO "Users"("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId", suspicious_activities)VALUES
 ('doktor', 'doktor', true, false, 1, '5c036fba-1118-4f4b-b153-90d75e60625e', null);
+
+
+INSERT INTO "Patients" ("Id", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "EmailAddress", "PhoneNumber") VALUES
+('e6fbebce-dd68-45e4-9e38-c66b98cc8197', '5c036fba-1118-4f4b-b153-90d75e60625e', 'Mandi', 'Leupold', '2014-08-09 16:50:05', 1, '1b9e69e2-283a-4e1b-999e-4f9997bbcfe5', '{"JmbgValue": "1807000730038"}', 'mleupold13@cnet.com', '884-638-8935');
+
+
+INSERT INTO "Appointments"("Id", "DoctorId", "RoomId", "PatientId", "Discriminator", "EndTime", "EquipmentToMoveId", "IsDone", "StartTime", "Type") VALUES
+('9ae3255d-261f-472f-a961-7f2e7d05d22c', '5c036fba-1118-4f4b-b153-90d75e60625e', '9ae3255d-261f-472f-a961-7f2e7d05d95c', 'e6fbebce-dd68-45e4-9e38-c66b98cc8197', 'MedicalAppointment', '2022-12-12 8:30:00', null, false, '2022-12-12 8:00:00', null);

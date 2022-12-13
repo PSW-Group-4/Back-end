@@ -12,6 +12,6 @@ namespace HospitalAPI.Dtos.Consilium
         public int Duration { get; set; }
         public bool isDoctor { get; set; }
         public List<Guid> DoctorsId { get; set; }
-        public List<String> Specialitites { get; set; }
+        public List<String> Specialities { get; set; }
     }
 }

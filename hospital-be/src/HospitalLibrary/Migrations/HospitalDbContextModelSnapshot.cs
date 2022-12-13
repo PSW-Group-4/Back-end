@@ -37,6 +37,21 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("PatientAllergies");
                 });
 
+            modelBuilder.Entity("ConsiliumDoctor", b =>
+                {
+                    b.Property<Guid>("ConsiliumsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("DoctorsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ConsiliumsId", "DoctorsId");
+
+                    b.HasIndex("DoctorsId");
+
+                    b.ToTable("ConsiliumDoctor");
+                });
+
             modelBuilder.Entity("HospitalLibrary.AcountActivation.Model.AcountActivationInfo", b =>
                 {
                     b.Property<Guid>("PersonId")
@@ -528,18 +543,18 @@ namespace HospitalLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("AppointmentId")
-                        .HasColumnType("uuid");
-
                     b.Property<DateTime>("DateTime")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("MedicalAppointmentId")
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppointmentId");
+                    b.HasIndex("MedicalAppointmentId");
 
                     b.ToTable("Reports");
                 });
@@ -774,6 +789,16 @@ namespace HospitalLibrary.Migrations
                     b.HasDiscriminator().HasValue("MedicalAppointment");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Consiliums.Model.Consilium", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Model.Appointment");
+
+                    b.Property<string>("Reason")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("Consilium");
+                });
+
             modelBuilder.Entity("HospitalLibrary.MoveEquipment.Model.MoveEquipmentAppointment", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.Appointment");
@@ -787,6 +812,20 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("EquipmentToMoveId");
 
                     b.HasDiscriminator().HasValue("MoveEquipmentAppointment");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Renovation.Model.RenovationAppointment", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Model.Appointment");
+
+                    b.Property<string>("RoomRenovationPlans")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("RenovationAppointment_Type");
+
+                    b.HasDiscriminator().HasValue("RenovationAppointment");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.CafeteriaRoom", b =>
@@ -827,6 +866,21 @@ namespace HospitalLibrary.Migrations
                     b.HasOne("HospitalLibrary.Patients.Model.Patient", null)
                         .WithMany()
                         .HasForeignKey("PatientsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ConsiliumDoctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.Consiliums.Model.Consilium", null)
+                        .WithMany()
+                        .HasForeignKey("ConsiliumsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1108,13 +1162,13 @@ namespace HospitalLibrary.Migrations
 
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
                 {
-                    b.HasOne("HospitalLibrary.Appointments.Model.Appointment", "Appointment")
+                    b.HasOne("HospitalLibrary.Appointments.Model.MedicalAppointment", "MedicalAppointment")
                         .WithMany()
-                        .HasForeignKey("AppointmentId")
+                        .HasForeignKey("MedicalAppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Appointment");
+                    b.Navigation("MedicalAppointment");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.Bed", b =>

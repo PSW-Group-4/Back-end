@@ -26,6 +26,8 @@ namespace IntegrationLibrary.Settings
         public DbSet<Tender> Tenders { get; set; }
         public DbSet<BloodSubscription> BloodSubscription { get; set; }
         public DbSet<TenderApplication> TenderApplications { get; set; }
+        public DbSet<ManagerRequest> ManagerBloodRequests { get; set; }
+        public IntegrationDbContext(DbContextOptions<IntegrationDbContext> options) : base(options) { }
         public DbSet<BloodSubscriptionResponse> BloodSubscriptionRepsponce { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,6 +37,7 @@ namespace IntegrationLibrary.Settings
             modelBuilder.ApplyConfiguration(new BloodRequestConfiguration());
             modelBuilder.ApplyConfiguration(new TenderConfiguration());
             modelBuilder.ApplyConfiguration(new BloodSubscriptionConfiguration());
+            modelBuilder.ApplyConfiguration(new ManagerRequestConfiguration());
         }
     }
 }
