@@ -77,7 +77,7 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Patients\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomSchedules\" RESTART IDENTITY CASCADE;");
+            //context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomSchedules\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSymptom\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"MedicinePrescription\" RESTART IDENTITY CASCADE;");
@@ -149,7 +149,7 @@ namespace TestHospitalApp.Setup
                 Gender = Gender.Male,
                 AddressId = address.Id,
                 Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("mail@gmail.krompir"),
+                Email = new Email("mail@gmail.com"),
                 PhoneNumber = "066413242"
             };
 
@@ -164,7 +164,7 @@ namespace TestHospitalApp.Setup
                 Gender = Gender.Male,
                 AddressId = address.Id,
                 Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("mail2@gmail.krompir"),
+                Email = new Email("mail2@gmail.com"),
                 PhoneNumber = "066413242"
             };
 
@@ -349,9 +349,20 @@ namespace TestHospitalApp.Setup
                 PersonId = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639")
             };
 
+            User doctorUser = new User
+            {
+                Username = "doc",
+                Password = "doc",
+                IsAccountActive = true,
+                IsBlocked = false,
+                Role = UserRole.Doctor,
+                PersonId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")
+            };
+
             context.Add(user1);
             context.Add(userInactive);
             context.Add(managerUser);
+            context.Add(doctorUser);
         }
     }
 }

@@ -18,6 +18,7 @@ namespace HospitalLibrary.Core.Model
         public void Update(Appointment schedule)
         {
             IsDone = schedule.IsDone;
+            DateRange = schedule.DateRange;
         }
     }
 }
