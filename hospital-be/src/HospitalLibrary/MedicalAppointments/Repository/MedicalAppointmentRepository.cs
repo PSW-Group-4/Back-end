@@ -46,7 +46,7 @@ namespace HospitalLibrary.Appointments.Repository
             {
                 throw new NotFoundException();
             }
-
+            updatingAppointment.Update(medicalAppointment);
             _context.SaveChanges();
             return updatingAppointment;
         }
