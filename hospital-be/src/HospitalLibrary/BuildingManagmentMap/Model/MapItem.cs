@@ -10,20 +10,11 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
     {
         public Guid Id { get; set; }
 
-        public int CoordinateX { get; set; } 
-
-        public int CoordinateY { get; set; }
-
-        public int Height  { get; set; }  
-
-        public int Width { get; set; }
+        public MapLocation MapLocation {get; set;} 
 
         public void Update(MapItem item)
         {
-            CoordinateX = item.CoordinateX;
-            CoordinateY = item.CoordinateY;
-            Height = item.Height;
-            Width = item.Width;
+            this.MapLocation = item.MapLocation;
         }
     }
 }

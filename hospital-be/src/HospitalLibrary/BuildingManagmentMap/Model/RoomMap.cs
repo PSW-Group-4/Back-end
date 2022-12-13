@@ -11,6 +11,10 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
     {
         public virtual Room Room { get; set; }
 
+        public RoomMap() {}
+        public RoomMap(MapLocation location) {
+            this.MapLocation = location;
+        }
         public void Update(RoomMap map)
         {
             base.Update(map);
