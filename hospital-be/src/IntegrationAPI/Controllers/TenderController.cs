@@ -35,5 +35,9 @@ namespace IntegrationAPI.Controllers
         {
             return Ok(_tenderService.GetAll());
         }
+        [Route("active"), HttpGet]
+        public ActionResult GetActive() {
+            return Ok(_tenderService.GetActive());
+        }
     }
 }
