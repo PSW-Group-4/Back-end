@@ -6,16 +6,19 @@ using HospitalLibrary.Renovation.Service.Interfaces;
 using HospitalLibrary.Renovation.Repository.Interfaces;
 using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
 
 namespace HospitalLibrary.Renovation.Service.Implementation
 {
     public class RenovationAppointmentService : IRenovationAppointmentService
     {
-         private readonly IRenovationAppointmentRepository _renovationAppointmentRepository;
+        private readonly IRenovationAppointmentRepository _renovationAppointmentRepository;
+        private readonly IRoomService _roomService;
 
-        public RenovationAppointmentService(IRenovationAppointmentRepository equipmentToMoveRepository)
+        public RenovationAppointmentService(IRenovationAppointmentRepository equipmentToMoveRepository, IRoomService roomService)
         {
             _renovationAppointmentRepository = equipmentToMoveRepository;
+            _roomService = roomService;
         }
 
         public RenovationAppointment Create(RenovationAppointment entity)
@@ -54,6 +57,19 @@ namespace HospitalLibrary.Renovation.Service.Implementation
                 RenovationAppointment appointment2 = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, new DateRange(data.StartTime, data.EndTime), data.Room2.Id);
                 this.Create(appointment2);
             }
+        }
+
+        public void CheckForFinishedRenovations() {
+            foreach( RenovationAppointment appointment in this.GetAll() ) {
+                if(appointment.ShouldBeFinished()) {
+                    FinishRenovation(appointment);
+                }
+            }
+        }
+
+        public void FinishRenovation(RenovationAppointment appointment) {
+            _roomService.FinishRenovationPlans(appointment.GetAllPlans(), appointment.Type);
+            appointment.Finish();
         }
     }
 }

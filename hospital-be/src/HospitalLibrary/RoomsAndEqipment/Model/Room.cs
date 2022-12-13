@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.RoomsAndEqipment.Model
 {
@@ -22,6 +23,14 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             this.Name = name;
             this.RoomsEquipment = equipment;
         }
+
+        public Room(RoomRenovationPlan plan) {
+            this.Id = new Guid();
+            this.Description = plan.Description;
+            this.Name = plan.Name;
+            this.Number = plan.Number;
+        }
+
         public void Update(Room room) 
         {       
             Description = room.Description;
@@ -47,6 +56,13 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             }
         }
 
+        public void AddEquipment(IEnumerable<RoomsEquipment> roomsEquipments)
+        {
+            foreach(RoomsEquipment roomsEquipment in roomsEquipments) {
+                this.AddEquipment(roomsEquipment);
+            }
+        }
+
         public void RemoveEquipment(RoomsEquipment newEquipment)
         {
             foreach (RoomsEquipment oldeq in this.RoomsEquipment)
@@ -68,6 +84,10 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
                 }
             }
             
+        }
+
+        public void RemoveAllEquipment() {
+            this.RoomsEquipment = new List<RoomsEquipment>();
         }
     }
 }

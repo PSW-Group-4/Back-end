@@ -58,5 +58,13 @@ namespace HospitalLibrary.Renovation.Model
             }
         }
 
+        public bool ShouldBeFinished() {
+            return false == this.IsDone && DateRange.IsLesserThan(DateTime.Now);
+        }
+
+        public void Finish() {
+            this.IsDone = true;
+        }
+
     }
 }

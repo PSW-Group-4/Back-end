@@ -5,15 +5,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Service;
+using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.RoomsAndEqipment.Service.Interfaces
 {
-    public interface IRoomService
+    public interface IRoomService : ICrudService<Room>
     {
-        IEnumerable<Room> GetAll();
-        Room GetById(Guid id);
-        Room Create(Room room);
-        Room Update(Room room);
-        void Delete(Guid roomId);
+        public void FinishRenovationPlans(IEnumerable<RoomRenovationPlan> plans, RenovationAppointment.TypeOfRenovation typeOfRenovation);
+        public void CreateNewRooms(IEnumerable<RoomRenovationPlan> plans, RenovationAppointment.TypeOfRenovation typeOfRenovation);
+        public void MoveEquipmentToRoom(Room newRoom, IEnumerable<RoomRenovationPlan> plans);
+        public void SetFloorForNewRoom(Room newRoom, IEnumerable<RoomRenovationPlan> plans);
+        public void SetMapLocationForNewRoom(Room newRoom, IEnumerable<RoomRenovationPlan> plans, RenovationAppointment.TypeOfRenovation typeOfRenovation, int roomNumber);
+        public void RemoveOldRooms(IEnumerable<RoomRenovationPlan> plans);
     }
 }
