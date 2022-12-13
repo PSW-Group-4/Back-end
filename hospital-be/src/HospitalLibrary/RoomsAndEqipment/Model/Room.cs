@@ -14,6 +14,14 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         public int Number { get; set; }
         public virtual ICollection<RoomsEquipment> RoomsEquipment { get; set; }
 
+        public Room() {}
+        
+        public Room(Guid id, String description, String name, int Number, ICollection<RoomsEquipment> equipment) {
+            this.Id = id;
+            this.Description = description;
+            this.Name = name;
+            this.RoomsEquipment = equipment;
+        }
         public void Update(Room room) 
         {       
             Description = room.Description;

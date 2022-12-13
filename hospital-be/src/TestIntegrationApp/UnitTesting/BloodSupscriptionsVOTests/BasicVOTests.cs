@@ -17,7 +17,7 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
         {
             BloodType type = new BloodType(BloodGroup.A, RhFactor.POSITIVE);
             Blood product = new Blood(type,150);
-            BloodSubscription subscription = new BloodSubscription("TestBB");
+            BloodSubscription subscription = new BloodSubscription("TestBB",13);
 
             subscription.AddBloodType(product);
 
@@ -31,7 +31,7 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             BloodType type2 = new BloodType(BloodGroup.B, RhFactor.POSITIVE);
             Blood product = new Blood(type, 150);
             Blood product2 = new Blood(type2, 250);
-            BloodSubscription subscription = new BloodSubscription("TestBB");
+            BloodSubscription subscription = new BloodSubscription("TestBB",13);
             List<Blood> types = new List<Blood>();
             types.Add(product);
             types.Add(product2);
@@ -50,7 +50,7 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             Blood product = new Blood(type, 150);
             Blood product2 = new Blood(type2, 250);
             Blood product3 = new Blood(type3, 69);
-            BloodSubscription subscription = new BloodSubscription("TestBB");
+            BloodSubscription subscription = new BloodSubscription("TestBB",13);
             List<Blood> types = new List<Blood>();
             types.Add(product);
             types.Add(product2);
@@ -72,7 +72,7 @@ namespace TestIntegrationApp.UnitTesting.BloodSupscriptionsVOTests
             Blood product = new Blood(type, 150);
             Blood product2 = new Blood(type2, 250);
             Blood product3 = new Blood(type3, 69); ;
-            BloodSubscription subscription = new BloodSubscription("TestBB");
+            BloodSubscription subscription = new BloodSubscription("TestBB",13);
             List<Blood> types = new List<Blood>();
             types.Add(product);
             types.Add(product2);

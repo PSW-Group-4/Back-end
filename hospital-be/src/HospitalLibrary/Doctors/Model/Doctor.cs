@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Core.Model;
+﻿using HospitalLibrary.Consiliums.Model;
+using HospitalLibrary.Core.Model;
 using HospitalLibrary.Patients.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using System;
@@ -17,6 +18,7 @@ namespace HospitalLibrary.Doctors.Model
         public string WorkingTimeEnd { get; set; }
         public Guid RoomId { get; set; }
         public virtual Room Room { get; set; }
+        public virtual List<Consilium> Consiliums { get; set; }
 
         public void Update(Doctor doctor)
         {
