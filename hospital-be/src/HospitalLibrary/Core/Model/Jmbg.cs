@@ -50,13 +50,7 @@ namespace HospitalLibrary.Core.Model
         private bool IsChecksumValid(string jmbg)
         {
             List<int> jmbgNumericValues = GetNumericValues(jmbg);
-            int checksum =
-                11 - ((7 * (jmbgNumericValues[0] + jmbgNumericValues[6]) + 6 *
-                (jmbgNumericValues[1] + jmbgNumericValues[7]) +
-                5 * (jmbgNumericValues[2] + jmbgNumericValues[8]) +
-                4 * (jmbgNumericValues[3] + jmbgNumericValues[9]) +
-                3 * (jmbgNumericValues[4] + jmbgNumericValues[10]) +
-                2 * (jmbgNumericValues[5] + jmbgNumericValues[11])) % 11);
+            int checksum = CalculateChecksum(jmbgNumericValues);
 
             return checksum == jmbgNumericValues[12];
         }
@@ -71,6 +65,27 @@ namespace HospitalLibrary.Core.Model
             }
 
             return returnValue;
+        }
+
+        private int CalculateChecksum(List<int> jmbgNumericValues)
+        {
+            return 11 - ((7 * (jmbgNumericValues[0] + jmbgNumericValues[6]) + 6 *
+                (jmbgNumericValues[1] + jmbgNumericValues[7]) +
+                5 * (jmbgNumericValues[2] + jmbgNumericValues[8]) +
+                4 * (jmbgNumericValues[3] + jmbgNumericValues[9]) +
+                3 * (jmbgNumericValues[4] + jmbgNumericValues[10]) +
+                2 * (jmbgNumericValues[5] + jmbgNumericValues[11])) % 11);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Jmbg jmbg &&
+                   JmbgValue == jmbg.JmbgValue;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(JmbgValue);
         }
     }
 }

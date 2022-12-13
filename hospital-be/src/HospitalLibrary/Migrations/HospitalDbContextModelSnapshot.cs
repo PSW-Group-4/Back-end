@@ -814,6 +814,20 @@ namespace HospitalLibrary.Migrations
                     b.HasDiscriminator().HasValue("MoveEquipmentAppointment");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Renovation.Model.RenovationAppointment", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.Core.Model.Appointment");
+
+                    b.Property<string>("RoomRenovationPlans")
+                        .HasColumnType("text");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("RenovationAppointment_Type");
+
+                    b.HasDiscriminator().HasValue("RenovationAppointment");
+                });
+
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.CafeteriaRoom", b =>
                 {
                     b.HasBaseType("HospitalLibrary.RoomsAndEqipment.Model.Room");

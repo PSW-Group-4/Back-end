@@ -71,6 +71,10 @@ using HospitalLibrary.Symptoms.Repository;
 using HospitalLibrary.Symptoms.Service;
 using HospitalLibrary.Reports.Repository;
 using HospitalLibrary.Reports.Service;
+using HospitalLibrary.Renovation.Service.Interfaces;
+using HospitalLibrary.Renovation.Service.Implementation;
+using HospitalLibrary.Renovation.Repository.Interfaces;
+using HospitalLibrary.Renovation.Repository.Implementation;
 using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Consiliums.Service;
 
@@ -260,6 +264,10 @@ namespace HospitalAPI
             //Treatment
             services.AddScoped<ITreatmentRepository, TreatmentRepository>();
             services.AddScoped<ITreatmentService, TreatmentService>();
+
+            //Renovation
+            services.AddScoped<IRenovationAppointmentRepository, RenovationAppointmentRepository>();
+            services.AddScoped<IRenovationAppointmentService, RenovationAppointmentService>();
 
 
             //Hosted Service
