@@ -29,5 +29,11 @@ namespace HospitalAPI.Controllers
                 return Ok();
 
         }
+
+        [HttpGet]
+        public ActionResult GetAll()
+        {
+            return Ok(_moveEquipmentTask.GetAll());
+        }
     }
 }
