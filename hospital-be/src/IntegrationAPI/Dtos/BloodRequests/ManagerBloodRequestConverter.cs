@@ -10,7 +10,7 @@ namespace IntegrationAPI.Dtos.BloodRequests
             ManagerBloodRequestDto retVal = new ManagerBloodRequestDto();
             retVal.id = request.Id;
             retVal.urgent = true;
-            retVal.sendOnDate = DateTime.Now.ToString();
+            retVal.sendOnDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm");
             retVal.bloodBank = request.BloodBank.Name;
             retVal.amount = request.Blood.Amount;
             retVal.bloodType = request.Blood.BloodType.ToString();

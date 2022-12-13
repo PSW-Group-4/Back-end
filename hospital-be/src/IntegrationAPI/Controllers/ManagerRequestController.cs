@@ -1,11 +1,15 @@
-﻿using IntegrationAPI.Communications.ManagerRequests;
+﻿using Confluent.Kafka;
+using IntegrationAPI.Communications.ManagerRequests;
+using IntegrationAPI.Communications.Producer;
 using IntegrationAPI.Dtos.BloodRequests;
+using IntegrationAPI.Dtos.BloodSupplies;
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.ManagerBloodRequests.Model;
 using IntegrationLibrary.ManagerBloodRequests.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
 
 namespace IntegrationAPI.Controllers
 {
@@ -15,11 +19,13 @@ namespace IntegrationAPI.Controllers
     {
         private readonly IManagerRequestService _service;
         private readonly IBloodBankService _bankService;
+        private readonly IProducer _producer;
 
-        public ManagerRequestController(IManagerRequestService service, IBloodBankService bankService)
+        public ManagerRequestController(IManagerRequestService service, IBloodBankService bankService, IProducer producer)
         {
             _service = service;
             _bankService = bankService;
+            _producer = producer;
         }
 
         [HttpGet]
@@ -40,7 +46,12 @@ namespace IntegrationAPI.Controllers
             }
             request.ManagerId = dto.ManagerId;
             _service.Create(request);
-            ManagerRequestSender.SendRequest(ManagerBloodRequestConverter.Convert(request));
+            string result = ManagerRequestSender.SendRequest(ManagerBloodRequestConverter.Convert(request));
+            if (result.Equals("Completed"))
+            {
+                ReceivedBloodDto receivedBlooddto = new ReceivedBloodDto(request.Blood.BloodType.ToString(), request.Blood.Amount);
+                _producer.Send(JsonSerializer.Serialize(receivedBlooddto), "hospital.blood.supply.topic");
+            }
             return Ok(request);
         }
     }
