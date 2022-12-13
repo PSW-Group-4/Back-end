@@ -7,6 +7,7 @@ using HospitalLibrary.BuildingManagmentMap.Service.Interfaces;
 using HospitalLibrary.BuildingManagmentMap.Model;
 using HospitalLibrary.BuildingManagmentMap.Repository.Interfaces;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.BuildingManagmentMap.Service.Implementation
 {
@@ -58,6 +59,29 @@ namespace HospitalLibrary.BuildingManagmentMap.Service.Implementation
                 }
             } 
             return returnValue;
+        }
+
+        public Boolean AreAdjecent(Guid roomMap1, Guid roomMap2) {
+            return this.GetById(roomMap1).IsAdjacentTo(this.GetById(roomMap2));
+        }
+
+        public RoomMap GetRoomMapFromRoomId(Guid roomId) {
+            foreach(RoomMap map in this.GetAll()) {
+                if(map.Room.Id.Equals(roomId)) {
+                    return map;
+                }
+            }
+            return null;
+        }
+
+        public MapLocation CalculateNewRoomLocation(IEnumerable<RoomRenovationPlan> plans, RenovationAppointment.TypeOfRenovation typeOfRenovation, int roomNumber) {
+            RoomRenovationPlan[] plans1 = plans.ToArray();
+            if(typeOfRenovation == RenovationAppointment.TypeOfRenovation.Merge) {   
+                // Merges 2 room map location
+                return this.GetRoomMapFromRoomId(plans1[0].Id).MergeRoomLocation(this.GetRoomMapFromRoomId(plans1[1].Id).MapLocation);
+            }
+            // Splits first room map vertically
+            return this.GetRoomMapFromRoomId(plans1[0].Id).SplitRoomLocation(roomNumber);
         }
     }
 }

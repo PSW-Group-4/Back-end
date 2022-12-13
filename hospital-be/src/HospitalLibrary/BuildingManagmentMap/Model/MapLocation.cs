@@ -17,6 +17,26 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
 
         public MapLocation(){}
 
+        public MapLocation(int CoordinateX, int CoordinateY, int Height, int Width) {
+            this.CoordinateX = CoordinateX;
+            this.CoordinateY = CoordinateY;
+            this.Height = Height;
+            this.Width = Width;
+            Validate();
+        }
+
+        public void Validate() {
+
+        }
+
+        // Used for checking which location is on top
+        public int ComapreX(MapLocation mapLocation) {
+            return this.CoordinateX - mapLocation.CoordinateX;
+        }
+        public int ComapreY(MapLocation mapLocation) {
+            return this.CoordinateY - mapLocation.CoordinateY;
+        }
+
         public Boolean IsAdjacentTo(MapLocation location) {
             // Check vertical
             if(this.CoordinateX == location.CoordinateX) {
