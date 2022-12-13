@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using HospitalLibrary.Core.Model;
 using HospitalAPI.Dtos.Appointment;
 using HospitalLibrary.Appointments.Service;
+using HospitalLibrary.Core.Service.Interfaces;
 
 namespace HospitalAPI.Controllers
 {
@@ -20,12 +21,14 @@ namespace HospitalAPI.Controllers
         private readonly IDoctorAppointmentService _appointmentService;
         private readonly IAppointmentService appointment;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public SchedulingController(IDoctorAppointmentService patientService,IAppointmentService appointment, IMapper mapper)
+        public SchedulingController(IDoctorAppointmentService patientService,IAppointmentService appointment, IMapper mapper, IJwtService jwtService)
         {
             _appointmentService = patientService;
             this.appointment = appointment;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         // GET api/Available/2
@@ -34,7 +37,8 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                var termins = _appointmentService.AvailableTerminsForDate(date, patientId);
+                var doctorId = (Guid)_jwtService.GetCurrentUser(HttpContext.User).PersonId;
+                var termins = _appointmentService.AvailableTerminsForDate(date, patientId, doctorId);
                 return Ok(termins);
             }
             catch (NotFoundException)

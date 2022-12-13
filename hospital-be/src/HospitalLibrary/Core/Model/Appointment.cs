@@ -9,7 +9,7 @@ namespace HospitalLibrary.Core.Model
     public class Appointment
     {
         public Guid Id {get; set;}
-        public  DateRange DateRange { get; set; }
+        public DateRange DateRange { get; set; }
         public Guid RoomId { get; set; }
         public String Discriminator {get; private set;}
         public virtual Room Room { get; set; }

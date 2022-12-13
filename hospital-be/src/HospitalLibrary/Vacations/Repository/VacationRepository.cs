@@ -60,5 +60,22 @@ namespace HospitalLibrary.Vacations.Repository
             _context.Vacations.Remove(vacation);
             _context.SaveChanges();
         }
+
+public bool IsDoctorOnVacation(Guid doctorId, DateTime date)
+        {
+
+            IEnumerable<Vacation> doctorVacations = GetAll();
+            foreach (Vacation v in doctorVacations)
+            {
+                if (v.DoctorId == doctorId
+                    && v.VacationStatus == VacationStatus.Approved
+                    &&DateTime.Compare(date, v.DateStart) > 0
+                    && DateTime.Compare(date, v.DateEnd) < 0 )
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

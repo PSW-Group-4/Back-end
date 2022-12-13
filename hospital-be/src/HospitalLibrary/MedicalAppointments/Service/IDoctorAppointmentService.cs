@@ -15,6 +15,7 @@ namespace HospitalLibrary.Appointments.Service
         IEnumerable<MedicalAppointment> GetDoctorsOldAppointments(Guid id);
         IEnumerable<MedicalAppointment> GetDoctorsCurrentAppointments(Guid id);
         void deleteAppointmentEndSendNotification(Guid id);
-        List<DateRange> AvailableTerminsForDate(DateTime date, Guid patientId);
+        List<DateRange> AvailableTerminsForDate(DateTime date, Guid patientId, Guid doctorId);
+        bool IsDoctorAvailable(Guid doctorId, DateTime time);
     }
 }
