@@ -11,7 +11,7 @@ namespace HospitalLibrary.BuildingManagmentMap.Service.Interfaces
     public interface IRoomMapService : ICrudService<RoomMap>
     {
         public IEnumerable<RoomMap> GetRoomMapsByFloorId(Guid id);
-        public Boolean AreAdjecent(Guid roomMap1, Guid roomMap2);
+        public Boolean AreAdjacent(Guid roomMap1, Guid roomMap2);
         public MapLocation CalculateNewRoomLocation(IEnumerable<RoomRenovationPlan> plans, RenovationAppointment.TypeOfRenovation typeOfRenovation, int roomNumber);
     }
 }
