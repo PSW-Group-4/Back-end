@@ -40,7 +40,9 @@ namespace TestIntegrationApp.E2E.Tests
         [Fact]
         public void Registration_success()
         {
-            LoginPrivate();
+            LoginAsManager();
+            Page = new(Driver);
+            Page.Navigate();
             Page.EnterInformation("Bankicaa", "isaproject202223@gmail.com", "localhost:8080");
             Page.PressSubmitButton();
 
@@ -64,17 +66,15 @@ namespace TestIntegrationApp.E2E.Tests
 
             return options;
         }
-        private void LoginPrivate() 
-        { 
-            Driver = new ChromeDriver(GetOptions());
-
+        private void LoginAsManager() 
+        {
             LoginPage = new LoginPage(Driver);
             Driver.Navigate().GoToUrl("http://localhost:4200/login");
             LoginPage.EnterUsernameAndPassword("manager1", "manager1");
             LoginPage.PressLoginButton();
 
             var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(2));
-            wait.Until(driver => driver.Url != LoginPage.privateURI);
+            wait.Until(driver => driver.Url == "http://localhost:4200/manager");
         }
     }
 }

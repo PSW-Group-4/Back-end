@@ -5,7 +5,7 @@ namespace TestIntegrationApp.E2E.Pages
     public class BankRegistrationPage
     {
         private readonly IWebDriver driver;
-        public readonly string Url = "http://localhost:4200/bloodBanks/add";
+        public readonly string Url = "http://localhost:4200/manager/bloodBanks/add";
 
         public BankRegistrationPage(IWebDriver driver)
         {
