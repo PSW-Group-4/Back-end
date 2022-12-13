@@ -25,6 +25,7 @@ using HospitalLibrary.Users.Model;
 using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Medicines.Model;
+using HospitalLibrary.Consiliums.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -311,6 +312,8 @@ namespace TestHospitalApp.Setup
             //Users
             initUsers(context);
 
+            //Consiliums
+            initConsiliums(context);
 
             context.SaveChanges();
 
@@ -363,6 +366,19 @@ namespace TestHospitalApp.Setup
             context.Add(userInactive);
             context.Add(managerUser);
             context.Add(doctorUser);
+        }
+
+        private static void initConsiliums(HospitalDbContext context)
+        {
+            Consilium con1 = new Consilium
+            {
+                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
+                IsDone = false,
+                RoomId = new Guid("5c036fba-1318-4f4b-b153-90d75e606000"),
+                DateRange = new DateRange(),
+            };
+
+            context.Add(con1);
         }
     }
 }
