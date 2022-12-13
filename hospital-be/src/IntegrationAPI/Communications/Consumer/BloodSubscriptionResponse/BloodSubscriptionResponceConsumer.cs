@@ -55,7 +55,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
                 }
                 responceService.Create(BloodSubscriptionResponceConverter.Convert(subscription, response));
                 //"DELIVERY-SUCCESS:A_POSITIVE"
-                if (response.MessageString.Split(":")[0].Equals("DELIVERY - SUCCESS"))
+                if (response.MessageString.Split(":")[0].Equals("DELIVERY-SUCCESS"))
                 {
                     //TODO: fetch subscription, get its blood type and amount  
                     //and update hospital blood supply
