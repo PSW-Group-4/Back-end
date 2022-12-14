@@ -315,7 +315,7 @@ namespace TestHospitalApp.Setup
             };
             Appointment schedule2 = new Appointment
             {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
+                Id = new Guid("890e4ba4-e968-4cb6-ab86-abc1b52ad225"),
                 IsDone = true,
                 RoomId = room.Id
             };

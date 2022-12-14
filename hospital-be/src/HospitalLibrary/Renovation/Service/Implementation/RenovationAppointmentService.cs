@@ -48,13 +48,18 @@ namespace HospitalLibrary.Renovation.Service.Implementation
 
         public void CreateRenovation(RenovationDataDto data) {
             List<RoomRenovationPlan> plans = new List<RoomRenovationPlan>();
-            plans.Add(data.Room1);
-            plans.Add(data.Room2);
-            plans.Add(data.Room3);
-            RenovationAppointment appointment = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, new DateRange(data.StartTime, data.EndTime), data.Room1.Id);
+            plans.Add(new RoomRenovationPlan(new Guid(data.Room1.Id)));
+            if(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type) == RenovationAppointment.TypeOfRenovation.Merge) {
+                plans.Add(new RoomRenovationPlan(new Guid(data.Room2.Id)));
+            }
+            else {
+                plans.Add(new RoomRenovationPlan(data.Room2.Name, data.Room2.Description, data.Room2.Number));
+            }
+            plans.Add(new RoomRenovationPlan(data.Room3.Name, data.Room3.Description, data.Room3.Number));
+            RenovationAppointment appointment = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, new DateRange(data.StartTime, data.EndTime), new Guid(data.Room1.Id));
             this.Create(appointment);
             if(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type) == RenovationAppointment.TypeOfRenovation.Merge) {
-                RenovationAppointment appointment2 = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, new DateRange(data.StartTime, data.EndTime), data.Room2.Id);
+                RenovationAppointment appointment2 = new RenovationAppointment(Enum.Parse<RenovationAppointment.TypeOfRenovation>(data.Type), plans, new DateRange(data.StartTime, data.EndTime), new Guid(data.Room2.Id));
                 this.Create(appointment2);
             }
         }
