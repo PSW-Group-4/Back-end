@@ -25,7 +25,7 @@ INSERT INTO "Rooms" ("Id", "Description","Name", "Number", "Discriminator", "Flo
 
 ('2b9b4701-831d-4510-aa44-d4a940acff73', 'OpisSobe', 'Name 14', '9050', 'DoctorRoom', '9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'radni sati'),
 
-('f563b764-f837-4b70-ab6b-5c7be7f706b8', 'OpisSobe', 'Name 15', '9051', 'DoctorRoom', '9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'radni sati'),
+('f563b764-f837-4b70-ab6b-5c7be7f706b8', 'ConsiliumRoom', 'Name 15', '9051', 'DoctorRoom', '9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'radni sati'),
 ('e8c0f4e2-fa51-4691-a7ba-dbabb36e69b0', 'OpisSobe', 'Name 16', '9052', 'DoctorRoom', '9845c31d-e22a-48f6-b9ef-f8fc13e5f21c', 'radni sati');
 
 

@@ -15,5 +15,6 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Interfaces
         Room Create(Room room);
         Room Update(Room room);
         void Delete(Guid roomId);
+        List<Room> GetConsiliumRoom();
     }
 }
