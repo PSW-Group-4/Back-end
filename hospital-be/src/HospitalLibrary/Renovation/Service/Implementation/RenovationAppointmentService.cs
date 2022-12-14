@@ -33,6 +33,11 @@ namespace HospitalLibrary.Renovation.Service.Implementation
 
         public IEnumerable<RenovationAppointment> GetAll()
         {
+            foreach( RenovationAppointment appointment in _renovationAppointmentRepository.GetAll() ) {
+                if(appointment.ShouldBeFinished()) {
+                    FinishRenovation(appointment);
+                }
+            }
             return _renovationAppointmentRepository.GetAll();
         }
 
@@ -73,7 +78,9 @@ namespace HospitalLibrary.Renovation.Service.Implementation
         }
 
         public void FinishRenovation(RenovationAppointment appointment) {
-            _roomService.FinishRenovationPlans(appointment.GetAllPlans(), appointment.Type);
+            if(appointment.IsPrimaryRenovationAppointment()) {
+                _roomService.FinishRenovationPlans(appointment.GetAllPlans(), appointment.Type);
+            }
             appointment.Finish();
         }
     }

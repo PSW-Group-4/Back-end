@@ -68,5 +68,12 @@ namespace HospitalLibrary.Renovation.Model
             this.IsDone = true;
         }
 
+        public bool IsPrimaryRenovationAppointment() {
+            if(this.RoomId.Equals(this.RoomRenovationPlans.First().Id)) {
+                return true;
+            }
+            return false;
+        }
+
     }
 }

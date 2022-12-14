@@ -68,6 +68,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
                 if(plan.Type == RoomRenovationPlan.TypeOfPlan.New) {
                     Room newRoom = new Room(plan);
                     this.MoveEquipmentToRoom(newRoom, plans);
+                    this.Create(newRoom);
                     this.SetFloorForNewRoom(newRoom, plans);
                     this.SetMapLocationForNewRoom(newRoom, plans, typeOfRenovation, roomNumber);
                     roomNumber++;

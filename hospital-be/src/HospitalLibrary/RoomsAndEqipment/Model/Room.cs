@@ -42,6 +42,9 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         public void AddEquipment(RoomsEquipment newEquipment)
         {
             bool flag = false;
+            if(this.RoomsEquipment == null) {
+                this.RoomsEquipment = new List<RoomsEquipment>();
+            }
             foreach (RoomsEquipment oldeq in this.RoomsEquipment)
             {
                 if(newEquipment.Equipment.Id.Equals(oldeq.Equipment.Id))
@@ -52,7 +55,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             }
             if (!flag)
             {
-                this.RoomsEquipment.Add(newEquipment);
+                this.RoomsEquipment.Add(new RoomsEquipment(newEquipment.Equipment, this, newEquipment.Amount));
             }
         }
 
