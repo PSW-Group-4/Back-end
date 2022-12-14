@@ -51,39 +51,5 @@ namespace HospitalAPI.Controllers
             var bloodConsumptionRecord = _mapper.Map<BloodConsumptionRecord>(bloodConsumptionRecordRequestDto);
             return Ok(_bloodConsumptionRecordService.Create(bloodConsumptionRecord));
         }
-
-        // PUT api/BloodConsumptionRecord/1
-        [HttpPut("{id}")]
-        public ActionResult Update([FromRoute] Guid id,
-            [FromBody] BloodConsumptionRecordRequestDto bloodConsumptionRecordRequestDto)
-        {
-            var bloodConsumptionRecord = _mapper.Map<BloodConsumptionRecord>(bloodConsumptionRecordRequestDto);
-            bloodConsumptionRecord.Id = id;
-
-            try
-            {
-                var result = _bloodConsumptionRecordService.Update(bloodConsumptionRecord);
-                return Ok(result);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }
-
-        // DELETE api/BloodConsumptionRecord/1
-        [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] Guid id)
-        {
-            try
-            {
-                _bloodConsumptionRecordService.Delete(id);
-                return NoContent();
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }
     }
 }
