@@ -16,7 +16,7 @@ namespace IntegrationLibrary.BloodBanks.Repository
         public BloodBank GetByApiKey(string ApiKey);
         public BloodBank Update(BloodBank bloodBank);
         public BloodBank GetByName(string name);
-
+        public BloodBank GetByEmail(string email);
 
 
     }

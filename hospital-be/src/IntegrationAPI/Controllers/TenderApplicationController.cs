@@ -31,12 +31,12 @@ namespace IntegrationAPI.Controllers
             return Ok(tenderApplications);
         }
         [HttpPost]
-        public ActionResult Apply(ApplyForTenderDto applicationDto) {
+        public ActionResult Apply(ApplyForTenderDto tenderApplication) {
             TenderApplication application = new TenderApplication();
             application.ApplicationId = Guid.NewGuid();
-            application.BloodBank = _bloodBankService.GetById(applicationDto.BloodBankId);
-            application.Tender = _tenderService.GetById(applicationDto.TenderId);
-            application.PriceInRSD = applicationDto.PriceInRSD;
+            application.BloodBank = _bloodBankService.GetById(tenderApplication.BloodBankId);
+            application.Tender = _tenderService.GetById(tenderApplication.TenderId);
+            application.PriceInRSD = tenderApplication.PriceInRSD;
             return Ok(_service.Apply(application));
         }
     }

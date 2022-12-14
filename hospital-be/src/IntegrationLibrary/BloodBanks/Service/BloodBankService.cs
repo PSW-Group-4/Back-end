@@ -50,6 +50,9 @@ namespace IntegrationLibrary.BloodBanks.Service
             return _repository.GetByName(name);
         }
 
-
+        public BloodBank GetByEmail(string email)
+        {
+            return _repository.GetByEmail(email);
+        }
     }
 }
