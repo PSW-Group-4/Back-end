@@ -1,6 +1,8 @@
 ﻿using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Reports.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using System;
 using System.Collections.Generic;
@@ -47,6 +49,15 @@ namespace HospitalLibrary.Doctors.Model
             if (speciality.Equals(this.Speciality))
                 return true;
             return false;
+        }
+
+        private bool IsValid()
+        {
+            if ((String.IsNullOrEmpty(WorkingTimeStart)) || (String.IsNullOrEmpty(WorkingTimeEnd)))
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
