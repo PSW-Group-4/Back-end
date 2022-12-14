@@ -47,14 +47,6 @@ namespace HospitalAPI.Controllers
             }
         }
 
-        [HttpGet("suggestions")]
-        public ActionResult GetAppointmentSuggestions([FromRoute]AppointmentRequestWithSuggestionsDto request)
-        {
-            //var patientId = (Guid)_jwtService.GetCurrentUser(HttpContext.User).PersonId;
-            //return Ok();
-            throw new NotImplementedException();
-        }
-
         [HttpGet("Recommend/{relocationStart}/{duration}/{sourceId}/{targetId}")]
         public ActionResult Recommend([FromRoute] String relocationStart, [FromRoute] int duration, [FromRoute] String sourceId, [FromRoute] String targetId)
         {

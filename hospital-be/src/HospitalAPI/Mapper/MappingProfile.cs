@@ -44,6 +44,7 @@ using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
 using HospitalAPI.Dtos.Renovation;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.Utility;
 
 namespace HospitalAPI.Mapper
 {
@@ -159,6 +160,8 @@ namespace HospitalAPI.Mapper
 
             CreateMap<RenovationAppointmentDto, RenovationDataDto>();
             CreateMap<RoomRenovationPlanDto, RoomRenovationPlan>();
+
+            CreateMap<AppointmentRequestWithSuggestionsDto, RequestForAppointmentSlotSuggestions>();
 
         }
 

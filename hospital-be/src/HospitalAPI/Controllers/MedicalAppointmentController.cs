@@ -14,6 +14,7 @@ using HospitalLibrary.Users.Model;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Collections;
+using HospitalLibrary.Utility;
 
 namespace HospitalAPI.Controllers
 {
@@ -219,5 +220,21 @@ namespace HospitalAPI.Controllers
                 }
             }
 
+        [HttpPost("patient-appointment-request-with-suggestions")]
+        [Authorize(Roles = "Patient")]
+        public ActionResult GetAppointmentSuggestions([FromBody] AppointmentRequestWithSuggestionsDto requestInfo)
+        {
+            try
+            {
+                Guid patientId = _jwtService.GetCurrentUser(HttpContext.User).PersonId ?? throw new NotFoundException();
+                var request = _mapper.Map<RequestForAppointmentSlotSuggestions>(requestInfo);
+                var suggestions = _doctorAppointmentService.GetAppointmentSuggestionsForDateRange(request);
+                return Ok(suggestions);
+
+            }
+            catch (NotFoundException) {
+                return NotFound();  
+            }
+        }
     }
 }
