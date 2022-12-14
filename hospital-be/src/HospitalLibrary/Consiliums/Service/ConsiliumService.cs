@@ -160,34 +160,50 @@ namespace HospitalLibrary.Consiliums.Service
         private Consilium ConsiliumWithSpecialities(ConsiliumRequest consiliumRequest)
         {
             List<Doctor> Doctors = GetAllDoctorFromSpecialities(consiliumRequest.Specialities);
+            List<Doctor> bestAvailableDoctors = new List<Doctor>();
             int MustSpecialityCount = consiliumRequest.Specialities.Count;
-            List<Doctor> availableDoctors = new List<Doctor>();
-            List<String> availableSpecialitites = new List<String>();
+            int bestDoctorCount = 0;
+            Room roomAvailable = new Room();
+            DateTime bestTermin = new DateTime();
+            bool didItEvenFound = false;
+            bool continueItIs = false;
 
             for (DateTime termin = consiliumRequest.DateStart; termin <= consiliumRequest.DateEnd.AddMinutes(-30 * consiliumRequest.Duration); termin = termin.AddMinutes(30))
             {
+                List<Doctor> availableDoctors = new List<Doctor>();
+                List<String> availableSpecialitites = new List<String>();
                 foreach (Doctor doctor in Doctors)
                 {
+                    continueItIs = false;
                     if (!(IsLongerTerminGoodForDoctor(doctor.Id, termin, consiliumRequest)))
+                    {
+                        continueItIs = true;
+                        continue;
+                    }
+                    DateRange dr = new DateRange(termin, termin.AddMinutes(30 * consiliumRequest.Duration));
+                    roomAvailable = FindRoomForConsilium(dr);
+                    if (roomAvailable == null)
                     {
                         break;
                     }
-                    else
+                    if (!continueItIs)
                     {
                         availableDoctors.Add(doctor);
                         availableSpecialitites.Add(doctor.Speciality);
-                        if (MustSpecialityCount == availableSpecialitites.Distinct().Count())
-                        {
-                            DateRange dr = new DateRange(termin, termin.AddMinutes(30 * consiliumRequest.Duration));
-                            Room roomAvailable = FindRoomForConsilium(dr);
-                            if (roomAvailable != null)
-                            {
-                                return CreateConsiliumWithSpecialitites(termin, roomAvailable.Id, consiliumRequest, availableDoctors);
-                            }
-                                
-                        }
+                    }
+                    if (MustSpecialityCount == availableSpecialitites.Distinct().Count()
+                        && availableDoctors.Count() > bestDoctorCount)
+                    {
+                        didItEvenFound = true;
+                        bestDoctorCount = availableDoctors.Count;
+                        bestTermin = termin;
+                        bestAvailableDoctors = availableDoctors;
                     }
                 }
+            }
+            if (didItEvenFound)
+            {
+                return CreateConsiliumWithSpecialitites(bestTermin, roomAvailable.Id, consiliumRequest, bestAvailableDoctors);
             }
             return null;
         }
