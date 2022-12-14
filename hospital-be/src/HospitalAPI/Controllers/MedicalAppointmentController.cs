@@ -8,6 +8,10 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Users.Model;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace HospitalAPI.Controllers
 {
@@ -17,11 +21,13 @@ namespace HospitalAPI.Controllers
     {
         private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper)
+        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper, IJwtService jwtService)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         // GET: api/Appointment
@@ -86,5 +92,37 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        [HttpDelete("cancel/{id}")]
+        [Authorize(Roles = "Patient")]
+        public ActionResult Cancel([FromRoute] Guid id)
+        {
+            try
+            {
+                User user = _jwtService.GetCurrentUser(HttpContext.User);
+                if (user.PersonId == null)
+                {
+                    return BadRequest("OnlyPatientsCanCacnel");
+                }
+
+                _medicalAppointmentService.Cancel(id, (Guid)user.PersonId);
+                return Ok(id);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch(CanNotCancelAppointmentException e)
+            {
+                return Conflict(e.Message);
+            }
+            catch(AlreadyCanceledException)
+            {
+                return Conflict("Already canceled");
+            }
+
+        }
+
+        
     }
 }

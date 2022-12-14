@@ -57,5 +57,20 @@ namespace HospitalLibrary.Appointments.Repository
             _context.MedicalAppointments.Remove(appointment);
             _context.SaveChanges();
         }
+
+        public IEnumerable<MedicalAppointment> GetDoneByPatient(Guid patientId)
+        {
+            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.IsDone);
+        }
+
+        public IEnumerable<MedicalAppointment> GetCacneledByPatient(Guid patientId)
+        {
+            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.IsCanceled);
+        }
+
+        public IEnumerable<MedicalAppointment> GetFutureByPatient(Guid patientId)
+        {
+            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.DateRange.StartTime >= DateTime.Now);
+        }
     }
 }

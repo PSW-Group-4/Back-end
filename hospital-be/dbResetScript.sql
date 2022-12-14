@@ -621,4 +621,12 @@ INSERT INTO public."MapItem"("Id", "RoomId", "CoordinateX", "CoordinateY", "Heig
 INSERT INTO public."Admissions" ("Id","PatientId","Reason","RoomId","arrivalDate") VALUES
 	 ('1412c639-c5e1-47a1-b29b-1fe925536612','11942a9c-850e-489a-8434-98704889d8ed','Povisen secer pa mora da se oporavi','54c6de76-bc71-4615-8c73-4ebf9546444f','2022-11-11 11:11:00'),
 	 ('15f4c4e0-08b2-44ef-9e1b-0f14164d59d2','c1db258b-3034-4ba5-98bd-4f68137bac94','Srcani zastoj u prednjoj komori','d4857133-ef89-4e5e-865f-b49c83ecec23','2022-09-09 10:10:00');
+	 
+INSERT INTO public."Appointments" ("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES
+	 ('c463fec0-58eb-480d-8792-ed2b0f517b7a','2022-12-18 15:20:52.995821','2022-12-18 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL),
+	 ('9d01e700-70a4-4b1c-958c-2c587ec94b4b','2022-12-17 15:20:52.995821','2022-12-17 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL),
+	 ('ea7535a8-b3ce-45c9-835f-d003f295e99f','2022-12-8 15:20:52.995821','2022-12-8 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',true,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL),
+	 ('d72d3169-fbf4-4861-ab44-0449dce91b63','2022-12-20 15:20:52.995821','2022-12-20 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',true,NULL,NULL,NULL,NULL,NULL),
+	 ('18d4953d-3c47-4d11-aa23-ff7f6d1fee69','2022-12-21 15:20:52.995821','2022-12-21 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',true,NULL,NULL,NULL,NULL,NULL),
+	 ('e687fb8d-b7a7-4e8d-be9f-d51b9e2f01cb','2022-12-15 15:20:52.995821','2022-12-15 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL);
 
