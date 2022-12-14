@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.Consiliums.Model
 {
-    public class Consilium 
+    public class Consilium : Appointment
     {
         public String Reason { get; set; }
         public virtual List<Doctor> Doctors { get; set; }
