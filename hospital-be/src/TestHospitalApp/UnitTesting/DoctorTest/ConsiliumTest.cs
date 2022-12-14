@@ -22,7 +22,7 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             var doctorAppointmentService = new Mock<IDoctorAppointmentService>();
             var consiliumRepo = new Mock<IConsiliumRepository>();
             var doctorService = new Mock<IDoctorService>();
-            ConsiliumService cc = new ConsiliumService(consiliumRepo.Object, doctorService.Object, doctorAppointmentService.Object);
+            //ConsiliumService cc = new ConsiliumService(consiliumRepo.Object, doctorService.Object, doctorAppointmentService.Object);
 
             ConsiliumRequest cr = new ConsiliumRequest()
             {
