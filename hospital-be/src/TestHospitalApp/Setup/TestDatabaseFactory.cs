@@ -123,7 +123,6 @@ namespace TestHospitalApp.Setup
 
 
 
-
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
 
