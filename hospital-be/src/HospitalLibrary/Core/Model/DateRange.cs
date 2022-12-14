@@ -22,5 +22,10 @@ namespace HospitalLibrary.Core.Model
                     (this.StartTime < dateRange.EndTime && this.EndTime >= dateRange.EndTime) ||
                     (this.StartTime >= dateRange.StartTime && this.EndTime < dateRange.EndTime);
         }
+
+        // used for checking if appointment has ended
+        public Boolean IsLesserThan(DateTime time) {
+            return this.EndTime < time;
+        }
     }
 }

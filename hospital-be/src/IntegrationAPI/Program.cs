@@ -27,7 +27,7 @@ namespace IntegrationAPI
                     services.AddHostedService<BloodListener>();
                     services.AddHostedService<NewsListener>();
                     services.AddHostedService<BloodRequestResponseListener>();
-                    services.AddHostedService<BloodSubscriptionResponceListener>();
+                    services.AddHostedService<BloodSubscriptionResponseListener>();
                 });
     }
 }

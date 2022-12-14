@@ -212,88 +212,21 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Floors");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.MapItem", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("BuildingId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("CoordinateX")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CoordinateY")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuildingId");
+                    b.ToTable("MapItem");
 
-                    b.ToTable("BuildingMaps");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.FloorMap", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("CoordinateX")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CoordinateY")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("FloorId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FloorId");
-
-                    b.ToTable("FloorMaps");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.RoomMap", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("CoordinateX")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CoordinateY")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Height")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("RoomId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Width")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoomId");
-
-                    b.ToTable("RoomMaps");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MapItem");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Address", b =>
@@ -332,7 +265,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
 
-                    b.Property<Guid>("RoomId")
+                    b.Property<Guid?>("RoomId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
@@ -772,6 +705,42 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("ReportSymptom");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.BuildingManagmentMap.Model.MapItem");
+
+                    b.Property<Guid?>("BuildingId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("BuildingId");
+
+                    b.HasDiscriminator().HasValue("BuildingMap");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.FloorMap", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.BuildingManagmentMap.Model.MapItem");
+
+                    b.Property<Guid?>("FloorId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("FloorId");
+
+                    b.HasDiscriminator().HasValue("FloorMap");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.RoomMap", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.BuildingManagmentMap.Model.MapItem");
+
+                    b.Property<Guid?>("RoomId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasDiscriminator().HasValue("RoomMap");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Appointments.Model.MedicalAppointment", b =>
                 {
                     b.HasBaseType("HospitalLibrary.Core.Model.Appointment");
@@ -967,40 +936,45 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("BuildingId");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.MapItem", b =>
                 {
-                    b.HasOne("HospitalLibrary.BuildingManagment.Model.Building", "Building")
-                        .WithMany()
-                        .HasForeignKey("BuildingId");
+                    b.OwnsOne("HospitalLibrary.BuildingManagmentMap.Model.MapLocation", "MapLocation", b1 =>
+                        {
+                            b1.Property<Guid>("MapItemId")
+                                .HasColumnType("uuid");
 
-                    b.Navigation("Building");
-                });
+                            b1.Property<int>("CoordinateX")
+                                .HasColumnType("integer")
+                                .HasColumnName("CoordinateX");
 
-            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.FloorMap", b =>
-                {
-                    b.HasOne("HospitalLibrary.BuildingManagment.Model.Floor", "Floor")
-                        .WithMany()
-                        .HasForeignKey("FloorId");
+                            b1.Property<int>("CoordinateY")
+                                .HasColumnType("integer")
+                                .HasColumnName("CoordinateY");
 
-                    b.Navigation("Floor");
-                });
+                            b1.Property<int>("Height")
+                                .HasColumnType("integer")
+                                .HasColumnName("Height");
 
-            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.RoomMap", b =>
-                {
-                    b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.Room", "Room")
-                        .WithMany()
-                        .HasForeignKey("RoomId");
+                            b1.Property<int>("Width")
+                                .HasColumnType("integer")
+                                .HasColumnName("Width");
 
-                    b.Navigation("Room");
+                            b1.HasKey("MapItemId");
+
+                            b1.ToTable("MapItem");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MapItemId");
+                        });
+
+                    b.Navigation("MapLocation");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Core.Model.Appointment", b =>
                 {
                     b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.Room", "Room")
                         .WithMany()
-                        .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RoomId");
 
                     b.OwnsOne("HospitalLibrary.Core.Model.DateRange", "DateRange", b1 =>
                         {
@@ -1262,6 +1236,33 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("SymptomsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
+                {
+                    b.HasOne("HospitalLibrary.BuildingManagment.Model.Building", "Building")
+                        .WithMany()
+                        .HasForeignKey("BuildingId");
+
+                    b.Navigation("Building");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.FloorMap", b =>
+                {
+                    b.HasOne("HospitalLibrary.BuildingManagment.Model.Floor", "Floor")
+                        .WithMany()
+                        .HasForeignKey("FloorId");
+
+                    b.Navigation("Floor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.RoomMap", b =>
+                {
+                    b.HasOne("HospitalLibrary.RoomsAndEqipment.Model.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId");
+
+                    b.Navigation("Room");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Appointments.Model.MedicalAppointment", b =>

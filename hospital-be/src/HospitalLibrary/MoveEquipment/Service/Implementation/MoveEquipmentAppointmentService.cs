@@ -75,7 +75,10 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
 
         public void MoveEquipmentToRoom(MoveEquipmentAppointment appointment)
         {
-            Room room = _roomService.GetById(appointment.RoomId);
+            if(appointment.RoomId == null) {
+                return;
+            }
+            Room room = _roomService.GetById((Guid)appointment.RoomId);
             RoomsEquipment roomsEquipmentToMove = appointment.EquipmentToMove.ConvertToRoomsEquipmentForRoom(room);
             if (appointment.Type == MoveEquipmentAppointment.TypeOfMovement.Get) {
                 room.AddEquipment(roomsEquipmentToMove);

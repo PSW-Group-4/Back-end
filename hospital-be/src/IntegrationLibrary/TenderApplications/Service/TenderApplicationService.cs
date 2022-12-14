@@ -13,8 +13,8 @@ namespace IntegrationLibrary.TenderApplications.Service
     public class TenderApplicationService : ITenderApplicationService
     {
         private readonly ITenderApplicationRepository _repository;
-        private readonly ITenderRepository _tenderRepo;
-        private readonly IBloodBankRepository _bloodBankRepo;
+        private readonly ITenderRepository _tenderRepository;
+        private readonly IBloodBankRepository _bloodBankRepository;
         public TenderApplicationService(ITenderApplicationRepository repository )
         {
             _repository = repository;

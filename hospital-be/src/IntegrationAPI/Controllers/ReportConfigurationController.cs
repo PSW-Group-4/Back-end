@@ -4,6 +4,7 @@ using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.ReportConfigurations.Service;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using IntegrationAPI.Authorization;
 
 namespace IntegrationAPI.Controllers
 {
@@ -11,16 +12,17 @@ namespace IntegrationAPI.Controllers
     [ApiController]
     public class ReportConfigurationController : ControllerBase
     {
-        private readonly IBbReportConfigService _service;
+        private readonly IReportConfigurationService _service;
         private readonly IConverter<ReportConfiguration, ReportConfigurationDto> _converter;
 
-        public ReportConfigurationController(IBbReportConfigService service, IConverter<ReportConfiguration, ReportConfigurationDto> converter)
+        public ReportConfigurationController(IReportConfigurationService service, IConverter<ReportConfiguration, ReportConfigurationDto> converter)
         {
             _service = service;
             _converter = converter;
         }
 
         [HttpGet]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult GetAll()
         {
             var retVal = new List<ReportConfigurationDto>();
@@ -32,12 +34,14 @@ namespace IntegrationAPI.Controllers
             return Ok(retVal);
         }
         [HttpPut]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Update(ReportConfigurationDto dto)
         {
             ReportConfiguration config = _converter.Convert(dto);
             return Ok(_service.Update(config));
         }
         [HttpPost]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Create(ReportConfigurationDto dto)
         {
             ReportConfiguration config = _converter.Convert(dto);

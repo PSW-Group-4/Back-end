@@ -179,7 +179,7 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("blood_requests");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionRepsponce", b =>
+            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionResponses.Model.BloodSubscriptionResponse", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -204,7 +204,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("blood_subscription_responces");
+                    b.ToTable("blood_subscription_responses");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodSubscriptions.BloodSubscription", b =>
@@ -405,7 +405,7 @@ namespace IntegrationLibrary.Migrations
                     b.Navigation("BloodBank");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionRepsponce", b =>
+            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionResponses.Model.BloodSubscriptionResponse", b =>
                 {
                     b.HasOne("IntegrationLibrary.BloodSubscriptions.BloodSubscription", "Subscription")
                         .WithMany()

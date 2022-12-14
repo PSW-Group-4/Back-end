@@ -89,5 +89,11 @@ namespace HospitalAPI.Controllers.MapItem
             return Ok(_roomMapService.GetRoomMapsByFloorId(id));
         }
 
+        [HttpGet("CheckAdjacentRooms/{id1}/{id2}")]
+        public ActionResult CheckAdjacentRooms([FromRoute] Guid id1, [FromRoute] Guid id2)
+        {
+            return Ok(_roomMapService.AreAdjacent(id1, id2));
+        }
+
     }
 }
