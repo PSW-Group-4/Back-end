@@ -282,7 +282,7 @@ namespace HospitalAPI
             services.AddScoped<IConsiliumService, ConsiliumService>();
 
             //Report
-            services.AddScoped<IAppointmentReportService, AppointmentReportService>();
+            services.AddScoped<IMedicalAppointmentReportService, MedicalAppointmentReportService>();
 
         }
 

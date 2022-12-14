@@ -27,6 +27,8 @@ using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Reports.Model;
 
 namespace TestHospitalApp.Setup
 {
@@ -188,6 +190,39 @@ namespace TestHospitalApp.Setup
             context.Medicines.Add(medicine1);
             context.Medicines.Add(medicine2);
 
+            List<Prescription> prescriptions = new List<Prescription>();
+            List<Medicine> medicines = new List<Medicine>();
+            medicines.Add(medicine1);
+            medicines.Add(medicine2);
+
+            MedicalAppointment medicalAppointment = new MedicalAppointment
+            {
+                RoomId = room.Id,
+                Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                PatientId = patient.Id
+            };
+
+            Prescription prescription = new Prescription
+            {
+                Id = new Guid("0acea4a3-7101-4b0c-8c76-be553afbf84f"),
+                DateTime = new DateTime(),
+                Medicines = medicines
+            };
+            prescriptions.Add(prescription);
+            List<Symptom> symptoms = new List<Symptom>();
+            symptoms.Add(symptom1);
+            symptoms.Add(symptom2);
+            Report report = new Report
+            {
+                Id = new Guid("058eb841-3975-4c7a-83ad-8b81dd6744d9"),
+                MedicalAppointmentId = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+                Text = "Opaka bolest",
+                Symptoms = symptoms,
+                Prescriptions = prescriptions,
+                DateTime = new DateTime()
+            };
+
             Admission admission = new Admission
             {
                 Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174"),
@@ -234,13 +269,7 @@ namespace TestHospitalApp.Setup
             context.Vacations.Add(vacationWFA);
             context.Vacations.Add(vacationA);
 
-            MedicalAppointment medicalAppointment = new MedicalAppointment
-            {
-                RoomId = room.Id,
-                Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
-                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),   
-                PatientId = patient.Id
-            };
+
 
             // BEDS
 
@@ -315,7 +344,7 @@ namespace TestHospitalApp.Setup
             };
             Appointment schedule2 = new Appointment
             {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
+                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d224"),
                 IsDone = true,
                 RoomId = room.Id
             };
@@ -491,5 +520,6 @@ namespace TestHospitalApp.Setup
             context.Rooms.Add(room2);
             context.Rooms.Add(room3);
         }
-    }
+
+        }
 }
