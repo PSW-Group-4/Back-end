@@ -5,6 +5,11 @@ using HospitalAPI.Dtos.Report;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Reports.Service;
 using AutoMapper;
+using HospitalLibrary.AdmissionHistories.Model;
+using HospitalLibrary.AdmissionHistories.Service;
+using HospitalLibrary.AppointmentReport.Service;
+using iTextSharp.text;
+using System.Collections.Generic;
 
 namespace HospitalAPI.Controllers
 {
@@ -13,11 +18,13 @@ namespace HospitalAPI.Controllers
     public class ReportController : ControllerBase
     {
         private readonly IReportService _reportService;
+        private readonly IAppointmentReportService _appointmentReportService;
         private readonly IMapper _mapper;
 
-        public ReportController(IReportService reportService, IMapper mapper)
+        public ReportController(IReportService reportService,IAppointmentReportService appointmentReportService, IMapper mapper)
         {
             _reportService = reportService;
+            _appointmentReportService = appointmentReportService;
             _mapper = mapper;
         }
 
@@ -78,6 +85,20 @@ namespace HospitalAPI.Controllers
             catch (NotFoundException)
             {
                 return NotFound();
+            }
+        }
+
+        [HttpGet("GeneratePdf/{id}/{settings}")]
+        public ActionResult GenerateSeveralPdf([FromRoute] Guid id, [FromRoute] List<String> settings)
+        {
+            try
+            {
+                Report report = _reportService.GetById(id);
+                return File(_appointmentReportService.GeneratePdf(report,settings), "application/pdf", "medicalReport.pdf");
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

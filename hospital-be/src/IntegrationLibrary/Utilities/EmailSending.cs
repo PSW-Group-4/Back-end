@@ -13,11 +13,6 @@ namespace IntegrationLibrary.Utilities
 {
     public class EmailSending
     {
-        /*
-            private static String _senderName = "PSW Integrations";
-            private static String _email = "psw.integrations.g4@gmail.com";
-            private static String _password = "mcezencvkdktyarh";
-        */
         public static MimeMessage createTxtEmail(string recipientName, string recipientEmail,string subject,string emailText)
         {
             var message = new MimeMessage();

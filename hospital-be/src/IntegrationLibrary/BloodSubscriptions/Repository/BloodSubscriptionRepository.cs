@@ -1,11 +1,9 @@
-﻿using IntegrationLibrary.Exceptions;
-using IntegrationLibrary.Settings;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IntegrationLibrary.Exceptions;
+using IntegrationLibrary.Settings;
+using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.BloodSubscriptions.Repository
 {
@@ -32,46 +30,35 @@ namespace IntegrationLibrary.BloodSubscriptions.Repository
 
         public IEnumerable<BloodSubscription> GetActiveNotSent()
         {
-            return _context.BloodSubscription.Where(sub => sub.Sent == false && sub.ActiveStatus== true).ToList();
+            return _context.BloodSubscription.Where(sub => sub.Sent == false && sub.ActiveStatus == true).ToList();
         }
 
         public BloodSubscription GetByBbTitle(string title)
         {
-            BloodSubscription subscription = _context.BloodSubscription.Where(sub => sub.BloodBankName == title).First();
+            BloodSubscription subscription =
+                _context.BloodSubscription.Where(sub => sub.BloodBankName == title).First();
             if (subscription == null)
-            {
                 throw new NotFoundException();
-            }
-            else
-            {
-                return subscription;
-            }
+            return subscription;
         }
 
         public BloodSubscription GetById(Guid id)
         {
             BloodSubscription subscription = _context.BloodSubscription.Find(id);
             if (subscription == null)
-            {
                 throw new NotFoundException();
-            }
-            else
-            {
-                return subscription;
-            }
+            return subscription;
         }
 
         public BloodSubscription Update(BloodSubscription subscription)
         {
-            var local = _context.Set<BloodSubscription>()
-                 .Local
-                 .FirstOrDefault(entry => entry.Id.Equals(subscription.Id));
+            BloodSubscription local = _context.Set<BloodSubscription>()
+                .Local
+                .FirstOrDefault(entry => entry.Id.Equals(subscription.Id));
             // check if local is not null 
             if (local != null)
-            {
                 // detach
                 _context.Entry(local).State = EntityState.Detached;
-            }
             // set Modified flag in your entry
             _context.Entry(subscription).State = EntityState.Modified;
 

@@ -15,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace HospitalAPI.Controllers
@@ -39,6 +40,14 @@ namespace HospitalAPI.Controllers
             _jwtService = jwtService;
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        public IEnumerable<User> GetAll()
+        {
+            var users = _userService.GetAll();
+            return users;
+        }
+
         //POST api/user/registerPatient
         [HttpPost]
         [Route("[action]")]
@@ -56,6 +65,8 @@ namespace HospitalAPI.Controllers
                     address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
                     patient = _mapper.Map<Patient>(registrationDto);
                     user = _mapper.Map<User>(registrationDto.UserLoginDto);
+                    user.Password = new Password(registrationDto.UserLoginDto.Password);
+                    
                 }
                 catch(AutoMapperMappingException autoMapperException)
                 {
@@ -63,6 +74,10 @@ namespace HospitalAPI.Controllers
                     // this will break your call stack
                     // you may not know where the error is called and rather
                     // want to clone the InnerException or throw a brand new Exception
+                }
+                catch (ValueObjectValidationFailedException)
+                {
+                    return Conflict("Password is in wrong format");
                 }
 
                 if (!_patientService.isEmailUnique(patient.Email.Address))
@@ -126,6 +141,10 @@ namespace HospitalAPI.Controllers
             catch (UserIsBlockedException)
             {
                 return Unauthorized("Your account has been blocked");
+            }
+            catch (ValueObjectValidationFailedException)
+            {
+                return Unauthorized("Bad password");
             }
 
         }

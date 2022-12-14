@@ -11,5 +11,7 @@ namespace HospitalLibrary.Appointments.Model
         public virtual Doctor Doctor { get; set; }
         public Guid PatientId { get; set; }
         public virtual Patient Patient { get; set; }
+
+        public bool IsCanceled { get; set; }
     }
 }

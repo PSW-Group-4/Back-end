@@ -4,8 +4,8 @@ destFile = open('dbResetScript.sql', 'w')
 
 # Pay attention to order
 tables = ["AgeGroups","Addresses", "Allergies", "Buildings", "Floors", "Rooms",
- "Doctors", "Patients", "PatientAllergies", "Feedbacks", "Users", "RoomSchedules", "Equipments", "RoomsEquipment",
-  "Appointments", "BuildingMaps", "FloorMaps", "RoomMaps","Admissions"]
+ "Doctors", "Patients", "PatientAllergies", "Feedbacks", "Users", "Equipments", "RoomsEquipment",
+ "MapItem","Admissions"]
 
 
 # Clear all tables

@@ -315,7 +315,7 @@ namespace TestHospitalApp.Setup
             };
             Appointment schedule2 = new Appointment
             {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
+                Id = new Guid("890e4ba4-e968-4cb6-ab86-abc1b52ad225"),
                 IsDone = true,
                 RoomId = room.Id
             };
@@ -345,7 +345,7 @@ namespace TestHospitalApp.Setup
             User user1 = new User
             {
                 Username = "user",
-                Password = "pass",
+                Password = new Password("pass123"),
                 IsAccountActive = true,
                 IsBlocked = false,
                 Role = UserRole.Patient,
@@ -355,7 +355,7 @@ namespace TestHospitalApp.Setup
             User managerUser = new User
             {
                 Username = "manager",
-                Password = "manager",
+                Password = new Password("manager123"),
                 IsAccountActive = true,
                 IsBlocked = false,
                 Role = UserRole.Manager,
@@ -365,7 +365,7 @@ namespace TestHospitalApp.Setup
             User userInactive = new User
             {
                 Username = "notactive",
-                Password = "notactive",
+                Password = new Password("notactive123"),
                 IsAccountActive = false,
                 IsBlocked = false,
                 Role = UserRole.Patient,
@@ -375,7 +375,7 @@ namespace TestHospitalApp.Setup
             User doctorUser = new User
             {
                 Username = "doc",
-                Password = "doc",
+                Password = new Password("doc123"),
                 IsAccountActive = true,
                 IsBlocked = false,
                 Role = UserRole.Doctor,

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.RoomsAndEqipment.Model
 {
@@ -22,6 +23,14 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             this.Name = name;
             this.RoomsEquipment = equipment;
         }
+
+        public Room(RoomRenovationPlan plan) {
+            this.Id = new Guid();
+            this.Description = plan.Description;
+            this.Name = plan.Name;
+            this.Number = plan.Number;
+        }
+
         public void Update(Room room) 
         {       
             Description = room.Description;
@@ -33,6 +42,9 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
         public void AddEquipment(RoomsEquipment newEquipment)
         {
             bool flag = false;
+            if(this.RoomsEquipment == null) {
+                this.RoomsEquipment = new List<RoomsEquipment>();
+            }
             foreach (RoomsEquipment oldeq in this.RoomsEquipment)
             {
                 if(newEquipment.Equipment.Id.Equals(oldeq.Equipment.Id))
@@ -43,7 +55,14 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
             }
             if (!flag)
             {
-                this.RoomsEquipment.Add(newEquipment);
+                this.RoomsEquipment.Add(new RoomsEquipment(newEquipment.Equipment, this, newEquipment.Amount));
+            }
+        }
+
+        public void AddEquipment(IEnumerable<RoomsEquipment> roomsEquipments)
+        {
+            foreach(RoomsEquipment roomsEquipment in roomsEquipments) {
+                this.AddEquipment(roomsEquipment);
             }
         }
 
@@ -68,6 +87,10 @@ namespace HospitalLibrary.RoomsAndEqipment.Model
                 }
             }
             
+        }
+
+        public void RemoveAllEquipment() {
+            this.RoomsEquipment = new List<RoomsEquipment>();
         }
     }
 }

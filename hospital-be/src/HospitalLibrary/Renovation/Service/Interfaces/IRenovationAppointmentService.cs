@@ -10,5 +10,7 @@ namespace HospitalLibrary.Renovation.Service.Interfaces
     public interface IRenovationAppointmentService : ICrudService<RenovationAppointment>
     {
         public void CreateRenovation(RenovationDataDto data);
+        public void CheckForFinishedRenovations();
+        public void FinishRenovation(RenovationAppointment appointment);
     }
 }

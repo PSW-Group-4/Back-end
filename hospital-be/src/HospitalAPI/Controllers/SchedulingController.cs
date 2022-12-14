@@ -61,7 +61,7 @@ namespace HospitalAPI.Controllers
             try
             {
                 DateTime dateTime = DateTime.Parse(relocationStart);
-                EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO(new HospitalLibrary.Core.Model.DateRange(dateTime, dateTime.AddDays(2)), duration, Guid.Parse(sourceId), Guid.Parse(targetId));
+                EquipmentRelocationDTO equipmentRelocation = new EquipmentRelocationDTO(new HospitalLibrary.Core.Model.DateRange(dateTime, dateTime.AddDays(1).AddMinutes(duration)), duration, Guid.Parse(sourceId), Guid.Parse(targetId));
 
                 IEnumerable<DateTime> termins = appointment.RecommendStartForRelocationOrRenovation(equipmentRelocation);
                 return Ok(termins);

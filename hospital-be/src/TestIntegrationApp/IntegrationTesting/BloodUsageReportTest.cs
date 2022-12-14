@@ -24,7 +24,7 @@ namespace TestIntegrationApp.IntegrationTesting
         private static BbReportService SetupReportService(IServiceScope scope)
         {
             return new BbReportService(scope.ServiceProvider.GetRequiredService<IBbReportRepository>(), scope.ServiceProvider.GetRequiredService<IBloodUsageService>(),
-                scope.ServiceProvider.GetRequiredService<IBloodBankService>(), scope.ServiceProvider.GetRequiredService<IBbReportConfigService>());
+                scope.ServiceProvider.GetRequiredService<IBloodBankService>(), scope.ServiceProvider.GetRequiredService<IReportConfigurationService>());
         }
 
         [Fact]
