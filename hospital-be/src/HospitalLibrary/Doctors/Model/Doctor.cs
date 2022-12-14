@@ -30,7 +30,7 @@ namespace HospitalLibrary.Doctors.Model
             WorkingTimeEnd = workingTimeEnd;
             RoomId = roomId;
             Room = room;
-            Consiliums = consiliums;
+            Consiliums = new List<Consilium>();
         }
         public Doctor()
         {
