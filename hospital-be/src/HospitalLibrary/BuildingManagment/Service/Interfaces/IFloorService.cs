@@ -11,5 +11,6 @@ namespace HospitalLibrary.BuildingManagment.Service.Interfaces
     public interface IFloorService : IServiceBase<Floor>
     {
         public IEnumerable<Room> GetRoomsByFloorId(Guid id);
+        public Floor GetFloorByRoomId(Guid id);
     }
 }

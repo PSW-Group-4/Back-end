@@ -10,7 +10,7 @@ namespace HospitalLibrary.Core.Model
     {
         public Guid Id {get; set;}
         public DateRange DateRange { get; set; }
-        public Guid RoomId { get; set; }
+        public Guid? RoomId { get; set; }
         public String Discriminator {get; private set;}
         public virtual Room Room { get; set; }
         public bool IsDone { get; set; }

@@ -44,8 +44,7 @@ namespace TestHospitalApp.IntegrationTesting
                 DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
                 Amount = 50.00,
                 BloodType = "A+",
-                Reason = "Reason 1",
-                DateTime = new DateTime()
+                Reason = "Reason 1"
             };
 
             var createdRecord = bloodConsumptionRecordController.Create(bloodConsumptionRecord);
@@ -65,8 +64,7 @@ namespace TestHospitalApp.IntegrationTesting
                 DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
                 Amount = 50.00,
                 BloodType = "B+",
-                Reason = "Reason 2",
-                DateTime = new DateTime()
+                Reason = "Reason 2"
             };
 
             BloodConsumptionRecord createdRecord = ((ObjectResult)bloodConsumptionRecordController.Create(bloodConsumptionRecord)).Value as BloodConsumptionRecord;

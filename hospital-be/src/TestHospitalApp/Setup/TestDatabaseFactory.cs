@@ -372,7 +372,7 @@ namespace TestHospitalApp.Setup
             User user1 = new User
             {
                 Username = "user",
-                Password = "pass",
+                Password = new Password("pass123"),
                 IsAccountActive = true,
                 IsBlocked = false,
                 Role = UserRole.Patient,
@@ -382,7 +382,7 @@ namespace TestHospitalApp.Setup
             User managerUser = new User
             {
                 Username = "manager",
-                Password = "manager",
+                Password = new Password("manager123"),
                 IsAccountActive = true,
                 IsBlocked = false,
                 Role = UserRole.Manager,
@@ -392,7 +392,7 @@ namespace TestHospitalApp.Setup
             User userInactive = new User
             {
                 Username = "notactive",
-                Password = "notactive",
+                Password = new Password("notactive123"),
                 IsAccountActive = false,
                 IsBlocked = false,
                 Role = UserRole.Patient,
@@ -402,7 +402,7 @@ namespace TestHospitalApp.Setup
             User doctorUser = new User
             {
                 Username = "doc",
-                Password = "doc",
+                Password = new Password("doc123"),
                 IsAccountActive = true,
                 IsBlocked = false,
                 Role = UserRole.Doctor,
