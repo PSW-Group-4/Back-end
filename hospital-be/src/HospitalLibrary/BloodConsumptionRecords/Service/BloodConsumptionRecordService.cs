@@ -34,10 +34,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Service
             BloodSupply supplyToUpdate = _bloodSupplyService.GetByType(bloodConsumptionRecord.BloodType);
 
             if (supplyToUpdate.Amount - bloodConsumptionRecord.Amount < 0) return null;
-
-            bloodConsumptionRecord.DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e");
-            bloodConsumptionRecord.DateTime = DateTime.Now;
-
+            bloodConsumptionRecord.SetDate();
             supplyToUpdate.Amount = supplyToUpdate.Amount - bloodConsumptionRecord.Amount;
             _bloodSupplyService.Update(supplyToUpdate);
 
