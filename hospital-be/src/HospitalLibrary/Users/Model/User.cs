@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using HospitalLibrary.Exceptions;
+using HospitalLibrary.Patients.Model;
 
 namespace HospitalLibrary.Users.Model
 {
@@ -18,7 +19,9 @@ namespace HospitalLibrary.Users.Model
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public string Username { get; set; }
-        public string Password { get; set; }
+
+        [Column(TypeName = "jsonb")]
+        public Password Password { get; set; }
         public bool IsAccountActive { get; set; }
         public bool IsBlocked { get; set; }
         public UserRole Role { get; set; }

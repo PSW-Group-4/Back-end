@@ -111,13 +111,14 @@ namespace HospitalLibrary.Users.Service
         public string AuthenticatePublic(string username, string password)
 
         {
+            Password enteredPassword = new Password(password);
             User user = _userRepository.GetByUsername(username);
             if (user == null)
             {
                 throw new NotFoundException();
             }
             
-            if(user.Password != password)
+            if(!user.Password.Equals(enteredPassword))
             {
                 throw new BadPasswordException();
             }
@@ -141,13 +142,14 @@ namespace HospitalLibrary.Users.Service
 
         public string AuthenticatePrivate(string username, string password)
         {
+            Password enteredPassword = new Password(password);
             User user = _userRepository.GetByUsername(username);
             if (user == null)
             {
                 throw new NotFoundException();
             }
             
-            if(user.Password != password)
+            if(!user.Password.Equals(enteredPassword))
             {
                 throw new BadPasswordException();
             }
