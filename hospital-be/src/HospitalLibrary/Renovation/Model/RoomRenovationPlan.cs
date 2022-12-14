@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Exceptions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HospitalLibrary.Renovation.Model
 {
     public class RoomRenovationPlan : IComparable<RoomRenovationPlan>, IEquatable<RoomRenovationPlan>
     {
         public enum TypeOfPlan { Old, New }
+        [JsonInclude] 
         public Guid Id {get; private set;}
+        [JsonInclude] 
         public String Name {get; private set;}
+        [JsonInclude] 
         public String Description {get; private set;}
+        [JsonInclude] 
         public TypeOfPlan Type {get; private set;}
+        [JsonInclude] 
         public int Number {get; private set;}
 
         public RoomRenovationPlan() {
