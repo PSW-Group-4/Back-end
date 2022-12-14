@@ -32,7 +32,10 @@ namespace HospitalLibrary.Doctors.Model
             Room = room;
             Consiliums = consiliums;
         }
+        public Doctor()
+        {
 
+        }
         public void Update(Doctor doctor)
         {
             base.Update(doctor);
