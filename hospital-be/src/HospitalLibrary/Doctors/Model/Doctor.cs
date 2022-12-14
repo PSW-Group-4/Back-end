@@ -42,7 +42,11 @@ namespace HospitalLibrary.Doctors.Model
             LicenceNum = doctor.LicenceNum;
             Speciality = doctor.Speciality;
             WorkingTimeStart = doctor.WorkingTimeStart;
-            WorkingTimeEnd = doctor.WorkingTimeEnd; 
+            WorkingTimeEnd = doctor.WorkingTimeEnd;
+            if (!IsValid())
+            {
+                throw new ValueObjectValidationFailedException("Doctor must have work time !");
+            }
         }
 
         public bool IsInWorkHours(DateTime date)
