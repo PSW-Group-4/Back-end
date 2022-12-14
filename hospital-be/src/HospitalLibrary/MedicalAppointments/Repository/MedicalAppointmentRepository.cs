@@ -60,17 +60,19 @@ namespace HospitalLibrary.Appointments.Repository
 
         public IEnumerable<MedicalAppointment> GetDoneByPatient(Guid patientId)
         {
-            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.IsDone);
+            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.IsDone).ToList();
         }
 
         public IEnumerable<MedicalAppointment> GetCacneledByPatient(Guid patientId)
         {
-            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.IsCanceled);
+            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.IsCanceled).ToList();
         }
 
         public IEnumerable<MedicalAppointment> GetFutureByPatient(Guid patientId)
         {
-            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.DateRange.StartTime >= DateTime.Now);
+            return _context.MedicalAppointments.Where(a => a.PatientId == patientId 
+            && a.DateRange.StartTime >= DateTime.Now
+            && !a.IsCanceled).ToList();
         }
     }
 }

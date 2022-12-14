@@ -110,7 +110,7 @@ namespace HospitalLibrary.Appointments.Service
             return _medicalAppointmentRepository.GetDoneByPatient(patientId);
         }
 
-        public IEnumerable<MedicalAppointment> GetCacneledByPatient(Guid patientId)
+        public IEnumerable<MedicalAppointment> GetCanceledByPatient(Guid patientId)
         {
             return _medicalAppointmentRepository.GetCacneledByPatient(patientId);
         }
