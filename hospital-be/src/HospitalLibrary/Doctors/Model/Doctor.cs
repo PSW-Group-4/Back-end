@@ -22,6 +22,11 @@ namespace HospitalLibrary.Doctors.Model
         public virtual Room Room { get; private set; }
         public virtual List<Consilium> Consiliums { get; private set; }
 
+
+
+        // Jovan Srdanov zakomentarisao jer treba DDD konstruktor, vi dodajte vase validacione funkcije
+
+        /*
         public Doctor(string licenceNum, string speciality, string workingTimeStart, string workingTimeEnd, Guid roomId, Room room, List<Consilium> consiliums)
         {
             LicenceNum = licenceNum;
@@ -32,10 +37,23 @@ namespace HospitalLibrary.Doctors.Model
             Room = room;
             Consiliums = new List<Consilium>();
         }
-        public Doctor()
-        {
+        */
 
+        public Doctor() : base()
+        {}
+
+    public Doctor(Guid id, string name, string surname, DateTime birthdate, Gender gender, Address address, Jmbg jmbg, Email email, string phoneNumber, string licenceNum, string speciality, string workingTimeStart, string workingTimeEnd, Guid roomId, Room room) : base(id, name, surname, birthdate, gender, address, jmbg, email, phoneNumber)
+        {
+            LicenceNum = licenceNum;
+            Speciality = speciality;
+            WorkingTimeStart = workingTimeStart;
+            WorkingTimeEnd = workingTimeEnd;
+            RoomId = roomId;
+            Room = room;
+            Consiliums = new List<Consilium>();
         }
+
+
         public void Update(Doctor doctor)
         {
             base.Update(doctor);
