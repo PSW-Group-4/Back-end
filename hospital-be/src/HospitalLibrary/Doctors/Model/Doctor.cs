@@ -1,14 +1,9 @@
 ﻿using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Exceptions;
-using HospitalLibrary.Patients.Model;
-using HospitalLibrary.Reports.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalLibrary.Doctors.Model
 {
@@ -40,9 +35,9 @@ namespace HospitalLibrary.Doctors.Model
         */
 
         public Doctor() : base()
-        {}
+        { }
 
-    public Doctor(Guid id, string name, string surname, DateTime birthdate, Gender gender, Address address, Jmbg jmbg, Email email, string phoneNumber, string licenceNum, string speciality, string workingTimeStart, string workingTimeEnd, Guid roomId, Room room) : base(id, name, surname, birthdate, gender, address, jmbg, email, phoneNumber)
+        public Doctor(Guid id, string name, string surname, DateTime birthdate, Gender gender, Address address, Jmbg jmbg, Email email, string phoneNumber, string licenceNum, string speciality, string workingTimeStart, string workingTimeEnd, Guid roomId, Room room) : base(id, name, surname, birthdate, gender, address, jmbg, email, phoneNumber)
         {
             LicenceNum = licenceNum;
             Speciality = speciality;

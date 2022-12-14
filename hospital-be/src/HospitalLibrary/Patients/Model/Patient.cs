@@ -18,20 +18,16 @@ namespace HospitalLibrary.Patients.Model
             gender, address, jmbg, email, phoneNumber)
         {
             BloodType = bloodType;
+            Allergies = new List<Allergie>();
             Validate();
         }
 
-        public Patient() : base()
-        {}
+        public Patient() : base() {}
 
     public BloodType BloodType { get; private set; }
-        public virtual List<Allergie> Allergies
-        {
-            get { return new List<Allergie>(Allergies);}
-
-            private set{}
-
-        }
+        public virtual List<Allergie> Allergies { get; set; }
+       
+        
         public Guid ChosenDoctorId { get; private set; }
         public virtual Doctor ChosenDoctor { get; private set; }
 
