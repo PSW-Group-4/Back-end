@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace IntegrationLibrary.ReportConfigurations.Service
 {
-    public class BbReportConfigService : IBbReportConfigService
+    public class ReportConfigurationService : IReportConfigurationService
     {
-        private readonly IBbReportConfigRepository _repository;
+        private readonly IReportConfigurationRepository _repository;
 
-        public BbReportConfigService(IBbReportConfigRepository repository)
+        public ReportConfigurationService(IReportConfigurationRepository repository)
         {
             _repository = repository;
         }

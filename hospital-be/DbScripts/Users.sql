@@ -26,7 +26,7 @@ INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Ro
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jkermeenp', 'YGlGglaVCn', true, false, 0, 'c1db258b-3034-4ba5-98bd-4f68137bac94');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('shigounetq', 'QKzN0is', true, false, 0, 'eec1b3d6-19e2-4ba4-8710-ee5b9c8ceafa');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('lhanhardr', '9emNoQoZl', true, false, 0, '2cf39222-eb6d-4234-b0f8-858277bbfe88');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('amacvanamys', 'bZ8xmqmFJl', true, false, 0, '5e8db58e-d1f8-4a1c-800d-4b017a4817b0');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('amacvanamys', 'bZ8xmqmFJl', true, false, 2, '5e8db58e-d1f8-4a1c-800d-4b017a4817b0');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('famost', 'Y6mS72QIBPAr', true, false, 0, 'fe8935e7-9d48-4ec9-b68f-a2ee2afc3d4b');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('ndelguau', '8p1EMC', true, false, 0, '543edc56-3093-4f56-92a6-14a84efb06ac');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('cleacyv', 'TwlC7DMBh', true, false, 0, '5d3afaa2-9680-4ec2-8993-384a5509c0ae');

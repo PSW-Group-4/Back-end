@@ -109,5 +109,17 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
                 }  
             }
         }
+        public List<Room> GetConsiliumRoom()
+        {
+            List<Room> roomList = new List<Room>();
+            foreach (Room room in GetAll())
+            {
+                if (room.Description.Equals("ConsiliumRoom"))
+                {
+                    roomList.Add(room);
+                }
+            }
+            return roomList;
+        }
     }
 }

@@ -18,5 +18,6 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Interfaces
         public void SetFloorForNewRoom(Room newRoom, IEnumerable<RoomRenovationPlan> plans);
         public void SetMapLocationForNewRoom(Room newRoom, IEnumerable<RoomRenovationPlan> plans, RenovationAppointment.TypeOfRenovation typeOfRenovation, int roomNumber);
         public void RemoveOldRooms(IEnumerable<RoomRenovationPlan> plans);
+        List<Room> GetConsiliumRoom();
     }
 }

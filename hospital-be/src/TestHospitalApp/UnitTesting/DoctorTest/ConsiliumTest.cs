@@ -3,6 +3,7 @@ using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
 using Moq;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,8 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             var doctorAppointmentService = new Mock<IDoctorAppointmentService>();
             var consiliumRepo = new Mock<IConsiliumRepository>();
             var doctorService = new Mock<IDoctorService>();
-            ConsiliumService cc = new ConsiliumService(consiliumRepo.Object, doctorService.Object, doctorAppointmentService.Object);
+            var roomService = new Mock<IRoomService>();
+            ConsiliumService cc = new ConsiliumService(consiliumRepo.Object, doctorService.Object, doctorAppointmentService.Object,roomService.Object);
 
             ConsiliumRequest cr = new ConsiliumRequest()
             {

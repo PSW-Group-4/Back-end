@@ -1,10 +1,7 @@
 ﻿using Confluent.Kafka;
 using IntegrationAPI.Communications.Producer;
 using IntegrationAPI.Dtos.BloodSubscription;
-using IntegrationAPI.Dtos.BloodSubscriptionResponce;
 using IntegrationAPI.Dtos.BloodSupplies;
-using IntegrationLibrary.BloodSubscriptionReponces.Model;
-using IntegrationLibrary.BloodSubscriptionReponces.Service;
 using IntegrationLibrary.BloodSubscriptions;
 using IntegrationLibrary.BloodSubscriptions.Service;
 using IntegrationLibrary.Common;
@@ -16,17 +13,19 @@ using System.Diagnostics;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using IntegrationAPI.Dtos.BloodSubscriptionResponse;
+using IntegrationLibrary.BloodSubscriptionResponses.Service;
 
 namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
 {
-    public class BloodSubscriptionResponceListener : IHostedService
+    public class BloodSubscriptionResponseListener : IHostedService
     {
        
-        private readonly string topic = "blood.subscriptions.responce.topic";
+        private readonly string topic = "blood.subscriptions.response.topic";
         private readonly string groupId = "bloodSubscriptionResponses";
         private readonly string bootstrapServers = "localhost:9094";
         public IServiceScopeFactory _serviceScopeFactory;
-        public BloodSubscriptionResponceListener(IServiceScopeFactory serviceScopeFactory)
+        public BloodSubscriptionResponseListener(IServiceScopeFactory serviceScopeFactory)
         {
             _serviceScopeFactory = serviceScopeFactory;
         }
@@ -44,20 +43,19 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
             {
                 using (IServiceScope scope = _serviceScopeFactory.CreateScope())
                 {
-                    IBloodSubscriptionResponceService responceService = scope.ServiceProvider.GetRequiredService<IBloodSubscriptionResponceService>();
+                    IBloodSubscriptionResponseService responseService = scope.ServiceProvider.GetRequiredService<IBloodSubscriptionResponseService>();
                     IBloodSubscriptionService subscriptionService = scope.ServiceProvider.GetRequiredService<IBloodSubscriptionService>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
                         IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
                         consumerBuilder.Subscribe(topic);
                         CancellationTokenSource cancelToken = new();
-                        BloodSubscriptionResponceConsumer consumer = new(consumerBuilder, cancelToken, producer,subscriptionService,responceService);
+                        BloodSubscriptionResponseConsumer consumer = new(consumerBuilder, cancelToken, producer,subscriptionService,responseService);
                         try
                         {
                             while (true)
                             {
-                                //TODO: Update BloodSubscriptionRepsponce so it only consumes id and message simple 2 column table
-                                BloodSubscriptionResponceDto response = consumer.Consume(); 
+                                BloodSubscriptionResponseDto response = consumer.Consume(); 
                             }
                         }
                         catch (OperationCanceledException)

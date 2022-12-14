@@ -77,6 +77,7 @@ using HospitalLibrary.Renovation.Repository.Interfaces;
 using HospitalLibrary.Renovation.Repository.Implementation;
 using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Consiliums.Service;
+using HospitalLibrary.AppointmentReport.Service;
 
 namespace HospitalAPI
 {
@@ -282,6 +283,9 @@ namespace HospitalAPI
             //Consilium
             services.AddScoped<IConsiliumRepository, ConsiliumRepository>();
             services.AddScoped<IConsiliumService, ConsiliumService>();
+
+            //Report
+            services.AddScoped<IAppointmentReportService, AppointmentReportService>();
 
         }
 
