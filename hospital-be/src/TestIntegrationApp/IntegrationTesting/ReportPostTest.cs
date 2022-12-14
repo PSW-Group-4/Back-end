@@ -27,7 +27,7 @@ namespace TestIntegrationApp.IntegrationTesting
             return new BbReportService(scope.ServiceProvider.GetRequiredService<IBbReportRepository>(),
                 scope.ServiceProvider.GetRequiredService<IBloodUsageService>(),
                 scope.ServiceProvider.GetRequiredService<IBloodBankService>(),
-                scope.ServiceProvider.GetRequiredService<IBbReportConfigService>()
+                scope.ServiceProvider.GetRequiredService<IReportConfigurationService>()
                 );
         }
 

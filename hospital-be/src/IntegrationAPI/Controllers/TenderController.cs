@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using IntegrationAPI.Authorization;
 
 namespace IntegrationAPI.Controllers
 {
@@ -24,6 +25,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [HttpPost]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Create(TenderDto dto)
         {
             _tenderService.Create(tenderConverter.Convert(dto));

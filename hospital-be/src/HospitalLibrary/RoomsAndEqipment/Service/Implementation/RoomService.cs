@@ -44,5 +44,18 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
         {
             _roomRepository.Delete(roomId);
         }
+
+        public List<Room> GetConsiliumRoom()
+        {
+            List<Room> roomList = new List<Room>();
+            foreach (Room room in GetAll())
+            {
+                if (room.Description.Equals("ConsiliumRoom"))
+                {
+                    roomList.Add(room);
+                }
+            }
+            return roomList;
+        }
     }
 }
