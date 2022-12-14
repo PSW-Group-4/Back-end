@@ -24,6 +24,7 @@ using HospitalLibrary.Symptoms.Service;
 using HospitalLibrary.Medicines.Service;
 using HospitalLibrary.Medicines.Model;
 using HospitalAPI.Dtos.Prescription;
+using HospitalLibrary.AppointmentReport.Service;
 
 namespace TestHospitalApp.IntegrationTesting
 {
@@ -33,7 +34,7 @@ namespace TestHospitalApp.IntegrationTesting
 
         private static ReportController SetupReportController(IServiceScope scope)
         {
-            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>(),scope.ServiceProvider.GetRequiredService<IAppointmentReportService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         private static SymptomController SetupSymptomController(IServiceScope scope)
