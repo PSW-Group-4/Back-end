@@ -17,5 +17,8 @@ namespace HospitalLibrary.Appointments.Service
         void deleteAppointmentEndSendNotification(Guid id);
         List<DateRange> AvailableTerminsForDate(DateTime date, Guid patientId, Guid doctorId);
         bool IsDoctorAvailable(Guid doctorId, DateTime time);
+        public List<DateRange> getAvailableTerminsForAnotherDoctor(DateTime timeStart, DateTime timeEnd, Guid patientId, Guid doctorId);
+
+
     }
 }
