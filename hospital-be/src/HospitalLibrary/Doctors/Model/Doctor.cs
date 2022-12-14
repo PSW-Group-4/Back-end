@@ -28,5 +28,25 @@ namespace HospitalLibrary.Doctors.Model
             WorkingTimeStart = doctor.WorkingTimeStart;
             WorkingTimeEnd = doctor.WorkingTimeEnd; 
         }
+
+        public bool IsInWorkHours(DateTime date)
+        {
+            DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(this.WorkingTimeStart).Hour, DateTime.Parse(this.WorkingTimeStart).Minute, 0);
+            DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(this.WorkingTimeEnd).Hour, DateTime.Parse(this.WorkingTimeEnd).Minute, 0);
+
+            if (DateTime.Compare(date, WorkTimeStart) >= 0
+                && DateTime.Compare(date, WorkTimeEnd) < 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsSpeciality(String speciality)
+        {
+            if (speciality.Equals(this.Speciality))
+                return true;
+            return false;
+        }
     }
 }
