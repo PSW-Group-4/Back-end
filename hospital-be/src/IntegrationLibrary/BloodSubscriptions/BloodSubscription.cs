@@ -36,8 +36,8 @@ namespace IntegrationLibrary.BloodSubscriptions
             private set => blood = value;
         }
 
-        public string BloodBankName { get; }
-        public int DeliveryDay { get; }
+        public string BloodBankName { get; private set; }
+        public int DeliveryDay { get; private set; }
         public bool ActiveStatus { get; private set; }
         public bool Sent { get; private set; }
 
