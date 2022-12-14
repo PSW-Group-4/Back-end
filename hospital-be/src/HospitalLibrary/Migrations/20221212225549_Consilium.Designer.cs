@@ -493,7 +493,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<DateTime>("Birthdate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid>("ChoosenDoctorId")
+                    b.Property<Guid>("ChosenDoctorId")
                         .HasColumnType("uuid");
 
                     b.Property<int>("Gender")
@@ -515,7 +515,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("ChoosenDoctorId");
+                    b.HasIndex("ChosenDoctorId");
 
                     b.ToTable("Patients");
                 });
@@ -1084,9 +1084,9 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "ChoosenDoctor")
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "ChosenDoctor")
                         .WithMany()
-                        .HasForeignKey("ChoosenDoctorId")
+                        .HasForeignKey("ChosenDoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1134,7 +1134,7 @@ namespace HospitalLibrary.Migrations
 
                     b.Navigation("BloodType");
 
-                    b.Navigation("ChoosenDoctor");
+                    b.Navigation("ChosenDoctor");
 
                     b.Navigation("Email");
                 });

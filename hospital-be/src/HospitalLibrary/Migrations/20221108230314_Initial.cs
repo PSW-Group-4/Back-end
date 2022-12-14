@@ -387,7 +387,7 @@ namespace HospitalLibrary.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Patients_ChoosenDoctorId",
                 table: "Patients",
-                column: "ChoosenDoctorId");
+                column: "ChosenDoctorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RoomMaps_RoomId",

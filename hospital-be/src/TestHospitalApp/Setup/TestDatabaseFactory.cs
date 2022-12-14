@@ -103,34 +103,29 @@ namespace TestHospitalApp.Setup
             String WorkingTimeEnd1 = "12:00";
             String Speciality1 = "Surgeon";
             String LicenceNum1 = "12345";
-            Doctor doctor = new Doctor(LicenceNum1,Speciality1,WorkingTimeStart1,WorkingTimeEnd1,room.Id,room,new List<Consilium>())
-            {
-                Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
-                Name = "Test Doctor",
-                Surname = "Test Doctor",
-                Gender = Gender.Female,
-                Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("doctor@test.com"),
-                PhoneNumber = "066/123-456",
-                AddressId = address.Id
-            };
+
+
+            Doctor doctor = new Doctor(new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"), "Test Doctor", "Test Doctor",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
+                new Email("doctor@test.com"), "066/123-456", LicenceNum1, Speciality1, WorkingTimeStart1,
+                WorkingTimeEnd1, room.Id, room);
+
+
+
+
             String WorkingTimeStart = "9:00";
             String WorkingTimeEnd = "12:00";
             String Speciality = "Surgeon";
             String LicenceNum = "12345";
-            Doctor doctor1 = new Doctor(LicenceNum,Speciality,WorkingTimeStart, WorkingTimeEnd,room.Id,room,new List<Consilium>())
-            {
-                Id = new Guid("5c036fba-1318-4f4b-b153-90d75e60625e"),
-                Name = "Test Doctor",
-                Surname = "Test Doctor",
-                Gender = Gender.Female,
-                Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("doctor@test.com"),
-                PhoneNumber = "066/123-456",
-                AddressId = address.Id
-            };
+
+            Doctor doctor1 = new Doctor(new Guid("5c036fba-1318-4f4b-b153-90d75e60625e"), "Test Doctor", "Test Doctor",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
+                new Email("doctor@test.com"), "066/123-456", LicenceNum, Speciality, WorkingTimeStart,
+                WorkingTimeEnd, room.Id, room);
+
+
+
+        
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
 
@@ -140,36 +135,13 @@ namespace TestHospitalApp.Setup
             BloodSupply bloodSupply2 = new BloodSupply { BloodType = BloodType.FromString("B+"), Amount = 0.00 };
             context.BloodSupply.Add(bloodSupply2);
 
-            Patient patient = new Patient
-            {
-                Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),
-                BloodType = BloodType.FromString("A+"),
-                ChoosenDoctorId = doctor.Id,
-                Name = "Petar",
-                Surname = "Popovic",
-                Birthdate = DateTime.Now,
-                Gender = Gender.Male,
-                AddressId = address.Id,
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("mail@gmail.pir"),
-                PhoneNumber = "066413242"
-            };
+            Patient patient = new Patient( new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),"Petar","Popovic",DateTime.Now, Gender.Male,address,  new Jmbg("1807000730038"),
+                new Email("mail@gmail.pir"), "066413242", BloodType.FromString("A+"));
 
-            Patient patient2 = new Patient
-            {
-                Id = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"),
-                BloodType = BloodType.FromString("A+"),
-                ChoosenDoctorId = doctor.Id,
-                Name = "Test",
-                Surname = "Test",
-                Birthdate = DateTime.Now,
-                Gender = Gender.Male,
-                AddressId = address.Id,
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("mail2@gmail.pir"),
-                PhoneNumber = "066413242"
-            };
+            Patient patient2 = new Patient(new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"), "Petar", "Popovic", DateTime.Now, Gender.Male, address, new Jmbg("1807000730038"),
+                new Email("mail@gmail.pir"), "066413242", BloodType.FromString("A+"));
 
+        
             context.Patients.Add(patient);
             context.Patients.Add(patient2);
 
@@ -369,45 +341,22 @@ namespace TestHospitalApp.Setup
 
         private static void initUsers(HospitalDbContext context)
         {
-            User user1 = new User
-            {
-                Username = "user",
-                Password = new Password("pass123"),
-                IsAccountActive = true,
-                IsBlocked = false,
-                Role = UserRole.Patient,
-                PersonId = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1")
-            };
 
-            User managerUser = new User
-            {
-                Username = "manager",
-                Password = new Password("manager123"),
-                IsAccountActive = true,
-                IsBlocked = false,
-                Role = UserRole.Manager,
-                PersonId = null
-            };
+            User user1 = new User("user", new Password("pass123"), UserRole.Patient);
+            user1.ActivateAccount();
+            user1.ConnectPersonToUser(new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"));
 
-            User userInactive = new User
-            {
-                Username = "notactive",
-                Password = new Password("notactive123"),
-                IsAccountActive = false,
-                IsBlocked = false,
-                Role = UserRole.Patient,
-                PersonId = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639")
-            };
 
-            User doctorUser = new User
-            {
-                Username = "doc",
-                Password = new Password("doc123"),
-                IsAccountActive = true,
-                IsBlocked = false,
-                Role = UserRole.Doctor,
-                PersonId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")
-            };
+            User managerUser = new User("manager", new Password("manager123"), UserRole.Manager);
+            managerUser.ActivateAccount();
+            managerUser.ConnectPersonToUser(null);
+
+            User userInactive = new User("notactive", new Password("notactive123"), UserRole.Patient);
+            userInactive.ConnectPersonToUser(new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"));
+
+            User doctorUser = new User("doc", new Password("doc123"), UserRole.Doctor);
+            doctorUser.ActivateAccount();
+            doctorUser.ConnectPersonToUser(new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"));
 
             context.Add(user1);
             context.Add(userInactive);
