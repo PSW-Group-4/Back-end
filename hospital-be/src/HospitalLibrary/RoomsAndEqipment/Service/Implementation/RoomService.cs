@@ -104,6 +104,7 @@ namespace HospitalLibrary.RoomsAndEqipment.Service.Implementation
         public void RemoveOldRooms(IEnumerable<RoomRenovationPlan> plans) {
             foreach(RoomRenovationPlan plan in plans) {
                 if(plan.Type == RoomRenovationPlan.TypeOfPlan.Old) {
+                    _roomMapService.Delete(_roomMapService.GetRoomMapFromRoomId(plan.Id).Id);
                     this.Delete(plan.Id);
                 }  
             }

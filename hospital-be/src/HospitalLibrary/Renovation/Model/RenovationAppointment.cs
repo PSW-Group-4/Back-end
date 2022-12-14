@@ -66,6 +66,8 @@ namespace HospitalLibrary.Renovation.Model
 
         public void Finish() {
             this.IsDone = true;
+            this.Room = null;
+            this.RoomId = (Guid?)null;
         }
 
         public bool IsPrimaryRenovationAppointment() {

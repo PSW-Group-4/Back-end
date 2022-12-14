@@ -274,6 +274,9 @@ namespace HospitalAPI
             services.AddSingleton<ITaskSettings<ReportSendingTask>>(new TaskSettings<ReportSendingTask>(@" */15 * * * *", TimeZoneInfo.Local));
             services.AddHostedService<ReportSendingTask>();
 
+            services.AddSingleton<ITaskSettings<FinishRenovationTask>>(new TaskSettings<FinishRenovationTask>(@" */15 * * * *", TimeZoneInfo.Local));
+            services.AddHostedService<FinishRenovationTask>();
+
             services.AddScoped<IConsumer<BloodSupply>, BloodSupplyStateConsumer>();
 
             //Consilium
