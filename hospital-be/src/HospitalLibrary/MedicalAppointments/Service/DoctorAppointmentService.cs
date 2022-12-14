@@ -10,6 +10,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Vacations.Service;
 using HospitalLibrary.Vacations.Repository;
 using HospitalLibrary.Consiliums.Repository;
+using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -108,6 +109,60 @@ namespace HospitalLibrary.Appointments.Service
                 WorkTimeStart = WorkTimeStart.AddMinutes(30);
             }
             return list;
+        }
+        
+        //STEFAN
+        /*public List<DateRange> GetAppointmentSuggestionsForDateRange(
+            AppointmentRequestWithSuggestionsDto request, Guid patientId)       //TODO napraviti klasu request
+        {
+            List<DateRange> result = new List<DateRange>();
+
+            List<DateTime> dates = SetupRequestDates(request.DateRangeDto.StartTime, request.DateRangeDto.EndTime);
+            foreach(DateTime date in dates)
+            {
+                result.AddRange(AvailableTerminsForDate(date, patientId, request.DoctorId));
+            }
+
+            if (result.Count == 0)
+            {
+                return GetSuggestionsByPriority(request, patientId);
+            }
+            return result;
+        }
+
+        private List<DateRange> GetSuggestionsByPriority(
+            AppointmentRequestWithSuggestionsDto request, Guid patientId)       //TODO napraviti klasu request
+        {
+            switch(request.priority) 
+            {
+                case "Doctor":
+                    {
+                        return GetSuggestionByDoctor();     //TODO
+                    }
+                case "Date":
+                    {
+                        return GetSuggestionByDate();       //TODO
+                    }
+                default:
+                    {
+                        throw new Exception();  //Promeni
+                    }
+            }
+        }*/
+
+        private List<DateRange> GetSuggestionByDoctor()
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<DateRange> GetSuggestionByDate()
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<DateTime> SetupRequestDates(DateTime startTime, DateTime endTime) 
+        {
+            return null;
         }
 
         //TODO refactor
