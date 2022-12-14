@@ -99,38 +99,36 @@ namespace TestHospitalApp.Setup
             Room room = new Room { Id = new Guid(), Name = "Soba", Number = 10, Description = "Opis sobe" };
             context.Rooms.Add(room);
 
-            Doctor doctor = new Doctor
+            String WorkingTimeStart1 = "9:00";
+            String WorkingTimeEnd1 = "12:00";
+            String Speciality1 = "Surgeon";
+            String LicenceNum1 = "12345";
+            Doctor doctor = new Doctor(LicenceNum1,Speciality1,WorkingTimeStart1,WorkingTimeEnd1,room.Id,room,new List<Consilium>())
             {
                 Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
                 Name = "Test Doctor",
                 Surname = "Test Doctor",
-                WorkingTimeStart = "9:00",
-                WorkingTimeEnd = "12:00",
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
                 Jmbg = new Jmbg("1807000730038"),
                 Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
-                Speciality = "Surgeon",
-                LicenceNum = "12345",
-                RoomId = room.Id,
                 AddressId = address.Id
             };
-            Doctor doctor1 = new Doctor
+            String WorkingTimeStart = "9:00";
+            String WorkingTimeEnd = "12:00";
+            String Speciality = "Surgeon";
+            String LicenceNum = "12345";
+            Doctor doctor1 = new Doctor(LicenceNum,Speciality,WorkingTimeStart, WorkingTimeEnd,room.Id,room,new List<Consilium>())
             {
                 Id = new Guid("5c036fba-1318-4f4b-b153-90d75e60625e"),
                 Name = "Test Doctor",
                 Surname = "Test Doctor",
-                WorkingTimeStart = "9:00",
-                WorkingTimeEnd = "12:00",
                 Gender = Gender.Female,
                 Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
                 Jmbg = new Jmbg("1807000730038"),
                 Email = new Email("doctor@test.com"),
                 PhoneNumber = "066/123-456",
-                Speciality = "Surgeon",
-                LicenceNum = "12345",
-                RoomId = room.Id,
                 AddressId = address.Id
             };
             context.Doctors.Add(doctor);

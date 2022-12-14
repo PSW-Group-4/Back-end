@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Doctors.Repository;
 using HospitalLibrary.Doctors.Service;
@@ -31,28 +32,26 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
         private static List<Doctor> CreateDoctors()
         {
             var doctors = new List<Doctor>();
-            Doctor doctor1 = new Doctor
+            String Speciality = HospitalLibrary.Constants.Constants.GeneralPractitioner;
+            Doctor doctor1 = new Doctor("",Speciality,"","",new Guid(),new HospitalLibrary.RoomsAndEqipment.Model.Room(),new List<Consilium>())
             {
                 Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
                 Name = "Test Doctor1",
                 Surname = "Test Doctor1",
-                Speciality = HospitalLibrary.Constants.Constants.GeneralPractitioner,
 
             };
-            Doctor doctor2 = new Doctor
+            Doctor doctor2 = new Doctor("", Speciality, "", "", new Guid(), new HospitalLibrary.RoomsAndEqipment.Model.Room(), new List<Consilium>())
             {
                 Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625a"),
                 Name = "Test Doctor2",
                 Surname = "Test Doctor2",
-                Speciality = HospitalLibrary.Constants.Constants.GeneralPractitioner,
 
             };
-            Doctor doctor3 = new Doctor
+            Doctor doctor3 = new Doctor("", Speciality, "", "", new Guid(), new HospitalLibrary.RoomsAndEqipment.Model.Room(), new List<Consilium>())
             {
                 Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625b"),
                 Name = "Test Doctor3",
                 Surname = "Test Doctor3",
-                Speciality = HospitalLibrary.Constants.Constants.GeneralPractitioner,
 
             };
             doctors.Add(doctor1);

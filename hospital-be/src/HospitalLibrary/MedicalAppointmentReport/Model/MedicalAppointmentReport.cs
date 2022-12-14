@@ -23,14 +23,26 @@ namespace HospitalLibrary.AppointmentReport.Model
             {
                 throw new ValueObjectValidationFailedException("Report doesn't exist !");
             }
+            if (!IsValidSettings())
+            {
+                throw new ValueObjectValidationFailedException("Settings are not valid !");
+            }
+
         }
 
         private bool IsValid()
         {
-            if (String.IsNullOrEmpty(Report.Id.ToString()))
+            if (Report == null)
             {
                 return false;
             }
+            return true;
+        }
+
+        private bool IsValidSettings()
+        {
+            if (!(Settings.Contains("lek") || Settings.Contains("dijagnoza") || Settings.Contains("pacijent") || Settings.Contains("simptomi") || Settings.Equals("")))
+                return false;
             return true;
         }
     }

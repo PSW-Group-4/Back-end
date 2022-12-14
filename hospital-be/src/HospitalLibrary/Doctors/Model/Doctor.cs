@@ -14,13 +14,24 @@ namespace HospitalLibrary.Doctors.Model
 {
     public class Doctor : Person
     {
-        public string LicenceNum { get; set; }
-        public string Speciality { get; set; }
-        public string WorkingTimeStart { get; set; }
-        public string WorkingTimeEnd { get; set; }
-        public Guid RoomId { get; set; }
-        public virtual Room Room { get; set; }
-        public virtual List<Consilium> Consiliums { get; set; }
+        public string LicenceNum { get; private set; }
+        public string Speciality { get; private set; }
+        public string WorkingTimeStart { get; private set; }
+        public string WorkingTimeEnd { get; private set; }
+        public Guid RoomId { get; private set; }
+        public virtual Room Room { get; private set; }
+        public virtual List<Consilium> Consiliums { get; private set; }
+
+        public Doctor(string licenceNum, string speciality, string workingTimeStart, string workingTimeEnd, Guid roomId, Room room, List<Consilium> consiliums)
+        {
+            LicenceNum = licenceNum;
+            Speciality = speciality;
+            WorkingTimeStart = workingTimeStart;
+            WorkingTimeEnd = workingTimeEnd;
+            RoomId = roomId;
+            Room = room;
+            Consiliums = consiliums;
+        }
 
         public void Update(Doctor doctor)
         {
