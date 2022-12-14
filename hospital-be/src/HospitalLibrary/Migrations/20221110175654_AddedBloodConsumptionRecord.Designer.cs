@@ -353,7 +353,7 @@ namespace HospitalLibrary.Migrations
                     b.Property<int>("BloodType")
                         .HasColumnType("integer");
 
-                    b.Property<Guid>("ChosenDoctorId")
+                    b.Property<Guid>("ChoosenDoctorId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Email")
@@ -378,7 +378,7 @@ namespace HospitalLibrary.Migrations
 
                     b.HasIndex("AddressId");
 
-                    b.HasIndex("ChosenDoctorId");
+                    b.HasIndex("ChoosenDoctorId");
 
                     b.ToTable("Patients");
                 });
@@ -604,15 +604,15 @@ namespace HospitalLibrary.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "ChosenDoctor")
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "ChoosenDoctor")
                         .WithMany()
-                        .HasForeignKey("ChosenDoctorId")
+                        .HasForeignKey("ChoosenDoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
 
-                    b.Navigation("ChosenDoctor");
+                    b.Navigation("ChoosenDoctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.Equipment", b =>

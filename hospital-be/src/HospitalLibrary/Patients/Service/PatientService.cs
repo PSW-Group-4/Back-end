@@ -57,9 +57,11 @@ namespace HospitalLibrary.Patients.Service
         //TODO "Hash password"
         public Patient RegisterPatient(Patient patient, Guid chosenDoctorId, List<Guid> allergieIds)
         {
-            var doctor  =_doctorRepository.GetById(chosenDoctorId);
-            patient.AppointTheChosenDoctor(doctor);
-            patient.AddStartingAllergies(_allergieRepository.GetAll().Where(a => allergieIds.Contains(a.Id)).ToList());
+            patient.ChoosenDoctor = _doctorRepository.GetById(chosenDoctorId);
+            patient.ChoosenDoctorId = chosenDoctorId;
+
+            patient.Allergies = _allergieRepository.GetAll().Where(a => allergieIds.Contains(a.Id)).ToList();
+
             return _patientRepository.Create(patient);
         }
 

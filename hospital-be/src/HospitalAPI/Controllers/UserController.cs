@@ -1,5 +1,4 @@
-﻿using System;
-using AutoMapper;
+﻿using AutoMapper;
 using HospitalAPI.Dtos.Auth;
 using HospitalAPI.Dtos.User;
 using HospitalLibrary.AcountActivation.Model;
@@ -15,6 +14,7 @@ using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -55,28 +55,45 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                
-                if (!_patientService.isEmailUnique(registrationDto.Email))
+                Address address;
+                Patient patient;
+                User user;
+                //Auto mapper doesnt allow any exceptions to go out from him, instead he wraps it in his own exception
+                //I am here unwrapping my custom exceptions
+                try
+                {
+                    address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
+                    patient = _mapper.Map<Patient>(registrationDto);
+                    user = _mapper.Map<User>(registrationDto.UserLoginDto);
+                    user.Password = new Password(registrationDto.UserLoginDto.Password);
+                    
+                }
+                catch(AutoMapperMappingException autoMapperException)
+                {
+                    throw autoMapperException.InnerException; 
+                    // this will break your call stack
+                    // you may not know where the error is called and rather
+                    // want to clone the InnerException or throw a brand new Exception
+                }
+                catch (ValueObjectValidationFailedException)
+                {
+                    return Conflict("Password is in wrong format");
+                }
+
+                if (!_patientService.isEmailUnique(patient.Email.Address))
                 {
                     return Conflict("Email not unique");
                 }
 
-                if (!_userService.IsUsernameUnique(registrationDto.UserLoginDto.Username))
+                if (!_userService.IsUsernameUnique(user.Username))
                 {
                     return Conflict("Username taken");
                 }
 
-                var address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
-                address.Id = new Guid();
-
-                Patient patient = new Patient(new Guid(), registrationDto.Name, registrationDto.Surname,
-                    registrationDto.Birthdate, registrationDto.Gender, address, registrationDto.Jmbg,
-                    new Email(registrationDto.Email), registrationDto.PhoneNumber, registrationDto.BloodType);
-                
+                patient.Address = address;
+                patient.AddressId = address.Id;
                 _patientService.RegisterPatient(patient, registrationDto.ChoosenDoctorId,
                     registrationDto.AllergieIds);
-
-                User user = new User(registrationDto.UserLoginDto.Username,new Password(registrationDto.UserLoginDto.Password),UserRole.Patient);
 
                 AcountActivationInfo info = _userService.RegisterPatient(user, patient.Id);
                 //slanje maila (pozivanje servia koji salje mail)
@@ -90,9 +107,8 @@ namespace HospitalAPI.Controllers
             }
             catch (ValueObjectValidationFailedException exception)
             {
-                return BadRequest("Value object error");
+                return BadRequest(exception.Message);
             }
-
         }
 
         //POST api/user/loginUser/patient
@@ -129,10 +145,6 @@ namespace HospitalAPI.Controllers
             catch (ValueObjectValidationFailedException)
             {
                 return Unauthorized("Bad password");
-            }
-            catch (Exception)
-            {
-                return BadRequest("Unknown error");
             }
 
         }
@@ -202,7 +214,23 @@ namespace HospitalAPI.Controllers
             return Unauthorized();
         }
 
- 
+        // PUT api/User/1
+        [HttpPut("{username}")]
+        public ActionResult Update([FromRoute] string username, [FromBody] UserDto userDto)
+        {
+            var user = _mapper.Map<User>(userDto);
+            user.Username = username;
+
+            try
+            {
+                var result = _userService.Update(user);
+                return Ok(result);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
 
         [HttpGet]
         [Route("[action]")]

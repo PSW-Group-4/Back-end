@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using HospitalLibrary.Exceptions;
 
 namespace HospitalLibrary.Core.Model
 {
@@ -12,61 +11,20 @@ namespace HospitalLibrary.Core.Model
     }
     public  class Person
     {
-        public Guid Id { get; private set; }
-        public string Name { get; private  set; }
-        public string Surname { get; private set; }
-        public DateTime Birthdate { get; private set; }
-        public Gender Gender { get; private set; }
-        public Guid AddressId { get; private set; }
-        public virtual Address Address { get; private set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public DateTime Birthdate { get; set; }
+        public Gender Gender { get; set; }
+        public Guid AddressId { get; set; }
+        public virtual Address Address { get; set; }
 
         [Column(TypeName = "jsonb")]
-        public virtual Jmbg Jmbg { get; private set; }
-        public Email Email { get; private set; }
-        public string PhoneNumber { get; private set; }
+        public virtual Jmbg Jmbg { get; set; }
+        public Email Email { get; set; }
 
-    
-        public Person(){}
+        public string PhoneNumber { get; set; }
 
-        public Person(Guid id, string name, string surname, DateTime birthdate, Gender gender, Address address, Jmbg jmbg, Email email, string phoneNumber)
-        {
-            Id = id;
-            Name = name;
-            Surname = surname;
-            Birthdate = birthdate;
-            Gender = gender;
-            AddressId = address.Id;
-            Address = address;
-            Jmbg = jmbg;
-            Email = email;
-            PhoneNumber = phoneNumber;
-            Validate();
-        }
-
-        private void Validate()
-        {
-            if (Id.Equals(null) )
-                throw new EntityObjectValidationFailedException();
-            if (string.IsNullOrEmpty(Name))
-                throw new EntityObjectValidationFailedException();
-            if (string.IsNullOrEmpty(Surname))
-                throw new EntityObjectValidationFailedException();
-            if (DateTime.Now<Birthdate)
-                throw new EntityObjectValidationFailedException();
-            if (Gender.Equals(null))
-                throw new EntityObjectValidationFailedException();
-            if (Address.Equals(null))
-                throw new EntityObjectValidationFailedException();
-            if (AddressId.Equals(null))
-                throw new EntityObjectValidationFailedException();
-            if (Jmbg.Equals(null))
-                throw new EntityObjectValidationFailedException();
-            if (Email.Equals(null))
-                throw new EntityObjectValidationFailedException();
-            if (string.IsNullOrEmpty(PhoneNumber))
-                throw new EntityObjectValidationFailedException();
-
-        }
         public void Update(Person person)
         {
             Name = person.Name;
@@ -79,14 +37,7 @@ namespace HospitalLibrary.Core.Model
             PhoneNumber = person.PhoneNumber;
         }
 
-        public override bool Equals(object obj)
-        {
-            return base.Equals(obj);
-        }
 
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
+
     }
 }

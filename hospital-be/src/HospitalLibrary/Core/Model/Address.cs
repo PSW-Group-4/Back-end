@@ -4,7 +4,6 @@ namespace HospitalLibrary.Core.Model
 {
     public class Address
     {
-        public Address(){}
         public Guid Id { get; set; }
         public string City { get; set; }
         public string Country { get; set; }

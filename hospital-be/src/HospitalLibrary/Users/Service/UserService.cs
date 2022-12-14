@@ -51,9 +51,10 @@ namespace HospitalLibrary.Users.Service
 
         public AcountActivationInfo RegisterPatient(User user, Guid patientId)
         {
-
-            _patientRepository.GetById(patientId);
-            user.ConnectPersonToUser(patientId);
+            user.PersonId = patientId;
+            user.Role = UserRole.Patient;
+            user.IsAccountActive = false;
+            user.IsBlocked = false;
             _userRepository.Create(user);
 
             //DODAO
@@ -85,7 +86,7 @@ namespace HospitalLibrary.Users.Service
                     throw new NotFoundException(); 
                 }
 
-                user.ActivateAccount();
+                user.IsAccountActive = true;
                 _userRepository.Update(user);
 
                 accountActivationInfo.ActivationToken = Guid.Empty;

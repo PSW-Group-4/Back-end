@@ -75,7 +75,7 @@ namespace HospitalLibrary.Patients.Repository
 
         public int GetDoctorsPatientCountByAgeGroup(AgeGroup ageGroup, Guid doctorId)
         {
-            return _context.Patients.ToList().Count(p => p.IsInAgeGroup(ageGroup) && p.ChosenDoctorId==doctorId);
+            return _context.Patients.ToList().Count(p => p.IsInAgeGroup(ageGroup) && p.ChoosenDoctorId==doctorId);
         }
 
         public int NumberOfAllPatients()

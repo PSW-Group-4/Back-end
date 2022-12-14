@@ -8,10 +8,10 @@ namespace HospitalLibrary.Users.Model
         public string ActivityName { get; private set; }
         public DateTime ActivityTime { get; private set; }
 
-        public SuspiciousActivity(string activityName)
+        public SuspiciousActivity(string activityName, DateTime activityTime)
         {
             ActivityName = activityName;
-            ActivityTime = DateTime.Now;
+            ActivityTime = activityTime;
             Validate();
         }
 

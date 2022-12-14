@@ -18,48 +18,15 @@ namespace HospitalLibrary.Users.Model
     public class User
     {
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Username { get;private set; }
+        public string Username { get; set; }
 
         [Column(TypeName = "jsonb")]
-        public Password Password { get; private set; }
-        public bool IsAccountActive { get; private set; }
-        public bool IsBlocked { get; private set; }
-        public UserRole Role { get; private set; }
+        public Password Password { get; set; }
+        public bool IsAccountActive { get; set; }
+        public bool IsBlocked { get; set; }
+        public UserRole Role { get; set; }
         //In managers case it can be null
-        public Guid? PersonId { get; private set; }
-
-
-        public User(string username, Password password, UserRole role)
-        {
-            Username = username;
-            Password = password;
-            Role = role;
-            IsAccountActive = false;
-            IsBlocked = false;
-            Validate();
-        }
-
-        public void ActivateAccount()
-        {
-            IsAccountActive = true;
-        }
-
-        public void ConnectPersonToUser(Guid? personId)
-        {
-            PersonId = personId;
-        }
-
-        private void Validate()
-        {
-            if (Password.Equals(null))
-                throw new EntityObjectValidationFailedException();
-            if (string.IsNullOrEmpty(Username))
-                throw new EntityObjectValidationFailedException();
-            if (Role.Equals(null))
-                throw new EntityObjectValidationFailedException();
-          
-
-        }
+        public Guid? PersonId { get; set; }
 
         [Column(TypeName = "jsonb")] private List<SuspiciousActivity> suspicious_activities;
 
@@ -132,6 +99,5 @@ namespace HospitalLibrary.Users.Model
         }
 
 
-    
     }
 }

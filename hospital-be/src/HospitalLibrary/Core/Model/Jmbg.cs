@@ -11,7 +11,6 @@ namespace HospitalLibrary.Core.Model
     public class Jmbg
     {
         public string JmbgValue { get; private set; }
-        public Jmbg(){}
 
         public Jmbg(string jmbgValue)
         {
