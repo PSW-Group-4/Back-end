@@ -629,4 +629,3 @@ INSERT INTO public."Appointments" ("Id","StartTime","EndTime","RoomId","Discrimi
 	 ('d72d3169-fbf4-4861-ab44-0449dce91b63','2022-12-20 15:20:52.995821','2022-12-20 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',true,NULL,NULL,NULL,NULL,NULL),
 	 ('18d4953d-3c47-4d11-aa23-ff7f6d1fee69','2022-12-21 15:20:52.995821','2022-12-21 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',true,NULL,NULL,NULL,NULL,NULL),
 	 ('e687fb8d-b7a7-4e8d-be9f-d51b9e2f01cb','2022-12-15 15:20:52.995821','2022-12-15 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL);
-
