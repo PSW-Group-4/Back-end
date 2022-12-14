@@ -69,6 +69,7 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
             MedicalAppointmentPage.EnsureAddEndPageIsNotDisplayed();
             MedicalAppointmentPage.RefreshPage();
             MedicalAppointmentPage.EnsurePageIsDisplayed();
+            MedicalAppointmentPage.EnsureTableIsUpdated(rowCount);
 
             Assert.Equal(rowCount + 1, MedicalAppointmentPage.GetRowsCount());
         }

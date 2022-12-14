@@ -85,7 +85,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
             try
             {
                 WebDriverWait waitSelect = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(2));
-                waitSelect.Until((e) =>{ return IsElementHasTrueAriaDisabledAttribute(e, PatientBox); });
+                waitSelect.Until(e =>{ return IsElementHasTrueAriaDisabledAttribute(e, PatientBox); });
                 PatientBox.Click();
                 WebDriverWait waitOption = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
                 waitOption.Until(e => e.FindElement(By.Id("patientPickOption"))).Click();
@@ -117,10 +117,19 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
             try
             {
                 WebDriverWait waitSelect = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(2));
-                waitSelect.Until((e) => { return IsElementHasTrueAriaDisabledAttribute(e, TerminBox); });
+                waitSelect.Until(e => { return IsElementHasTrueAriaDisabledAttribute(e, TerminBox); });
                 TerminBox.Click();
-                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
-                wait.Until(e => e.FindElement(By.Id("terminPickOption"))).Click();
+                int attempts = 0;
+                while (attempts < 2)
+                {
+                    try
+                    {
+                        driver.FindElement(By.XPath("//mat-option[@id='terminPickOption']")).Click();
+                        break;
+                    }
+                    catch (StaleElementReferenceException e) {}
+                    attempts++;
+                }
             }
             catch (NoSuchElementException)
             {
@@ -253,6 +262,26 @@ namespace TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment
                 try
                 {
                     return FinishClick.Displayed;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
+        public void EnsureTableIsUpdated(int rowCount)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return GetRowsCount() > rowCount;
                 }
                 catch (StaleElementReferenceException)
                 {
