@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntegrationLibrary.ReportConfigurations.Service
+namespace IntegrationLibrary.BloodBanks.Repository
 {
-    public interface IBbReportConfigService 
+    public interface IReportConfigurationRepository
     {
         public IEnumerable<ReportConfiguration> GetAll();
         public ReportConfiguration GetById(Guid id);

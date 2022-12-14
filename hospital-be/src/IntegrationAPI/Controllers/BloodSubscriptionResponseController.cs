@@ -1,18 +1,18 @@
 ﻿using IntegrationAPI.Authorization;
-using IntegrationLibrary.BloodSubscriptionReponces.Model;
-using IntegrationLibrary.BloodSubscriptionReponces.Service;
 using System.Collections.Generic;
+using IntegrationLibrary.BloodSubscriptionResponses.Model;
+using IntegrationLibrary.BloodSubscriptionResponses.Service;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IntegrationAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BloodSubscriptionResponceController : ControllerBase
+    public class BloodSubscriptionResponseController : ControllerBase
     {
-        private readonly IBloodSubscriptionResponceService _service;
+        private readonly IBloodSubscriptionResponseService _service;
 
-        public BloodSubscriptionResponceController(IBloodSubscriptionResponceService service)
+        public BloodSubscriptionResponseController(IBloodSubscriptionResponseService service)
         {
             _service = service;
         }
@@ -21,7 +21,7 @@ namespace IntegrationAPI.Controllers
         //[ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult GetAll()
         {
-            IEnumerable<BloodSubscriptionRepsponce> responces = _service.GetAll();
+            IEnumerable<BloodSubscriptionResponse> responces = _service.GetAll();
             return Ok(responces);
         }
     }

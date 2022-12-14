@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    [Migration("20221212160344_managerRequests")]
-    partial class managerRequests
+    [Migration("20221213204725_tableNameChange")]
+    partial class tableNameChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,7 +181,7 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("blood_requests");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionResponses", b =>
+            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionResponses.Model.BloodSubscriptionResponse", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -206,7 +206,7 @@ namespace IntegrationLibrary.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("blood_subscription_responces");
+                    b.ToTable("blood_subscription_responses");
                 });
 
             modelBuilder.Entity("IntegrationLibrary.BloodSubscriptions.BloodSubscription", b =>
@@ -221,14 +221,8 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Blood")
                         .HasColumnType("text");
 
-                    b.Property<string>("BloodBankName")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("timestamp without time zone");
-
-                    b.Property<int>("DeliveryDay")
-                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp without time zone");
@@ -407,7 +401,7 @@ namespace IntegrationLibrary.Migrations
                     b.Navigation("BloodBank");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionReponces.Model.BloodSubscriptionResponses", b =>
+            modelBuilder.Entity("IntegrationLibrary.BloodSubscriptionResponses.Model.BloodSubscriptionResponse", b =>
                 {
                     b.HasOne("IntegrationLibrary.BloodSubscriptions.BloodSubscription", "Subscription")
                         .WithMany()

@@ -47,8 +47,8 @@ using HospitalLibrary.BloodSupplies.Model;
 using IntegrationAPI.Communications.Consumer.ReceivedBlood;
 using IntegrationLibrary.Common;
 using IntegrationAPI.Communications.Producer.BloodSubscription;
-using IntegrationLibrary.BloodSubscriptionReponces.Service;
-using IntegrationLibrary.BloodSubscriptionReponces.Repository;
+using IntegrationLibrary.BloodSubscriptionResponses.Repository;
+using IntegrationLibrary.BloodSubscriptionResponses.Service;
 using IntegrationLibrary.ManagerBloodRequests.Repository;
 using IntegrationLibrary.ManagerBloodRequests.Service;
 
@@ -115,8 +115,8 @@ namespace IntegrationAPI
             services.AddScoped<INewsRepository, NewsRepository>();
             services.AddScoped<INewsService, NewsService>();
             services.AddScoped<IMailSender, MailSender>();
-            services.AddScoped<IBbReportConfigRepository, BbReportConfigRepository>();
-            services.AddScoped<IBbReportConfigService, BbReportConfigService>();
+            services.AddScoped<IReportConfigurationRepository, ReportConfigurationRepository>();
+            services.AddScoped<IReportConfigurationService, ReportConfigurationService>();
             services.AddScoped<IBloodUsageService, BloodUsageService>();
             services.AddScoped<IBloodUsageRepository, BloodUsageRepository>();
             services.AddScoped<IBbReportService, BbReportService>();
@@ -132,8 +132,8 @@ namespace IntegrationAPI
             services.AddScoped<IConsumer<News>, NewsConsumer>();
             services.AddScoped<IConsumer<BloodRequest>, BloodRequestResponseConsumer>();
             services.AddScoped<IConsumer<Blood>, BloodConsumer>();
-            services.AddScoped<IBloodSubscriptionResponceRepository, BloodSubscriptionResponceRepository>();
-            services.AddScoped<IBloodSubscriptionResponceService, BloodSubscriptionResponceService>();
+            services.AddScoped<IBloodSubscriptionResponseRepository, BloodSubscriptionResponseRepository>();
+            services.AddScoped<IBloodSubscriptionResponseService, BloodSubscriptionResponseService>();
 
             services.AddScoped<IManagerRequestRepository, ManagerRequestRepository>();
             services.AddScoped<IManagerRequestService, ManagerRequestService>();

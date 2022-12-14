@@ -19,13 +19,13 @@ namespace IntegrationLibrary.BloodReport.Service
         private readonly IBbReportRepository _repository;
         private readonly IBloodUsageService _usageService;
         private readonly IBloodBankService _bankService;
-        private readonly IBbReportConfigService _configService;
-        public BbReportService(IBbReportRepository repository, IBloodUsageService usageService, IBloodBankService bankService, IBbReportConfigService configService)
+        private readonly IReportConfigurationService _configurationService;
+        public BbReportService(IBbReportRepository repository, IBloodUsageService usageService, IBloodBankService bankService, IReportConfigurationService configurationService)
         {
             _repository = repository;
             _usageService = usageService;
             _bankService = bankService;
-            _configService = configService;
+            _configurationService = configurationService;
         }
         public ReportPathTransporter Create(string bloodBankId)
         {
@@ -36,7 +36,7 @@ namespace IntegrationLibrary.BloodReport.Service
                 return null;
             }
 
-            bloodUsageReport.ReportConfiguration = _configService.GetByBloodBank(bloodUsageReport.BloodBank.Id);
+            bloodUsageReport.ReportConfiguration = _configurationService.GetByBloodBank(bloodUsageReport.BloodBank.Id);
             if(bloodUsageReport.ReportConfiguration == null)
             {
                 return null;
@@ -63,7 +63,7 @@ namespace IntegrationLibrary.BloodReport.Service
         }
         public IEnumerable<ReportConfiguration> GetAllActiveConfigs()
         {
-            return _configService.GetAllActive();
+            return _configurationService.GetAllActive();
         }
         public List<ReportPathTransporter> CreateAllTimeElapsed()
         {

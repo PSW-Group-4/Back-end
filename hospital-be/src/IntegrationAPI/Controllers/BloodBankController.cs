@@ -33,6 +33,7 @@ namespace IntegrationAPI.Controllers
             return Ok(bloodBanks);
         }
         [HttpPost]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Create(BloodBankRegisterDto bloodBankDto)
         {
             BloodBank bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
