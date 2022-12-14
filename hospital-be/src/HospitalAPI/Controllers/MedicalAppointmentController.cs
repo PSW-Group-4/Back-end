@@ -8,6 +8,11 @@ using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Exceptions;
 using Microsoft.AspNetCore.Mvc;
+using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Users.Model;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
+using System.Collections;
 
 namespace HospitalAPI.Controllers
 {
@@ -17,11 +22,13 @@ namespace HospitalAPI.Controllers
     {
         private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IMapper _mapper;
+        private readonly IJwtService _jwtService;
 
-        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper)
+        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper, IJwtService jwtService)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _mapper = mapper;
+            _jwtService = jwtService;
         }
 
         // GET: api/Appointment
@@ -80,6 +87,111 @@ namespace HospitalAPI.Controllers
             {
                 _medicalAppointmentService.Delete(id);
                 return NoContent();
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpDelete("cancel/{id}")]
+        [Authorize(Roles = "Patient")]
+        public ActionResult Cancel([FromRoute] Guid id)
+        {
+            try
+            {
+                User user = _jwtService.GetCurrentUser(HttpContext.User);
+                if (user.PersonId == null)
+                {
+                    return BadRequest("Only patients can cacnel");
+                }
+
+                _medicalAppointmentService.Cancel(id, (Guid)user.PersonId);
+                return Ok(id);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch(CanNotCancelAppointmentException e)
+            {
+                return Conflict(e.Message);
+            }
+            catch(AlreadyCanceledException)
+            {
+                return Conflict("Already canceled");
+            }
+
+        }
+
+        [HttpGet("get-all-done")]
+        public ActionResult GetAllDoneForPatient()
+        {
+            try
+            {
+                User user = _jwtService.GetCurrentUser(HttpContext.User);
+                if (user.PersonId == null)
+                {
+                    return BadRequest("Only patient can view their appointments");
+                }
+
+                var appointments = _medicalAppointmentService.GetDoneByPatient((Guid)user.PersonId);
+                var appsDto = new List<MedicalAppointmentDto>();
+                foreach(var a in appointments)
+                {
+                    appsDto.Add(new MedicalAppointmentDto(a));
+                }
+                return Ok(appsDto);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("get-all-future")]
+        public ActionResult GetAllFutureForPatient()
+        {
+            try
+            {
+                User user = _jwtService.GetCurrentUser(HttpContext.User);
+                if (user.PersonId == null)
+                {
+                    return BadRequest("Only patient can view their appointments");
+                }
+
+                var appointments = _medicalAppointmentService.GetFutureByPatient((Guid)user.PersonId);
+                var appsDto = new List<MedicalAppointmentDto>();
+                foreach(var a in appointments)
+                {
+                    appsDto.Add(new MedicalAppointmentDto(a));
+                }
+                return Ok(appsDto);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
+
+        [HttpGet("get-all-canceled")]
+        public ActionResult GetAllCanceledForPatient()
+        {
+            try
+            {
+                User user = _jwtService.GetCurrentUser(HttpContext.User);
+                if (user.PersonId == null)
+                {
+                    return BadRequest("Only patient can view their appointments");
+                }
+
+                var appointments = _medicalAppointmentService.GetCanceledByPatient((Guid)user.PersonId);
+                var appsDto = new List<MedicalAppointmentDto>();
+                foreach(var a in appointments)
+                {
+                    appsDto.Add(new MedicalAppointmentDto(a));
+                }
+                return Ok(appsDto);
             }
             catch (NotFoundException)
             {
