@@ -31,7 +31,7 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
         // RoomNumber should be 1 for first room and 2 for second
         public MapLocation SplitRoomLocation(int roomNumber) {
             // it will always split vertically
-            return new MapLocation(this.MapLocation.CoordinateX + this.MapLocation.Width * (roomNumber-1) , this.MapLocation.CoordinateY, this.MapLocation.Height, this.MapLocation.Width/2);
+            return new MapLocation(this.MapLocation.CoordinateX + this.MapLocation.Width/2 * (roomNumber-1) , this.MapLocation.CoordinateY, this.MapLocation.Height, this.MapLocation.Width/2);
         }
 
         public MapLocation MergeRoomLocation(MapLocation location) {
