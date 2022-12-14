@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Exceptions;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace HospitalLibrary.Renovation.Model
 {
@@ -12,8 +14,8 @@ namespace HospitalLibrary.Renovation.Model
         public enum TypeOfRenovation { Merge, Split }
 
         public TypeOfRenovation Type {get; private set;}
-
-        public IEnumerable<RoomRenovationPlan> _RoomRenovationPlans;
+        
+        private IEnumerable<RoomRenovationPlan> _RoomRenovationPlans {get; set;}
         public IEnumerable<RoomRenovationPlan> RoomRenovationPlans {
             get { return new List<RoomRenovationPlan>(_RoomRenovationPlans); }
             private set {_RoomRenovationPlans = value;}
@@ -56,6 +58,23 @@ namespace HospitalLibrary.Renovation.Model
             foreach (RoomRenovationPlan plan in this.RoomRenovationPlans) {
                 plan.Validate();
             }
+        }
+
+        public bool ShouldBeFinished() {
+            return false == this.IsDone && DateRange.IsLesserThan(DateTime.Now);
+        }
+
+        public void Finish() {
+            this.IsDone = true;
+            this.Room = null;
+            this.RoomId = (Guid?)null;
+        }
+
+        public bool IsPrimaryRenovationAppointment() {
+            if(this.RoomId.Equals(this.RoomRenovationPlans.First().Id)) {
+                return true;
+            }
+            return false;
         }
 
     }

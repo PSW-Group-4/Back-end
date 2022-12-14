@@ -46,5 +46,16 @@ namespace HospitalLibrary.BuildingManagment.Service.Implementation
         public IEnumerable<Room> GetRoomsByFloorId(Guid id) {
             return this.GetById(id).RoomList;
         }
+
+        public Floor GetFloorByRoomId(Guid id) {
+            foreach(Floor floor in this.GetAll()) {
+                foreach(Room room in floor.RoomList) {
+                    if(room.Id.Equals(id)) {
+                        return floor;
+                    }
+                }
+            }
+            return null;
+        }
     }
 }

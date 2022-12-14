@@ -7,11 +7,15 @@ using HospitalLibrary.Renovation.Service.Interfaces;
 using AutoMapper;
 using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
+using HospitalAPI.Dtos.Renovation;
+
 
 namespace HospitalAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize(Roles = "Manager")]
     public class RenovationAppointmentController : ControllerBase
     {
         private readonly IRenovationAppointmentService _renovationAppointment;
@@ -29,9 +33,9 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create([FromBody] RenovationDataDto taskDto)
+        public ActionResult Create([FromBody] RenovationAppointmentDto taskDto)
         {
-                RenovationDataDto data = taskDto;
+                RenovationDataDto data = _mapper.Map<RenovationDataDto>(taskDto);
                 _renovationAppointment.CreateRenovation(data);
                 return Ok();
         }
