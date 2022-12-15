@@ -61,5 +61,21 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("Termins/{timeStart}/{timeEnd}/{patientId}/{doctorId}")]
+        public ActionResult getAvailableTerminsForAnotherDoctor([FromRoute] String timeStart, [FromRoute] String timeEnd, [FromRoute] Guid patientId, [FromRoute] Guid doctorId)
+        {
+            try
+            {
+                DateTime start = DateTime.Parse(timeStart);
+                DateTime end = DateTime.Parse(timeEnd);
+                var termins = _doctorAppointmentService.getAvailableTerminsForAnotherDoctor(start, end, patientId, doctorId);
+                return Ok(termins);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+        }
     }
 }
