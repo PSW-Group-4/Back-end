@@ -14,6 +14,7 @@ using Org.BouncyCastle.Asn1.Ocsp;
 using HospitalLibrary.Utility;
 using HospitalLibrary.Exceptions;
 using iTextSharp.text;
+using System.Linq;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -157,8 +158,11 @@ namespace HospitalLibrary.Appointments.Service
 
         private List<DateRange> GetSuggestionsByDate(RequestForAppointmentSlotSuggestions request, List<DateRange> result)
         {
-            Doctor doctor = _doctorRepository.GetById(request.DoctorId);
-            foreach (Doctor doc in _doctorRepository.GetDoctorsWithSpecialty(doctor.Speciality))
+            List<Doctor> otherDoctorsOfTheSameSpeciality = _doctorRepository.GetDoctorsWithSpecialty(
+                _doctorRepository.GetById(request.DoctorId).Speciality).Where
+                (r => r.Id != request.DoctorId).ToList();
+
+            foreach (Doctor doc in otherDoctorsOfTheSameSpeciality)
             {
                 foreach (DateTime date in SetupRequestDates(request.StartDate, request.EndDate))
                 {
