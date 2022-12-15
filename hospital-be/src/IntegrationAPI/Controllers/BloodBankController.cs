@@ -47,12 +47,16 @@ namespace IntegrationAPI.Controllers
             BloodBank bloodBank = _service.GetByApiKey(ApiKey);
             return Ok(bloodBank);
         }
-        [HttpPost ("{id}")]
+        [HttpPost("{id}")]
         public ActionResult Update(String Id, BloodBankEditDto bloodBankDto)
         {
             BloodBank bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Update(bloodBank);
             return Ok(bloodBank);
+        }
+        [Route("mail/{email}"), HttpPost]
+        public ActionResult GetByEmail(String email) {
+            return Ok(_service.GetByEmail(email));
         }
     }
 }

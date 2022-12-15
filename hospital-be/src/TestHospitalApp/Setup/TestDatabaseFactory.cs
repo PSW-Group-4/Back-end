@@ -131,8 +131,26 @@ namespace TestHospitalApp.Setup
                 RoomId = room.Id,
                 AddressId = address.Id
             };
+            Doctor doctorConsilium = new Doctor
+            {
+                Id = new Guid("5c125fba-1318-4f4b-b153-90d75e60625e"),
+                Name = "Test Doctor Sastanak",
+                Surname = "Test Doctor Sastanak",
+                WorkingTimeStart = "1:00",
+                WorkingTimeEnd = "21:00",
+                Gender = Gender.Female,
+                Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
+                Jmbg = new Jmbg("1807000730038"),
+                Email = new Email("doctor@test.com"),
+                PhoneNumber = "066/123-456",
+                Speciality = "Surgeon",
+                LicenceNum = "12345",
+                RoomId = room.Id,
+                AddressId = address.Id
+            };
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
+            context.Doctors.Add(doctorConsilium);
 
             BloodSupply bloodSupply1 = new BloodSupply { BloodType = BloodType.FromString("A+"), Amount = 200.00 };
             context.BloodSupply.Add(bloodSupply1);
@@ -327,7 +345,7 @@ namespace TestHospitalApp.Setup
             initUsers(context);
 
             //Consiliums
-            initConsiliums(context);
+            initConsiliums(context, doctorConsilium);
 
             // Rooms
             initRooms(context);
@@ -388,17 +406,24 @@ namespace TestHospitalApp.Setup
             context.Add(doctorUser);
         }
 
-        private static void initConsiliums(HospitalDbContext context)
+        private static void initConsiliums(HospitalDbContext context, Doctor doctor)
         {
-            Consilium con1 = new Consilium
+            Room room = new Room { Id = new Guid("5c036fba-1318-4f4b-b153-90d75e606111"), Name = "Soba", Number = 10, Description = "ConsiliumRoom" };
+            context.Rooms.Add(room);
+            List<Doctor> doctorList = new List<Doctor>();
+            doctorList.Add(doctor);
+            /*Consilium con1 = new Consilium
             {
                 Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
                 IsDone = false,
-                RoomId = new Guid("5c036fba-1318-4f4b-b153-90d75e606000"),
+                RoomId = new Guid("5c036fba-1318-4f4b-b153-90d75e606111"),
                 DateRange = new DateRange(),
+                Doctors = doctorList,
             };
 
-            context.Add(con1);
+            context.Add(con1);*/
+
+            
         }
         private static void initRenovation(HospitalDbContext context)
         {

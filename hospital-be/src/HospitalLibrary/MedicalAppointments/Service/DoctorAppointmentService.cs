@@ -13,6 +13,7 @@ using HospitalLibrary.Consiliums.Repository;
 using Org.BouncyCastle.Asn1.Ocsp;
 using HospitalLibrary.Utility;
 using HospitalLibrary.Exceptions;
+using iTextSharp.text;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -192,6 +193,37 @@ namespace HospitalLibrary.Appointments.Service
             {
                 yield return day;
             }
+        }
+
+        public List<DateRange> getAvailableTerminsForAnotherDoctor(DateTime timeStart, DateTime timeEnd, Guid patientId, Guid doctorId)
+        {
+            List<DateRange> res = new List<DateRange>();
+            DateRange dateRange = new DateRange(timeStart, timeEnd);
+            DateTime start = new DateTime(dateRange.StartTime.Year, dateRange.StartTime.Month, dateRange.StartTime.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Minute, 0);
+            DateTime WorkTimeStart = new DateTime(dateRange.StartTime.Year, dateRange.StartTime.Month, dateRange.StartTime.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Minute, 0);
+            DateTime WorkTimeEnd = new DateTime(dateRange.StartTime.Year, dateRange.StartTime.Month, dateRange.StartTime.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeEnd).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeEnd).Minute, 0);
+            timeEnd = timeEnd.AddDays(1);
+            double addDays = 1;
+
+            
+            while (DateTime.Compare(timeEnd, WorkTimeStart) > 0)
+            {                
+                DateRange terminRange = new DateRange(WorkTimeStart, WorkTimeEnd);
+                if (IsDoctorAvailable(doctorId, WorkTimeStart) && _medicalAppointmentService.IsPatientFree(patientId, terminRange))
+                {
+                    DateRange abailableTerin = new DateRange(WorkTimeStart, WorkTimeStart.AddMinutes(30));
+                    res.Add(abailableTerin);
+                }
+                WorkTimeStart = WorkTimeStart.AddMinutes(30);
+                if(DateTime.Compare(WorkTimeStart, WorkTimeEnd) > 0)
+                {                    
+                    WorkTimeStart = start;
+                    WorkTimeEnd = WorkTimeEnd.AddDays(1);
+                    WorkTimeStart = WorkTimeStart.AddDays(1);                    
+                }           
+                
+            } 
+            return res;
         }
 
         //TODO refactor

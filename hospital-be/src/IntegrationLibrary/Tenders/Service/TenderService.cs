@@ -22,6 +22,19 @@ namespace IntegrationLibrary.Tenders.Service
             _repository.Create(tender);
         }
 
+        public IEnumerable<Tender> GetActive()
+        {
+            IEnumerable<Tender> all = _repository.GetAll();
+            List<Tender> activeTenders = new List<Tender>();
+            foreach (Tender tender in all){
+                if (tender.IsActive()) {
+                    activeTenders.Add(tender);
+                }
+            }
+            IEnumerable<Tender> active = activeTenders;
+            return active;
+        }
+
         public IEnumerable<Tender> GetAll()
         {
             return _repository.GetAll();
