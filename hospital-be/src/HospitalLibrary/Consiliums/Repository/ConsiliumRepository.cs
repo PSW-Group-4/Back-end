@@ -46,7 +46,7 @@ namespace HospitalLibrary.Consiliums.Repository
                 throw new NotFoundException();
             }
 
-            //updatingConsilium.Update(entity);
+            updatingConsilium.Update(entity);
             _context.SaveChanges();
             return updatingConsilium;
         }
