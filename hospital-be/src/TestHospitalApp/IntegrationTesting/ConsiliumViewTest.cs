@@ -46,6 +46,7 @@ namespace TestHospitalApp.IntegrationTesting
             var consiliumController = SetupConsiliumController(scope);
             List<Guid> doctorsID = new List<Guid>();
             Guid dr = new Guid("5c125fba-1318-4f4b-b153-90d75e60625e");
+
             doctorsID.Add(dr);
             ConsiliumRequestDto consiliumRequest = new ConsiliumRequestDto()
             {

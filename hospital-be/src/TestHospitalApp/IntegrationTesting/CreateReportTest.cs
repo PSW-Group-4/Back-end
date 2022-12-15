@@ -34,7 +34,7 @@ namespace TestHospitalApp.IntegrationTesting
 
         private static ReportController SetupReportController(IServiceScope scope)
         {
-            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>(),scope.ServiceProvider.GetRequiredService<IAppointmentReportService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>(),scope.ServiceProvider.GetRequiredService<IMedicalAppointmentReportService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         private static SymptomController SetupSymptomController(IServiceScope scope)

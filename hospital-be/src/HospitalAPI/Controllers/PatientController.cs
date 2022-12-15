@@ -94,23 +94,7 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = patient.Id }, patient);
         }
 
-        // PUT api/Patient/2
-        [HttpPut("{id}")]
-        public ActionResult Update([FromRoute] Guid id, [FromBody] PatientRequestDto patientDto)
-        {
-            var patient = _mapper.Map<Patient>(patientDto);
-            patient.Id = id;
-
-            try
-            {
-                var result = _patientService.Update(patient);
-                return Ok(result);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }
+   
 
         // DELETE api/Patient/2
         [HttpDelete("{id}")]
@@ -157,7 +141,7 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                _userService.AddSuspiciousActivityToUser(PatientId, new SuspiciousActivity("Appointment cancellation", DateTime.Now));
+                _userService.AddSuspiciousActivityToUser(PatientId, new SuspiciousActivity("Appointment cancellation"));
                 return Ok();
             }
             catch (NotFoundException)

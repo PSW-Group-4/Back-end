@@ -50,7 +50,7 @@ namespace HospitalLibrary.Doctors.Service
         private  int NumberOfPatientsDoctorHas(Guid doctorId)
         {
            
-            return _patientRepository.GetAll().Count(p => p.ChoosenDoctorId == doctorId);
+            return _patientRepository.GetAll().Count(p => p.ChosenDoctorId == doctorId);
         }
 
 
