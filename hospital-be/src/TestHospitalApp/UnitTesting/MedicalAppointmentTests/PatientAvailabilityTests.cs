@@ -18,7 +18,7 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
 {
     public class PatientAvailabilityTests
     {
-        [Fact]
+        /*[Fact]
         public void Patient_free()  //promeni za datum
         {
             var patient = SetupPatients()[0];
@@ -79,6 +79,6 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
                 medicalAppointmentRepository.Object, doctorService.Object, patientService.Object);
 
             return medicalAppointmentService;
-        }
+        }*/
     }
 }

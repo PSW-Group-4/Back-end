@@ -35,7 +35,7 @@ namespace HospitalAPI.Controllers
 
         public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, 
             IMapper mapper, IJwtService jwtService, IDoctorAppointmentService doctorAppointmentService,
-            IDoctorService doctorService, IUserService _userService)
+            IDoctorService doctorService, IUserService userService)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _jwtService = jwtService;

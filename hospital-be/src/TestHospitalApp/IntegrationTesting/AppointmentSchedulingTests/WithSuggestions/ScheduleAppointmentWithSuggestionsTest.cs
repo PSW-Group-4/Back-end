@@ -9,6 +9,7 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Doctors.Service;
+using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -40,7 +41,8 @@ namespace TestHospitalApp.IntegrationTesting.AppointmentSchedulingTests.WithSugg
                                                     scope.ServiceProvider.GetRequiredService<IMapper>(),
                                                     scope.ServiceProvider.GetRequiredService<IJwtService>(),
                                                     scope.ServiceProvider.GetRequiredService<IDoctorAppointmentService>(),
-                                                    scope.ServiceProvider.GetRequiredService<IDoctorService>());
+                                                    scope.ServiceProvider.GetRequiredService<IDoctorService>(),
+                                                    scope.ServiceProvider.GetRequiredService<IUserService>());
         }
 
         [Fact]

@@ -33,7 +33,9 @@ namespace TestIntegrationApp.IntegrationTesting
         }
         private static TenderApplicationService SetupService(IServiceScope scope)
         {
-            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>());
+            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>(),
+                                                scope.ServiceProvider.GetRequiredService<ITenderRepository>(),
+                                                scope.ServiceProvider.GetRequiredService<IBloodBankRepository>());
         }
         private static BloodBankService SetupBloodBankService(IServiceScope scope)
         {

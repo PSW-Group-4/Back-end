@@ -24,7 +24,7 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
 {
     public class DoctorAvailabilityTests
     {
-        [Fact]
+        /*[Fact]
         public void Doctor_available()  //promeni za datum
         {
             var doctor = SetupDoctors()[0];
@@ -58,9 +58,9 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
             bool isAvailable = SetupDoctorAppointmentService().IsDoctorAvailable(doctor.Id, DateTime.Now);
 
             isAvailable.ShouldBeFalse();
-        }
+        }*/
 
-        private static List<Doctor> SetupDoctors()
+        /*private static List<Doctor> SetupDoctors()
         {
             var result = new List<Doctor>();
 
@@ -160,6 +160,6 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
                 new MedicalAppointmentService(medicalAppointmentRepository.Object, doctorService.Object, patientService.Object);
 
             return service;
-        }
+        }*/
     }
 }
