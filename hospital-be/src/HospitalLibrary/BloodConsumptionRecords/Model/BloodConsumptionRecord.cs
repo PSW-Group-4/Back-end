@@ -1,5 +1,6 @@
 ﻿using System;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Exceptions;
 
 namespace HospitalLibrary.BloodConsumptionRecords.Model
 {
@@ -8,7 +9,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Model
         public Guid Id { get; private set; }
         public Guid DoctorId { get; private set; }
         public virtual Doctor Doctor { get; private set; }
-        public double Amount { get; private set; }
+        public Amount Amount { get; private set; }
         public string BloodType { get; private set; }
         public string Reason { get; private set; }
         public DateTime DateTime { get; private set; }
@@ -18,7 +19,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Model
             DateTime = DateTime.Now;
         }
 
-        public BloodConsumptionRecord(Guid id, Guid doctorId, double amount, string bloodType, string reason, DateTime dateTime)
+        public BloodConsumptionRecord(Guid id, Guid doctorId, Amount amount, string bloodType, string reason, DateTime dateTime)
         {
             Id = id;
             DoctorId = doctorId;
@@ -26,7 +27,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Model
             BloodType = bloodType;
             Reason = reason;
             DateTime = DateTime.Now;
-            if (!Validate()) throw new ArgumentException();
+            if (!Validate()) throw new EntityObjectValidationFailedException();
         }
 
         public void Update(BloodConsumptionRecord bloodConsumptionRecord)
@@ -34,7 +35,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Model
             Amount = bloodConsumptionRecord.Amount;
             BloodType = bloodConsumptionRecord.BloodType;
             Reason = bloodConsumptionRecord.Reason;
-            if (!Validate()) throw new ArgumentException();
+            if (!Validate()) throw new EntityObjectValidationFailedException();
         }
 
         public void SetDate()
@@ -44,7 +45,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Model
 
         private bool Validate()
         {
-            if (String.IsNullOrWhiteSpace(BloodType) || String.IsNullOrWhiteSpace(Reason) || Amount <= 0)
+            if (String.IsNullOrWhiteSpace(BloodType) || String.IsNullOrWhiteSpace(Reason) || Amount == null)
                 return false;
             return true;
         }

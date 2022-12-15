@@ -632,6 +632,7 @@ INSERT INTO public."Appointments" ("Id","StartTime","EndTime","RoomId","Discrimi
 	 ('18d4953d-3c47-4d11-aa23-ff7f6d1fee69','2022-12-21 15:20:52.995821','2022-12-21 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',true,NULL,NULL,NULL,NULL,NULL),
 	 ('e687fb8d-b7a7-4e8d-be9f-d51b9e2f01cb','2022-12-15 15:20:52.995821','2022-12-15 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL);
 
+
 INSERT INTO public."Vacations" ("Id", "DoctorId", "DateStart", "DateEnd", "Reason", "Urgent", "VacationStatus", "DeniedRequestReason") VALUES
 			('030d8222-259f-4995-899c-fc6aa7d6a053','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-11-04 00:00:00', '2022-11-09 00:00:00', 'Zenim se', true, 2, 'Ne moze ove nedelje'),
 		   	('54cacecd-6d49-40cb-ad60-d0b95bcbf7ba','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-12-20 00:00:00', '2022-12-28 00:00:00', 'Zenim se drugi put', true, 1, ''),
@@ -640,3 +641,4 @@ INSERT INTO public."Vacations" ("Id", "DoctorId", "DateStart", "DateEnd", "Reaso
 			('a0d68360-9ead-4acc-927c-e2444fc2e66b','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-03-20 00:00:00', '2022-04-22 00:00:00', 'Boli me prst na nozi', false, 1, ''),
 			('c512766c-21bc-4240-ac4c-e3a2a1946bb4','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-06-20 00:00:00', '2022-06-21 00:00:00', 'Finale svetskog prvenstva', true, 1, ''),
 			('887bc79b-fc88-4b44-b86f-e6998f1ee7d4','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-07-20 00:00:00', '2022-07-31 00:00:00', 'Razvodim se', false, 2, 'Jer brakovi ne traju kao sto su nekad');
+

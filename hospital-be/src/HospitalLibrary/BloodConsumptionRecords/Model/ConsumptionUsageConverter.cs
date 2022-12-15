@@ -14,7 +14,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Model
         {
             BloodUsage usage = new BloodUsage();
             usage.TimeStamp = record.DateTime;
-            usage.Milliliters = record.Amount;
+            usage.Milliliters = record.Amount.Value;
             usage.Type = BloodType.FromString(record.BloodType);
             return usage;
         } 

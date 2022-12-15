@@ -26,7 +26,7 @@ namespace HospitalAPI.HostedService
 
         public override Task DoWork(CancellationToken cancellationToken)
         {
-            _moveEquipmentTaskService.MoveEquipment(DateTime.Now);
+            _moveEquipmentTaskService.MoveEquipment();
             return Task.CompletedTask;
         }
 
