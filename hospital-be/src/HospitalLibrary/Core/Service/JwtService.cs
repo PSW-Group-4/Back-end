@@ -43,7 +43,7 @@ namespace HospitalLibrary.Core.Service
             var token = new JwtSecurityToken("http://localhost:16177/",
               "http://localhost:16177/",
               claims,
-              expires: DateTime.Now.AddMinutes(30),
+              expires: DateTime.Now.AddDays(1),
               signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
