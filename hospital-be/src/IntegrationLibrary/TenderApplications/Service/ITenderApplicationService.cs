@@ -11,7 +11,12 @@ namespace IntegrationLibrary.TenderApplications.Service
    public interface ITenderApplicationService
     {
          IEnumerable<TenderApplication> GetAll();
+        IEnumerable<TenderApplication> GetByTender(Guid tenderId);
         TenderApplication FindById(Guid applicationId);
         TenderApplication Apply(TenderApplication application);
+        Boolean AcceptOffer(TenderApplication application);
+        public bool SendEmailsToParticipants(TenderApplication application, string winnerMessage, string rejectionMessage);
+        public string GenerateRejectionMessage();
+        public string GenerateWinnerMessage(TenderApplication application);
     }
 }

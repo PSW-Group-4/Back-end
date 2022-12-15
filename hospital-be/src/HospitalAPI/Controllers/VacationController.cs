@@ -28,6 +28,12 @@ namespace HospitalAPI.Controllers
             return Ok(_vacationtService.GetAll());
         }
 
+        [HttpGet("/api/pastVacations/{doctorId}")]
+        public ActionResult GetAllPastByDoctorId(Guid doctorId)
+        {
+            return Ok(_vacationtService.GetAllPastByDoctorId(doctorId));
+        }
+
         // GET api/Vacation/1
         [HttpGet("{id}")]
         public ActionResult GetById([FromRoute] Guid id)

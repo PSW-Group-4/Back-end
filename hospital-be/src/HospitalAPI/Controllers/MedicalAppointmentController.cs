@@ -17,6 +17,7 @@ using System.Collections;
 using HospitalLibrary.Utility;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Users.Service;
 
 namespace HospitalAPI.Controllers
 {
@@ -29,11 +30,12 @@ namespace HospitalAPI.Controllers
         private readonly IJwtService _jwtService;
         private readonly IDoctorAppointmentService _doctorAppointmentService;
         private readonly IDoctorService _doctorService;
+        private readonly IUserService _userService;
         //private readonly IPatientService _patientService;
 
         public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, 
             IMapper mapper, IJwtService jwtService, IDoctorAppointmentService doctorAppointmentService,
-            IDoctorService doctorService)
+            IDoctorService doctorService, IUserService _userService)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _jwtService = jwtService;
@@ -42,6 +44,7 @@ namespace HospitalAPI.Controllers
             _jwtService = jwtService;
             _doctorService = doctorService;
             //_patientService = patientService;
+            _userService = userService;
         }
 
         // GET: api/Appointment
@@ -136,6 +139,7 @@ namespace HospitalAPI.Controllers
                 }
 
                 _medicalAppointmentService.Cancel(id, (Guid)user.PersonId);
+                _userService.AddSuspiciousActivityToUser((Guid)user.PersonId, new SuspiciousActivity("Appointment cancellation"));
                 return Ok(id);
             }
             catch (NotFoundException)

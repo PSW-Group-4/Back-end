@@ -77,5 +77,10 @@ public bool IsDoctorOnVacation(Guid doctorId, DateTime date)
             }
             return false;
         }
+
+        public IEnumerable<Vacation> GetAllPastByDoctorId(Guid doctorId)
+        {
+            return _context.Vacations.Where(x => x.DoctorId == doctorId && x.DateEnd < DateTime.Now && x.VacationStatus == VacationStatus.Approved);
+        }
     }
 }
