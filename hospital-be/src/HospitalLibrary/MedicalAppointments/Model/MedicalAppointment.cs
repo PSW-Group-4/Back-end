@@ -13,5 +13,6 @@ namespace HospitalLibrary.Appointments.Model
         public virtual Patient Patient { get; set; }
 
         public bool IsCanceled { get; set; }
+        
     }
 }
