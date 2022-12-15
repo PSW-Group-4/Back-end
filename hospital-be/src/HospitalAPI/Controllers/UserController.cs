@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Constants;
 
 namespace HospitalAPI.Controllers
 {
@@ -214,6 +215,15 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAllSuspiciousUsers()
         {
             return Ok(_userService.GetAllSuspiciousUsers().Select(sp => new SuspiciousUserDTO(sp.Username, sp.IsBlocked, sp.NumberOfSuspiciousActivitiesInRecentPeriod())).ToList());
+        }
+
+
+        [HttpGet]
+        [Route("[action]")]
+        [Authorize(Roles = "Manager")]
+        public ActionResult SuspiciousCount()
+        {
+            return Ok(Constants.MinSuspiciousActivityCount);
         }
 
         [HttpPatch("block-user/{username}")]
