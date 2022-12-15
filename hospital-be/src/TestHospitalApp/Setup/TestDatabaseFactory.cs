@@ -94,7 +94,7 @@ namespace TestHospitalApp.Setup
             Building building = new Building { Id = new Guid("f6923bfe-0246-4e2b-94e1-4b8023ef3ea2"), Name = "Zgrada" };
             context.Buildings.Add(building);
 
-            Room room = new Room { Id = new Guid(), Name = "Soba", Number = 10, Description = "Opis sobe" };
+            Room room = new Room { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea2"), Name = "Soba", Number = 10, Description = "Opis sobe" };
             context.Rooms.Add(room);
 
             String WorkingTimeStart1 = "9:00";
@@ -121,25 +121,14 @@ namespace TestHospitalApp.Setup
                 new Email("doctor@test.com"), "066/123-456", LicenceNum, Speciality, WorkingTimeStart,
                 WorkingTimeEnd, room.Id, room);
 
+            Doctor doctorConsilium = new Doctor(new Guid("5c125fba-1318-4f4b-b153-90d75e60625e"), "Test Doctor Sastanak", "Test Doctor Sastanak",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
+                new Email("doctor@test.com"), "066/123-456", "12345", "Surgeon", "1:00",
+                "21:00", room.Id, room);
 
 
-            Doctor doctorConsilium = new Doctor
-            {
-                Id = new Guid("5c125fba-1318-4f4b-b153-90d75e60625e"),
-                Name = "Test Doctor Sastanak",
-                Surname = "Test Doctor Sastanak",
-                WorkingTimeStart = "1:00",
-                WorkingTimeEnd = "21:00",
-                Gender = Gender.Female,
-                Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("doctor@test.com"),
-                PhoneNumber = "066/123-456",
-                Speciality = "Surgeon",
-                LicenceNum = "12345",
-                RoomId = room.Id,
-                AddressId = address.Id
-            };
+
+         
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
             context.Doctors.Add(doctorConsilium);
