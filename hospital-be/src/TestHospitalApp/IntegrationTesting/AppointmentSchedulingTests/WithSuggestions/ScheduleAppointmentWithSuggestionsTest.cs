@@ -25,30 +25,32 @@ namespace TestHospitalApp.IntegrationTesting.AppointmentSchedulingTests.WithSugg
     {
         public ScheduleAppointmentWithSuggestionsTest(TestDatabaseFactory<Startup> factory) : base(factory) { }
 
-        private static SchedulingController SetupSchedulingController(IServiceScope scope)
+        /*private static SchedulingController SetupSchedulingController(IServiceScope scope)
         {
             return new SchedulingController(scope.ServiceProvider.GetRequiredService<IDoctorAppointmentService>(),
                                             scope.ServiceProvider.GetRequiredService<IAppointmentService>(),
                                             scope.ServiceProvider.GetRequiredService<IMapper>(),
                                             scope.ServiceProvider.GetRequiredService<IJwtService>());
-        }
+        }*/
 
         private static MedicalAppointmentController SetupMedicalAppointmentController(IServiceScope scope)
         {
             return new MedicalAppointmentController(scope.ServiceProvider.GetRequiredService<IMedicalAppointmentService>(),
-                                                    scope.ServiceProvider.GetRequiredService<IMapper>());
+                                                    scope.ServiceProvider.GetRequiredService<IMapper>(),
+                                                    scope.ServiceProvider.GetRequiredService<IJwtService>(),
+                                                    scope.ServiceProvider.GetRequiredService<IDoctorAppointmentService>());
         }
 
         [Fact]
         public void Test_Schedule_Appointment()
         {
             using var scope = Factory.Services.CreateScope();
-            var schedulingController = SetupSchedulingController(scope);
+            //var schedulingController = SetupSchedulingController(scope);
             var medicalAppointmentController = SetupMedicalAppointmentController(scope);
 
             var requestForSuggestions = SetupRequestForSuggestionsDtos();
 
-            List<DateRange> suggestions = ((OkObjectResult)schedulingController.GetAppointmentSuggestions(
+            List<DateRange> suggestions = ((OkObjectResult)medicalAppointmentController.GetAppointmentSuggestions(
                 requestForSuggestions))?.Value as List<DateRange>;
 
             var requestForScheduling = SetupRequestForSchedulingDtos(requestForSuggestions, suggestions[0]);
@@ -79,9 +81,9 @@ namespace TestHospitalApp.IntegrationTesting.AppointmentSchedulingTests.WithSugg
         {
             var result = new AppointmentRequestDto();
             result.StartTime = suggestion.StartTime;
-            result.PatientId = Guid.NewGuid();      //promeni
+            result.PatientId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e");      //promeni
             result.DoctorId = requestForSuggestions.DoctorId;
-            result.RoomId = Guid.NewGuid();     //promeni
+            result.RoomId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e");     //promeni
 
             return result;
         }

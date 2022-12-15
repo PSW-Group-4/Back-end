@@ -24,11 +24,11 @@ namespace HospitalAPI.Controllers
     {
         private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IMapper _mapper;
-        private readonly JwtService _jwtService;
-        private readonly DoctorAppointmentService _doctorAppointmentService;
+        private readonly IJwtService _jwtService;
+        private readonly IDoctorAppointmentService _doctorAppointmentService;
         
 
-        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper, JwtService jwtService, DoctorAppointmentService doctorAppointmentService)
+        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper, IJwtService jwtService, IDoctorAppointmentService doctorAppointmentService)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _jwtService = jwtService;

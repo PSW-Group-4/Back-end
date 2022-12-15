@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.EquipmentRelocation.DTO;
+using HospitalLibrary.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,7 @@ namespace HospitalLibrary.Appointments.Service
         List<DateRange> AvailableTerminsForDate(DateTime date, Guid patientId, Guid doctorId);
         bool IsDoctorAvailable(Guid doctorId, DateTime time);
         public List<DateRange> getAvailableTerminsForAnotherDoctor(DateTime timeStart, DateTime timeEnd, Guid patientId, Guid doctorId);
-
+        public List<DateRange> GetAppointmentSuggestionsForDateRange(RequestForAppointmentSlotSuggestions request);
 
     }
 }
