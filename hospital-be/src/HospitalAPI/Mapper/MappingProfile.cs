@@ -100,6 +100,8 @@ namespace HospitalAPI.Mapper
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
+            CreateMap<BloodConsumptionRecord, BloodConsumptionRecordRequestDto>().ForMember(dest => dest.Amount, 
+                opt => opt.MapFrom(src => src.Amount.Value));
             CreateMap<BloodSupplyDto, BloodSupply>();
             CreateMap<Feedback, FeedbackPatientResponseDto>().ForMember(dest => dest.PatientFullname,
                 opt => opt.MapFrom(src => ResolveFeedbackPatientFullName(src)));
