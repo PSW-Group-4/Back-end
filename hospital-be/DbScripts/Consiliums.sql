@@ -51,7 +51,7 @@ INSERT INTO "Doctors" ("Id", "LicenceNum", "Speciality", "WorkingTimeStart", "Wo
 ('5ffed53e-8c78-432f-a603-8bce2f86c5e2', 'Licenca', 'Oftamologist', '8:04', '20:22', '2b9b4701-831d-4510-aa44-d4a940acff73', 'Vonni', 'Oris', '1970-12-03 08:14:18', 0, '1b9e69e2-283a-4e1b-999e-4f9997bbcfe5', '{"JmbgValue": "1807000730038"}', 'vorisj@twitpic.com', '862-694-4594');
 
 INSERT INTO "Users"("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId", suspicious_activities)VALUES
-('doktor', 'doktor', true, false, 1, '5c036fba-1118-4f4b-b153-90d75e60625e', null);
+('doktor', '{"Password": "doktor"}', true, false, 1, '5c036fba-1118-4f4b-b153-90d75e60625e', null);
 
 
 INSERT INTO "Patients" ("Id", "ChoosenDoctorId", "Name", "Surname", "Birthdate", "Gender", "AddressId", "Jmbg", "EmailAddress", "PhoneNumber") VALUES
