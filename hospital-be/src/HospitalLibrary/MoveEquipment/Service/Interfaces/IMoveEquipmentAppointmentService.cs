@@ -11,6 +11,6 @@ namespace HospitalLibrary.MoveEquipment.Service.Interfaces
     {
         public void CreateMoveEquipment(InputCreateData data);
 
-        public void MoveEquipment(DateTime moveDate);
+        public void MoveEquipment();
     }
 }
