@@ -72,15 +72,15 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
             this.Create(appDest);
         }
 
-        public void MoveEquipment(DateTime moveDate)
+        public void MoveEquipment()
         {
             IEnumerable<MoveEquipmentAppointment> list = GetAll();
             foreach (MoveEquipmentAppointment app in list)
             {
-                if((app.DateRange.EndTime <= moveDate) && !(app.IsDone))
+                if(app.ShouldBeFinished())
                 {
                     MoveEquipmentToRoom(app);
-                    app.IsDone = true;
+                    app.Finish();
                     Update(app);
                 }
             }

@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Core.Model;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.RoomsAndEqipment.Model;
+using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalLibrary.MoveEquipment.Model
 {
@@ -22,8 +24,28 @@ namespace HospitalLibrary.MoveEquipment.Model
             this.IsDone = false;
             this.RoomId = roomId;
             this.DateRange = dateRange;
+            Validate();
         }
 
+        public void Validate() {
+            if (EquipmentToMove == null)
+                throw new InvalidValueException();
+            
+            if (RoomId.Equals(Guid.Empty)) { 
+                throw new InvalidValueException();
+            }
+            if(DateRange == null) { throw new InvalidValueException();}
 
+        }
+
+        public bool ShouldBeFinished()
+        {
+            return false == this.IsDone && DateRange.IsLesserThan(DateTime.Now);
+        }
+
+        public void Finish()
+        {
+            this.IsDone = true;
+        }
     }
 }
