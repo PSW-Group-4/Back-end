@@ -16,5 +16,6 @@ namespace IntegrationLibrary.BloodBanks.Service
         public BloodBank Update(BloodBank bloodBank);
         public BloodBank GetByName(string name);
         public BloodBank GetByEmail(string email);
+        public string Authenticate(string email, string password);
     }
 }

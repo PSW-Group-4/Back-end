@@ -17,6 +17,7 @@ namespace IntegrationLibrary.BloodBanks.Model
         public string EmailAddress { get; set; }
         public string Password { get; set; }
         public string ApiKey { get; set; }
+        public bool Activated { get; set; }
 
         public BloodBank(Guid id, string name, string serverAddress, string emailAddress, string password, string apiKey)
         {
@@ -26,6 +27,18 @@ namespace IntegrationLibrary.BloodBanks.Model
             EmailAddress = emailAddress;
             Password = password;
             ApiKey = apiKey;
+            Activated = false;
+        }
+        
+        public BloodBank(Guid id, string name, string serverAddress, string emailAddress, string password, string apiKey, bool activated)
+        {
+            Id = id;
+            Name = name;
+            ServerAddress = serverAddress;
+            EmailAddress = emailAddress;
+            Password = password;
+            ApiKey = apiKey;
+            Activated = activated;
         }
 
         public BloodBank() { }

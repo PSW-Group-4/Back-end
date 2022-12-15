@@ -1,4 +1,5 @@
 using System;
+using System.Text;
 using IntegrationAPI.Authorization;
 using IntegrationAPI.Mappers;
 using IntegrationLibrary.BloodBankNews.Repository;
@@ -51,6 +52,8 @@ using IntegrationLibrary.BloodSubscriptionResponses.Repository;
 using IntegrationLibrary.BloodSubscriptionResponses.Service;
 using IntegrationLibrary.ManagerBloodRequests.Repository;
 using IntegrationLibrary.ManagerBloodRequests.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace IntegrationAPI
 {
@@ -100,7 +103,20 @@ namespace IntegrationAPI
 
             });
 
-
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                    };
+                });
             
             services.AddScoped<ExternalAuthorizationFilter>();
             services.AddAutoMapper(typeof(MappingProfile));
@@ -166,6 +182,8 @@ namespace IntegrationAPI
             }
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

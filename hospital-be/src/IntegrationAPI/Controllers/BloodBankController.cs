@@ -7,6 +7,9 @@ using System;
 using IntegrationAPI.Authorization;
 using IntegrationAPI.Dtos.BloodBank;
 using IntegrationAPI.Communications.Mail;
+using IntegrationAPI.Dtos;
+using IntegrationLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntegrationAPI.Controllers
 {
@@ -57,6 +60,35 @@ namespace IntegrationAPI.Controllers
         [Route("mail/{email}"), HttpPost]
         public ActionResult GetByEmail(String email) {
             return Ok(_service.GetByEmail(email));
+        }
+        
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("/login")]
+        public ActionResult Login([FromBody] BloodBankLoginDto dto)
+        {
+            try
+            {
+                var token = _service.Authenticate(dto.Email, dto.Password);
+                return Ok(new JwtDto(token));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Blood bank not found");
+            }
+            catch (BadCredentialsException)
+            {
+                return Unauthorized("Bad credentials");
+            }
+            catch (AccountNotActivated)
+            {
+                return Unauthorized("Please change your password first");
+            }
+            catch (Exception)
+            {
+                return BadRequest("Unknown error");
+            }
+
         }
     }
 }
