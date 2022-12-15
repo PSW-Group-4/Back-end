@@ -41,7 +41,7 @@ namespace TestHospitalApp.IntegrationTesting.UserTests
             using var scope = Factory.Services.CreateScope();
             var userController = SetupUserController(scope);
 
-            UserLoginDto userDto = new UserLoginDto { Username = "wrongUsername", Password = "wrongPass" };
+            UserLoginDto userDto = new UserLoginDto { Username = "wrongUsername", Password = "wrongPass123" };
 
             var response = userController.LoginPublic(userDto);
             response.ShouldBeOfType<NotFoundObjectResult>();
@@ -65,7 +65,7 @@ namespace TestHospitalApp.IntegrationTesting.UserTests
             using var scope = Factory.Services.CreateScope();
             var userController = SetupUserController(scope);
 
-            UserLoginDto userDto = new UserLoginDto { Username = "notactive", Password = "notactive" };
+            UserLoginDto userDto = new UserLoginDto { Username = "notactive", Password = "notactive123" };
 
             var response = (StatusCodeResult)userController.LoginPublic(userDto);
             response.StatusCode.ShouldBe(403);
@@ -77,7 +77,7 @@ namespace TestHospitalApp.IntegrationTesting.UserTests
             using var scope = Factory.Services.CreateScope();
             var userController = SetupUserController(scope);
 
-            UserLoginDto userDto = new UserLoginDto { Username = "user", Password = "pass" };
+            UserLoginDto userDto = new UserLoginDto { Username = "user", Password = "pass123" };
 
             var response = userController.LoginPublic(userDto);
             response.ShouldBeOfType<OkObjectResult>();

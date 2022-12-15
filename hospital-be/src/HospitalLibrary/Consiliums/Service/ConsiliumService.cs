@@ -101,7 +101,7 @@ namespace HospitalLibrary.Consiliums.Service
         {
             for (DateTime longerTermin = termin; longerTermin < termin.AddMinutes(30 * consiliumRequest.Duration - 1); longerTermin = longerTermin.AddMinutes(30))
             {
-                if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, termin)))
+                if (!(_doctorAppointmentService.IsDoctorAvailable(doctorId, longerTermin)))
                 {
                     return false;
                 }
@@ -138,18 +138,21 @@ namespace HospitalLibrary.Consiliums.Service
             List<Room> allRooms = _roomService.GetConsiliumRoom();
             List<Consilium> consiliums = GetAll().ToList();
             bool noConsiliums = true;
+            bool found = true;
+
             foreach (Room room in allRooms)
             {
                 foreach(Consilium consilium in consiliums)
                 {
                     noConsiliums = false;
                     if(consilium.RoomId == room.Id
-                      && !(consilium.DateRange.OverlapsWith(dr)))
+                      && (consilium.DateRange.OverlapsWith(dr)))
                     {
-                        return room;
+                        found = false;
+                        break;
                     }
                 }
-                if (noConsiliums)
+                if (noConsiliums || found)
                 {
                     return room;
                 }
@@ -166,7 +169,6 @@ namespace HospitalLibrary.Consiliums.Service
             Room roomAvailable = new Room();
             DateTime bestTermin = new DateTime();
             bool didItEvenFound = false;
-            bool continueItIs = false;
 
             for (DateTime termin = consiliumRequest.DateStart; termin <= consiliumRequest.DateEnd.AddMinutes(-30 * consiliumRequest.Duration); termin = termin.AddMinutes(30))
             {
@@ -174,10 +176,8 @@ namespace HospitalLibrary.Consiliums.Service
                 List<String> availableSpecialitites = new List<String>();
                 foreach (Doctor doctor in Doctors)
                 {
-                    continueItIs = false;
                     if (!(IsLongerTerminGoodForDoctor(doctor.Id, termin, consiliumRequest)))
                     {
-                        continueItIs = true;
                         continue;
                     }
                     DateRange dr = new DateRange(termin, termin.AddMinutes(30 * consiliumRequest.Duration));
@@ -186,11 +186,8 @@ namespace HospitalLibrary.Consiliums.Service
                     {
                         break;
                     }
-                    if (!continueItIs)
-                    {
                         availableDoctors.Add(doctor);
                         availableSpecialitites.Add(doctor.Speciality);
-                    }
                     if (MustSpecialityCount == availableSpecialitites.Distinct().Count()
                         && availableDoctors.Count() > bestDoctorCount)
                     {

@@ -8,6 +8,8 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Patients.Model;
 using Microsoft.VisualBasic;
+using HospitalLibrary.Exceptions;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -76,6 +78,46 @@ namespace HospitalLibrary.Appointments.Service
                 }
             }
             return patientAppointments;
+        }
+
+        public void Cancel(Guid appointmentId, Guid patientId)
+        {
+            var appointment = GetById(appointmentId);
+            if(appointment.PatientId != patientId)
+            {
+                throw new CanNotCancelAppointmentException("Can not cancel appointment that is not your own");
+            }
+            if (appointment.IsCanceled)
+            {
+                throw new AlreadyCanceledException();
+            }
+            if (appointment.IsDone)
+            {
+                throw new CanNotCancelAppointmentException("Appointment is already done");
+            }
+
+            if (DateTime.Now.AddHours(24) >= appointment.DateRange.StartTime)
+            {
+                throw new CanNotCancelAppointmentException("Can not cancel less then 24h");
+            }
+
+            appointment.IsCanceled = true;
+            _medicalAppointmentRepository.Update(appointment);
+        }
+
+        public IEnumerable<MedicalAppointment> GetDoneByPatient(Guid patientId)
+        {
+            return _medicalAppointmentRepository.GetDoneByPatient(patientId);
+        }
+
+        public IEnumerable<MedicalAppointment> GetCanceledByPatient(Guid patientId)
+        {
+            return _medicalAppointmentRepository.GetCacneledByPatient(patientId);
+        }
+
+        public IEnumerable<MedicalAppointment> GetFutureByPatient(Guid patientId)
+        {
+            return _medicalAppointmentRepository.GetFutureByPatient(patientId);
         }
     }
 }

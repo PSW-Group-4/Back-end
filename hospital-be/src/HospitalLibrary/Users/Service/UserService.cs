@@ -51,10 +51,9 @@ namespace HospitalLibrary.Users.Service
 
         public AcountActivationInfo RegisterPatient(User user, Guid patientId)
         {
-            user.PersonId = patientId;
-            user.Role = UserRole.Patient;
-            user.IsAccountActive = false;
-            user.IsBlocked = false;
+
+            _patientRepository.GetById(patientId);
+            user.ConnectPersonToUser(patientId);
             _userRepository.Create(user);
 
             //DODAO
@@ -86,7 +85,7 @@ namespace HospitalLibrary.Users.Service
                     throw new NotFoundException(); 
                 }
 
-                user.IsAccountActive = true;
+                user.ActivateAccount();
                 _userRepository.Update(user);
 
                 accountActivationInfo.ActivationToken = Guid.Empty;
@@ -111,13 +110,14 @@ namespace HospitalLibrary.Users.Service
         public string AuthenticatePublic(string username, string password)
 
         {
+            Password enteredPassword = new Password(password);
             User user = _userRepository.GetByUsername(username);
             if (user == null)
             {
                 throw new NotFoundException();
             }
             
-            if(user.Password != password)
+            if(!user.Password.Equals(enteredPassword))
             {
                 throw new BadPasswordException();
             }
@@ -141,13 +141,14 @@ namespace HospitalLibrary.Users.Service
 
         public string AuthenticatePrivate(string username, string password)
         {
+            Password enteredPassword = new Password(password);
             User user = _userRepository.GetByUsername(username);
             if (user == null)
             {
                 throw new NotFoundException();
             }
             
-            if(user.Password != password)
+            if(!user.Password.Equals(enteredPassword))
             {
                 throw new BadPasswordException();
             }
