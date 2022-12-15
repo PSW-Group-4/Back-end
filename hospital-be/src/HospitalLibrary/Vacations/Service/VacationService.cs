@@ -175,5 +175,10 @@ namespace HospitalLibrary.Vacations.Service
             }
             return doctorVacations;
         }
+
+        public IEnumerable<Vacation> GetAllPastByDoctorId(Guid doctorId)
+        {
+            return _vacationRepository.GetAllPastByDoctorId(doctorId);
+        }
     }
 }

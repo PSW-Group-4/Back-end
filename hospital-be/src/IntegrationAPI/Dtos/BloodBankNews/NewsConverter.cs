@@ -36,14 +36,8 @@ namespace IntegrationAPI.Dtos.BloodBankNews
                 throw new NotFoundException();
             } else
             {
-
-                News news = new()
-                {
-                    Title = dto.title,
-                    Body = dto.body,
-                    BloodBank = _bloodBankService.GetByName(dto.bloodBank),
-                    Timestamp = new DateTime(1970, 1, 1).AddMilliseconds(dto.milliseconds)
-                };
+                News news = new News(dto.title, dto.body, _bloodBankService.GetByName(dto.bloodBank), new DateTime(1970, 1, 1).AddMilliseconds(dto.milliseconds));
+                
                 return news;
             }
         }

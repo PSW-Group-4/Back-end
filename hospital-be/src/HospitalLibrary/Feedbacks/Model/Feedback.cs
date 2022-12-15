@@ -18,7 +18,7 @@ namespace HospitalLibrary.Feedbacks.Model
         public string Text { get; private set; }
         public bool IsAnonimous { get; private set; }
         public bool IsDesiredPublic { get;  private set; }
-        public Status Status { get; set; }
+        public Status Status { get; private set; }     //promenio, mozda ne radi proveri posle
         public Guid PatientId { get; private set; }
         public virtual Patient Patient { get; private set; }
         public DateTime Date { get; private  set; }

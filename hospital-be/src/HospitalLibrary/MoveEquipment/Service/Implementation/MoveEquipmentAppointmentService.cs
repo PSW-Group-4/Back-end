@@ -33,6 +33,19 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
 
         public void Delete(Guid id)
         {
+            MoveEquipmentAppointment moveEquipmentAppointment = GetById(id);
+            if(moveEquipmentAppointment.AbleToCancel()) 
+            {
+                return;
+            }
+            foreach(MoveEquipmentAppointment appointment in GetAll())
+            {
+                if(moveEquipmentAppointment.IsSameAppointment(appointment))
+                {
+                    _moveEquipmentTaskRepository.Delete(appointment.Id);
+                    break;
+                }
+            }
             _moveEquipmentTaskRepository.Delete(id);
         }
 
@@ -59,15 +72,15 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
             this.Create(appDest);
         }
 
-        public void MoveEquipment(DateTime moveDate)
+        public void MoveEquipment()
         {
             IEnumerable<MoveEquipmentAppointment> list = GetAll();
             foreach (MoveEquipmentAppointment app in list)
             {
-                if((app.DateRange.EndTime <= moveDate) && !(app.IsDone))
+                if(app.ShouldBeFinished())
                 {
                     MoveEquipmentToRoom(app);
-                    app.IsDone = true;
+                    app.Finish();
                     Update(app);
                 }
             }

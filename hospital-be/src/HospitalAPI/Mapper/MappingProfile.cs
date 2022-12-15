@@ -44,6 +44,7 @@ using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
 using HospitalAPI.Dtos.Renovation;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.Utility;
 
 namespace HospitalAPI.Mapper
 {
@@ -97,9 +98,15 @@ namespace HospitalAPI.Mapper
 
             CreateMap<AppointmentRequestDto, MedicalAppointment>().ForMember(dest=> dest.DateRange,
                 opt => opt.MapFrom(src => new DateRange(src.StartTime,src.StartTime.AddMinutes(30))));
+
+            CreateMap<AppointmentRequestPatientDto, MedicalAppointment>().ForMember(dest => dest.DateRange,
+                opt => opt.MapFrom(src => new DateRange(src.Date, src.Date.AddMinutes(30))));
+
             CreateMap<VacationRequestDto, Vacation>();
 
             CreateMap<BloodConsumptionRecordRequestDto, BloodConsumptionRecord>();
+            CreateMap<BloodConsumptionRecord, BloodConsumptionRecordRequestDto>().ForMember(dest => dest.Amount, 
+                opt => opt.MapFrom(src => src.Amount.Value));
             CreateMap<BloodSupplyDto, BloodSupply>();
             CreateMap<Feedback, FeedbackPatientResponseDto>().ForMember(dest => dest.PatientFullname,
                 opt => opt.MapFrom(src => ResolveFeedbackPatientFullName(src)));
@@ -159,6 +166,8 @@ namespace HospitalAPI.Mapper
 
             CreateMap<RenovationAppointmentDto, RenovationDataDto>();
             CreateMap<RoomRenovationPlanDto, RoomRenovationPlan>();
+
+            CreateMap<AppointmentRequestWithSuggestionsDto, RequestForAppointmentSlotSuggestions>();
 
         }
 

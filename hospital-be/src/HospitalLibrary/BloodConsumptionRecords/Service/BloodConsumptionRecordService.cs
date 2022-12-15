@@ -33,9 +33,9 @@ namespace HospitalLibrary.BloodConsumptionRecords.Service
         {
             BloodSupply supplyToUpdate = _bloodSupplyService.GetByType(bloodConsumptionRecord.BloodType);
 
-            if (supplyToUpdate.Amount - bloodConsumptionRecord.Amount < 0) return null;
+            if (supplyToUpdate.Amount - bloodConsumptionRecord.Amount.Value < 0) return null;
             bloodConsumptionRecord.SetDate();
-            supplyToUpdate.Amount = supplyToUpdate.Amount - bloodConsumptionRecord.Amount;
+            supplyToUpdate.Amount = supplyToUpdate.Amount - bloodConsumptionRecord.Amount.Value;
             _bloodSupplyService.Update(supplyToUpdate);
 
             //_bloodUsageService.Create(ConsumptionUsageConverter.Convert(bloodConsumptionRecord));

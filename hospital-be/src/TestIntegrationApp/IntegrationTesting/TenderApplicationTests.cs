@@ -32,8 +32,10 @@ namespace TestIntegrationApp.IntegrationTesting
             return new TenderApplicationController(scope.ServiceProvider.GetRequiredService<ITenderApplicationService>(), scope.ServiceProvider.GetRequiredService<ITenderService>(), scope.ServiceProvider.GetRequiredService<IBloodBankService>());
         }
         private static TenderApplicationService SetupService(IServiceScope scope)
-        {// ITenderRepository tenderRepository, IBloodBankRepository _bloodBankRepository
-            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>(), scope.ServiceProvider.GetRequiredService<ITenderRepository>(), scope.ServiceProvider.GetRequiredService<IBloodBankRepository>());
+        {
+            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>(),
+                                                scope.ServiceProvider.GetRequiredService<ITenderRepository>(),
+                                                scope.ServiceProvider.GetRequiredService<IBloodBankRepository>());
         }
         private static BloodBankService SetupBloodBankService(IServiceScope scope)
         {

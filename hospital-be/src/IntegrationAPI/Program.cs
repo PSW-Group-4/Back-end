@@ -24,10 +24,11 @@ namespace IntegrationAPI
                 })
                 .ConfigureServices(services =>
                 {
-                    services.AddHostedService<BloodListener>();
-                    services.AddHostedService<NewsListener>();
-                    services.AddHostedService<BloodRequestResponseListener>();
-                    services.AddHostedService<BloodSubscriptionResponseListener>();
+                    services
+                        .AddHostedService<BloodSubscriptionResponseListener>()
+                        .AddHostedService<BloodListener>()
+                        .AddHostedService<NewsListener>()
+                        .AddHostedService<BloodRequestResponseListener>();
                 });
     }
 }

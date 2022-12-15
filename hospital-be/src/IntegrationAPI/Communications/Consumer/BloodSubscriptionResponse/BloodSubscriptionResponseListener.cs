@@ -32,6 +32,14 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Started BloodSubscriptionResponseListener");
+            Task.Run(() => Listen(cancellationToken));
+            
+            return Task.CompletedTask;
+        }
+
+        public void Listen(CancellationToken cancellationToken)
+        {
             ConsumerConfig config = new()
             {
                 GroupId = groupId,
@@ -69,9 +77,7 @@ namespace IntegrationAPI.Communications.Consumer.BloodSubscriptionResponse
             {
                 Debug.WriteLine(ex.Message);
             }
-            return Task.CompletedTask;
         }
-
         public Task StopAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
