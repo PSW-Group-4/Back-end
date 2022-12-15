@@ -246,10 +246,33 @@ namespace TestHospitalApp.Setup
                 DeniedRequestReason = ""
             };
 
-            context.Vacations.Add(vacationWFA);
+            Vacation vacation1 = new Vacation
+            {
+                Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DateStart = new DateTime(2022, 10, 10),
+                DateEnd = new DateTime(2022,10,17),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = true,
+                VacationStatus = VacationStatus.Approved,
+                DeniedRequestReason = "Nesto"
+            };
+            Vacation vacation2 = new Vacation
+            {
+                Id = new Guid("5c036fba-1108-4f4b-b153-90d75e60625e"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                DateStart = new DateTime(2022, 5, 10),
+                DateEnd = new DateTime(2022, 5, 17),
+                Reason = "Zato sto mi je dodijalo",
+                Urgent = false,
+                VacationStatus = VacationStatus.Approved,
+                DeniedRequestReason = ""
+            };
+
             context.Vacations.Add(vacationA);
-
-
+            context.Vacations.Add(vacationWFA);
+            context.Vacations.Add(vacation1);
+            context.Vacations.Add(vacation2);
 
             // BEDS
 

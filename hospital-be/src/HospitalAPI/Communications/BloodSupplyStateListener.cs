@@ -25,7 +25,14 @@ namespace HospitalAPI.Communications
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            var config = new ConsumerConfig
+            Console.WriteLine("Started BloodSupplyStateListener");
+            Task.Run(() => Listen(cancellationToken));
+            return Task.CompletedTask;
+        }
+
+        public void Listen(CancellationToken cancellationToken)
+        {
+            ConsumerConfig config = new ConsumerConfig
             {
                 GroupId = groupId,
                 BootstrapServers = bootstrapServers,
@@ -34,7 +41,7 @@ namespace HospitalAPI.Communications
 
             try
             {
-                using (var scope = _serviceScopeFactory.CreateScope())
+                using (IServiceScope scope = _serviceScopeFactory.CreateScope())
                 {
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
@@ -44,7 +51,7 @@ namespace HospitalAPI.Communications
                         BloodSupplyStateConsumer bloodSupplyConsumer = new(consumerBuilder, cancelToken, bloodSupplyService);
                         try
                         {
-                            while (false)
+                            while (true)
                             {
                                 BloodSupply bloodSupply = bloodSupplyConsumer.Consume();
                                 Console.WriteLine("Hospital received blood!");
@@ -62,7 +69,6 @@ namespace HospitalAPI.Communications
                 Debug.WriteLine(ex.Message);
             }
 
-            return Task.CompletedTask;
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {

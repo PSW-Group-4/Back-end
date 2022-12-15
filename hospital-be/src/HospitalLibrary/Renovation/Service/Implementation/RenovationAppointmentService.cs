@@ -7,6 +7,7 @@ using HospitalLibrary.Renovation.Repository.Interfaces;
 using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.RoomsAndEqipment.Service.Interfaces;
+using HospitalLibrary.MoveEquipment.Model;
 
 namespace HospitalLibrary.Renovation.Service.Implementation
 {
@@ -28,6 +29,25 @@ namespace HospitalLibrary.Renovation.Service.Implementation
 
         public void Delete(Guid id)
         {
+            RenovationAppointment renovation= GetById(id);
+            
+            if (renovation.DateRange.StartTime.AddDays(-1) < DateTime.Now)
+            {
+                return;
+            }
+            //if it use two rooms, delete appointment in both of them
+            //not the best logic, because of project construction, but works for now
+            if(renovation.Type == RenovationAppointment.TypeOfRenovation.Merge) {
+                foreach (RenovationAppointment appointment in GetAll())
+                {
+                    if (appointment.Id != id && appointment.DateRange.StartTime == renovation.DateRange.StartTime)
+                    {
+                        _renovationAppointmentRepository.Delete(appointment.Id);
+                        break;
+                    }
+                }
+            }
+            
             _renovationAppointmentRepository.Delete(id);
         }
 

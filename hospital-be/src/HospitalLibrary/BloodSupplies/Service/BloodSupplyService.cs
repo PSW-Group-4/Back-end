@@ -48,8 +48,11 @@ namespace HospitalLibrary.BloodSupplies.Service
         public BloodSupply UpdateByType(string type, double amount)
         {
             BloodSupply bloodSupply = GetByType(type);
+            Console.WriteLine("Before: " + type + " " +  bloodSupply.Amount);
             bloodSupply.Amount += amount;
-            return _bloodSupplyRepository.Update(bloodSupply);
+            BloodSupply updated = _bloodSupplyRepository.Update(bloodSupply);;
+            Console.WriteLine("After: " + type + " " +  updated.Amount);
+            return updated;
         }
     }
 }

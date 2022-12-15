@@ -54,30 +54,32 @@ namespace TestHospitalApp.EndToEndTesting.Tests.CancelAppointment
         [Fact]
         public void Cancel_move_equipment_appointment()
         {
-            //CancelAppointmentPage.tabDisplayedAndClicked();
-            //Assert.True(CancelAppointmentPage.tabDisplayedAndClicked());
-            Assert.True(CancelAppointmentPage.EnsurePageIsDisplayed());
-            Assert.True(CancelAppointmentPage.clickTable());
+            //CancelAppointmentPage.Navigate();
+            CancelAppointmentPage.EnsurePageIsDisplayed();
             rowCount = CancelAppointmentPage.GetRowsCount();    //Problem
-            //Assert.NotEqual(0, rowCount);
+
+            Assert.NotEqual(0, rowCount);
+            Assert.True(CancelAppointmentPage.TrPressed());
             CancelAppointmentPage.TrPressed();
-            
-            //Assert.True(CancelAppointmentPage.TrPressed());
-            //CancelAppointmentPage.NavigateRoom();
-            //CancelAppointmentPage.DivSelected();
-            //Assert.True(CancelAppointmentPage.DivSelected());
-            CancelAppointmentPage.ShowRoomScheduleButtonPressed();
-            //Assert.True(CancelAppointmentPage.ShowRoomScheduleButtonPressed());
-            //CancelAppointmentPage.EnsureEndPageIsDisplayed();
-            CancelAppointmentPage.EquipmentRelocationTabPressed();
-            CancelAppointmentPage.EquipmentRelocationTablePressed();
-            CancelAppointmentPage.CancelMoveEquipmentAppointmentButtonPressed();
+            CancelAppointmentPage.TrPressed();
+            Assert.True(CancelAppointmentPage.ShowRoomScheduleButtonPressed());
+            CancelAppointmentPage.EnsureEndPageIsDisplayed();
+            int rowForMEA = CancelAppointmentPage.GetRowsCountForMoveEquipment();
+            Assert.True(CancelAppointmentPage.CancelMoveEquipmentAppointmentButtonPressed());
+            CancelAppointmentPage.RefreshPage();
 
-            //
-            //Assert.True(CancelAppointmentPage.CancelMoveEquipmentAppointmentButtonPressed());
-            //Assert.True(CancelAppointmentPage.DivSelected());
+            CancelAppointmentPage.EnsurePageIsDisplayed();
+            rowCount = CancelAppointmentPage.GetRowsCount();    //Problem
 
-            //Assert.Equal(rowCount, CancelAppointmentPage.GetRowsCount());
+            Assert.NotEqual(0, rowCount);
+            Assert.True(CancelAppointmentPage.TrPressed());
+            CancelAppointmentPage.TrPressed();
+
+            Assert.True(CancelAppointmentPage.ShowRoomScheduleButtonPressed());
+           
+            Assert.NotEqual(rowForMEA, CancelAppointmentPage.GetRowsCountForMoveEquipment());
         }
+
+       
     }
 }
