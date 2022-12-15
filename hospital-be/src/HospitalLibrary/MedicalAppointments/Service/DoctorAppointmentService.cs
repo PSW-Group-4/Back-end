@@ -119,8 +119,10 @@ namespace HospitalLibrary.Appointments.Service
             RequestForAppointmentSlotSuggestions request)
         {
             List<DateRange> result = new List<DateRange>();
+            request.StartDate = request.StartDate.AddDays(1);
+            request.EndDate = request.EndDate.AddDays(1);
 
-            foreach(DateTime date in SetupRequestDates(request.StartDate, request.EndDate))
+            foreach (DateTime date in SetupRequestDates(request.StartDate, request.EndDate))
             {
                 result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, request.DoctorId));
             }
@@ -181,7 +183,10 @@ namespace HospitalLibrary.Appointments.Service
 
             for (int i = 1; i <= 5; i++)   //doctor ignores the date, but appointments must be 5 days before/after the chosen date
             {
-                result.Add(startDate.AddDays(-i));
+                if (startDate.AddDays(-i) > DateTime.Now)
+                {
+                    result.Add(startDate.AddDays(-i));
+                }
                 result.Add(endDate.AddDays(i));
             }
             return result;
