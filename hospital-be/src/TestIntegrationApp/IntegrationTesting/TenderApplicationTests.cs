@@ -32,8 +32,8 @@ namespace TestIntegrationApp.IntegrationTesting
             return new TenderApplicationController(scope.ServiceProvider.GetRequiredService<ITenderApplicationService>(), scope.ServiceProvider.GetRequiredService<ITenderService>(), scope.ServiceProvider.GetRequiredService<IBloodBankService>());
         }
         private static TenderApplicationService SetupService(IServiceScope scope)
-        {
-            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>());
+        {// ITenderRepository tenderRepository, IBloodBankRepository _bloodBankRepository
+            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>(), scope.ServiceProvider.GetRequiredService<ITenderRepository>(), scope.ServiceProvider.GetRequiredService<IBloodBankRepository>());
         }
         private static BloodBankService SetupBloodBankService(IServiceScope scope)
         {
@@ -57,7 +57,7 @@ namespace TestIntegrationApp.IntegrationTesting
             {
                 BloodBankId = banks.First().Id,
                 TenderId = tenders.First().Id,
-                PriceInRSD = 30000
+                Price = new Price(30000, "RSD")
             };
 
             tenderApplicationController.Apply(applicationDto);

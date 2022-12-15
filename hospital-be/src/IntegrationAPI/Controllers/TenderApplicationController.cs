@@ -32,11 +32,7 @@ namespace IntegrationAPI.Controllers
         }
         [HttpPost]
         public ActionResult Apply(ApplyForTenderDto tenderApplication) {
-            TenderApplication application = new TenderApplication();
-            application.ApplicationId = Guid.NewGuid();
-            application.BloodBank = _bloodBankService.GetById(tenderApplication.BloodBankId);
-            application.Tender = _tenderService.GetById(tenderApplication.TenderId);
-            application.PriceInRSD = tenderApplication.PriceInRSD;
+            TenderApplication application = new TenderApplication(_bloodBankService.GetById(tenderApplication.BloodBankId), _tenderService.GetById(tenderApplication.TenderId), tenderApplication.Price);
             return Ok(_service.Apply(application));
         }
         [Route("tender"), HttpPost]
