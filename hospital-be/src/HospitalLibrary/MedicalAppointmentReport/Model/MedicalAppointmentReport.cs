@@ -32,16 +32,19 @@ namespace HospitalLibrary.AppointmentReport.Model
 
         private bool IsValid()
         {
-            if (Report == null)
+            foreach (string setting in Settings) 
             {
-                return false;
+                if (!(setting.Contains("lek") || setting.Contains("dijagnoza") || setting.Contains("pacijent") || setting.Contains("simptomi") || setting.Contains("")))
+                {
+                    return false;
+                }
             }
             return true;
         }
 
         private bool IsValidSettings()
         {
-            if (!(Settings.Contains("lek") || Settings.Contains("dijagnoza") || Settings.Contains("pacijent") || Settings.Contains("simptomi") || Settings.Equals("")))
+            if (Settings == null)
                 return false;
             return true;
         }
