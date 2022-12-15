@@ -51,15 +51,14 @@ namespace IntegrationAPI.Controllers
         }
 
         [Route("manage"), HttpPost]
-        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
+        //[ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Manage(BloodRequestEditDto bloodRequestDto) {
             BloodRequest bloodRequest = _service.GetById(bloodRequestDto.Id);
             bloodRequest.IsApproved = bloodRequestDto.IsApproved;
             bloodRequest.ManagerId = bloodRequestDto.ManagerId;
             if(bloodRequestDto.IsApproved)
             {
-                bloodRequest.BloodBank = bloodBankService.GetByName(bloodRequestDto.BloodBank);
-                BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.Blood.BloodType.ToString(), bloodRequest.Blood.Amount, bloodRequest.SendOnDate, bloodRequest.BloodBank.Name, bloodRequest.IsUrgent);
+                BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.Blood.BloodType.ToString(), bloodRequest.Blood.Amount, bloodRequest.SendOnDate, bloodRequest.IsUrgent);
                 bloodRequestProducer.Send(JsonSerializer.Serialize(messageDto), "blood.requests.topic");
             } else
             {

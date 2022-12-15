@@ -11,7 +11,6 @@ namespace IntegrationAPI.Dtos.BloodRequests
     {
         public Guid Id { get; set; }
         public String Reason { get; set; }
-        public String BloodBank { get; set; }
         public Boolean IsApproved { get; set; }
         public String RejectionComment { get; set; }
         public String ManagerId { get; set; }

@@ -24,6 +24,14 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Started BloodRequestResponseListener");
+            Task.Run(() => Listen(cancellationToken));
+            
+            return Task.CompletedTask;
+        }
+
+        public void Listen(CancellationToken cancellationToken)
+        {
             ConsumerConfig config = new()
             {
                 GroupId = groupId,
@@ -43,10 +51,9 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
                         BloodRequestResponseConsumer consumer = new(consumerBuilder, cancelToken, bloodRequestService);
                         try
                         {
-                            while (false)
+                            while (true)
                             {
                                 BloodRequest response = consumer.Consume();
-                                bloodRequestService.Update(response);
                             }
                         }
                         catch (OperationCanceledException)
@@ -60,8 +67,6 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
             {
                 Debug.WriteLine(ex.Message);
             }
-
-            return Task.CompletedTask;
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {
