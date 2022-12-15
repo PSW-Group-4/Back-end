@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IntegrationAPI.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IntegrationAPI.Controllers
 {
@@ -31,6 +33,7 @@ namespace IntegrationAPI.Controllers
             return Ok(tenderApplications);
         }
         [HttpPost]
+        [Authorize(Roles = "BloodBank")]
         public ActionResult Apply(ApplyForTenderDto tenderApplication) {
             TenderApplication application = new TenderApplication();
             application.ApplicationId = Guid.NewGuid();
@@ -44,6 +47,7 @@ namespace IntegrationAPI.Controllers
             return Ok(_service.GetByTender(Guid.Parse(tenderId)));
         }
         [Route("accept"), HttpPost]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult AcceptOffer(string applicationId) {
             TenderApplication application = _service.FindById(Guid.Parse(applicationId));
             return Ok(_service.AcceptOffer(application));
