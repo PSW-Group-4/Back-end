@@ -141,9 +141,6 @@ namespace HospitalLibrary.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<double>("Amount")
-                        .HasColumnType("double precision");
-
                     b.Property<string>("BloodType")
                         .HasColumnType("text");
 
@@ -901,6 +898,25 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsOne("HospitalLibrary.BloodConsumptionRecords.Model.Amount", "Amount", b1 =>
+                        {
+                            b1.Property<Guid>("BloodConsumptionRecordId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<double>("Value")
+                                .HasColumnType("double precision")
+                                .HasColumnName("AmountValue");
+
+                            b1.HasKey("BloodConsumptionRecordId");
+
+                            b1.ToTable("BloodConsumptionRecords");
+
+                            b1.WithOwner()
+                                .HasForeignKey("BloodConsumptionRecordId");
+                        });
+
+                    b.Navigation("Amount");
 
                     b.Navigation("Doctor");
                 });

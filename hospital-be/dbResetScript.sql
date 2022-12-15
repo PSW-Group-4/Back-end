@@ -230,47 +230,17 @@ INSERT INTO public."Feedbacks" ("Id","Text","IsAnonimous","IsDesiredPublic","Sta
 	 ('3e75f50a-6cf1-4818-8f82-445c89c4e430','Excellent',false,true,0,'11f66ba5-eabb-4956-bdd4-960b83201d0b','2022-10-29 19:07:45.829214'),
 	 ('aec658b3-bcd5-43db-8668-8361363923ef','Doctor Strahinja chopped my finger and laughed',true,false,0,'13984a82-bdac-42f5-b856-d76df3f85f9b','2022-10-29 19:07:12.273741');
 
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('hgradon0', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '123a835d-0998-4e5e-b55f-d1ec6f8f1ad2');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('gtorbeck1', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('nsaffill2', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '501cb78e-d157-49b5-9093-f87833f5ab42');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('agreengrass3', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '7306ce59-2c2e-4b8c-8dc6-6b1977a237fa');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('rprozescky4', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '11f66ba5-eabb-4956-bdd4-960b83201d0b');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('rlanphier5', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '13984a82-bdac-42f5-b856-d76df3f85f9b');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('dbattie6', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'ba871e05-a586-4d23-aa90-b7a86bbfb264');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('clotwich7', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '12cd00c4-cd4f-4597-97d7-d642181c278f');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('mbanthorpe8', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '210809af-8fdc-467a-a07f-2ee188a345e1');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('lgodier9', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '44cf702e-4e04-40c0-9098-841852fe498f');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('gisgara', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '940e3bd6-b09a-45bd-8799-788d570c8592');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jgomeryb', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '2d21cf4e-9b59-432e-9467-cd663851a344');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jrubinowc', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '684f17a4-2474-474d-9c46-cd9a9d22b687');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('bgrayerd', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'de6a91ee-bac0-439e-85aa-2bee3c6da92c');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('ufurye', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '11942a9c-850e-489a-8434-98704889d8ed');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('htonsleyf', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '1c993005-265d-40b8-8804-4d84f02aadd4');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('cshentong', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '886dd1c8-8057-4538-b993-3e42c805e7a6');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('awhitsunh', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'cf5f4283-d409-42ca-bb12-6dbec77563d0');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('ldekeyseri', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '70d9229a-73e2-455e-a3f6-81b5380979cf');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('kbeaneyj', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '59fd4e8a-0ed7-4c81-939d-fec17dffe9d0');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('dpridittk', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '666afc0c-1256-4752-8769-2c32769ff55e');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('cmcettrickl', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '608d9eda-335f-42c9-aeee-942673984d2b');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('ffilipovicm', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'be06968d-fa84-43db-8834-b1ae7b990f8e');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('bsuermeiersn', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '2f965ffe-c645-4e43-bd34-f3c89c2d06ab');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('acobdeno', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'a401926d-2cc7-43d3-af2e-1361212b2298');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jkermeenp', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'c1db258b-3034-4ba5-98bd-4f68137bac94');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('shigounetq', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'eec1b3d6-19e2-4ba4-8710-ee5b9c8ceafa');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('lhanhardr', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '2cf39222-eb6d-4234-b0f8-858277bbfe88');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('amacvanamys', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 2, '5e8db58e-d1f8-4a1c-800d-4b017a4817b0');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('famost', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'fe8935e7-9d48-4ec9-b68f-a2ee2afc3d4b');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('ndelguau', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '543edc56-3093-4f56-92a6-14a84efb06ac');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('cleacyv', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '5d3afaa2-9680-4ec2-8993-384a5509c0ae');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('vmecchiw', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '0d5bdccd-19ec-4e52-9c43-09d7eec861d2');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('yturviex', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '026e14a8-41a7-4fc2-a98d-d9d0b88ee202');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('wbeardselly', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '1344543f-01e7-498d-a806-b4cd522331ce');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('borrocksz', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'b259d8ef-af8c-4faf-83e4-3c1022cadae0');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('bstoven10', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'e4e226d0-bb83-4536-aecf-2104e62187c4');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('egrane11', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '58c0bccf-acef-43e9-9edc-2201ef6fd2c8');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('jmuffitt12', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, '53021651-422e-4ace-9398-59559e6ebeb8');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('mpryer13', '{"PasswordValue": "54XpdkOd14ha"}', true, false, 0, 'e6fbebce-dd68-45e4-9e38-c66b98cc8197');
-INSERT INTO "Users" ("Username", "PasswordValue", "IsAccountActive", "IsBlocked", "Role") VALUES ('manager1', '{"PasswordValue": "manager1"}', true, false, 2);
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('hgradon0', '{"PasswordValue":"54XpdkOd14ha"}', true, false, 0, '123a835d-0998-4e5e-b55f-d1ec6f8f1ad2');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('gtorbeck1', '{"PasswordValue":"U0LHHu3X60"}', true, false, 0, '3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('nsaffill2', '{"PasswordValue":"FRufwDOeE"}', true, false, 0, '501cb78e-d157-49b5-9093-f87833f5ab42');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('agreengrass3', '{"PasswordValue":"HSrLcZW"}', true, false, 0, '7306ce59-2c2e-4b8c-8dc6-6b1977a237fa');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('rprozescky4', '{"PasswordValue":"gv8G2dR"}', true, false, 0, '11f66ba5-eabb-4956-bdd4-960b83201d0b');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('rlanphier5', '{"PasswordValue":"WcKFFAV"}', true, false, 0, '13984a82-bdac-42f5-b856-d76df3f85f9b');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('dbattie6', '{"PasswordValue":"VdUtpYaryJf"}', true, false, 0, 'ba871e05-a586-4d23-aa90-b7a86bbfb264');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('clotwich7', '{"PasswordValue":"ZlYRG56SHGh"}', true, false, 0, '12cd00c4-cd4f-4597-97d7-d642181c278f');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('mbanthorpe8', '{"PasswordValue":"pjrFxYt"}', true, false, 0, '210809af-8fdc-467a-a07f-2ee188a345e1');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('lgodier9', '{"PasswordValue":"lvYp08vTg"}', true, false, 0, '44cf702e-4e04-40c0-9098-841852fe498f');
+INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role") VALUES ('manager1', '{"PasswordValue":"manager1"}', true, false, 2);
 
 insert into public."Equipments" ("Id", "Name") values ('c8da3993-1a84-46c0-97bd-187991b54b4a','Krevet');
 insert into public."Equipments" ("Id", "Name") values ('497f7913-2139-4091-9a4c-0091d3b76216','Stalak za infuziju');
@@ -653,6 +623,14 @@ INSERT INTO public."MapItem"("Id", "RoomId", "CoordinateX", "CoordinateY", "Heig
 INSERT INTO public."Admissions" ("Id","PatientId","Reason","RoomId","arrivalDate") VALUES
 	 ('1412c639-c5e1-47a1-b29b-1fe925536612','11942a9c-850e-489a-8434-98704889d8ed','Povisen secer pa mora da se oporavi','54c6de76-bc71-4615-8c73-4ebf9546444f','2022-11-11 11:11:00'),
 	 ('15f4c4e0-08b2-44ef-9e1b-0f14164d59d2','c1db258b-3034-4ba5-98bd-4f68137bac94','Srcani zastoj u prednjoj komori','d4857133-ef89-4e5e-865f-b49c83ecec23','2022-09-09 10:10:00');
+	 
+INSERT INTO public."Appointments" ("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES
+	 ('c463fec0-58eb-480d-8792-ed2b0f517b7a','2022-12-18 15:20:52.995821','2022-12-18 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL),
+	 ('9d01e700-70a4-4b1c-958c-2c587ec94b4b','2022-12-17 15:20:52.995821','2022-12-17 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL),
+	 ('ea7535a8-b3ce-45c9-835f-d003f295e99f','2022-12-8 15:20:52.995821','2022-12-8 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',true,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL),
+	 ('d72d3169-fbf4-4861-ab44-0449dce91b63','2022-12-20 15:20:52.995821','2022-12-20 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',true,NULL,NULL,NULL,NULL,NULL),
+	 ('18d4953d-3c47-4d11-aa23-ff7f6d1fee69','2022-12-21 15:20:52.995821','2022-12-21 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',true,NULL,NULL,NULL,NULL,NULL),
+	 ('e687fb8d-b7a7-4e8d-be9f-d51b9e2f01cb','2022-12-15 15:20:52.995821','2022-12-15 15:50:52.995821','3bf58a45-d903-4148-8b7b-3fb0018bda83','MedicalAppointment',false,'7875c605-4989-465c-8cbc-2f93f2b1612e','3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17',false,NULL,NULL,NULL,NULL,NULL);
 
 
 INSERT INTO public."Vacations" ("Id", "DoctorId", "DateStart", "DateEnd", "Reason", "Urgent", "VacationStatus", "DeniedRequestReason") VALUES
