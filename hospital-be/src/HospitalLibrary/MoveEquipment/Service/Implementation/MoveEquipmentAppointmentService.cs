@@ -64,7 +64,7 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
             IEnumerable<MoveEquipmentAppointment> list = GetAll();
             foreach (MoveEquipmentAppointment app in list)
             {
-                if(app.ShouldBeFinished() && !(app.IsDone))
+                if(app.ShouldBeFinished())
                 {
                     MoveEquipmentToRoom(app);
                     app.Finish();
