@@ -10,6 +10,7 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Vacations.Service;
 using HospitalLibrary.Vacations.Repository;
 using HospitalLibrary.Consiliums.Repository;
+using iTextSharp.text;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -110,13 +111,44 @@ namespace HospitalLibrary.Appointments.Service
             return list;
         }
 
+        public List<DateRange> getAvailableTerminsForAnotherDoctor(DateTime timeStart, DateTime timeEnd, Guid patientId, Guid doctorId)
+        {
+            List<DateRange> res = new List<DateRange>();
+            DateRange dateRange = new DateRange(timeStart, timeEnd);
+            DateTime start = new DateTime(dateRange.StartTime.Year, dateRange.StartTime.Month, dateRange.StartTime.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Minute, 0);
+            DateTime WorkTimeStart = new DateTime(dateRange.StartTime.Year, dateRange.StartTime.Month, dateRange.StartTime.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeStart).Minute, 0);
+            DateTime WorkTimeEnd = new DateTime(dateRange.StartTime.Year, dateRange.StartTime.Month, dateRange.StartTime.Day, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeEnd).Hour, DateTime.Parse(_doctorRepository.GetById(doctorId).WorkingTimeEnd).Minute, 0);
+            timeEnd = timeEnd.AddDays(1);
+            double addDays = 1;
+
+            
+            while (DateTime.Compare(timeEnd, WorkTimeStart) > 0)
+            {                
+                DateRange terminRange = new DateRange(WorkTimeStart, WorkTimeEnd);
+                if (IsDoctorAvailable(doctorId, WorkTimeStart) && _medicalAppointmentService.IsPatientFree(patientId, terminRange))
+                {
+                    DateRange abailableTerin = new DateRange(WorkTimeStart, WorkTimeStart.AddMinutes(30));
+                    res.Add(abailableTerin);
+                }
+                WorkTimeStart = WorkTimeStart.AddMinutes(30);
+                if(DateTime.Compare(WorkTimeStart, WorkTimeEnd) > 0)
+                {                    
+                    WorkTimeStart = start;
+                    WorkTimeEnd = WorkTimeEnd.AddDays(1);
+                    WorkTimeStart = WorkTimeStart.AddDays(1);                    
+                }           
+                
+            } 
+            return res;
+        }
+
         //TODO refactor
         //PETAR
         public bool IsDoctorAvailable(Guid doctorId, DateTime time)
         {
             Doctor doctor = _doctorRepository.GetById(doctorId);
             // da li je u radnom vremenu termin
-            if (!IsInDoctorWorkingTime(doctor, time))
+            if (!doctor.IsInWorkHours(time))
             {
                 return false;
             }
@@ -148,19 +180,6 @@ namespace HospitalLibrary.Appointments.Service
             return IsDoctorWorkTimeAvailable(time);*/
         }
 
-
-        private bool IsInDoctorWorkingTime(Doctor doctor, DateTime date)
-        {
-            DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(doctor.WorkingTimeStart).Hour, DateTime.Parse(doctor.WorkingTimeStart).Minute, 0);
-            DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(doctor.WorkingTimeEnd).Hour, DateTime.Parse(doctor.WorkingTimeEnd).Minute, 0);
-
-            if (DateTime.Compare(date, WorkTimeStart) >= 0
-                && DateTime.Compare(date, WorkTimeEnd) < 0)
-            {
-                return true;
-            }
-            return false;
-        }
         private bool IsDoctorOnMedicalAppointment(Doctor doctor, DateTime date)
         {
             IEnumerable<MedicalAppointment> allDoctorsAppointments = GetDoctorAppointments(doctor.Id);
@@ -173,6 +192,7 @@ namespace HospitalLibrary.Appointments.Service
                 }
             }
             return false;
+            
         }
 
 

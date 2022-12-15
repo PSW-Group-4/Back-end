@@ -1,32 +1,31 @@
 ﻿using HospitalAPI;
-using HospitalLibrary.BloodSupplies.Model;
-using HospitalLibrary.Settings;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Linq;
-using System;
-using HospitalLibrary.BuildingManagment.Model;
-using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Core.Model;
-using HospitalLibrary.RoomsAndEqipment.Model;
-using HospitalLibrary.Patients.Model;
+using HospitalLibrary.AdmissionHistories.Model;
 using HospitalLibrary.Admissions.Model;
+using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.BloodSupplies.Model;
+using HospitalLibrary.BuildingManagment.Model;
+using HospitalLibrary.Consiliums.Model;
+using HospitalLibrary.Core.Model;
+using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Medicines.Model;
+using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.Reports.Model;
+using HospitalLibrary.RoomsAndEqipment.Model;
+using HospitalLibrary.Settings;
+using HospitalLibrary.Symptoms.Model;
+using HospitalLibrary.Users.Model;
+using HospitalLibrary.Vacations.Model;
+using IntegrationLibrary.Common;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using HospitalLibrary.Vacations.Model;
-using HospitalLibrary.Appointments.Model;
-using HospitalLibrary.AdmissionHistories.Model;
-using HospitalAPI.Controllers;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
-using HospitalLibrary.EquipmentRelocation.DTO;
-using HospitalLibrary.Users.Model;
-using IntegrationLibrary.Common;
-using HospitalLibrary.Symptoms.Model;
-using HospitalLibrary.Medicines.Model;
-using HospitalLibrary.Consiliums.Model;
-using HospitalLibrary.Renovation.Model;
+using System.Linq;
 
 namespace TestHospitalApp.Setup
 {
@@ -44,7 +43,7 @@ namespace TestHospitalApp.Setup
                 var db = scopedServices.GetRequiredService<HospitalDbContext>();
 
                 InitializeDatabase(db);
-                while (isDbCreated) {}
+                while (isDbCreated) { }
             });
         }
 
@@ -87,52 +86,52 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Prescriptions\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Medicines\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomsEquipment\" RESTART IDENTITY CASCADE;");
+            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Admissions\" RESTART IDENTITY CASCADE;");
 
-            Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
+            Address address = new Address { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8123ef3ea2"), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
 
-            Building building = new Building { Id = new Guid(), Name = "Zgrada" };
+            Building building = new Building { Id = new Guid("f6923bfe-0246-4e2b-94e1-4b8023ef3ea2"), Name = "Zgrada" };
             context.Buildings.Add(building);
 
-            Room room = new Room { Id = new Guid(), Name = "Soba", Number = 10, Description = "Opis sobe" };
+            Room room = new Room { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea2"), Name = "Soba", Number = 10, Description = "Opis sobe" };
             context.Rooms.Add(room);
 
-            Doctor doctor = new Doctor
-            {
-                Id = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
-                Name = "Test Doctor",
-                Surname = "Test Doctor",
-                WorkingTimeStart = "9:00",
-                WorkingTimeEnd = "12:00",
-                Gender = Gender.Female,
-                Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("doctor@test.com"),
-                PhoneNumber = "066/123-456",
-                Speciality = "Surgeon",
-                LicenceNum = "12345",
-                RoomId = room.Id,
-                AddressId = address.Id
-            };
-            Doctor doctor1 = new Doctor
-            {
-                Id = new Guid("5c036fba-1318-4f4b-b153-90d75e60625e"),
-                Name = "Test Doctor",
-                Surname = "Test Doctor",
-                WorkingTimeStart = "9:00",
-                WorkingTimeEnd = "12:00",
-                Gender = Gender.Female,
-                Birthdate = new DateTime(1973, 9, 28, 0, 0, 0),
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("doctor@test.com"),
-                PhoneNumber = "066/123-456",
-                Speciality = "Surgeon",
-                LicenceNum = "12345",
-                RoomId = room.Id,
-                AddressId = address.Id
-            };
+            String WorkingTimeStart1 = "9:00";
+            String WorkingTimeEnd1 = "12:00";
+            String Speciality1 = "Surgeon";
+            String LicenceNum1 = "12345";
+
+
+            Doctor doctor = new Doctor(new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"), "Test Doctor", "Test Doctor",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
+                new Email("doctor@test.com"), "066/123-456", LicenceNum1, Speciality1, WorkingTimeStart1,
+                WorkingTimeEnd1, room.Id, room);
+
+
+
+
+            String WorkingTimeStart = "9:00";
+            String WorkingTimeEnd = "12:00";
+            String Speciality = "Surgeon";
+            String LicenceNum = "12345";
+
+            Doctor doctor1 = new Doctor(new Guid("5c036fba-1318-4f4b-b153-90d75e60625e"), "Test Doctor", "Test Doctor",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
+                new Email("doctor@test.com"), "066/123-456", LicenceNum, Speciality, WorkingTimeStart,
+                WorkingTimeEnd, room.Id, room);
+
+            Doctor doctorConsilium = new Doctor(new Guid("5c125fba-1318-4f4b-b153-90d75e60625e"), "Test Doctor Sastanak", "Test Doctor Sastanak",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
+                new Email("doctor@test.com"), "066/123-456", "12345", "Surgeon", "1:00",
+                "21:00", room.Id, room);
+
+
+
+         
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
+            context.Doctors.Add(doctorConsilium);
 
             BloodSupply bloodSupply1 = new BloodSupply { BloodType = BloodType.FromString("A+"), Amount = 200.00 };
             context.BloodSupply.Add(bloodSupply1);
@@ -140,38 +139,7 @@ namespace TestHospitalApp.Setup
             BloodSupply bloodSupply2 = new BloodSupply { BloodType = BloodType.FromString("B+"), Amount = 0.00 };
             context.BloodSupply.Add(bloodSupply2);
 
-            Patient patient = new Patient
-            {
-                Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"),
-                BloodType = BloodType.FromString("A+"),
-                ChoosenDoctorId = doctor.Id,
-                Name = "Petar",
-                Surname = "Popovic",
-                Birthdate = DateTime.Now,
-                Gender = Gender.Male,
-                AddressId = address.Id,
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("mail@gmail.pir"),
-                PhoneNumber = "066413242"
-            };
-
-            Patient patient2 = new Patient
-            {
-                Id = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"),
-                BloodType = BloodType.FromString("A+"),
-                ChoosenDoctorId = doctor.Id,
-                Name = "Test",
-                Surname = "Test",
-                Birthdate = DateTime.Now,
-                Gender = Gender.Male,
-                AddressId = address.Id,
-                Jmbg = new Jmbg("1807000730038"),
-                Email = new Email("mail2@gmail.pir"),
-                PhoneNumber = "066413242"
-            };
-
-            context.Patients.Add(patient);
-            context.Patients.Add(patient2);
+        
 
 
             //Symptoms
@@ -187,6 +155,53 @@ namespace TestHospitalApp.Setup
 
             context.Medicines.Add(medicine1);
             context.Medicines.Add(medicine2);
+
+            List<Prescription> prescriptions = new List<Prescription>();
+            List<Medicine> medicines = new List<Medicine>();
+            medicines.Add(medicine1);
+            medicines.Add(medicine2);
+
+            Patient patient = new Patient(new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"), "Petar", "Popovic", DateTime.Now, Gender.Male, address, new Jmbg("1807000730038"),
+                new Email("mail@gmail.pir"), "066413242", BloodType.FromString("A+"));
+            patient.AppointTheChosenDoctor(doctor1);
+
+            Patient patient2 = new Patient(new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"), "Petar", "Popovic", DateTime.Now, Gender.Male, address, new Jmbg("1807000730038"),
+                new Email("mail@gmail.pir"), "066413242", BloodType.FromString("A+"));
+            patient2.AppointTheChosenDoctor(doctor1);
+
+
+            context.Patients.Add(patient);
+            context.Patients.Add(patient2);
+
+
+
+            MedicalAppointment medicalAppointment = new MedicalAppointment
+            {
+                RoomId = room.Id,
+                Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+                PatientId = patient.Id
+            };
+
+            Prescription prescription = new Prescription
+            {
+                Id = new Guid("0acea4a3-7101-4b0c-8c76-be553afbf84f"),
+                DateTime = new DateTime(),
+                Medicines = medicines
+            };
+            prescriptions.Add(prescription);
+            List<Symptom> symptoms = new List<Symptom>();
+            symptoms.Add(symptom1);
+            symptoms.Add(symptom2);
+            Report report = new Report
+            {
+                Id = new Guid("058eb841-3975-4c7a-83ad-8b81dd6744d9"),
+                MedicalAppointmentId = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+                Text = "Opaka bolest",
+                Symptoms = symptoms,
+                Prescriptions = prescriptions,
+                DateTime = new DateTime()
+            };
 
             Admission admission = new Admission
             {
@@ -234,13 +249,7 @@ namespace TestHospitalApp.Setup
             context.Vacations.Add(vacationWFA);
             context.Vacations.Add(vacationA);
 
-            MedicalAppointment medicalAppointment = new MedicalAppointment
-            {
-                RoomId = room.Id,
-                Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
-                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),   
-                PatientId = patient.Id
-            };
+
 
             // BEDS
 
@@ -264,13 +273,14 @@ namespace TestHospitalApp.Setup
             context.Equipments.Add(eq);
             context.Equipments.Add(eq2);
             context.Equipments.Add(eq3);
-            
 
-            Bed bed1 = new Bed {
+
+            Bed bed1 = new Bed
+            {
                 Id = new Guid("5c036fba-1118-4f4b-b153-90d75e606251"),
                 IsFree = true,
                 equipmentId = new Guid("5c036fba-1118-4f4b-b153-90d75e606299"),
-                
+
             };
             Bed bed2 = new Bed
             {
@@ -300,7 +310,7 @@ namespace TestHospitalApp.Setup
                 Name = "Ime sobee",
                 Number = 10,
                 Description = "Opis",
-                BedIds =  new List<Guid>() ,
+                BedIds = new List<Guid>(),
             };
 
             patientRoom.BedIds.Add(bed1.Id);
@@ -315,7 +325,7 @@ namespace TestHospitalApp.Setup
             };
             Appointment schedule2 = new Appointment
             {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-abc1b52ad225"),
+                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d224"),
                 IsDone = true,
                 RoomId = room.Id
             };
@@ -327,7 +337,7 @@ namespace TestHospitalApp.Setup
             initUsers(context);
 
             //Consiliums
-            initConsiliums(context);
+            initConsiliums(context, doctorConsilium);
 
             // Rooms
             initRooms(context);
@@ -342,45 +352,22 @@ namespace TestHospitalApp.Setup
 
         private static void initUsers(HospitalDbContext context)
         {
-            User user1 = new User
-            {
-                Username = "user",
-                Password = new Password("pass123"),
-                IsAccountActive = true,
-                IsBlocked = false,
-                Role = UserRole.Patient,
-                PersonId = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1")
-            };
 
-            User managerUser = new User
-            {
-                Username = "manager",
-                Password = new Password("manager123"),
-                IsAccountActive = true,
-                IsBlocked = false,
-                Role = UserRole.Manager,
-                PersonId = null
-            };
+            User user1 = new User("user", new Password("pass123"), UserRole.Patient);
+            user1.ActivateAccount();
+            user1.ConnectPersonToUser(new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea1"));
 
-            User userInactive = new User
-            {
-                Username = "notactive",
-                Password = new Password("notactive123"),
-                IsAccountActive = false,
-                IsBlocked = false,
-                Role = UserRole.Patient,
-                PersonId = new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639")
-            };
 
-            User doctorUser = new User
-            {
-                Username = "doc",
-                Password = new Password("doc123"),
-                IsAccountActive = true,
-                IsBlocked = false,
-                Role = UserRole.Doctor,
-                PersonId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")
-            };
+            User managerUser = new User("manager", new Password("manager123"), UserRole.Manager);
+            managerUser.ActivateAccount();
+            managerUser.ConnectPersonToUser(null);
+
+            User userInactive = new User("notactive", new Password("notactive123"), UserRole.Patient);
+            userInactive.ConnectPersonToUser(new Guid("1d9aae17-fc67-4a7c-b05e-815fb94c4639"));
+
+            User doctorUser = new User("doc", new Password("doc123"), UserRole.Doctor);
+            doctorUser.ActivateAccount();
+            doctorUser.ConnectPersonToUser(new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"));
 
             context.Add(user1);
             context.Add(userInactive);
@@ -388,17 +375,24 @@ namespace TestHospitalApp.Setup
             context.Add(doctorUser);
         }
 
-        private static void initConsiliums(HospitalDbContext context)
+        private static void initConsiliums(HospitalDbContext context, Doctor doctor)
         {
-            Consilium con1 = new Consilium
+            Room room = new Room { Id = new Guid("5c036fba-1318-4f4b-b153-90d75e606111"), Name = "Soba", Number = 10, Description = "ConsiliumRoom" };
+            context.Rooms.Add(room);
+            List<Doctor> doctorList = new List<Doctor>();
+            doctorList.Add(doctor);
+            /*Consilium con1 = new Consilium
             {
                 Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d225"),
                 IsDone = false,
-                RoomId = new Guid("5c036fba-1318-4f4b-b153-90d75e606000"),
+                RoomId = new Guid("5c036fba-1318-4f4b-b153-90d75e606111"),
                 DateRange = new DateRange(),
+                Doctors = doctorList,
             };
 
-            context.Add(con1);
+            context.Add(con1);*/
+
+            
         }
         private static void initRenovation(HospitalDbContext context)
         {
@@ -410,8 +404,8 @@ namespace TestHospitalApp.Setup
                 "Name8211",
                 212
                 ));
-            
-        
+
+
             RenovationAppointment renovation1 = new RenovationAppointment(
                 RenovationAppointment.TypeOfRenovation.Merge,
                 plans1,
@@ -439,19 +433,19 @@ namespace TestHospitalApp.Setup
                 23
                 ));
 
-             RenovationAppointment renovation3 = new RenovationAppointment(
-                RenovationAppointment.TypeOfRenovation.Split,
-                plans2,
-                new DateRange(DateTime.Now.AddDays(4), DateTime.Now.AddDays(5)),
-                new Guid("e2689a81-c248-4686-a807-5e6796a90857")
-            );
+            RenovationAppointment renovation3 = new RenovationAppointment(
+               RenovationAppointment.TypeOfRenovation.Split,
+               plans2,
+               new DateRange(DateTime.Now.AddDays(4), DateTime.Now.AddDays(5)),
+               new Guid("e2689a81-c248-4686-a807-5e6796a90857")
+           );
 
             context.RenovationAppointments.Add(renovation1);
             context.RenovationAppointments.Add(renovation2);
             context.RenovationAppointments.Add(renovation3);
         }
         private static void initRooms(HospitalDbContext context)
-        {   
+        {
             List<RoomsEquipment> list = new List<RoomsEquipment>();
             list.Add(new RoomsEquipment(new Guid("a8402f72-7a2f-47a0-8bd0-fc0bf6b698d0"), new Guid("fbcf2919-ef1c-49fe-9556-f99188bdbad9"), 3));
 
@@ -491,5 +485,6 @@ namespace TestHospitalApp.Setup
             context.Rooms.Add(room2);
             context.Rooms.Add(room3);
         }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using HospitalAPI.Dtos.Auth;
 using HospitalAPI.Dtos.User;
 using HospitalLibrary.AcountActivation.Model;
@@ -14,9 +15,10 @@ using HospitalLibrary.Users.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.Constants;
+using IntegrationLibrary.Common;
 
 namespace HospitalAPI.Controllers
 {
@@ -55,45 +57,28 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                Address address;
-                Patient patient;
-                User user;
-                //Auto mapper doesnt allow any exceptions to go out from him, instead he wraps it in his own exception
-                //I am here unwrapping my custom exceptions
-                try
-                {
-                    address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
-                    patient = _mapper.Map<Patient>(registrationDto);
-                    user = _mapper.Map<User>(registrationDto.UserLoginDto);
-                    user.Password = new Password(registrationDto.UserLoginDto.Password);
-                    
-                }
-                catch(AutoMapperMappingException autoMapperException)
-                {
-                    throw autoMapperException.InnerException; 
-                    // this will break your call stack
-                    // you may not know where the error is called and rather
-                    // want to clone the InnerException or throw a brand new Exception
-                }
-                catch (ValueObjectValidationFailedException)
-                {
-                    return Conflict("Password is in wrong format");
-                }
-
-                if (!_patientService.isEmailUnique(patient.Email.Address))
+                
+                if (!_patientService.isEmailUnique(registrationDto.Email))
                 {
                     return Conflict("Email not unique");
                 }
 
-                if (!_userService.IsUsernameUnique(user.Username))
+                if (!_userService.IsUsernameUnique(registrationDto.UserLoginDto.Username))
                 {
                     return Conflict("Username taken");
                 }
 
-                patient.Address = address;
-                patient.AddressId = address.Id;
+                var address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
+                address.Id = Guid.NewGuid();
+
+                Patient patient = new Patient(Guid.NewGuid(), registrationDto.Name, registrationDto.Surname,
+                    registrationDto.Birthdate, registrationDto.Gender, address, registrationDto.Jmbg,
+                    new Email(registrationDto.Email), registrationDto.PhoneNumber, new BloodType(registrationDto.BloodType.BloodGroup, registrationDto.BloodType.RhFactor));
+                
                 _patientService.RegisterPatient(patient, registrationDto.ChoosenDoctorId,
                     registrationDto.AllergieIds);
+
+                User user = new User(registrationDto.UserLoginDto.Username,new Password(registrationDto.UserLoginDto.Password),UserRole.Patient);
 
                 AcountActivationInfo info = _userService.RegisterPatient(user, patient.Id);
                 //slanje maila (pozivanje servia koji salje mail)
@@ -107,8 +92,9 @@ namespace HospitalAPI.Controllers
             }
             catch (ValueObjectValidationFailedException exception)
             {
-                return BadRequest(exception.Message);
+                return BadRequest("Value object error");
             }
+
         }
 
         //POST api/user/loginUser/patient
@@ -146,7 +132,39 @@ namespace HospitalAPI.Controllers
             {
                 return Unauthorized("Bad password");
             }
+            catch (Exception)
+            {
+                return BadRequest("Unknown error");
+            }
 
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult LoginPrivate([FromBody] UserLoginDto userLogin)
+        {
+            try
+            {
+                var token = _userService.AuthenticatePrivate(userLogin.Username, userLogin.Password);
+                return Ok(new JwtDto(token));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("User not found");
+            }
+            catch (BadPasswordException)
+            {
+                return Unauthorized("Bad password");
+            }
+            catch (UnauthorizedException)
+            {
+                return Unauthorized("Only managers and doctors can login from public app");
+            }
+            catch (ValueObjectValidationFailedException)
+            {
+                return Unauthorized("Bad password");
+            }
         }
 
         [HttpPost]
@@ -181,30 +199,6 @@ namespace HospitalAPI.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
-        public ActionResult LoginPrivate([FromBody] UserLoginDto userLogin)
-        {
-            try
-            {
-                var token = _userService.AuthenticatePrivate(userLogin.Username, userLogin.Password);
-                return Ok(new JwtDto(token));
-            }
-            catch (NotFoundException)
-            {
-                return NotFound("User not found");
-            }
-            catch (BadPasswordException)
-            {
-                return Unauthorized("Bad password");
-            }
-            catch (UnauthorizedException)
-            {
-                return Unauthorized("Only managers and doctors can login from public app");
-            }
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("[action]")]
         public ActionResult AuthorizeIntegrationApi([FromBody] IntegrationAuthorizationDto dto)
         {
             if (_jwtService.HasMatchingRoles(dto.ExpectedRoles, HttpContext.User))
@@ -214,23 +208,7 @@ namespace HospitalAPI.Controllers
             return Unauthorized();
         }
 
-        // PUT api/User/1
-        [HttpPut("{username}")]
-        public ActionResult Update([FromRoute] string username, [FromBody] UserDto userDto)
-        {
-            var user = _mapper.Map<User>(userDto);
-            user.Username = username;
-
-            try
-            {
-                var result = _userService.Update(user);
-                return Ok(result);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }
+ 
 
         [HttpGet]
         [Route("[action]")]
@@ -238,6 +216,15 @@ namespace HospitalAPI.Controllers
         public ActionResult GetAllSuspiciousUsers()
         {
             return Ok(_userService.GetAllSuspiciousUsers().Select(sp => new SuspiciousUserDTO(sp.Username, sp.IsBlocked, sp.NumberOfSuspiciousActivitiesInRecentPeriod())).ToList());
+        }
+
+
+        [HttpGet]
+        [Route("[action]")]
+        [Authorize(Roles = "Manager")]
+        public ActionResult SuspiciousCount()
+        {
+            return Ok(Constants.MinSuspiciousActivityCount);
         }
 
         [HttpPatch("block-user/{username}")]

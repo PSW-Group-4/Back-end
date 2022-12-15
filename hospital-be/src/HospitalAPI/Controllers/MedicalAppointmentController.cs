@@ -13,6 +13,7 @@ using HospitalLibrary.Users.Model;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Collections;
+using HospitalLibrary.Users.Service;
 
 namespace HospitalAPI.Controllers
 {
@@ -23,12 +24,14 @@ namespace HospitalAPI.Controllers
         private readonly IMedicalAppointmentService _medicalAppointmentService;
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
+        private readonly IUserService _userService;
 
-        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper, IJwtService jwtService)
+        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper, IJwtService jwtService, IUserService userService)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _mapper = mapper;
             _jwtService = jwtService;
+            _userService = userService;
         }
 
         // GET: api/Appointment
@@ -107,6 +110,7 @@ namespace HospitalAPI.Controllers
                 }
 
                 _medicalAppointmentService.Cancel(id, (Guid)user.PersonId);
+                _userService.AddSuspiciousActivityToUser((Guid)user.PersonId, new SuspiciousActivity("Appointment cancellation"));
                 return Ok(id);
             }
             catch (NotFoundException)

@@ -82,5 +82,18 @@ namespace IntegrationLibrary.BloodBanks.Repository
             _context.SaveChanges();
             return bloodBank;
         }
+
+        public BloodBank GetByEmail(string email)
+        {
+            BloodBank bloodBank = _context.BloodBanks.SingleOrDefault(e => e.EmailAddress == email);
+            if (bloodBank == null)
+            {
+                throw new NotFoundException();
+            }
+            else
+            {
+                return bloodBank;
+            }
+        }
     }
 }

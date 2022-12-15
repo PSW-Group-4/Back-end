@@ -24,20 +24,48 @@ namespace TestHospitalApp.IntegrationTesting
 
         private static ReportController SetupReportController(IServiceScope scope)
         {
-            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>(), scope.ServiceProvider.GetRequiredService<IAppointmentReportService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
+            return new ReportController(scope.ServiceProvider.GetRequiredService<IReportService>(), scope.ServiceProvider.GetRequiredService<IMedicalAppointmentReportService>(), scope.ServiceProvider.GetRequiredService<IMapper>());
         }
 
         [Fact]
-        public void Generate_pdf()
+        public void Generate_pdf_patient_diagnose()
         {
             using var scope = Factory.Services.CreateScope();
             var reportController = SetupReportController(scope);
 
-            Guid reportId = new Guid("c19703eb-14d0-4456-8bc2-adcaa76b524d");
+            Guid reportId = new Guid("058eb841-3975-4c7a-83ad-8b81dd6744d9");
             string[] s = { "pacijent", "dijagnoza" };
             List<String> settings = new List<string>(s);
 
             byte[] pdf = ((CreatedAtActionResult)reportController.GenerateSeveralPdf(reportId,settings))?.Value as byte[];
+            pdf.ShouldBeNull();
+        }
+
+        [Fact]
+        public void Generate_pdf_drugs()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var reportController = SetupReportController(scope);
+
+            Guid reportId = new Guid("058eb841-3975-4c7a-83ad-8b81dd6744d9");
+            string[] s = { "lek" };
+            List<String> settings = new List<string>(s);
+
+            byte[] pdf = ((CreatedAtActionResult)reportController.GenerateSeveralPdf(reportId, settings))?.Value as byte[];
+            pdf.ShouldBeNull();
+        }
+
+        [Fact]
+        public void Generate_pdf_empty()
+        {
+            using var scope = Factory.Services.CreateScope();
+            var reportController = SetupReportController(scope);
+
+            Guid reportId = new Guid("058eb841-3975-4c7a-83ad-8b81dd6744d9");
+            string[] s = { "" };
+            List<String> settings = new List<string>(s);
+
+            byte[] pdf = ((CreatedAtActionResult)reportController.GenerateSeveralPdf(reportId, settings))?.Value as byte[];
             pdf.ShouldBeNull();
         }
     }

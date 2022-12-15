@@ -11,12 +11,13 @@ using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.AppointmentReport.Model;
 
 namespace HospitalLibrary.AppointmentReport.Service
 {
-    public class AppointmentReportService : IAppointmentReportService
+    public class MedicalAppointmentReportService : IMedicalAppointmentReportService
     {
-        public byte[] GeneratePdf(Report report,List<String> settings)
+        public byte[] GeneratePdf(MedicalAppointmentReport medicalAppointmentReport)
         {
             using (MemoryStream ms = new MemoryStream())
             {
@@ -27,26 +28,32 @@ namespace HospitalLibrary.AppointmentReport.Service
                 writer.Open();
 
                 document.Open();
-                String[] setting = settings[0].Split(",");
+
+                Paragraph par = new Paragraph("Generisani izvestaj medicinskog pregleda !", new Font(Font.FontFamily.HELVETICA, 20));
+                par.Alignment = Element.ALIGN_CENTER;
+                par.SpacingAfter = 10;
+                document.Add(par);
+
+                String[] setting = medicalAppointmentReport.Settings[0].Split(",");
                 if (setting.Contains("pacijent"))
                 {
-                    Paragraph para1 = new Paragraph("Izvestaj za " + report.MedicalAppointment.Patient.Name + " " + report.MedicalAppointment.Patient.Surname, new Font(Font.FontFamily.HELVETICA, 20));
+                    Paragraph para1 = new Paragraph("Izvestaj za " + medicalAppointmentReport.Report.MedicalAppointment.Patient.Name + " " + medicalAppointmentReport.Report.MedicalAppointment.Patient.Surname, new Font(Font.FontFamily.HELVETICA, 18));
                     para1.Alignment = Element.ALIGN_CENTER;
                     para1.SpacingAfter = 10;
                     document.Add(para1);
-                }
 
-                Paragraph para2 = new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, 20));
-                para2.Alignment = Element.ALIGN_CENTER;
-                para2.SpacingAfter = 10;
-                document.Add(para2);
+                    Paragraph para2 = new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, 20));
+                    para2.Alignment = Element.ALIGN_CENTER;
+                    para2.SpacingAfter = 10;
+                    document.Add(para2);
+                }
 
                 if (setting.Contains("simptomi"))
                 {
                     String simp = "";
-                    foreach (Symptom s in report.Symptoms)
+                    foreach (Symptom s in medicalAppointmentReport.Report.Symptoms)
                     {
-                        simp = simp + "," + s.Name;
+                        simp = simp + s.Name + ",";
                     }
                     Paragraph para3 = new Paragraph("Simptomi su :" + simp, new Font(Font.FontFamily.HELVETICA, 12));
                     para3.Alignment = Element.ALIGN_LEFT;
@@ -55,7 +62,7 @@ namespace HospitalLibrary.AppointmentReport.Service
                 }
                 if (setting.Contains("dijagnoza"))
                 {
-                    Paragraph para4 = new Paragraph("Dijagnoza :" + report.Text, new Font(Font.FontFamily.HELVETICA, 12));
+                    Paragraph para4 = new Paragraph("Dijagnoza :" + medicalAppointmentReport.Report.Text, new Font(Font.FontFamily.HELVETICA, 12));
                     para4.Alignment = Element.ALIGN_LEFT;
                     para4.SpacingAfter = 10;
                     document.Add(para4);
@@ -64,23 +71,24 @@ namespace HospitalLibrary.AppointmentReport.Service
                 if (setting.Contains("lek"))
                 {
                     String lek = "";
-                    foreach (Prescription s in report.Prescriptions)
+                    foreach (Prescription s in medicalAppointmentReport.Report.Prescriptions)
                     {
                         foreach (Medicine m in s.Medicines)
-                            lek = lek + "," + m.Name;
+                            lek = lek + m.Name + ",";
                     }
                     Paragraph para5 = new Paragraph("Lekovi koji su prepisani :" + lek, new Font(Font.FontFamily.HELVETICA, 12));
                     para5.Alignment = Element.ALIGN_LEFT;
                     para5.SpacingAfter = 10;
                     document.Add(para5);
+
+                    Paragraph para6 = new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, 20));
+                    para6.Alignment = Element.ALIGN_CENTER;
+                    para6.SpacingAfter = 10;
+                    document.Add(para6);
                 }
 
-                Paragraph para6 = new Paragraph(" ", new Font(Font.FontFamily.HELVETICA, 20));
-                para6.Alignment = Element.ALIGN_CENTER;
-                para6.SpacingAfter = 10;
-                document.Add(para6);
-
-                Paragraph para7 = new Paragraph("Datum pregleda :" + report.MedicalAppointment.DateRange.StartTime.ToShortDateString(), new Font(Font.FontFamily.HELVETICA, 12));
+                Paragraph para7 = new Paragraph("Datum pregleda :" + medicalAppointmentReport.Report.MedicalAppointment.DateRange.StartTime.ToShortDateString() +
+                    " u :" + medicalAppointmentReport.Report.MedicalAppointment.DateRange.StartTime.ToShortTimeString() + " sati", new Font(Font.FontFamily.HELVETICA, 12));
                 para7.Alignment = Element.ALIGN_LEFT;
                 para7.SpacingAfter = 10;
                 document.Add(para7);
