@@ -137,6 +137,34 @@ namespace HospitalAPI.Controllers
 
         }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [Route("[action]")]
+        public ActionResult LoginPrivate([FromBody] UserLoginDto userLogin)
+        {
+            try
+            {
+                var token = _userService.AuthenticatePrivate(userLogin.Username, userLogin.Password);
+                return Ok(new JwtDto(token));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("User not found");
+            }
+            catch (BadPasswordException)
+            {
+                return Unauthorized("Bad password");
+            }
+            catch (UnauthorizedException)
+            {
+                return Unauthorized("Only managers and doctors can login from public app");
+            }
+            catch (ValueObjectValidationFailedException)
+            {
+                return Unauthorized("Bad password");
+            }
+        }
+
         [HttpPost]
         [Route("[action]")]
         public ActionResult ActivateAccount([FromBody] AccountActivationDto activationInformation)
@@ -164,30 +192,6 @@ namespace HospitalAPI.Controllers
                 return Unauthorized("Tokens do not match");
             }
 
-        }
-
-        [AllowAnonymous]
-        [HttpPost]
-        [Route("[action]")]
-        public ActionResult LoginPrivate([FromBody] UserLoginDto userLogin)
-        {
-            try
-            {
-                var token = _userService.AuthenticatePrivate(userLogin.Username, userLogin.Password);
-                return Ok(new JwtDto(token));
-            }
-            catch (NotFoundException)
-            {
-                return NotFound("User not found");
-            }
-            catch (BadPasswordException)
-            {
-                return Unauthorized("Bad password");
-            }
-            catch (UnauthorizedException)
-            {
-                return Unauthorized("Only managers and doctors can login from public app");
-            }
         }
 
         [AllowAnonymous]

@@ -27,7 +27,7 @@ namespace IntegrationLibrary.Tenders.Model
         }
         public DateTime? Deadline { get; private set; }
 
-        private Tender() { }
+        public Tender() { }
         private Tender(IEnumerable<Blood> blood, DateTime deadline)
         {
             Id = Guid.NewGuid();
