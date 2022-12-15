@@ -47,5 +47,13 @@ namespace HospitalLibrary.MoveEquipment.Model
         {
             this.IsDone = true;
         }
+
+        public bool AbleToCancel() {
+            return this.DateRange.StartTime.AddDays(-1) < DateTime.Now;
+        }
+
+        public bool IsSameAppointment(MoveEquipmentAppointment appointment) {
+            return appointment.Id != this.Id && appointment.DateRange.StartTime == this.DateRange.StartTime;
+        }
     }
 }

@@ -47,16 +47,8 @@ namespace TestIntegrationApp.IntegrationTesting
         [Fact]
         public void Saves_News()
         {
-            News news = new()
-            {
-                Id = Guid.NewGuid(),
-                Title = "It's me, hi",
-                Body = "I'm the news, it's me",
-                Timestamp = DateTime.Now,
-                BloodBank = null,
-                IsArchived = false,
-                IsPublished = false
-            };
+            News news = new News(Guid.NewGuid(), null, "It's me, hi", "I'm the news, it's me", DateTime.Now, false);
+            
             using var scope = Factory.Services.CreateScope();
             var service = SetupService(scope);
             service.Save(news);
@@ -68,16 +60,8 @@ namespace TestIntegrationApp.IntegrationTesting
         [Fact]
         public void Update_News() 
         {
-            News news = new()
-            {
-                Id = Guid.NewGuid(),
-                Title = "It's me, hi",
-                Body = "I'm the news, it's me",
-                Timestamp = DateTime.Now,
-                BloodBank = null,
-                IsArchived = false,
-                IsPublished = false
-            };
+            News news = new News(Guid.NewGuid(), null, "It's me, hi", "I'm the news, it's me", DateTime.Now, false);
+
             using var scope = Factory.Services.CreateScope();
             var controller = SetupController(scope);
             var service = SetupService(scope);
@@ -136,16 +120,8 @@ namespace TestIntegrationApp.IntegrationTesting
         [Fact]
         public void Consumes_News()
         {
-            News news = new()
-            {
-                Id = Guid.NewGuid(),
-                Title = "It's me, hi",
-                Body = "I'm the news, it's me",
-                Timestamp = DateTime.Now,
-                BloodBank = null,
-                IsArchived = false,
-                IsPublished = false
-            };
+            News news = new News(Guid.NewGuid(), null, "It's me, hi", "I'm the news, it's me", DateTime.Now, false);
+
             var consumerMock = new Mock<IConsumer<News>>();
             consumerMock.Setup(consumer => consumer.Consume()).Returns(news);
 

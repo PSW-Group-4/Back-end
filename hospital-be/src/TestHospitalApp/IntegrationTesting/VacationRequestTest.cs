@@ -49,7 +49,7 @@ namespace TestHospitalApp.IntegrationTesting
 
             List<Vacation> result = ((OkObjectResult)vacationController.GetDoctorVacationsFromSpecificStatus(VacationStatus.Approved, new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")))?.Value as List<Vacation>;
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(1);
+            result.Count.ShouldBe(3);
             result.First().VacationStatus.ShouldNotBe(VacationStatus.Waiting_For_Approval);
         }
 
@@ -63,7 +63,7 @@ namespace TestHospitalApp.IntegrationTesting
 
             List<Vacation> result = ((OkObjectResult)vacationController.GetAll())?.Value as List<Vacation>;
 
-            result.Count().ShouldBe(1);
+            result.Count().ShouldBe(3);
         }
 
         [Fact]
@@ -76,7 +76,7 @@ namespace TestHospitalApp.IntegrationTesting
 
             List<Vacation> result = ((OkObjectResult)vacationController.GetAll())?.Value as List<Vacation>;
 
-            result.Count().ShouldBe(2);
+            result.Count().ShouldBe(3);
         }
 
         // ovo bi trebalo da nij eimplementirano, ali fejluje zato sto nisu dodati apojntmenti
