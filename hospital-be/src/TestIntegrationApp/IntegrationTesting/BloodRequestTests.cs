@@ -107,7 +107,6 @@ namespace TestIntegrationApp.IntegrationTesting
             BloodRequestEditDto bloodRequestEditDto = new()
             {
                 Id = request.Id,
-                BloodBank = "Bankica",
                 IsApproved = true,
             };
             controller.Manage(bloodRequestEditDto);

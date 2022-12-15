@@ -31,6 +31,7 @@ namespace IntegrationAPI.Communications.Consumer.ReceivedBlood
             ConsumeResult<Ignore, string> consumer = _consumerBuilder.Consume(_cancellationToken.Token);
             ReceivedBloodDto dto = JsonSerializer.Deserialize<ReceivedBloodDto>(consumer.Message.Value, options);
             _producer.Send(JsonSerializer.Serialize(dto), "hospital.blood.supply.topic");
+            
             return new Blood(BloodType.FromString(dto.BloodType), dto.Amount);
         }
     }
