@@ -39,5 +39,14 @@ namespace IntegrationAPI.Controllers
             application.PriceInRSD = tenderApplication.PriceInRSD;
             return Ok(_service.Apply(application));
         }
+        [Route("tender"), HttpPost]
+        public ActionResult GetByTender(string tenderId) {
+            return Ok(_service.GetByTender(Guid.Parse(tenderId)));
+        }
+        [Route("accept"), HttpPost]
+        public ActionResult AcceptOffer(string applicationId) {
+            TenderApplication application = _service.FindById(Guid.Parse(applicationId));
+            return Ok(_service.AcceptOffer(application));
+        }
     }
 }
