@@ -30,7 +30,6 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
             var doctor = SetupDoctors()[0];
             bool isAvailable = SetupDoctorAppointmentService().IsDoctorAvailable(doctor.Id, DateTime.Now);
 
-
             isAvailable.ShouldBeTrue();
         }
 
@@ -39,6 +38,7 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
         {
             var doctor = SetupDoctors()[1];  
             bool isAvailable = SetupDoctorAppointmentService().IsDoctorAvailable(doctor.Id, DateTime.Now); 
+
             isAvailable.ShouldBeFalse();
         }
 
@@ -141,6 +141,7 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
             var doctorRepository = new Mock<IDoctorRepository>();
             var vacationRepository = new Mock<IVacationRepository>();
             var consiliumRepository = new Mock<IConsiliumRepository>();
+            consiliumRepository.Setup(m => m.GetAll()).Returns(SetupConsiliums());
 
             DoctorAppointmentService service = new DoctorAppointmentService(
                 medicalAppointmentService, doctorRepository.Object, vacationRepository.Object, consiliumRepository.Object);
@@ -157,7 +158,7 @@ namespace TestHospitalApp.UnitTesting.MedicalAppointmentTests
 
             var service = 
                 new MedicalAppointmentService(medicalAppointmentRepository.Object, doctorService.Object, patientService.Object);
-            //setup
+
             return service;
         }
     }
