@@ -8,6 +8,7 @@ using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Core.Service;
 using HospitalLibrary.Core.Service.Interfaces;
+using HospitalLibrary.Doctors.Service;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
@@ -38,7 +39,8 @@ namespace TestHospitalApp.IntegrationTesting.AppointmentSchedulingTests.WithSugg
             return new MedicalAppointmentController(scope.ServiceProvider.GetRequiredService<IMedicalAppointmentService>(),
                                                     scope.ServiceProvider.GetRequiredService<IMapper>(),
                                                     scope.ServiceProvider.GetRequiredService<IJwtService>(),
-                                                    scope.ServiceProvider.GetRequiredService<IDoctorAppointmentService>());
+                                                    scope.ServiceProvider.GetRequiredService<IDoctorAppointmentService>(),
+                                                    scope.ServiceProvider.GetRequiredService<IDoctorService>());
         }
 
         [Fact]
@@ -65,11 +67,8 @@ namespace TestHospitalApp.IntegrationTesting.AppointmentSchedulingTests.WithSugg
         {
             var result = new AppointmentRequestWithSuggestionsDto();
 
-            var requestTimeRange = new DateRangeDto();
-            requestTimeRange.StartTime = new DateTime();        //promeni
-            requestTimeRange.EndTime = new DateTime();          //promeni
-
-            result.RequestTimeRange = requestTimeRange;
+            result.StartDate = new DateTime();
+            result.EndDate = new DateTime();
             result.DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e");              
             result.Priority = "Doctor";
 

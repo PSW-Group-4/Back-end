@@ -15,6 +15,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Collections;
 using HospitalLibrary.Utility;
+using HospitalLibrary.Patients.Service;
+using HospitalLibrary.Core.Model;
 
 namespace HospitalAPI.Controllers
 {
@@ -26,15 +28,20 @@ namespace HospitalAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IJwtService _jwtService;
         private readonly IDoctorAppointmentService _doctorAppointmentService;
-        
+        private readonly IDoctorService _doctorService;
+        //private readonly IPatientService _patientService;
 
-        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, IMapper mapper, IJwtService jwtService, IDoctorAppointmentService doctorAppointmentService)
+        public MedicalAppointmentController(IMedicalAppointmentService medicalAppointmentService, 
+            IMapper mapper, IJwtService jwtService, IDoctorAppointmentService doctorAppointmentService,
+            IDoctorService doctorService)
         {
             _medicalAppointmentService = medicalAppointmentService;
             _jwtService = jwtService;
             _doctorAppointmentService = doctorAppointmentService;
             _mapper = mapper;
             _jwtService = jwtService;
+            _doctorService = doctorService;
+            //_patientService = patientService;
         }
 
         // GET: api/Appointment
@@ -64,6 +71,22 @@ namespace HospitalAPI.Controllers
         public ActionResult Create([FromBody] AppointmentRequestDto appointmentDto)
         {
             var appointment = _mapper.Map<MedicalAppointment>(appointmentDto);
+            _medicalAppointmentService.Create(appointment);
+            return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
+        }
+
+        [HttpPost("schedule-patient")]
+        [Authorize(Roles = "Patient")]
+        public ActionResult ScheduleAppointmentPatient([FromBody] AppointmentRequestPatientDto request)
+        {
+            var doctor = _doctorService.GetById(request.DoctorId);
+            var patientId = 
+                _jwtService.GetCurrentUser(HttpContext.User).PersonId ?? throw new NotFoundException();
+
+            var appointment = _mapper.Map<MedicalAppointment>(request);
+            appointment.PatientId = patientId;
+            appointment.RoomId = doctor.RoomId;
+
             _medicalAppointmentService.Create(appointment);
             return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
         }
@@ -228,6 +251,9 @@ namespace HospitalAPI.Controllers
             {
                 Guid patientId = _jwtService.GetCurrentUser(HttpContext.User).PersonId ?? throw new NotFoundException();
                 var request = _mapper.Map<RequestForAppointmentSlotSuggestions>(requestInfo);
+                request.RequestingPatientId = patientId;
+                request.StartDate = requestInfo.StartDate;
+                request.EndDate = requestInfo.EndDate;
                 var suggestions = _doctorAppointmentService.GetAppointmentSuggestionsForDateRange(request);
                 return Ok(suggestions);
 
