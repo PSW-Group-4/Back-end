@@ -51,8 +51,7 @@ namespace IntegrationAPI.Controllers
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult PublishNews(string id) {
             News news = _service.GetById(Guid.Parse(id));
-            news.IsPublished = true;
-            news.IsArchived = false;
+            news.publish();
             return Ok(_service.Update(news));
         }
         [Route("Archive"), HttpPost]
@@ -60,8 +59,7 @@ namespace IntegrationAPI.Controllers
         public ActionResult ArchiveNews(string id)
         {
             News news = _service.GetById(Guid.Parse(id));
-            news.IsPublished = false;
-            news.IsArchived = true;
+            news.archive();
             return Ok(_service.Update(news));
         }
 
