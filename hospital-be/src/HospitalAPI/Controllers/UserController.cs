@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.Constants;
+using IntegrationLibrary.Common;
 
 namespace HospitalAPI.Controllers
 {
@@ -72,7 +73,7 @@ namespace HospitalAPI.Controllers
 
                 Patient patient = new Patient(new Guid(), registrationDto.Name, registrationDto.Surname,
                     registrationDto.Birthdate, registrationDto.Gender, address, registrationDto.Jmbg,
-                    new Email(registrationDto.Email), registrationDto.PhoneNumber, registrationDto.BloodType);
+                    new Email(registrationDto.Email), registrationDto.PhoneNumber, new BloodType(registrationDto.BloodType.BloodGroup, registrationDto.BloodType.RhFactor));
                 
                 _patientService.RegisterPatient(patient, registrationDto.ChoosenDoctorId,
                     registrationDto.AllergieIds);
