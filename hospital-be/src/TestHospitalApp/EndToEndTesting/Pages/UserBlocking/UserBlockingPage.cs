@@ -88,7 +88,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.UserBlocking
             return false;
         }
 
-        internal void unblockUser(string userToUnblock)
+        internal void UnblockUser(string userToUnblock)
         {
             EnsurePageIsDisplayed();
             var usersRow = -1;

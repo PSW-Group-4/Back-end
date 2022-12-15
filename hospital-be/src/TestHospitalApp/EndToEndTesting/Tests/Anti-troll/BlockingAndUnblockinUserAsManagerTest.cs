@@ -1,29 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 using Shouldly;
-using TestHospitalApp.EndToEndTesting.Pages.CancelAppointment;
+using System;
 using TestHospitalApp.EndToEndTesting.Pages.Login;
-using TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment;
 using TestHospitalApp.EndToEndTesting.Pages.UserBlocking;
 using Xunit;
 
 namespace TestHospitalApp.EndToEndTesting.Tests.Anti_troll
 {
-    public class BlockingUserAsManagerTest
+    public class BlockingAndUnblockinUserAsManagerTest
     {
         private IWebDriver driver;
-   
+
+
         private LoginPage loginPage;
         private UserBlockingPage userBlockingPage;
 
 
-        public BlockingUserAsManagerTest()
+        public BlockingAndUnblockinUserAsManagerTest()
         {
             Login();
             userBlockingPage = new UserBlockingPage(driver);
@@ -57,6 +52,7 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Anti_troll
             wait.Until(driver => driver.Url != loginPage.privateURI);
         }
 
+        //Rade oba testa ali samo zavisi da li postoje ovi korisnici u bazi, tako da blockHim nije blokiran a unblockHim jeste
 
         [Fact]
         public void BlockingUser()
@@ -64,16 +60,18 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Anti_troll
             userBlockingPage.BlockUser("blockHim");
             userBlockingPage.Wait();
             var isBlocked = userBlockingPage.IsUserBlocked("blockHim");
-            isBlocked.ShouldBe(true);
+            isBlocked.ShouldBe(true); 
+            //Rade oba testa ali samo zavisi da li postoje ovi korisnici u bazi, tako da blockHim nije blokiran a unblockHim jeste
         }
 
         [Fact]
         public void UnblockingUser()
         {
-            userBlockingPage.unblockUser("unblockHim");
+            userBlockingPage.UnblockUser("unblockHim");
             userBlockingPage.Wait();
             var isBlocked = userBlockingPage.IsUserBlocked("unblockHim");
             isBlocked.ShouldBe(false);
+            //Rade oba testa ali samo zavisi da li postoje ovi korisnici u bazi, tako da blockHim nije blokiran a unblockHim jeste
         }
 
     }
