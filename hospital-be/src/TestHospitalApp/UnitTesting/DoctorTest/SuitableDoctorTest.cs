@@ -34,8 +34,8 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
 
         private static List<Doctor> CreateDoctors()
         {
-            Room room = new Room { Id = new Guid(), Name = "Soba", Number = 10, Description = "Opis sobe" };
-            Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
+            Room room = new Room { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea2"), Name = "Soba", Number = 10, Description = "Opis sobe" };
+            Address address = new Address { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea2"), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
 
             String WorkingTimeStart1 = "9:00";
             String WorkingTimeEnd1 = "12:00";
@@ -68,8 +68,8 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
 
         public static List<Patient> CreatePatients()
         {
-            Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
-            Room room = new Room { Id = new Guid(), Name = "Soba", Number = 10, Description = "Opis sobe" };
+            Address address = new Address { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea2"), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
+            Room room = new Room { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea2"), Name = "Soba", Number = 10, Description = "Opis sobe" };
 
             String WorkingTimeStart1 = "9:00";
             String WorkingTimeEnd1 = "12:00";

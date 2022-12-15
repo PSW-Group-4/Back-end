@@ -51,13 +51,11 @@ namespace HospitalLibrary.Users.Model
 
         private void Validate()
         {
-            if (Password.Equals(null))
+            if (Password==null)
                 throw new EntityObjectValidationFailedException();
             if (string.IsNullOrEmpty(Username))
                 throw new EntityObjectValidationFailedException();
-            if (Role.Equals(null))
-                throw new EntityObjectValidationFailedException();
-          
+           
 
         }
 

@@ -13,7 +13,7 @@ namespace HospitalAPI.Dtos.Patient
     public class PatientInfoDto : PersonRequestDto
     {
         public BloodType BloodType { get; set; }
-        public List<AllergieInfoDto> Allergies { get; set; }
+        public virtual List<AllergieInfoDto> Allergies { get; set; }
         public DoctorRequestDto ChosenDoctor { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace HospitalLibrary.Core.Model
 
         private void Validate()
         {
-            if (Id.Equals(null) )
+            if (Id.Equals(Guid.Empty) )
                 throw new EntityObjectValidationFailedException();
             if (string.IsNullOrEmpty(Name))
                 throw new EntityObjectValidationFailedException();
@@ -53,15 +53,13 @@ namespace HospitalLibrary.Core.Model
                 throw new EntityObjectValidationFailedException();
             if (DateTime.Now<Birthdate)
                 throw new EntityObjectValidationFailedException();
-            if (Gender.Equals(null))
+            if (Address==null)
                 throw new EntityObjectValidationFailedException();
-            if (Address.Equals(null))
+            if (AddressId.Equals(Guid.Empty))
                 throw new EntityObjectValidationFailedException();
-            if (AddressId.Equals(null))
+            if (Jmbg==null)
                 throw new EntityObjectValidationFailedException();
-            if (Jmbg.Equals(null))
-                throw new EntityObjectValidationFailedException();
-            if (Email.Equals(null))
+            if (Email==null)
                 throw new EntityObjectValidationFailedException();
             if (string.IsNullOrEmpty(PhoneNumber))
                 throw new EntityObjectValidationFailedException();

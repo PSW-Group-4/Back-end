@@ -69,9 +69,9 @@ namespace HospitalAPI.Controllers
                 }
 
                 var address = _mapper.Map<Address>(registrationDto.AddressRequestDto);
-                address.Id = new Guid();
+                address.Id = Guid.NewGuid();
 
-                Patient patient = new Patient(new Guid(), registrationDto.Name, registrationDto.Surname,
+                Patient patient = new Patient(Guid.NewGuid(), registrationDto.Name, registrationDto.Surname,
                     registrationDto.Birthdate, registrationDto.Gender, address, registrationDto.Jmbg,
                     new Email(registrationDto.Email), registrationDto.PhoneNumber, new BloodType(registrationDto.BloodType.BloodGroup, registrationDto.BloodType.RhFactor));
                 

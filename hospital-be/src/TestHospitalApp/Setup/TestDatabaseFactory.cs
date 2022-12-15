@@ -88,10 +88,10 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomsEquipment\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Admissions\" RESTART IDENTITY CASCADE;");
 
-            Address address = new Address { Id = new Guid(), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
+            Address address = new Address { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8123ef3ea2"), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
             context.Addresses.Add(address);
 
-            Building building = new Building { Id = new Guid(), Name = "Zgrada" };
+            Building building = new Building { Id = new Guid("f6923bfe-0246-4e2b-94e1-4b8023ef3ea2"), Name = "Zgrada" };
             context.Buildings.Add(building);
 
             Room room = new Room { Id = new Guid(), Name = "Soba", Number = 10, Description = "Opis sobe" };

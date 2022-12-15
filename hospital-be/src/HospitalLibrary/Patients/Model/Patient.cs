@@ -1,12 +1,10 @@
 ﻿using HospitalLibrary.Allergies.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
-using HospitalLibrary.Patients.Model;
-using IntegrationLibrary.BloodBanks.Model;
+using HospitalLibrary.Exceptions;
 using IntegrationLibrary.Common;
 using System;
 using System.Collections.Generic;
-using HospitalLibrary.Exceptions;
 
 namespace HospitalLibrary.Patients.Model
 {
@@ -22,12 +20,13 @@ namespace HospitalLibrary.Patients.Model
             Validate();
         }
 
-        public Patient() : base() {}
+        public Patient() : base() { }
 
-    public BloodType BloodType { get; private set; }
-        public virtual List<Allergie> Allergies { get; set; }
-       
-        
+        public BloodType BloodType { get; private set; }
+
+        public virtual List<Allergie> Allergies { get; private set; }
+
+
         public Guid ChosenDoctorId { get; private set; }
         public virtual Doctor ChosenDoctor { get; private set; }
 
@@ -42,9 +41,9 @@ namespace HospitalLibrary.Patients.Model
 
         public void AppointTheChosenDoctor(Doctor doctor)
         {
-            if (doctor.Equals(null))
+            if (doctor==null)
                 throw new EntityObjectValidationFailedException();
-            if (doctor.Id.Equals(null))
+            if (doctor.Id == Guid.Empty)
                 throw new EntityObjectValidationFailedException();
 
             ChosenDoctor = doctor;
@@ -62,9 +61,9 @@ namespace HospitalLibrary.Patients.Model
 
         private void Validate()
         {
-            if (BloodType.Equals(null))
+            if (BloodType==null)
                 throw new EntityObjectValidationFailedException();
-       
+
         }
 
         public override bool Equals(object obj)
