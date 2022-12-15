@@ -16,58 +16,33 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
         public const string URI = @"http://localhost:4200/manager/maps";
         public const string LoginURI = @"http://localhost:4200/login";
 
-        private IWebElement Tab => driver.FindElement(By.XPath("/html/body/app-root/app-manager-root/app-maps-main-container/div/div[2]/div[2]/app-search/mat-card/mat-card-content/mat-tab-group/mat-tab-header/div/div/div/div[1]"));
-        private IWebElement Table => driver.FindElement(By.Id("searchNameTable"));
-
+        private IWebElement Table => driver.FindElement(By.XPath("/html/body/app-root/app-manager-root/app-maps-main-container/div/div[2]/div[2]/app-search/mat-card/mat-card-content/mat-tab-group/div/mat-tab-body[1]/div/table"));
         private ReadOnlyCollection<IWebElement> Rows =>
             Table.FindElements(By.TagName("tr"));
-        private IWebElement divTest => driver.FindElement(By.Id("divDialog"));
-        private IWebElement tr => driver.FindElement(By.XPath("/html/body/app-root/app-manager-root/app-maps-main-container/div/div[2]/div[2]/app-search/mat-card/mat-card-content/mat-tab-group/div/mat-tab-body[1]/div/table/tbody/tr[1]"));
-        private IWebElement showRoomScheduleButton => divTest.FindElement(By.XPath("/html/body/app-root/app-manager-root/app-maps-main-container/div/div[2]/div[1]/app-rooms/div/div[3]/div/div/mat-card/button[4]"));
+        private IWebElement divTest;
+        private IWebElement tr => driver.FindElement(By.XPath("/html/body/app-root/app-manager-root/app-maps-main-container/div/div[2]/div[2]/app-search/mat-card/mat-card-content/mat-tab-group/div/mat-tab-body[1]/div/table/tbody/tr[1]/td[1]"));
+        private IWebElement showRoomScheduleButton  ;
+        private IWebElement cancelMoveEquipmentAppointmentButton => driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/mat-dialog-container/app-room-schedule/div/mat-tab-group/div/mat-tab-body[1]/div/table/tbody/tr[1]/td[3]/button"));
 
-        private IWebElement equipmentRelocationTab => driver.FindElement(By.Id("EquipmentRelocation"));
-        private IWebElement equipmentTable => driver.FindElement(By.Id("equipmentRelocationTable"));
-        private IWebElement cancelMoveEquipmentAppointmentButton => driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/mat-dialog-container/app-room-schedule/div/mat-tab-group/div/mat-tab-body[1]/div/table/tbody/tr/td[3]/button"));
+        private IWebElement tableMoveEquipmentAppointment => driver.FindElement(By.XPath("//*[@id=\"equipmentRelocationTable\"]"));
+        private ReadOnlyCollection<IWebElement> RowsMoveEquipmentAppointment =>
+            tableMoveEquipmentAppointment.FindElements(By.TagName("tr"));
 
+        private IWebElement tableRenovationAppointment => driver.FindElement(By.XPath("//*[@id=\"equipmentRelocationTable\"]"));
+        private ReadOnlyCollection<IWebElement> RowsRenovationAppointment =>
+            tableRenovationAppointment.FindElements(By.TagName("tr"));
         public CancelAppointmentPage(IWebDriver driver)
         {
             this.driver = driver;
         }
-
-        public bool tabDisplayedAndClicked() {
-            try
-            {
-                var button = Tab;
-                button.Click();
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public bool clickTable()
-        {
-            try
-            {
-                var button = Table;
-                button.Click();
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
-        }
+  
         public bool ShowRoomScheduleButtonPressed() 
         {
             try
             {
-                WebDriverWait waitSelect = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(2));
-               // waitSelect.Until(showRoomScheduleButton.Displayed);
-                var button = showRoomScheduleButton;
-                button.Click();
+
+                showRoomScheduleButton = driver.FindElement(By.XPath("//*[@id=\"divDialog\"]/div/div/mat-card/button[4]"));
+                showRoomScheduleButton.Click();
             }
             catch (NoSuchElementException)
             {
@@ -89,19 +64,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
             return true;
 
         }
-        public bool DivSelected()
-        {
-            try
-            {
-                var trr = divTest;
-                trr.Click();
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
-        }
+        
         public bool CancelMoveEquipmentAppointmentButtonPressed()
         {
             try
@@ -115,71 +78,51 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
             }
             return true;
         }
-
-        public bool EquipmentRelocationTabPressed()
-        {
-            try
-            {
-                var tab = equipmentRelocationTab;
-                tab.Click();
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
-        }
-        public bool EquipmentRelocationTablePressed()
-        {
-            try
-            {
-                var tab = equipmentTable;
-                tab.Click();
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
+        
+        public int GetRowsCountForMoveEquipment() {
+            return RowsMoveEquipmentAppointment.Count;
         }
 
-        public void clickOutside()
+        public int GetRowsCountForRenovation()
         {
-            Actions action = new Actions(driver);
-            action.MoveByOffset(0, 0).Click().Build().Perform();
+            return RowsRenovationAppointment.Count;
         }
+        
 
         public int GetRowsCount()
         {
-            return driver.FindElement(By.Id("searchNameTable")).FindElements(By.TagName("tr")).Count;
+            return Rows.Count;
         }
 
-        public bool EnsurePageIsDisplayed()
+        public void EnsurePageIsDisplayed()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(condition =>
             {
                 try
                 {
-                    return true;
+                    return Rows.Count >0;
                 }
-                
+
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
                 catch (NoSuchElementException)
                 {
                     return false;
                 }
             });
-            return true;
         }
 
         public void EnsureEndPageIsDisplayed()
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
             wait.Until(condition =>
             {
                 try
                 {
-                    return equipmentRelocationTab.Displayed;
+                    return cancelMoveEquipmentAppointmentButton.Displayed;
                 }
                 catch (NoSuchElementException)
                 {

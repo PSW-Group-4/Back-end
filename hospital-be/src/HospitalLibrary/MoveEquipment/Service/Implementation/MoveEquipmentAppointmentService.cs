@@ -34,13 +34,13 @@ namespace HospitalLibrary.MoveEquipment.Service.Implementation
         public void Delete(Guid id)
         {
             MoveEquipmentAppointment moveEquipmentAppointment = GetById(id);
-            if(moveEquipmentAppointment.DateRange.StartTime.AddDays(-1) < DateTime.Now ) 
+            if(moveEquipmentAppointment.AbleToCancel()) 
             {
                 return;
             }
             foreach(MoveEquipmentAppointment appointment in GetAll())
             {
-                if(appointment.Id != id && appointment.DateRange.StartTime == moveEquipmentAppointment.DateRange.StartTime)
+                if(moveEquipmentAppointment.IsSameAppointment(appointment))
                 {
                     _moveEquipmentTaskRepository.Delete(appointment.Id);
                     break;
