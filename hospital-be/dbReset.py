@@ -1,6 +1,6 @@
 import os
 
-destFile = open('dbResetScript.sql', 'w')
+destFile = open('dbResetScript.sql', 'w', encoding="utf-8")
 
 # Pay attention to order
 tables = ["AgeGroups","Addresses", "Allergies", "Buildings", "Floors", "Rooms",

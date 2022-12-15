@@ -10,6 +10,9 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Vacations.Service;
 using HospitalLibrary.Vacations.Repository;
 using HospitalLibrary.Consiliums.Repository;
+using Org.BouncyCastle.Asn1.Ocsp;
+using HospitalLibrary.Utility;
+using HospitalLibrary.Exceptions;
 using iTextSharp.text;
 
 namespace HospitalLibrary.Appointments.Service
@@ -109,6 +112,87 @@ namespace HospitalLibrary.Appointments.Service
                 WorkTimeStart = WorkTimeStart.AddMinutes(30);
             }
             return list;
+        }
+        
+        //STEFAN
+        public List<DateRange> GetAppointmentSuggestionsForDateRange(
+            RequestForAppointmentSlotSuggestions request)
+        {
+            List<DateRange> result = new List<DateRange>();
+
+            foreach(DateTime date in SetupRequestDates(request.StartDate, request.EndDate))
+            {
+                result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, request.DoctorId));
+            }
+
+            if (result.Count == 0)
+            {
+                return GetSuggestionsByPriority(request);
+            }
+            return result;
+        }
+
+        private List<DateRange> GetSuggestionsByPriority(
+            RequestForAppointmentSlotSuggestions request)
+        {
+            var result = new List<DateRange>();
+            switch (request.Priority) 
+            {
+                case "Doctor":
+                    {
+                        return GetSuggestionsByDoctor(request, result);
+                    }
+                case "Date":
+                    {
+                        return GetSuggestionsByDate(request, result);
+                    }
+                default:
+                    {
+                        throw new InvalidPriorityException();
+                    }
+            }
+        }
+
+        private List<DateRange> GetSuggestionsByDate(RequestForAppointmentSlotSuggestions request, List<DateRange> result)
+        {
+            Doctor doctor = _doctorRepository.GetById(request.DoctorId);
+            foreach (Doctor doc in _doctorRepository.GetDoctorsWithSpecialty(doctor.Speciality))
+            {
+                foreach (DateTime date in SetupRequestDates(request.StartDate, request.EndDate))
+                {
+                    result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, doc.Id));
+                }
+            }
+            return result;
+        }
+
+        private List<DateRange> GetSuggestionsByDoctor(RequestForAppointmentSlotSuggestions request, List<DateRange> result)
+        {
+            foreach (DateTime date in SetupDoctorPriorityDates(request.StartDate, request.EndDate))
+            {
+                result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, request.DoctorId));
+            }
+            return result;
+        }
+
+        private List<DateTime> SetupDoctorPriorityDates(DateTime startDate, DateTime endDate)
+        {
+            var result = new List<DateTime>();
+
+            for (int i = 1; i <= 5; i++)   //doctor ignores the date, but appointments must be 5 days before/after the chosen date
+            {
+                result.Add(startDate.AddDays(-i));
+                result.Add(endDate.AddDays(i));
+            }
+            return result;
+        }
+
+        private IEnumerable<DateTime> SetupRequestDates(DateTime startDate, DateTime endDate) 
+        {
+            for (var day = startDate.Date; day.Date <= endDate.Date; day = day.AddDays(1))
+            {
+                yield return day;
+            }
         }
 
         public List<DateRange> getAvailableTerminsForAnotherDoctor(DateTime timeStart, DateTime timeEnd, Guid patientId, Guid doctorId)
