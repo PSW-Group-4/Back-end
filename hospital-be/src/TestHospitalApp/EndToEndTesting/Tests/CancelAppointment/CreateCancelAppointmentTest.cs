@@ -49,15 +49,20 @@ namespace TestHospitalApp.EndToEndTesting.Tests.CancelAppointment
             wait.Until(driver => driver.Url == "http://localhost:4200/manager");
         }
 
+
+        //Doesn't work the best
         [Fact]
         public void Cancel_move_equipment_appointment()
         {
-            CancelAppointmentPage.EnsurePageIsDisplayed();
+            //CancelAppointmentPage.tabDisplayedAndClicked();
+            //Assert.True(CancelAppointmentPage.tabDisplayedAndClicked());
+            Assert.True(CancelAppointmentPage.EnsurePageIsDisplayed());
+            Assert.True(CancelAppointmentPage.clickTable());
+            rowCount = CancelAppointmentPage.GetRowsCount();    //Problem
+            //Assert.NotEqual(0, rowCount);
+            CancelAppointmentPage.TrPressed();
             
-            rowCount = CancelAppointmentPage.GetRowsCount();
-            //CancelAppointmentPage.TrPressed();
-            
-            Assert.True(CancelAppointmentPage.TrPressed());
+            //Assert.True(CancelAppointmentPage.TrPressed());
             //CancelAppointmentPage.NavigateRoom();
             //CancelAppointmentPage.DivSelected();
             //Assert.True(CancelAppointmentPage.DivSelected());

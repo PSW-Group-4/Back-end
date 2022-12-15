@@ -15,6 +15,8 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
         private readonly IWebDriver driver;
         public const string URI = @"http://localhost:4200/manager/maps";
         public const string LoginURI = @"http://localhost:4200/login";
+
+        private IWebElement Tab => driver.FindElement(By.XPath("/html/body/app-root/app-manager-root/app-maps-main-container/div/div[2]/div[2]/app-search/mat-card/mat-card-content/mat-tab-group/mat-tab-header/div/div/div/div[1]"));
         private IWebElement Table => driver.FindElement(By.Id("searchNameTable"));
 
         private ReadOnlyCollection<IWebElement> Rows =>
@@ -31,10 +33,39 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
         {
             this.driver = driver;
         }
+
+        public bool tabDisplayedAndClicked() {
+            try
+            {
+                var button = Tab;
+                button.Click();
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool clickTable()
+        {
+            try
+            {
+                var button = Table;
+                button.Click();
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
         public bool ShowRoomScheduleButtonPressed() 
         {
             try
             {
+                WebDriverWait waitSelect = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(2));
+               // waitSelect.Until(showRoomScheduleButton.Displayed);
                 var button = showRoomScheduleButton;
                 button.Click();
             }
@@ -120,17 +151,17 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
 
         public int GetRowsCount()
         {
-            return Rows.Count;
+            return driver.FindElement(By.Id("searchNameTable")).FindElements(By.TagName("tr")).Count;
         }
 
-        public void EnsurePageIsDisplayed()
+        public bool EnsurePageIsDisplayed()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until(condition =>
             {
                 try
                 {
-                    return Table.Displayed;
+                    return true;
                 }
                 
                 catch (NoSuchElementException)
@@ -138,6 +169,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
                     return false;
                 }
             });
+            return true;
         }
 
         public void EnsureEndPageIsDisplayed()
@@ -156,6 +188,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.CancelAppointment
             });
         }
 
+        public void RefreshPage() => driver.Navigate().Refresh();
         public void Navigate() => driver.Navigate().GoToUrl(URI);
         public void NavigateStart() => driver.Navigate().GoToUrl(LoginURI);
         
