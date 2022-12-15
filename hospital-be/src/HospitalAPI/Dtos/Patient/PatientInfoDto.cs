@@ -14,6 +14,6 @@ namespace HospitalAPI.Dtos.Patient
     {
         public BloodType BloodType { get; set; }
         public List<AllergieInfoDto> Allergies { get; set; }
-        public DoctorRequestDto ChoosenDoctor { get; set; }
+        public DoctorRequestDto ChosenDoctor { get; set; }
     }
 }
