@@ -1,4 +1,5 @@
 ﻿using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Symptoms.Model;
 using System;
@@ -8,14 +9,84 @@ namespace HospitalLibrary.Reports.Model
 {
     public class Report
     {
-        public Guid Id { get; set; }
-        public Guid MedicalAppointmentId { get; set; }
-        public virtual MedicalAppointment MedicalAppointment { get; set; }
-        public string Text { get; set; }
-        public virtual List<Symptom> Symptoms { get; set; }
-        public virtual List<Prescription> Prescriptions { get; set; }
-        public DateTime DateTime { get; set; }
+        public Guid Id { get; private set; }
+        public Guid MedicalAppointmentId { get; private set; }
+        public virtual MedicalAppointment MedicalAppointment { get; private set; }
+        public string Text { get; private set; }
+        public virtual List<Symptom> Symptoms { get; private set; }
+        public virtual List<Prescription> Prescriptions { get; private set; }
+        public DateTime DateTime { get; private set; }
 
+        public Report()
+        {
+        }
+
+        public Report(Guid id, Guid medicalAppointmentId, string text, List<Symptom> symptoms, List<Prescription> prescriptions, DateTime dateTime)
+        {
+            Id = id;
+            MedicalAppointmentId = medicalAppointmentId;
+            Text = text;
+            Symptoms = symptoms;
+            Prescriptions = prescriptions;
+            DateTime = dateTime;
+
+            if (!IsValid())
+            {
+                throw new ValueObjectValidationFailedException("Report doesn't exist !");
+            }
+        }
+        private bool IsValid()
+        {
+            if (!IsThereMedicalAppointment())
+            {
+                return false;
+            }
+            if (!IsThereText())
+            {
+                return false;
+            }
+            if (!IsThereSymptoms())
+            {
+                return false;
+            }
+            if (!IsTherePrescriptions())
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool IsThereMedicalAppointment()
+        {
+            if (MedicalAppointment == null)
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool IsThereText()
+        {
+            if (String.IsNullOrEmpty(Text))
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool IsThereSymptoms()
+        {
+            if (Symptoms.Count <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
+        private bool IsTherePrescriptions()
+        {
+            if (Prescriptions.Count <= 0)
+            {
+                return false;
+            }
+            return true;
+        }
         public void Update(Report report)
         {
             Text = report.Text;

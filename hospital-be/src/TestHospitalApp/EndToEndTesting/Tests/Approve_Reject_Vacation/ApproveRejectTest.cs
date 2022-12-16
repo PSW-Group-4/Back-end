@@ -6,20 +6,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TestHospitalApp.EndToEndTesting.Pages.Login;
-using TestHospitalApp.EndToEndTesting.Pages.Consilium;
+using TestHospitalApp.EndToEndTesting.Pages.Approve_Reject_Vacation;
+using TestHospitalApp.EndToEndTesting.Pages.Maps;
+using TestHospitalApp.EndToEndTesting.Tests.UpdateMapItem;
 using Xunit;
 
-namespace TestHospitalApp.EndToEndTesting.Tests.Consilium
+namespace TestHospitalApp.EndToEndTesting.Tests.Approve_Reject_Vacation
 {
-    public class CreateConsiliumTest
+    public class ApproveRejectTest
     {
         public IWebDriver Driver;
-        public ConsiliumPage ConsiliumPage;
-        private LoginPage loginPage;
+        private LoginPageManager loginPage;
+        public VacationRequestsPage vacationPage;
         public int rowCount;
 
-        public CreateConsiliumTest()
+        public ApproveRejectTest()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");            // open Browser in maximized mode
@@ -32,8 +33,9 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Consilium
 
             LoginPrivate(options);
 
-            ConsiliumPage.Navigate();
+            VacationNavigate(options);
         }
+
 
         public void Dispose()
         {
@@ -44,33 +46,32 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Consilium
         private void LoginPrivate(ChromeOptions options)
         {
             Driver = new ChromeDriver(options);
-            ConsiliumPage = new ConsiliumPage(Driver);
-            loginPage = new LoginPage(Driver);
-            ConsiliumPage.NavigateStart();
-            loginPage.EnterUsernameAndPassword("doktor", "doktor");
+            vacationPage = new VacationRequestsPage(Driver);
+            loginPage = new LoginPageManager(Driver);
+            vacationPage.NavigateStart();
+            loginPage.EnterUsernameAndPassword("manager1", "manager1");
             loginPage.PressLoginButton();
 
             var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
-            wait.Until(driver => driver.Url == "http://localhost:4200/doctor");
+            wait.Until(driver => driver.Url == "http://localhost:4200/manager");
+        }
+
+        private void VacationNavigate(ChromeOptions options)
+        {
+            vacationPage.Navigate();
+            var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            wait.Until(driver => driver.Url == "http://localhost:4200/manager/vacationRequests");
         }
 
         [Fact]
-        public void Create_consilium_with_doctors()
+        public void RejectVacation()
         {
-            ConsiliumPage.EnsurePageIsDisplayed();
-            rowCount = ConsiliumPage.GetRowsCount();
-            ConsiliumPage.AddConsiliumButtonPressed();
-            ConsiliumPage.EnsureEndPageIsDisplayed();
-            ConsiliumPage.ChooseReason("Treba mi pomoch");
-            ConsiliumPage.ChooseStartDate("12.19.2022.");
-            ConsiliumPage.ChooseEndDate("12.21.2022.");
-            ConsiliumPage.ChooseDuration("1");
-            ConsiliumPage.DoctorRadionButtonPressed();
-            ConsiliumPage.ChooseDoctorCombo();
-            ConsiliumPage.clickOutside();
-            ConsiliumPage.CreateConsiliumButtonPressed();
+            vacationPage.PressRejectButton();
+            String komentar = "Testiramo da li radi komentar";
+            vacationPage.writeComment(komentar);
+            vacationPage.PressSubmitButton();
 
-            Assert.Equal(rowCount, ConsiliumPage.GetRowsCount());
+            Assert.Equal(komentar, vacationPage.read());
         }
     }
 }

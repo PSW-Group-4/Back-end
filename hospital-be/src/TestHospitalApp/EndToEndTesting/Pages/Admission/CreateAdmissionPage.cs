@@ -53,15 +53,30 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Admission
             return true;
         }
 
+        public bool PatientBoxClick()
+        {
+            try
+            {
+                PatientBox.Click();
+            }
+            catch (NoSuchElementException)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool ChoosePatient()
         {
             try
             {
                 WebDriverWait waitSelect = new WebDriverWait(driver, timeout: TimeSpan.FromSeconds(2));
-                waitSelect.Until(e => { return IsElementHasTrueAriaDisabledAttribute(e, PatientBox); });
+                waitSelect.Until(e => { return IsElementHasTrueAriaDisabledAttribute(e, PatientBox); });          
                 PatientBox.Click();
                 WebDriverWait waitOption = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
                 waitOption.Until(e => e.FindElement(By.Id("optionPatient"))).Click();
+                
+                
             }
             catch (NoSuchElementException)
             {
@@ -113,6 +128,27 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Admission
                 }
             });
         }
+
+        public void EnsurePatientOptionDisplayed()
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+            wait.Until(condition =>
+            {
+                try
+                {
+                    return driver.FindElements(By.Id("optionPatient")).Count != 0;
+                }
+                catch (StaleElementReferenceException)
+                {
+                    return false;
+                }
+                catch (NoSuchElementException)
+                {
+                    return false;
+                }
+            });
+        }
+
         public void EnsureEndPageIsDisplayed()
         {
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));

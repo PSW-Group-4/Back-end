@@ -54,22 +54,6 @@ namespace HospitalAPI.Controllers
             return BadRequest("This user is not a patient");
         }
 
-        //TODO staviti da se zapravo dobavlja ulogovan pacijent
-        // GET api/Patient/loggedInPatient
-        [HttpGet("loggedInPatient")]
-        public ActionResult GetLoggedInPatient()
-        {
-            try
-            {
-                var patient = _patientService.GetAll().FirstOrDefault();
-                return Ok(patient);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }
-
         // GET api/Patient/2
         [HttpGet("{id}")]
         public ActionResult GetById([FromRoute] Guid id)
