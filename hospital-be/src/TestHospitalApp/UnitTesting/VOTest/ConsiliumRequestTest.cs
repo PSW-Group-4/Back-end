@@ -52,7 +52,7 @@ namespace TestHospitalApp.UnitTesting.VOTest
             List<string> Specialities = new List<string>();
             DoctorsId.Add(guid);
 
-s
+
             Should.Throw<ValueObjectValidationFailedException>(() =>
             {
                 ConsiliumRequest consiliumrequest = new ConsiliumRequest (
