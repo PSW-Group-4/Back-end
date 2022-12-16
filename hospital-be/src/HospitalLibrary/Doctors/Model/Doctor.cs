@@ -48,6 +48,11 @@ namespace HospitalLibrary.Doctors.Model
 
         public bool IsInWorkHours(DateTime date)
         {
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                return false;
+            }
+
             DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(this.WorkingTimeStart).Hour, DateTime.Parse(this.WorkingTimeStart).Minute, 0);
             DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(this.WorkingTimeEnd).Hour, DateTime.Parse(this.WorkingTimeEnd).Minute, 0);
 
