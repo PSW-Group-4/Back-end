@@ -57,7 +57,7 @@ namespace HospitalLibrary.Reports.Model
         }
         private bool IsThereMedicalAppointment()
         {
-            if (MedicalAppointment == null)
+            if (MedicalAppointmentId.Equals(Guid.Empty))        //Stefan menjao, puca pri inicijalizaciji jer se provrava ceo objekat, koji je null
             {
                 return false;
             }
