@@ -118,18 +118,20 @@ namespace HospitalLibrary.Consiliums.Service
                 doctors.Add(_doctorService.GetById(d));
             }
 
-            Consilium consilium = new Consilium()
-            {
-                Reason = consiliumRequest.Reason,
-                IsDone = false,
-                RoomId = RoomId,
-                DateRange = dr,
-                Doctors = doctors
-                
-                //DoctorsId = consiliumRequest.DoctorsId,
-                // ostale stvari koje ja ne znam sta su hahahah
 
-            };
+            Consilium consilium =
+                new Consilium(Guid.NewGuid(), dr, RoomId, null, consiliumRequest.Reason, doctors);
+            // {
+            //     Reason = consiliumRequest.Reason,
+            //     IsDone = false,
+            //     RoomId = RoomId,
+            //     DateRange = dr,
+            //     Doctors = doctors
+            //     
+            //     //DoctorsId = consiliumRequest.DoctorsId,
+            //     // ostale stvari koje ja ne znam sta su hahahah
+            //
+            // };
             return _consiliumRepository.Create(consilium);
         }
 
@@ -208,18 +210,20 @@ namespace HospitalLibrary.Consiliums.Service
         private Consilium CreateConsiliumWithSpecialitites(DateTime terminFound,Guid roomId, ConsiliumRequest consiliumRequest, List<Doctor> availableDoctors)
         {
             DateRange dr = new DateRange(terminFound, terminFound.AddMinutes(30 * consiliumRequest.Duration));
-            Consilium consilium = new Consilium()
-            {
-                Reason = consiliumRequest.Reason,
-                IsDone = false,
-                RoomId = roomId,
-                DateRange = dr,
-                Doctors = availableDoctors
-
-                //DoctorsId = consiliumRequest.DoctorsId,
-                // ostale stvari koje ja ne znam sta su hahahah
-
-            };
+            Consilium consilium = 
+                new Consilium(Guid.NewGuid(), dr, roomId, null , consiliumRequest.Reason, availableDoctors);
+            // {
+            // {
+            //     Reason = consiliumRequest.Reason,
+            //     IsDone = false,
+            //     RoomId = roomId,
+            //     DateRange = dr,
+            //     Doctors = availableDoctors
+            //
+            //     //DoctorsId = consiliumRequest.DoctorsId,
+            //     // ostale stvari koje ja ne znam sta su hahahah
+            //
+            // };
             return _consiliumRepository.Create(consilium);
         }
 

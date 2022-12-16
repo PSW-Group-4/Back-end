@@ -154,8 +154,9 @@ namespace HospitalLibrary.Vacations.Service
                 if(appointment.DateRange.StartTime > vacation.DateStart &&
                     appointment.DateRange.StartTime < vacation.DateEnd)
                 {
-                    appointment.DoctorId = availableSwitchDoctor.Id;
-                    appointment.RoomId = availableSwitchDoctor.RoomId;
+                    appointment.SwitchRoomAndDoctor(availableSwitchDoctor.Id, availableSwitchDoctor.RoomId);
+                    // appointment.DoctorId = availableSwitchDoctor.Id;
+                    // appointment.RoomId = availableSwitchDoctor.RoomId;
                     // updejtuj apojntment
                 }
             }
@@ -179,6 +180,29 @@ namespace HospitalLibrary.Vacations.Service
         public IEnumerable<Vacation> GetAllPastByDoctorId(Guid doctorId)
         {
             return _vacationRepository.GetAllPastByDoctorId(doctorId);
+        }
+
+        public List<int> GetNumberOfVacationsPerMonth(Guid doctorId)
+        {
+            List<int> returnList = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //init lista 0, svaki broj predstavlja broj iskoriscenih dana u mesecu, prvi broj januar itd...
+            IEnumerable<Vacation> vacations = _vacationRepository.GetAllPastByDoctorId(doctorId);
+
+            foreach(Vacation v in vacations)
+            {
+                int numberOfDays = (v.DateEnd - v.DateStart).Days;
+
+                if(numberOfDays > 31)
+                {
+                    returnList[v.DateStart.Month - 1] = returnList[v.DateStart.Month - 1] + 31;
+                    returnList[v.DateStart.Month] = returnList[v.DateStart.Month] + (numberOfDays - 31);
+                }
+                else
+                {
+                    returnList[v.DateStart.Month - 1] = returnList[v.DateStart.Month - 1] + numberOfDays;
+                }
+            }
+
+            return returnList;
         }
     }
 }

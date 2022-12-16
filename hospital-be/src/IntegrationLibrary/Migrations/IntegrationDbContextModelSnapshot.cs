@@ -31,17 +31,26 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("text");
 
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsPublished")
                         .HasColumnType("boolean");
 
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp without time zone");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
+
+                    b.Property<double>("Version")
+                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
@@ -55,6 +64,9 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("Activated")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("ApiKey")
                         .HasColumnType("text");
@@ -266,20 +278,29 @@ namespace IntegrationLibrary.Migrations
 
             modelBuilder.Entity("IntegrationLibrary.TenderApplications.Model.TenderApplication", b =>
                 {
-                    b.Property<Guid>("ApplicationId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid?>("BloodBankId")
                         .HasColumnType("uuid");
 
-                    b.Property<double>("PriceInRSD")
-                        .HasColumnType("double precision");
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Price")
+                        .HasColumnType("text");
 
                     b.Property<Guid?>("TenderId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("ApplicationId");
+                    b.Property<double>("Version")
+                        .HasColumnType("double precision");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("BloodBankId");
 

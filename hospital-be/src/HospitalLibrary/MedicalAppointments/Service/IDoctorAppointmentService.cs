@@ -19,7 +19,8 @@ namespace HospitalLibrary.Appointments.Service
         List<DateRange> AvailableTerminsForDate(DateTime date, Guid patientId, Guid doctorId);
         bool IsDoctorAvailable(Guid doctorId, DateTime time);
         public List<DateRange> getAvailableTerminsForAnotherDoctor(DateTime timeStart, DateTime timeEnd, Guid patientId, Guid doctorId);
-        public List<DateRange> GetAppointmentSuggestionsForDateRange(RequestForAppointmentSlotSuggestions request);
+        public List<AppointmentSuggestionsWithTheirDoctors> GetAppointmentSuggestionsForDateRange(
+            RequestForAppointmentSlotSuggestions request);
 
     }
 }

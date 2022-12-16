@@ -31,7 +31,7 @@ namespace HospitalAPI.Controllers
         [HttpGet("/api/pastVacations/{doctorId}")]
         public ActionResult GetAllPastByDoctorId(Guid doctorId)
         {
-            return Ok(_vacationtService.GetAllPastByDoctorId(doctorId));
+            return Ok(_vacationtService.GetNumberOfVacationsPerMonth(doctorId));
         }
 
         // GET api/Vacation/1

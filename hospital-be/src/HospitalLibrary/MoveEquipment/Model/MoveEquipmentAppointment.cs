@@ -18,12 +18,10 @@ namespace HospitalLibrary.MoveEquipment.Model
         public TypeOfMovement Type {get; private set;}
         public MoveEquipmentAppointment() {}
 
-        public MoveEquipmentAppointment(TypeOfMovement type, Guid equipmentId, UInt64 amount, Guid roomId, DateRange dateRange) {
+        
+        public MoveEquipmentAppointment(TypeOfMovement type, Guid equipmentId, UInt64 amount, Guid roomId, DateRange dateRange) : base(Guid.NewGuid(), dateRange, roomId, null) {
             this.Type = type;
             this.EquipmentToMove = new EquipmentToMove(equipmentId, amount);
-            this.IsDone = false;
-            this.RoomId = roomId;
-            this.DateRange = dateRange;
             Validate();
         }
 
@@ -45,7 +43,7 @@ namespace HospitalLibrary.MoveEquipment.Model
 
         public void Finish()
         {
-            this.IsDone = true;
+            this.FinishAppointment();
         }
 
         public bool AbleToCancel() {
