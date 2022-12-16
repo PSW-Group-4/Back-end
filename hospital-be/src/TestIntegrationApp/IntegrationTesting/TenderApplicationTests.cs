@@ -57,9 +57,9 @@ namespace TestIntegrationApp.IntegrationTesting
             IEnumerable<Tender> tenders = tenderService.GetAll();
             ApplyForTenderDto applicationDto = new()
             {
-                BloodBankId = banks.First().Id,
+                BloodBank = banks.First().Id,
                 TenderId = tenders.First().Id,
-                PriceInRSD = 30000
+                Price = new Price(30000, "RSD")
             };
 
             tenderApplicationController.Apply(applicationDto);

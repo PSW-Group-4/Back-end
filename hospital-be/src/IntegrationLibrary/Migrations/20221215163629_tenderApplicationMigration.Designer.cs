@@ -3,15 +3,17 @@ using System;
 using IntegrationLibrary.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace IntegrationLibrary.Migrations
 {
     [DbContext(typeof(IntegrationDbContext))]
-    partial class IntegrationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221215163629_tenderApplicationMigration")]
+    partial class tenderApplicationMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,26 +33,17 @@ namespace IntegrationLibrary.Migrations
                     b.Property<string>("Body")
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<bool>("IsArchived")
                         .HasColumnType("boolean");
 
                     b.Property<bool>("IsPublished")
                         .HasColumnType("boolean");
 
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
                         .HasColumnType("text");
-
-                    b.Property<double>("Version")
-                        .HasColumnType("double precision");
 
                     b.HasKey("Id");
 
@@ -64,9 +57,6 @@ namespace IntegrationLibrary.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
-
-                    b.Property<bool>("Activated")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("ApiKey")
                         .HasColumnType("text");

@@ -15,6 +15,7 @@ using HospitalLibrary.Reports.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Symptoms.Model;
+using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
 using IntegrationLibrary.Common;
@@ -25,6 +26,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace TestHospitalApp.Setup
@@ -205,14 +207,13 @@ namespace TestHospitalApp.Setup
                 Prescriptions = prescriptions,
                 DateTime = new DateTime()
             };
-
-            Admission admission = new Admission
+            Guid Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174");
+            Guid PatientId = patient.Id;
+            Reason Reason = new Reason("Glavobolja");            
+            DateTime arrivalDate = DateTime.Now;
+            Admission admission = new Admission(Id, patient.Id, patient, Reason, room.Id, room, arrivalDate, new Guid(), new Treatment())
             {
-                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174"),
-                PatientId = patient.Id,
-                Reason = "Razlog za otpust",
-                RoomId = room.Id,
-                arrivalDate = DateTime.Now
+                
             };
             context.Admissions.Add(admission);
 
