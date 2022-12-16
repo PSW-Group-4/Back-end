@@ -19,7 +19,7 @@ namespace HospitalLibrary.Admissions.Model
             Text = text;
             if (!IsValid())
             {
-                throw new ValueObjectValidationFailedException("Email is not in proper format");
+                throw new ValueObjectValidationFailedException("Reason is not in proper format");
             }
         }        
 
