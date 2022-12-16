@@ -35,41 +35,49 @@ namespace IntegrationAPI.Controllers
             IEnumerable<BloodBank> bloodBanks = _service.GetAll();
             return Ok(bloodBanks);
         }
+
         [HttpPost]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Create(BloodBankRegisterDto bloodBankDto)
         {
             BloodBank bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Create(bloodBank);
-            _mailSender.sendEmail(_mailSender.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress, IntegrationLibrary.Settings.EmailingResources.EmailSubjectBB, _mailSender.CreateEmailText(bloodBank)));
+            _mailSender.sendEmail(_mailSender.createTxtEmail(bloodBank.Name, bloodBank.EmailAddress,
+                IntegrationLibrary.Settings.EmailingResources.EmailSubjectBB, _mailSender.CreateEmailText(bloodBank)));
             return Ok(bloodBank);
         }
+
         [HttpGet("{ApiKey}")]
         public ActionResult GetByApiKey(string ApiKey)
         {
             BloodBank bloodBank = _service.GetByApiKey(ApiKey);
             return Ok(bloodBank);
         }
+
         [HttpPost("{id}")]
+        [AllowAnonymous]
         public ActionResult Update(String Id, BloodBankEditDto bloodBankDto)
         {
             BloodBank bloodBank = _mapper.Map<BloodBank>(bloodBankDto);
             _service.Update(bloodBank);
             return Ok(bloodBank);
         }
+
         [Route("mail/{email}"), HttpPost]
-        public ActionResult GetByEmail(String email) {
+        public ActionResult GetByEmail(String email)
+        {
             return Ok(_service.GetByEmail(email));
         }
-        
-        [AllowAnonymous]
+
+
         [HttpPost]
-        [Route("/login")]
+        [Route("login")]
+        [AllowAnonymous]
         public ActionResult Login([FromBody] BloodBankLoginDto dto)
         {
             try
             {
-                var token = _service.Authenticate(dto.Email, dto.Password);
+                var token = _service.Authenticate(dto.Username, dto.Password);
                 return Ok(new JwtDto(token));
             }
             catch (NotFoundException)
@@ -88,7 +96,6 @@ namespace IntegrationAPI.Controllers
             {
                 return BadRequest("Unknown error");
             }
-
         }
     }
 }
