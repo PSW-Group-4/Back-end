@@ -51,7 +51,7 @@ namespace IntegrationAPI.Controllers
         }
 
         [Route("manage"), HttpPost]
-        //[ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Manage(BloodRequestEditDto bloodRequestDto) {
             BloodRequest bloodRequest = _service.GetById(bloodRequestDto.Id);
             bloodRequest.IsApproved = bloodRequestDto.IsApproved;

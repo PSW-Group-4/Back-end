@@ -8,7 +8,7 @@ namespace IntegrationAPI.Dtos.TenderApplications
 {
     public class ApplyForTenderDto
     {
-        public Guid BloodBankId { get; set; }
+        public String BloodBank { get; set; }
         public Guid TenderId { get; set; }
         public Price Price { get; set; }
     }
