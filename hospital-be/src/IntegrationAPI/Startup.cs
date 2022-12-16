@@ -116,6 +116,14 @@ namespace IntegrationAPI
                         ValidAudience = Configuration["Jwt:Audience"],
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
+                    options.Events = new JwtBearerEvents
+                    {                        
+                        OnAuthenticationFailed = async ctx => 
+                        {
+                            var putBreakpointHere = true;
+                            var exceptionMessage = ctx.Exception;
+                        },
+                    };
                 });
             
             services.AddScoped<ExternalAuthorizationFilter>();
