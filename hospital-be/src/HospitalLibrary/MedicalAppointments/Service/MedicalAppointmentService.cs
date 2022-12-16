@@ -101,7 +101,7 @@ namespace HospitalLibrary.Appointments.Service
                 throw new CanNotCancelAppointmentException("Can not cancel less then 24h");
             }
 
-            appointment.IsCanceled = true;
+            appointment.CancelAppointment();
             _medicalAppointmentRepository.Update(appointment);
         }
 

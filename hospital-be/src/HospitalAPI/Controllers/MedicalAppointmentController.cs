@@ -89,9 +89,11 @@ namespace HospitalAPI.Controllers
                 _jwtService.GetCurrentUser(HttpContext.User).PersonId ?? throw new NotFoundException();
 
             request.Date =request.Date.AddHours(1);
-            var appointment = _mapper.Map<MedicalAppointment>(request);
-            appointment.PatientId = patientId;
-            appointment.RoomId = doctor.RoomId;
+            var dateRange = new DateRange(request.Date, request.Date.AddMinutes(30));
+            var appointment = new MedicalAppointment(Guid.NewGuid(), dateRange, doctor.RoomId, null, doctor.Id, null,
+                patientId, null, false);
+            // appointment.PatientId = patientId;
+            // appointment.RoomId = doctor.RoomId;
 
             _medicalAppointmentService.Create(appointment);
             return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
