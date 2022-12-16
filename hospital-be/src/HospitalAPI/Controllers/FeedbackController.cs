@@ -69,6 +69,7 @@ namespace HospitalAPI.Controllers
 
         //PATCH api/feedback/publish/2
         [HttpPatch("publishhide/{id}")]
+        [Authorize(Roles = "Manager")]
         public ActionResult PublishHide([FromRoute] Guid id, [FromBody] JsonPatchDocument feedbackModel)
         {
             try

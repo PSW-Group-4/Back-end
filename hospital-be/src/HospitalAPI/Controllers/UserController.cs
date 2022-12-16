@@ -167,6 +167,7 @@ namespace HospitalAPI.Controllers
             }
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("[action]")]
         public ActionResult ActivateAccount([FromBody] AccountActivationDto activationInformation)
