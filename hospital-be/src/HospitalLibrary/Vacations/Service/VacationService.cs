@@ -190,7 +190,16 @@ namespace HospitalLibrary.Vacations.Service
             foreach(Vacation v in vacations)
             {
                 int numberOfDays = (v.DateEnd - v.DateStart).Days;
-                returnList[v.DateStart.Month - 1] = returnList[v.DateStart.Month - 1] + numberOfDays;
+
+                if(numberOfDays > 31)
+                {
+                    returnList[v.DateStart.Month - 1] = returnList[v.DateStart.Month - 1] + 31;
+                    returnList[v.DateStart.Month] = returnList[v.DateStart.Month] + (numberOfDays - 31);
+                }
+                else
+                {
+                    returnList[v.DateStart.Month - 1] = returnList[v.DateStart.Month - 1] + numberOfDays;
+                }
             }
 
             return returnList;
