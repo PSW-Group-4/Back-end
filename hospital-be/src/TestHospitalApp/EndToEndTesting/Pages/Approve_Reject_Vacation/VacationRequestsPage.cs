@@ -20,38 +20,17 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Approve_Reject_Vacation
             this.driver = driver;
         }
 
-        private IWebElement approveVacationButton => driver.FindElement(By.Id("approveButton"));
-        private IWebElement rejectVacationButton => driver.FindElement(By.Id("rejectButton"));
+        private IWebElement rejectVacationButton => driver.FindElement(By.XPath("/html/body/app-root/app-manager-root/app-manager-vacations/table/tbody/tr[1]/td[7]/button/span[1]/mat-icon"));
 
-        private IWebElement submitCommentButton => driver.FindElement(By.Id("commentSubmitButton"));
+        private IWebElement submitCommentButton => driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/mat-dialog-container/app-comment/div/button"));
 
-        private IWebElement commentInput => driver.FindElement(By.Id("commentField"));
+        private IWebElement commentInput => driver.FindElement(By.XPath("/html/body/div[2]/div[2]/div/mat-dialog-container/app-comment/div/mat-form-field[2]/div/div[1]/div/textarea"));
 
-        public bool PressApproveButton()
+        public void PressRejectButton()
         {
-            try
-            {
-                approveVacationButton.Click();
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public bool PressRejectButton()
-        {
-            try
-            {
-                rejectVacationButton.Click();
-                
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-            return true;
+            WebDriverWait myDynamicElement = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
+            myDynamicElement.Until(driver => CheckIfItExists("/html/body/app-root/app-manager-root/app-manager-vacations/table/tbody/tr[1]/td[7]/button/span[1]/mat-icon"));
+            rejectVacationButton.Click();
         }
 
         public bool PressSubmitButton()
@@ -71,7 +50,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Approve_Reject_Vacation
         public void writeComment(String comment)
         {
             WebDriverWait myDynamicElement = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-            //myDynamicElement.Until(driver => CheckIfItExists("/html/body/div[2]/div[2]/div/mat-dialog-container/app-edit-building/div/mat-form-field[2]/div/div[1]/div/input"));
+            myDynamicElement.Until(driver => CheckIfItExists("/html/body/div[2]/div[2]/div/mat-dialog-container/app-comment/div/mat-form-field[2]/div/div[1]/div"));
             commentInput.Clear();
             commentInput.SendKeys(comment);
         }
@@ -79,7 +58,7 @@ namespace TestHospitalApp.EndToEndTesting.Pages.Approve_Reject_Vacation
         public String read()
         {
             WebDriverWait myDynamicElement = new WebDriverWait(driver, TimeSpan.FromSeconds(30));
-            myDynamicElement.Until(driver => CheckIfItExists("/html/body/div[2]/div[2]/div/mat-dialog-container/app-edit-building/div/mat-form-field[2]/div/div[1]/div/input"));
+            myDynamicElement.Until(driver => CheckIfItExists("/html/body/div[2]/div[2]/div/mat-dialog-container/app-comment/div/mat-form-field[2]/div/div[1]/div"));
             String s = commentInput.GetAttribute("value").ToString();
             return s;
         }

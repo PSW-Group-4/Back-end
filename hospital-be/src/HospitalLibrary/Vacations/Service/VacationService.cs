@@ -204,5 +204,10 @@ namespace HospitalLibrary.Vacations.Service
 
             return returnList;
         }
+
+        public IEnumerable<Vacation> GetAllManager()
+        {
+            return _vacationRepository.GetAllManager();
+        }
     }
 }

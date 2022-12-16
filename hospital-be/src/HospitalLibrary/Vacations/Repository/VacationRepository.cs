@@ -22,7 +22,12 @@ namespace HospitalLibrary.Vacations.Repository
 
         public IEnumerable<Vacation> GetAll()
         {
-            return _context.Vacations.ToList();
+            return _context.Vacations.ToList(); //.OrderBy(x => x.DateEnd);
+        }
+
+        public IEnumerable<Vacation> GetAllManager()
+        {
+            return _context.Vacations.ToList().OrderBy(x => x.DateEnd); //.OrderBy(x => x.DateEnd);
         }
 
         public Vacation GetById(Guid id)

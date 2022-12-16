@@ -70,11 +70,11 @@ namespace TestHospitalApp.IntegrationTesting
                 VacationStatus = VacationStatus.Approved
             };
 
-            List<Vacation> result = ((OkObjectResult)vacationController.GetAllPastByDoctorId(new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")))?.Value as List<Vacation>;
+            List<int> result = ((OkObjectResult)vacationController.GetAllPastByDoctorId(new Guid("5c036fba-1118-4f4b-b153-90d75e60625e")))?.Value as List<int>;
             
             result.ShouldNotBeNull();
-            result.Count.ShouldBe(2);
-            result.First().VacationStatus.ShouldBe(VacationStatus.Approved);
+            result.Count.ShouldBe(12);
+            //result.First().VacationStatus.ShouldBe(VacationStatus.Approved);
         }
 
     }

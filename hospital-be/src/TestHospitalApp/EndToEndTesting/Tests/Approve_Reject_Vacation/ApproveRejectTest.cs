@@ -67,9 +67,14 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Approve_Reject_Vacation
         public void RejectVacation()
         {
             vacationPage.PressRejectButton();
-            String komentar = "Testiramo da li radi komentar";
+            string komentar = "Testiramo da li radi komentar";
             vacationPage.writeComment(komentar);
+
             vacationPage.PressSubmitButton();
+
+            vacationPage.Navigate();
+            
+            vacationPage.PressRejectButton();
 
             Assert.Equal(komentar, vacationPage.read());
         }
