@@ -193,7 +193,11 @@ namespace TestHospitalApp.Setup
             List<Symptom> symptoms = new List<Symptom>();
             symptoms.Add(symptom1);
             symptoms.Add(symptom2);
-            Report report = new Report
+
+            Report report = new Report(new Guid("058eb841-3975-4c7a-83ad-8b81dd6744d9"), new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+                "Opaka bolest", symptoms,prescriptions, new DateTime(2022, 9, 28, 0, 0, 0));
+            
+            /*Report report = new Report
             {
                 Id = new Guid("058eb841-3975-4c7a-83ad-8b81dd6744d9"),
                 MedicalAppointmentId = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
@@ -201,7 +205,7 @@ namespace TestHospitalApp.Setup
                 Symptoms = symptoms,
                 Prescriptions = prescriptions,
                 DateTime = new DateTime()
-            };
+            };*/
 
             Admission admission = new Admission
             {

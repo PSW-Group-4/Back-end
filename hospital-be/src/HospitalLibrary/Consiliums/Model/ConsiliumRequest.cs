@@ -30,7 +30,7 @@ namespace HospitalLibrary.Consiliums.Model
 
             if (!IsValid())
             {
-                throw new ValueObjectValidationFailedException("Report doesn't exist !");
+                throw new ValueObjectValidationFailedException("ConsiliumRequest doesn't exist !");
             }
         }
 
