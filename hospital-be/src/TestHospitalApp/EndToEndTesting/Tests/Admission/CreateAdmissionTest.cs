@@ -1,25 +1,28 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
+using Shouldly;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TestHospitalApp.EndToEndTesting.Pages.Admission;
+using TestHospitalApp.EndToEndTesting.Pages.Feedback;
 using TestHospitalApp.EndToEndTesting.Pages.Login;
 using TestHospitalApp.EndToEndTesting.Pages.MedicalAppointment;
 using Xunit;
 
-namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
+namespace TestHospitalApp.EndToEndTesting.Tests.Admission
 {
-    public class CreateAppointmentTest : IDisposable
+    public class CreateAdmissionTest : IDisposable
     {
         public IWebDriver Driver;
-        public MedicalAppointmentPage MedicalAppointmentPage;
+        public CreateAdmissionPage CreateAdmissionPage;
         private LoginPage loginPage;
         public int rowCount;
 
-        public CreateAppointmentTest()
+        public CreateAdmissionTest()
         {
             ChromeOptions options = new ChromeOptions();
             options.AddArguments("start-maximized");            // open Browser in maximized mode
@@ -32,7 +35,7 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
 
             LoginPrivate(options);
 
-            MedicalAppointmentPage.Navigate();
+            CreateAdmissionPage.Navigate();
         }
 
         public void Dispose()
@@ -44,9 +47,9 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
         private void LoginPrivate(ChromeOptions options)
         {
             Driver = new ChromeDriver(options);
-            MedicalAppointmentPage = new MedicalAppointmentPage(Driver);
+            CreateAdmissionPage = new CreateAdmissionPage(Driver);
             loginPage = new LoginPage(Driver);
-            MedicalAppointmentPage.NavigateStart();
+            CreateAdmissionPage.NavigateStart();
             loginPage.EnterUsernameAndPassword("doktor", "doktor");
             loginPage.PressLoginButton();
 
@@ -55,23 +58,23 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
         }
 
         [Fact]
-        public void Create_new_appointment()
+        public void Create_new_admission()
         {
-            rowCount = MedicalAppointmentPage.GetRowsCount();
-            MedicalAppointmentPage.AddButtonPressed();
-            MedicalAppointmentPage.EnsureAddPageIsDisplayed();
-            MedicalAppointmentPage.ChoosePatient();
-            MedicalAppointmentPage.ChooseDate("12-15-2022");
-            MedicalAppointmentPage.ChooseTermin();
-            MedicalAppointmentPage.CreateButtonPressed();
-            MedicalAppointmentPage.EnsureAddEndPageIsDisplayed();
-            MedicalAppointmentPage.FinishAddButtonPressed();
-            MedicalAppointmentPage.EnsureAddEndPageIsNotDisplayed();
-            MedicalAppointmentPage.RefreshPage();
-            MedicalAppointmentPage.EnsurePageIsDisplayed();
-            MedicalAppointmentPage.EnsureTableIsUpdated(rowCount);
+           
+            rowCount = CreateAdmissionPage.GetRowsCount();
+            CreateAdmissionPage.AddButtonPressed();
+            CreateAdmissionPage.EnsureEndPageIsDisplayed();
+            CreateAdmissionPage.ChoosePatient();            
+            CreateAdmissionPage.ChooseRoom();
+            CreateAdmissionPage.EnterReason("Glavobolja.");
+            CreateAdmissionPage.ConfirmButtonPressed();
+            CreateAdmissionPage.Navigate();
+            CreateAdmissionPage.RefreshPage();
+            
+            //CreateAdmissionPage.EnsureAddEndPageIsNotDisplayed();
+            CreateAdmissionPage.EnsureTableIsUpdated(rowCount);
 
-            Assert.Equal(rowCount + 1, MedicalAppointmentPage.GetRowsCount());
+            Assert.Equal(rowCount + 1, CreateAdmissionPage.GetRowsCount());
         }
     }
 }
