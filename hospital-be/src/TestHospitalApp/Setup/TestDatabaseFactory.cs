@@ -134,6 +134,7 @@ namespace TestHospitalApp.Setup
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
             context.Doctors.Add(doctorConsilium);
+            
 
             BloodSupply bloodSupply1 = new BloodSupply { BloodType = BloodType.FromString("A+"), Amount = 200.00 };
             context.BloodSupply.Add(bloodSupply1);
@@ -373,6 +374,9 @@ namespace TestHospitalApp.Setup
             initRooms(context);
             // Relocation Appointments
             initRenovation(context);
+            
+            //Medical appointments
+            initMedicalAppointments(context);
 
 
             context.SaveChanges();
@@ -515,6 +519,34 @@ namespace TestHospitalApp.Setup
             context.Rooms.Add(room2);
             context.Rooms.Add(room3);
         }
+
+        private static void initMedicalAppointments(HospitalDbContext context)
+        {
+            Address address = new Address { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8123ef3ea3"), Street = "Ulica", StreetNumber = "10", City = "Grad", Country = "Država" };
+            Room room = new Room { Id = new Guid("f6927bfe-0246-4e2b-94e1-4b8023ef3ea3"), Name = "Soba", Number = 10, Description = "Opis sobe" };
+            Doctor doctor= new Doctor(new Guid("5c125fba-1318-4f4b-b153-90d75e60626e"), "Test Doctor Sastanak", "Test Doctor Sastanak",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
+                new Email("doctor@test.com"), "066/123-456", "12345", "Surgeon", "03:00",
+                "05:00", room.Id, room);
+            
+            Patient patient = new Patient(new Guid("a6937bfe-0246-4e2b-94e1-4b8023ef3ea1"), "Petar", "Popovic", DateTime.Now, Gender.Male, address, new Jmbg("1807000730038"),
+                new Email("mail@gmail.pir"), "066413242", BloodType.FromString("A+"));
+            patient.AppointTheChosenDoctor(doctor);
+
+            var dateStart = new DateTime(2022, 12, 26, 4, 0, 0);
+            MedicalAppointment medicalAppointment = new MedicalAppointment(
+                new Guid("9d01e769-70a4-4b1c-958c-2c587ec94b4b"),
+                new DateRange(dateStart, dateStart.AddMinutes(30)),
+                room.Id, null, new Guid("5c125fba-1318-4f4b-b153-90d75e60626e"), null, patient.Id, null, false);
+
+            context.Addresses.Add(address);
+            context.Rooms.Add(room);
+            context.Doctors.Add(doctor);
+            context.Patients.Add(patient);
+            context.MedicalAppointments.Add(medicalAppointment);
+            
+        }
+
 
     }
 }
