@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Text.Json;
 using System.Threading;
 using Confluent.Kafka;
 using HospitalAPI.Communications.Consumer;
@@ -27,8 +28,9 @@ namespace HospitalAPI.Communications
             {
                 PropertyNameCaseInsensitive = true
             };
-            var consumer = _consumerBuilder.Consume(_cancellationToken.Token);
+            ConsumeResult<Ignore, string> consumer = _consumerBuilder.Consume(_cancellationToken.Token);
             BloodSupplyDto dto = JsonSerializer.Deserialize<BloodSupplyDto>(consumer.Message.Value, options);
+            Console.WriteLine("Hospital received blood: " + dto.BloodType.ToString() + ", " + dto.Amount + "ml");
             return _bloodSupplyService.UpdateByType(dto.BloodType, dto.Amount);
         }
     }

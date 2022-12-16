@@ -14,6 +14,14 @@ namespace HospitalLibrary.Consiliums.Model
     {
         public String Reason { get; set; }
         public virtual List<Doctor> Doctors { get; set; }
-
+    
+        public Consilium(Guid id, DateRange dateRange, Guid? roomId, Room room,
+            string reason, List<Doctor> doctors) : base(id, dateRange, roomId,  room)
+        {
+            Reason = reason;
+            Doctors = doctors;
+        }
+        
+        public  Consilium() : base(){}
     }
 }

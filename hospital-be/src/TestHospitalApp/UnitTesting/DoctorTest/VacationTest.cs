@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HospitalLibrary.Core.Model;
 using Xunit;
 
 namespace TestHospitalApp.UnitTesting.DoctorTest
@@ -29,14 +30,18 @@ namespace TestHospitalApp.UnitTesting.DoctorTest
             VacationService vc = new VacationService(vacationRepo.Object, doctorAppointmentService.Object, doctorService.Object);
             List<MedicalAppointment> doctorAppointments = new List<MedicalAppointment>();
 
-            doctorAppointments.Add(new MedicalAppointment
-            {
-                DoctorId = DoctorId
-            });
-            doctorAppointments.Add(new MedicalAppointment
-            {
-                DoctorId = DoctorId
-            });
+            doctorAppointments.Add(new MedicalAppointment(Guid.NewGuid(), new DateRange(DateTime.Now, DateTime.Now.AddMinutes(30)),
+                    Guid.NewGuid(), null, DoctorId, null, Guid.NewGuid(), null, false)
+            // {
+            //     DoctorId = DoctorId
+            // }
+            );
+            doctorAppointments.Add(new MedicalAppointment(Guid.NewGuid(), new DateRange(DateTime.Now, DateTime.Now.AddMinutes(30)),
+                    Guid.NewGuid(), null, DoctorId, null, Guid.NewGuid(), null, false)
+            // {
+            //     DoctorId = DoctorId
+            // }
+            );
             Vacation vacationTrue = new Vacation()
             {
                 DoctorId = DoctorId,

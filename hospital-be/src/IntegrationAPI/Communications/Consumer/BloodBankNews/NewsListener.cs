@@ -28,6 +28,14 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Started NewsListener");
+            Task.Run(() => Listen(cancellationToken));
+
+            return Task.CompletedTask;
+        }
+
+        public void Listen(CancellationToken cancellationToken)
+        {
             ConsumerConfig config = new ConsumerConfig
             {
                 GroupId = groupId,
@@ -42,14 +50,14 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
                     INewsService newsService = scope.ServiceProvider.GetRequiredService<INewsService>();
                     var newsConverter = scope.ServiceProvider.GetRequiredService<IConverter<News, NewsDto>>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder
-                <Ignore, string>(config).Build();
+                        <Ignore, string>(config).Build();
                     {
                         consumerBuilder.Subscribe(topic);
                         CancellationTokenSource cancelToken = new CancellationTokenSource();
                         NewsConsumer newsConsumer = new(consumerBuilder, cancelToken, newsConverter);
                         try
                         {
-                            while (false)
+                            while (true)
                             {
                                 News news = newsConsumer.Consume();
                                 newsService.Save(news);
@@ -66,8 +74,6 @@ namespace IntegrationAPI.Communications.Consumer.BloodBankNews
             {
                 Debug.WriteLine(ex.Message);
             }
-
-            return Task.CompletedTask;
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {

@@ -29,6 +29,8 @@ namespace IntegrationAPI.Communications.Consumer.BloodRequestResponse
             BloodRequestResponseDto response = JsonSerializer.Deserialize<BloodRequestResponseDto>(consumer.Message.Value, options);
             BloodRequest request = _bloodRequestService.GetById(response.RequestId);
             request.Status = (BloodRequestStatus) Enum.Parse(typeof(BloodRequestStatus), response.Status);
+            Console.WriteLine("Request #" + request.Id + ": " + request.Status.ToString());
+            _bloodRequestService.Update(request);
             return request;
         }
     }
