@@ -25,12 +25,12 @@ namespace IntegrationLibrary.BloodReport.Repository
 
         public IEnumerable<BloodUsage> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.BloodUsages.ToList();
         }
 
         public IEnumerable<BloodUsageDto> GetAllBetweenDates(DateTime start, DateTime end)
         {
-            return _context.BloodUsages
+            /*return _context.BloodUsages
                 .Where(where => where.TimeStamp > start && where.TimeStamp < end)
                 .GroupBy(group => new
                 {
@@ -39,7 +39,21 @@ namespace IntegrationLibrary.BloodReport.Repository
                 {
                     BloodType = new BloodType(select.Key.bType.BloodGroup, select.Key.bType.RhFactor),
                     Milliliters = select.Sum(ml => ml.Milliliters)
-                }).ToList();    
+                }).ToList();    */
+            List<BloodUsage> bloodUsages = GetAll().ToList();
+            List<BloodUsageDto> bloodUsageDtos = new();
+            for (int i = 0; i < bloodUsages.Count; i++)
+            {
+                if (bloodUsages[i].TimeStamp.CompareTo(start) > 0 && bloodUsages[i].TimeStamp.CompareTo(end) < 0)
+                {
+                    BloodUsageDto dto = new BloodUsageDto();
+                    dto.BloodType = new BloodType(bloodUsages[i].Type.BloodGroup, bloodUsages[i].Type.RhFactor);
+                    dto.Milliliters = bloodUsages[i].Milliliters;
+                    bloodUsageDtos.Add(dto);
+                }
+            }
+
+            return bloodUsageDtos;
         } 
 
         public BloodUsage GetById(Guid id)

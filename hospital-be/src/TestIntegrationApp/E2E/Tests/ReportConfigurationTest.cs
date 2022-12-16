@@ -48,7 +48,7 @@ namespace TestIntegrationApp.E2E.Tests
             Page = new(Driver);
             Page.Navigate();
             Page.NewButtonClick();
-            Page.SelectInformation("34361aaf-b0fa-4ade-a00e-9b46a8db177a", "true", "1");
+            Page.SelectInformation("cd8056ba-26bb-4e36-a0e7-09908f734541", "true", "1");
             Page.SaveButtonClick();
             Page.Navigate(); //ref
 
@@ -56,8 +56,7 @@ namespace TestIntegrationApp.E2E.Tests
 
             wait.Until(drv => drv.FindElements(By.ClassName("item-wrapper")));
 
-            Assert.Equal(@"http://localhost:4200/manager/bloodBanks", Driver.Url);
-            Page.ValidateNewEntry("34361aaf-b0fa-4ade-a00e-9b46a8db177a", "true", "1").ShouldBe(true);
+            Page.ValidateNewEntry("Bankica", "true", "Daily").ShouldBe(true);
 
         }
         private void LoginAsManager()

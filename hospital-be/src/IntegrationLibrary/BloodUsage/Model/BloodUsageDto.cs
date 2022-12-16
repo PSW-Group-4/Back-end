@@ -11,5 +11,7 @@ namespace IntegrationLibrary.BloodUsages.Model
     {
         public BloodType BloodType { get; set; }    
         public double Milliliters { get; set; }
+        
+        
     }
 }

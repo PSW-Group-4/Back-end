@@ -27,6 +27,7 @@
 
     <ItemGroup>
         <Folder Include="Mappers\" />
+        <Folder Include="Reports" />
     </ItemGroup>
 
     <ItemGroup>

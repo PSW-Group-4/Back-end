@@ -1,4 +1,4 @@
-﻿using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.BloodBanks.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

@@ -66,27 +66,43 @@ namespace TestIntegrationApp.E2E.Pages
         }
         public bool ValidateNewEntry(string bank,string status, string frequency)
         {
-            if (ValidateBankName(bank) && ValidateStatus(status) && ValidateFrequency(frequency)) return true;
+            if (ValidateBankName(bank) && ValidateStatusAndFrequency(status, frequency)) return true;
             return false;
         }
 
         private bool ValidateBankName(string bank)
         {
             string bankTitleString = LastEntry.FindElement(By.TagName("p")).Text;
-            if (bankTitleString != null) if (bankTitleString.Equals("Bloodbank name: " + bank)) return true;
+            string bankTitle = (bankTitleString.Split(':')[1]).Trim();
+            if (bankTitleString != null) if (bankTitle.Equals(bank)) return true;
             return false;
         }
         private bool ValidateStatus(string status)
         {
-            string activeStatus = LastEntry.FindElements(By.TagName("select")).First().Selected.ToString();
+            string activeStatus = LastEntry.FindElements(By.TagName("select")).First().Displayed.ToString().ToLower();
             if (activeStatus != null) if (activeStatus.Equals(status)) return true;
             return false;
         }
-        private bool ValidateFrequency(string frequency)
+        private bool ValidateStatusAndFrequency(string status, string frequency)
         {
-            string frequencyString = LastEntry.FindElements(By.TagName("select")).Last().Selected.ToString();
-            if (frequencyString != null) if (frequencyString.Equals(frequency)) return true;
-            return false;
+            IList<IWebElement> selectElements = driver.FindElements(By.TagName("select"));
+            bool passing = false;
+            int checkedCount = 0;
+            foreach (IWebElement select in selectElements)
+            {
+                var selectElement = new SelectElement(select);
+                if (checkedCount == 0)
+                {
+                    passing = status.ToLower().Equals(selectElement.SelectedOption.Text.ToLower());
+                    checkedCount++;
+                } else if (checkedCount == 1)
+                {
+                    passing = passing && frequency.ToLower().Equals(selectElement.SelectedOption.Text.ToLower());
+                    checkedCount++;
+                }
+            }
+
+            return passing;
         }
     }
 }
