@@ -10,6 +10,7 @@ namespace HospitalLibrary.Vacations.Service
     public interface IVacationService
     {
         IEnumerable<Vacation> GetAll();
+        IEnumerable<Vacation> GetAllManager();
         Vacation GetById(Guid id);
         Vacation Create(Vacation vacation);
         Vacation Update(Vacation vacation);

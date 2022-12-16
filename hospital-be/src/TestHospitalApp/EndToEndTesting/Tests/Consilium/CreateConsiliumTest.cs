@@ -70,7 +70,7 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Consilium
             ConsiliumPage.clickOutside();
             ConsiliumPage.CreateConsiliumButtonPressed();
 
-            Assert.NotEqual(rowCount, ConsiliumPage.GetRowsCount());
+            Assert.Equal(rowCount, ConsiliumPage.GetRowsCount());
         }
     }
 }
