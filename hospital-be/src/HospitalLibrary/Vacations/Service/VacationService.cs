@@ -180,5 +180,19 @@ namespace HospitalLibrary.Vacations.Service
         {
             return _vacationRepository.GetAllPastByDoctorId(doctorId);
         }
+
+        public List<int> GetNumberOfVacationsPerMonth(Guid doctorId)
+        {
+            List<int> returnList = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; //init lista 0, svaki broj predstavlja broj iskoriscenih dana u mesecu, prvi broj januar itd...
+            IEnumerable<Vacation> vacations = _vacationRepository.GetAllPastByDoctorId(doctorId);
+
+            foreach(Vacation v in vacations)
+            {
+                int numberOfDays = (v.DateEnd - v.DateStart).Days;
+                returnList[v.DateStart.Month - 1] = returnList[v.DateStart.Month - 1] + numberOfDays;
+            }
+
+            return returnList;
+        }
     }
 }
