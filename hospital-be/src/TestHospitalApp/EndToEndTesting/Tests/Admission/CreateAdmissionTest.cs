@@ -64,9 +64,11 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Admission
             rowCount = CreateAdmissionPage.GetRowsCount();
             CreateAdmissionPage.AddButtonPressed();
             CreateAdmissionPage.EnsureEndPageIsDisplayed();
+            //CreateAdmissionPage.PatientBoxClick();            
+            //CreateAdmissionPage.EnsurePatientOptionDisplayed();
             CreateAdmissionPage.ChoosePatient();            
             CreateAdmissionPage.ChooseRoom();
-            CreateAdmissionPage.EnterReason("Glavobolja.");
+            CreateAdmissionPage.EnterReason("Glavobolja");
             CreateAdmissionPage.ConfirmButtonPressed();
             CreateAdmissionPage.Navigate();
             CreateAdmissionPage.RefreshPage();
