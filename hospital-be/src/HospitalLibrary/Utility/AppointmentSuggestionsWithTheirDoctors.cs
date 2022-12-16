@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,6 @@ namespace HospitalLibrary.Utility
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public DateRange appointmentSuggestions { get; set; }
     }
 }

@@ -116,16 +116,18 @@ namespace HospitalLibrary.Appointments.Service
         }
         
         //STEFAN
-        public List<DateRange> GetAppointmentSuggestionsForDateRange(
+        public List<AppointmentSuggestionsWithTheirDoctors> GetAppointmentSuggestionsForDateRange(
             RequestForAppointmentSlotSuggestions request)
         {
-            List<DateRange> result = new List<DateRange>();
-            request.StartDate = request.StartDate.AddDays(1);
-            request.EndDate = request.EndDate.AddDays(1);
+            List<AppointmentSuggestionsWithTheirDoctors> result =
+                new List<AppointmentSuggestionsWithTheirDoctors>();
+
+            FixDatesForTimezone(request);
 
             foreach (DateTime date in SetupRequestDates(request.StartDate, request.EndDate))
             {
-                result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, request.DoctorId));
+                
+                result.AddRange(MapSuggestionsWithDesiredDoctor(request, date));
             }
 
             if (result.Count == 0)
@@ -135,10 +137,34 @@ namespace HospitalLibrary.Appointments.Service
             return result;
         }
 
-        private List<DateRange> GetSuggestionsByPriority(
+        private List<AppointmentSuggestionsWithTheirDoctors> MapSuggestionsWithDesiredDoctor(
+            RequestForAppointmentSlotSuggestions request, DateTime date)
+        {
+            List<AppointmentSuggestionsWithTheirDoctors> result =
+                                new List<AppointmentSuggestionsWithTheirDoctors>();
+
+            List<DateRange> suggestions =
+                AvailableTerminsForDate(date, request.RequestingPatientId, request.DoctorId);
+
+            foreach(var item in suggestions)
+            {
+                result.Add(new AppointmentSuggestionsWithTheirDoctors()
+                { Id = request.DoctorId, appointmentSuggestions = item, Name = "", Surname = "" });
+            }
+
+            return result;
+        }
+
+        private static void FixDatesForTimezone(RequestForAppointmentSlotSuggestions request)
+        {
+            request.StartDate = request.StartDate.AddDays(1);
+            request.EndDate = request.EndDate.AddDays(1);
+        }
+
+        private List<AppointmentSuggestionsWithTheirDoctors> GetSuggestionsByPriority(
             RequestForAppointmentSlotSuggestions request)
         {
-            var result = new List<DateRange>();
+            var result = new List<AppointmentSuggestionsWithTheirDoctors>();
             switch (request.Priority) 
             {
                 case "Doctor":
@@ -156,7 +182,8 @@ namespace HospitalLibrary.Appointments.Service
             }
         }
 
-        private List<DateRange> GetSuggestionsByDate(RequestForAppointmentSlotSuggestions request, List<DateRange> result)
+        private List<AppointmentSuggestionsWithTheirDoctors> GetSuggestionsByDate(
+            RequestForAppointmentSlotSuggestions request, List<AppointmentSuggestionsWithTheirDoctors> result)
         {
             List<Doctor> otherDoctorsOfTheSameSpeciality = _doctorRepository.GetDoctorsWithSpecialty(
                 _doctorRepository.GetById(request.DoctorId).Speciality).Where
@@ -166,17 +193,38 @@ namespace HospitalLibrary.Appointments.Service
             {
                 foreach (DateTime date in SetupRequestDates(request.StartDate, request.EndDate))
                 {
-                    result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, doc.Id));
+                    result.AddRange(MapSuggestionsWithOtherDoctorsOfTheSameSpeciality(doc, request, date));
+                    //result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, doc.Id));
                 }
             }
             return result;
         }
 
-        private List<DateRange> GetSuggestionsByDoctor(RequestForAppointmentSlotSuggestions request, List<DateRange> result)
+        private List<AppointmentSuggestionsWithTheirDoctors> MapSuggestionsWithOtherDoctorsOfTheSameSpeciality(
+            Doctor doc, RequestForAppointmentSlotSuggestions request, DateTime date)
+        {
+            List<AppointmentSuggestionsWithTheirDoctors> result =
+                new List<AppointmentSuggestionsWithTheirDoctors>();
+
+            List<DateRange> suggestions =
+                AvailableTerminsForDate(date, request.RequestingPatientId, doc.Id);
+
+            foreach(var item in suggestions)
+            {
+                result.Add(new AppointmentSuggestionsWithTheirDoctors()
+                { Id = doc.Id, appointmentSuggestions = item, Name = doc.Name, Surname = doc.Surname });
+            }
+
+            return result;
+        }
+
+        private List<AppointmentSuggestionsWithTheirDoctors> GetSuggestionsByDoctor(
+            RequestForAppointmentSlotSuggestions request, List<AppointmentSuggestionsWithTheirDoctors> result)
         {
             foreach (DateTime date in SetupDoctorPriorityDates(request.StartDate, request.EndDate))
             {
-                result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, request.DoctorId));
+                result.AddRange(MapSuggestionsWithDesiredDoctor(request, date));
+                //result.AddRange(AvailableTerminsForDate(date, request.RequestingPatientId, request.DoctorId));
             }
             return result;
         }
