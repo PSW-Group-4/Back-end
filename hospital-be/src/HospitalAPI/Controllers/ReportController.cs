@@ -60,8 +60,19 @@ namespace HospitalAPI.Controllers
         [HttpPut("{id}")]
         public ActionResult Update([FromRoute] Guid id, [FromBody] ReportRequestDto reportRequestDto)
         {
-            var report = _mapper.Map<Report>(reportRequestDto);
-            report.Id = id;
+            var reportMap = _mapper.Map<Report>(reportRequestDto);
+            //report.Id = id;
+
+            Report report = new Report(
+                id,
+                reportMap.MedicalAppointmentId,
+                reportMap.Text,
+                reportMap.Symptoms,
+                reportMap.Prescriptions,
+                reportMap.DateTime
+        );
+
+
 
             try
             {
