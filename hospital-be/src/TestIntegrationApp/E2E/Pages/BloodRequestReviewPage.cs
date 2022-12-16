@@ -11,25 +11,30 @@ namespace TestIntegrationApp.E2E.Pages
     {
         
         private readonly IWebDriver driver;
-        public readonly string Url = "http://localhost:4200/manager/viewRequests;
+        public readonly string Url = "http://localhost:4200/manager/viewRequests";
+
 
         public BloodRequestReviewPage(IWebDriver driver)
         {
             this.driver = driver;
         }
 
-        private IWebElement NameInput => driver.FindElement(By.Name("name"));
-        private IWebElement EmailInput => driver.FindElement(By.Name("email"));
-        private IWebElement ServerAddressInput => driver.FindElement(By.Name("serverAddress"));
-        private IWebElement SubmitButton => driver.FindElement(By.TagName("BUTTON"));
+        private IWebElement RejectButton => driver.FindElement(By.Name("reject"));
+        private IWebElement AcceptButton => driver.FindElement(By.Name("accept"));
+        private IWebElement RejectionCommentInput => driver.FindElement(By.Name("rejectionComment"));
+        private IWebElement SubmitButton => driver.FindElement(By.Name("submit"));
 
-        public void EnterInformation(string name, string email, string serverAddress)
+        public void EnterInformation(string rejectionComment)
         {
-            NameInput.SendKeys(name);
-            EmailInput.SendKeys(email);
-            ServerAddressInput.SendKeys(serverAddress);
+            RejectionCommentInput.SendKeys(rejectionComment);
+     
         }
-
+        public void PressAcceptButton() {
+            AcceptButton.Click();
+        }
+        public void PressRejectButton() {
+            RejectButton.Click();
+        }
         public void PressSubmitButton()
         {
             SubmitButton.Click();
