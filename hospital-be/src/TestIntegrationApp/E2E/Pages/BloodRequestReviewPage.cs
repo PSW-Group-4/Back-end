@@ -11,7 +11,7 @@ namespace TestIntegrationApp.E2E.Pages
     {
         
         private readonly IWebDriver driver;
-        public readonly string Url = "http://localhost:4200/manager/blood-request-manager";
+        public readonly string Url = "http://localhost:4200/manager/viewRequests;
 
         public BloodRequestReviewPage(IWebDriver driver)
         {

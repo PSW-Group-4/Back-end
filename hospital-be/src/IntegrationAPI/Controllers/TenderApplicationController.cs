@@ -12,6 +12,8 @@ using HospitalLibrary.Core.Service;
 using IntegrationAPI.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using JwtService = IntegrationLibrary.Utilities.JwtService;
+using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Tenders.Model;
 
 namespace IntegrationAPI.Controllers
 {
@@ -41,13 +43,12 @@ namespace IntegrationAPI.Controllers
         [HttpPost]
         [Authorize(Roles = "BloodBank")]
         public ActionResult Apply(ApplyForTenderDto tenderApplication)
-        {
-            TenderApplication application = new TenderApplication();
-            application.ApplicationId = Guid.NewGuid();
-            application.BloodBank =
+        {    
+            BloodBank bank =
                 _bloodBankService.GetByEmail(JwtService.GetEmailFromToken(tenderApplication.BloodBank));
-            application.Tender = _tenderService.GetById(tenderApplication.TenderId);
-            application.PriceInRSD = tenderApplication.PriceInRSD;
+            Tender tender = _tenderService.GetById(tenderApplication.TenderId);
+            Price price = tenderApplication.Price;
+            TenderApplication application = new TenderApplication(bank,tender,price);
             return Ok(_service.Apply(application));
         }
 
