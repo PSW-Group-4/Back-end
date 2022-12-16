@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.4.33103.184
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D598A8FD-AF65-4E98-A73B-1BE4D96774C6}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cd", "cd", "{D598A8FD-AF65-4E98-A73B-1BE4D96774C6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HospitalAPI", "src\HospitalAPI\HospitalAPI.csproj", "{94E83A7C-2FD7-4274-AC9F-114A04520F6D}"
 EndProject
