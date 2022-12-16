@@ -83,7 +83,7 @@ namespace TestHospitalApp.EndToEndTesting.Tests.Feedback
 
             loginPage = new LoginPage(driver);
             loginPage.NavigatePublic();
-            loginPage.EnterUsernameAndPassword("stefan", "salama9000");
+            loginPage.EnterUsernameAndPassword("salamahd", "salama9000");
             loginPage.PressLoginButton();
 
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(2));
