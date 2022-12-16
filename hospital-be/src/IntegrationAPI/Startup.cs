@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using IntegrationAPI.Authorization;
 using IntegrationAPI.Mappers;
@@ -103,6 +104,7 @@ namespace IntegrationAPI
 
             });
 
+            services.AddScoped<ExternalAuthorizationFilter>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -112,8 +114,16 @@ namespace IntegrationAPI
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = Configuration["Jwt:Issuer"],
-                        ValidAudience = Configuration["Jwt:Audience"],
+                        ValidIssuers = new List<string> 
+                        {
+                            "http://localhost:5000/",
+                            "http://localhost:16177/"
+                        },
+                        ValidAudiences = new List<string> 
+                        {
+                            "http://localhost:5000/",
+                            "http://localhost:16177/"
+                        },
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                     };
                     options.Events = new JwtBearerEvents
@@ -126,7 +136,6 @@ namespace IntegrationAPI
                     };
                 });
             
-            services.AddScoped<ExternalAuthorizationFilter>();
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IPasswordHasher<BloodBank>, PasswordHasher<BloodBank>>();
             services.AddScoped<IConverter<News, NewsDto>, NewsConverter>();

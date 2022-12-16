@@ -43,7 +43,7 @@ namespace TestIntegrationApp.E2E.Tests
             LoginAsManager();
             Page = new(Driver);
             Page.Navigate();
-            Page.EnterInformation("Bankicaa", "isaproject202223@gmail.com", "localhost:8080");
+            Page.EnterInformation("Bankicaa2", "isaproject2022233@gmail.com", "localhost:8080");
             Page.PressSubmitButton();
 
             WebDriverWait wait = new(Driver, TimeSpan.FromSeconds(10));

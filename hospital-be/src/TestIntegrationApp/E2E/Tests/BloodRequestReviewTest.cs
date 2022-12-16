@@ -48,7 +48,6 @@ namespace TestIntegrationApp.E2E.Tests
             Page.PressRejectButton();
             Page.EnterInformation("I reject");
             Page.PressSubmitButton();
-            //wait.Until(drv => drv.FindElement(By.ClassName("table-title")));
             Assert.Equal(@"http://localhost:4200/manager/viewRequests", Driver.Url);
         }
         [Fact]
@@ -59,9 +58,6 @@ namespace TestIntegrationApp.E2E.Tests
             Page = new(Driver);
             Page.Navigate();
             Page.PressAcceptButton();
-            Page.EnterInformation("I reject");
-            Page.PressSubmitButton();
-            //wait.Until(drv => drv.FindElement(By.ClassName("table-title")));
             Assert.Equal(@"http://localhost:4200/manager/viewRequests", Driver.Url);
         }
         private ChromeOptions GetOptions()

@@ -28,7 +28,7 @@ namespace IntegrationLibrary.BloodRequests.Repository
 
         public IEnumerable<BloodRequest> GetUnapproved()
         {
-            return _context.BloodRequests.Where(b => b.IsApproved == false);
+            return _context.BloodRequests.Where(b => b.Status == BloodRequestStatus.PENDING_APPROVAL);
         }
 
         public BloodRequest Create(BloodRequest bloodRequest)

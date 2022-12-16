@@ -10,15 +10,18 @@ using System.Threading.Tasks;
 using IntegrationAPI.Dtos.BloodRequests;
 using IntegrationAPI.Communications.Producer;
 using System.Text.Json;
+using System.Web.Mvc;
 using IntegrationAPI.Authorization;
 using IntegrationLibrary.Common;
 using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationLibrary.BloodBanks.Service;
+using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
+using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
 
 namespace IntegrationAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
     [ApiController]
     public class BloodRequestController : ControllerBase
     {
@@ -34,7 +37,8 @@ namespace IntegrationAPI.Controllers
             this.bloodRequestProducer = bloodRequestProducer;
         }
 
-        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.HttpGet]
+        [AllowAnonymous]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager, Doctor")]
         public ActionResult GetAll()
         {
@@ -42,7 +46,8 @@ namespace IntegrationAPI.Controllers
             return Ok(bloodRequests);
         }
 
-        [Route("unapproved"), HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("unapproved"), Microsoft.AspNetCore.Mvc.HttpGet]
+        [AllowAnonymous]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult GetUnapproved()
         {
@@ -50,7 +55,8 @@ namespace IntegrationAPI.Controllers
             return Ok(bloodRequests);
         }
 
-        [Route("manage"), HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("manage"), Microsoft.AspNetCore.Mvc.HttpPost]
+        [AllowAnonymous]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Manage(BloodRequestEditDto bloodRequestDto) {
             BloodRequest bloodRequest = _service.GetById(bloodRequestDto.Id);
@@ -58,16 +64,19 @@ namespace IntegrationAPI.Controllers
             bloodRequest.ManagerId = bloodRequestDto.ManagerId;
             if(bloodRequestDto.IsApproved)
             {
+                bloodRequest.Status = BloodRequestStatus.APPROVED_BY_MANAGER;
                 BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.Blood.BloodType.ToString(), bloodRequest.Blood.Amount, bloodRequest.SendOnDate, bloodRequest.IsUrgent);
                 bloodRequestProducer.Send(JsonSerializer.Serialize(messageDto), "blood.requests.topic");
             } else
             {
+                bloodRequest.Status = BloodRequestStatus.REJECTED_BY_MANAGER;
                 bloodRequest.RejectionComment = bloodRequestDto.RejectionComment;
             }
             return Ok(_service.Update(bloodRequest));
         }
 
-        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.HttpPost]
+        [AllowAnonymous]
         [ExternalAuthorizationFilter(ExpectedRoles = "Doctor")]
         public ActionResult Create([FromBody] BloodRequestsCreateDto bloodRequestDto)
         {
@@ -77,7 +86,8 @@ namespace IntegrationAPI.Controllers
                 DoctorId = bloodRequestDto.DoctorId,
                 Reasons = bloodRequestDto.Reasons,
                 IsUrgent = bloodRequestDto.IsUrgent,
-                SendOnDate = bloodRequestDto.SendOnDate
+                SendOnDate = bloodRequestDto.SendOnDate,
+                Status = BloodRequestStatus.PENDING_APPROVAL
             };
             return Ok(_service.Create(bloodRequest));
         }
