@@ -98,9 +98,6 @@ namespace HospitalLibrary.Migrations
                     b.Property<Guid>("PatientId")
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Reason")
-                        .HasColumnType("text");
-
                     b.Property<Guid>("RoomId")
                         .HasColumnType("uuid");
 
@@ -884,7 +881,26 @@ namespace HospitalLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("TreatmentId");
 
+                    b.OwnsOne("HospitalLibrary.Admissions.Model.Reason", "Reason", b1 =>
+                        {
+                            b1.Property<Guid>("AdmissionId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Text")
+                                .HasColumnType("text")
+                                .HasColumnName("ReasonText");
+
+                            b1.HasKey("AdmissionId");
+
+                            b1.ToTable("Admissions");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AdmissionId");
+                        });
+
                     b.Navigation("Patient");
+
+                    b.Navigation("Reason");
 
                     b.Navigation("Room");
 

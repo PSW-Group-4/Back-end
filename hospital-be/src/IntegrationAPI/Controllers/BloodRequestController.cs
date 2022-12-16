@@ -58,8 +58,7 @@ namespace IntegrationAPI.Controllers
             bloodRequest.ManagerId = bloodRequestDto.ManagerId;
             if(bloodRequestDto.IsApproved)
             {
-                bloodRequest.BloodBank = bloodBankService.GetByName(bloodRequestDto.BloodBank);
-                BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.Blood.BloodType.ToString(), bloodRequest.Blood.Amount, bloodRequest.SendOnDate, bloodRequest.BloodBank.Name, bloodRequest.IsUrgent);
+                BloodRequestMessageDto messageDto = new(bloodRequest.Id, bloodRequest.Blood.BloodType.ToString(), bloodRequest.Blood.Amount, bloodRequest.SendOnDate, bloodRequest.IsUrgent);
                 bloodRequestProducer.Send(JsonSerializer.Serialize(messageDto), "blood.requests.topic");
             } else
             {

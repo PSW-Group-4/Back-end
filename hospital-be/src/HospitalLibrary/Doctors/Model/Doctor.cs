@@ -18,22 +18,6 @@ namespace HospitalLibrary.Doctors.Model
         public virtual List<Consilium> Consiliums { get; private set; }
 
 
-
-        // Jovan Srdanov zakomentarisao jer treba DDD konstruktor, vi dodajte vase validacione funkcije
-
-        /*
-        public Doctor(string licenceNum, string speciality, string workingTimeStart, string workingTimeEnd, Guid roomId, Room room, List<Consilium> consiliums)
-        {
-            LicenceNum = licenceNum;
-            Speciality = speciality;
-            WorkingTimeStart = workingTimeStart;
-            WorkingTimeEnd = workingTimeEnd;
-            RoomId = roomId;
-            Room = room;
-            Consiliums = new List<Consilium>();
-        }
-        */
-
         public Doctor() : base()
         { }
 
@@ -46,6 +30,10 @@ namespace HospitalLibrary.Doctors.Model
             RoomId = roomId;
             Room = room;
             Consiliums = new List<Consilium>();
+            if (!IsValid())
+            {
+                throw new ValueObjectValidationFailedException("Doctor Must have Work Time !");
+            }
         }
 
 
@@ -56,14 +44,15 @@ namespace HospitalLibrary.Doctors.Model
             Speciality = doctor.Speciality;
             WorkingTimeStart = doctor.WorkingTimeStart;
             WorkingTimeEnd = doctor.WorkingTimeEnd;
-            if (!IsValid())
-            {
-                throw new ValueObjectValidationFailedException("Doctor must have work time !");
-            }
         }
 
         public bool IsInWorkHours(DateTime date)
         {
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday)
+            {
+                return false;
+            }
+
             DateTime WorkTimeStart = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(this.WorkingTimeStart).Hour, DateTime.Parse(this.WorkingTimeStart).Minute, 0);
             DateTime WorkTimeEnd = new DateTime(date.Year, date.Month, date.Day, DateTime.Parse(this.WorkingTimeEnd).Hour, DateTime.Parse(this.WorkingTimeEnd).Minute, 0);
 

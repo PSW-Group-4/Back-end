@@ -32,9 +32,15 @@ namespace TestHospitalApp.UnitTesting.EquipmentRelocation
             var apServ = new Mock<IAppointmentService>();
             AppointmentService service = new AppointmentService(mService.Object, doctorService.Object);
             List<Appointment> appointments = new List<Appointment>();
-            appointments.Add(new Appointment { RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"), DateRange = new HospitalLibrary.Core.Model.DateRange(new DateTime(2022, 12, 12, 0, 0, 0), new DateTime(2022, 12, 12, 0, 30, 0)) });
-            appointments.Add(new Appointment { RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
+            // appointments.Add(new Appointment { RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"), DateRange = new HospitalLibrary.Core.Model.DateRange(new DateTime(2022, 12, 12, 0, 0, 0), new DateTime(2022, 12, 12, 0, 30, 0)) });
+            // appointments.Add(new Appointment { RoomId = Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c") });
+            appointments.Add(new Appointment(Guid.NewGuid(),
+                new DateRange(new DateTime(2022, 12, 12, 0, 0, 0),
+                    new DateTime(2022, 12, 12, 0, 30, 0)),Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"), null));
 
+            appointments.Add(new Appointment(Guid.NewGuid(),
+                new DateRange(new DateTime(2022, 12, 12, 0, 0, 0),
+                    new DateTime(2022, 12, 12, 0, 30, 0)),Guid.Parse("9ae3255d-261f-472f-a961-7f2e7d05d95c"), null));
 
             apServ.Setup(x => x.GetAll()).Returns(appointments);
 

@@ -7,7 +7,9 @@ using HospitalAPI.Dtos.Appointment;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Appointments.Service;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using HospitalLibrary.Core.Service.Interfaces;
 using HospitalLibrary.Users.Model;
@@ -86,9 +88,12 @@ namespace HospitalAPI.Controllers
             var patientId = 
                 _jwtService.GetCurrentUser(HttpContext.User).PersonId ?? throw new NotFoundException();
 
-            var appointment = _mapper.Map<MedicalAppointment>(request);
-            appointment.PatientId = patientId;
-            appointment.RoomId = doctor.RoomId;
+            request.Date =request.Date.AddHours(1);
+            var dateRange = new DateRange(request.Date, request.Date.AddMinutes(30));
+            var appointment = new MedicalAppointment(Guid.NewGuid(), dateRange, doctor.RoomId, null, doctor.Id, null,
+                patientId, null, false);
+            // appointment.PatientId = patientId;
+            // appointment.RoomId = doctor.RoomId;
 
             _medicalAppointmentService.Create(appointment);
             return CreatedAtAction("GetById", new { id = appointment.Id }, appointment);
@@ -110,8 +115,7 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
-
-        // DELETE api/Appointment/1
+        
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] Guid id)
         {
@@ -158,6 +162,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("get-all-done")]
+        [Authorize(Roles = "Patient")]
         public ActionResult GetAllDoneForPatient()
         {
             try
@@ -183,6 +188,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("get-all-future")]
+        [Authorize(Roles = "Patient")]
         public ActionResult GetAllFutureForPatient()
         {
             try
@@ -208,6 +214,7 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpGet("get-all-canceled")]
+        [Authorize(Roles = "Patient")]
         public ActionResult GetAllCanceledForPatient()
         {
             try
@@ -232,8 +239,9 @@ namespace HospitalAPI.Controllers
             }
         }
         
+            [Authorize(Roles = "Patient")]
             [HttpPost("patient-appointment-request-simple")]
-            public ActionResult GetAvailableTerminsPatientSide(PatientSideAvailableAppointmentsRequestDto dto)
+            public ActionResult GetAvailableTerminsPatientSide([FromBody]PatientSideAvailableAppointmentsRequestDto dto)
             {
                 try
                 {

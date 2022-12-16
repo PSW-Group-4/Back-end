@@ -25,6 +25,14 @@ namespace IntegrationAPI.Communications.Consumer.ReceivedBlood
         
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Started BloodListener");
+            Task.Run(() => Listen(cancellationToken));
+            
+            return Task.CompletedTask;
+        }
+
+        public void Listen(CancellationToken cancellationToken)
+        {
             ConsumerConfig config = new()
             {
                 GroupId = _groupId,
@@ -36,18 +44,19 @@ namespace IntegrationAPI.Communications.Consumer.ReceivedBlood
             {
                 using (IServiceScope scope = ServiceScopeFactory.CreateScope())
                 {
+                    IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
                     IConsumer<Ignore, string> consumerBuilder = new ConsumerBuilder<Ignore, string>(config).Build();
                     {
-                        IProducer producer = scope.ServiceProvider.GetRequiredService<IProducer>();
                         consumerBuilder.Subscribe(_topic);
                         CancellationTokenSource cancelToken = new();
                         BloodConsumer bloodConsumer = new(consumerBuilder, cancelToken, producer);
                         try
                         {
-                            while (false)
+                            while (true)
                             {
                                 Blood receivedBlood = bloodConsumer.Consume();
-                                Console.WriteLine("Received blood!");
+                                if (cancellationToken.IsCancellationRequested)
+                                    break;
                             }
                         }
                         catch (OperationCanceledException)
@@ -62,7 +71,6 @@ namespace IntegrationAPI.Communications.Consumer.ReceivedBlood
                 Debug.WriteLine(ex.Message);
             }
 
-            return Task.CompletedTask;
         }
         public Task StopAsync(CancellationToken cancellationToken)
         {

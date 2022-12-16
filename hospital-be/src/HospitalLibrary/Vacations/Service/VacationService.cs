@@ -154,8 +154,9 @@ namespace HospitalLibrary.Vacations.Service
                 if(appointment.DateRange.StartTime > vacation.DateStart &&
                     appointment.DateRange.StartTime < vacation.DateEnd)
                 {
-                    appointment.DoctorId = availableSwitchDoctor.Id;
-                    appointment.RoomId = availableSwitchDoctor.RoomId;
+                    appointment.SwitchRoomAndDoctor(availableSwitchDoctor.Id, availableSwitchDoctor.RoomId);
+                    // appointment.DoctorId = availableSwitchDoctor.Id;
+                    // appointment.RoomId = availableSwitchDoctor.RoomId;
                     // updejtuj apojntment
                 }
             }

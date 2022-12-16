@@ -47,7 +47,7 @@ namespace TestHospitalApp.EndToEndTesting.Tests.MedicalAppointments
             MedicalAppointmentPage = new MedicalAppointmentPage(Driver);
             loginPage = new LoginPage(Driver);
             MedicalAppointmentPage.NavigateStart();
-            loginPage.EnterUsernameAndPassword("pele", "pele");
+            loginPage.EnterUsernameAndPassword("doktor", "doktor");
             loginPage.PressLoginButton();
 
             var wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));

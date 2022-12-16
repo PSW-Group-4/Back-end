@@ -15,6 +15,7 @@ using HospitalLibrary.Reports.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Symptoms.Model;
+using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Users.Model;
 using HospitalLibrary.Vacations.Model;
 using IntegrationLibrary.Common;
@@ -25,6 +26,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace TestHospitalApp.Setup
@@ -175,13 +177,16 @@ namespace TestHospitalApp.Setup
 
 
 
-            MedicalAppointment medicalAppointment = new MedicalAppointment
-            {
-                RoomId = room.Id,
-                Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
-                DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
-                PatientId = patient.Id
-            };
+            MedicalAppointment medicalAppointment = new MedicalAppointment(
+                new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+                new DateRange(DateTime.Now, DateTime.Now.AddMinutes(30)),
+                room.Id, null, new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"), null, patient.Id, null, false);
+            // {
+            //     RoomId = room.Id,
+            //     Id = new Guid("9d01e700-70a4-4b1c-958c-2c587ec94b4b"),
+            //     DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
+            //     PatientId = patient.Id
+            // };
 
             Prescription prescription = new Prescription
             {
@@ -202,14 +207,13 @@ namespace TestHospitalApp.Setup
                 Prescriptions = prescriptions,
                 DateTime = new DateTime()
             };
-
-            Admission admission = new Admission
+            Guid Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174");
+            Guid PatientId = patient.Id;
+            Reason Reason = new Reason("Glavobolja");            
+            DateTime arrivalDate = DateTime.Now;
+            Admission admission = new Admission(Id, patient.Id, patient, Reason, room.Id, room, arrivalDate, new Guid(), new Treatment())
             {
-                Id = new Guid("9b75b261-e305-4f6f-9990-97cb2d13d174"),
-                PatientId = patient.Id,
-                Reason = "Razlog za otpust",
-                RoomId = room.Id,
-                arrivalDate = DateTime.Now
+                
             };
             context.Admissions.Add(admission);
 
@@ -340,18 +344,21 @@ namespace TestHospitalApp.Setup
 
             context.Rooms.Add(patientRoom);
 
-            Appointment schedule = new Appointment
-            {
-                Id = new Guid("95a7ac4d-4f11-4530-995b-436f484599e7"),
-                IsDone = false,
-                RoomId = room.Id
-            };
-            Appointment schedule2 = new Appointment
-            {
-                Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d224"),
-                IsDone = true,
-                RoomId = room.Id
-            };
+            Appointment schedule = new Appointment(new Guid("95a7ac4d-4f11-4530-995b-436f484599e7"),
+                new DateRange(DateTime.Now, DateTime.Now.AddMinutes(30)), room.Id, null);
+            // {
+            //     Id = new Guid("95a7ac4d-4f11-4530-995b-436f484599e7"),
+            //     IsDone = false,
+            //     RoomId = room.Id
+            // };
+            Appointment schedule2 = new Appointment(new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d224"),
+                new DateRange(DateTime.Now, DateTime.Now.AddMinutes(30)), room.Id, null);
+            schedule2.FinishAppointment();
+            // {
+            //     Id = new Guid("890e4ba4-e968-4cb6-ab86-aac1b525d224"),
+            //     IsDone = true,
+            //     RoomId = room.Id
+            // };
 
             context.Appointments.Add(schedule);
             context.Appointments.Add(schedule2);

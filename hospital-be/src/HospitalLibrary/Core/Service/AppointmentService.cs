@@ -31,7 +31,7 @@ namespace HospitalLibrary.Core.Service
             foreach (Appointment appointment in appointments)
                 if (!appointment.IsDone && (DateTime.Compare(appointment.DateRange.StartTime, DateTime.Now) < 0))
                 {
-                    appointment.IsDone = true;
+                    appointment.FinishAppointment();
                     _appointmentRepository.Update(appointment);
                 }
         }
@@ -48,7 +48,6 @@ namespace HospitalLibrary.Core.Service
 
         public Appointment Create(Appointment entity)
         {
-            entity.IsDone = false;
             return _appointmentRepository.Create(entity);
         }
 
