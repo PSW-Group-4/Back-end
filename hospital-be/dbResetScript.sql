@@ -13,6 +13,7 @@ delete from "Buildings";
 delete from "Allergies";
 delete from "Addresses";
 delete from "AgeGroups";
+delete from "Vacations";
 insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
 	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
 	('113faa92-ea79-4bd7-9b9a-6413098f39ec','Young adults',17,30),
@@ -623,3 +624,11 @@ INSERT INTO public."Admissions" ("Id","PatientId","Reason","RoomId","arrivalDate
 	 ('1412c639-c5e1-47a1-b29b-1fe925536612','11942a9c-850e-489a-8434-98704889d8ed','Povisen secer pa mora da se oporavi','54c6de76-bc71-4615-8c73-4ebf9546444f','2022-11-11 11:11:00'),
 	 ('15f4c4e0-08b2-44ef-9e1b-0f14164d59d2','c1db258b-3034-4ba5-98bd-4f68137bac94','Srcani zastoj u prednjoj komori','d4857133-ef89-4e5e-865f-b49c83ecec23','2022-09-09 10:10:00');
 
+INSERT INTO public."Vacations" ("Id", "DoctorId", "DateStart", "DateEnd", "Reason", "Urgent", "VacationStatus", "DeniedRequestReason")	VALUES	
+			('030d8222-259f-4995-899c-fc6aa7d6a053','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-11-04 00:00:00', '2022-11-09 00:00:00', 'Zenim se', true, 2, 'Ne moze ove nedelje'),
+		   	('54cacecd-6d49-40cb-ad60-d0b95bcbf7ba','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-12-20 00:00:00', '2022-12-28 00:00:00', 'Zenim se drugi put', true, 1, ''),
+			('e5c8afe0-8ebd-4509-8b66-26f9e19533c0','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-05-28 00:00:00', '2022-06-07 00:00:00', 'Ne mogu da radim mrzi me', false, 0, ''),
+			('96453600-20e5-4fbf-bf75-a8225eda4116','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-01-01 00:00:00', '2022-02-05 00:00:00', 'Umoran sam', false, 1, ''),
+			('a0d68360-9ead-4acc-927c-e2444fc2e66b','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-03-20 00:00:00', '2022-04-22 00:00:00', 'Boli me prst na nozi', false, 1, ''),
+			('c512766c-21bc-4240-ac4c-e3a2a1946bb4','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-06-20 00:00:00', '2022-06-21 00:00:00', 'Finale svetskog prvenstva', true, 1, ''),
+			('887bc79b-fc88-4b44-b86f-e6998f1ee7d4','6444dff2-fcd7-44b0-90cb-19326b7ad49d', '2022-07-20 00:00:00', '2022-07-31 00:00:00', 'Razvodim se', false, 2, 'Jer brakovi ne traju kao sto su nekad');
