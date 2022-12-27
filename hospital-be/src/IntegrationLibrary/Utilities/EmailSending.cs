@@ -14,7 +14,7 @@ namespace IntegrationLibrary.Utilities
 {
     public class EmailSending
     {
-        public static MimeMessage createTxtEmail(string recipientName, string recipientEmail,string subject,string emailText)
+        public static MimeMessage CreateTxtEmail(string recipientName, string recipientEmail,string subject,string emailText)
         {
             var message = new MimeMessage();
 
@@ -30,7 +30,7 @@ namespace IntegrationLibrary.Utilities
             return message;
         }
 
-        public static MimeMessage createAttachedEmail(string recipientName, string recipientEmail, string subject, string emailText, string attachementName, byte[] attachment)
+        public static MimeMessage CreateAttachedEmail(string recipientName, string recipientEmail, string subject, string emailText, string attachementName, byte[] attachment)
         {
             var message = new MimeMessage();
             message.From.Add(new MailboxAddress(Settings.EmailingResources.SenderName, Settings.EmailingResources.SenderEmail));
@@ -47,7 +47,7 @@ namespace IntegrationLibrary.Utilities
             }
             return message;
         }
-        public static void sendEmail(MimeMessage message)
+        public static void SendEmail(MimeMessage message)
         {
             using (var client = new SmtpClient())
             {
