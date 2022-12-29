@@ -1,6 +1,7 @@
 ﻿using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Repository;
 using System;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Consiliums.Repository
 {

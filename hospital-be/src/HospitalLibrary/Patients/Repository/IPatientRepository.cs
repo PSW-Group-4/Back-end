@@ -2,6 +2,7 @@
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Patients.Model;
 using System;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Patients.Repository
 {

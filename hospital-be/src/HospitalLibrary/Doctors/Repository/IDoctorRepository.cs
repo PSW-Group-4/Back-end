@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Doctors.Repository
 {

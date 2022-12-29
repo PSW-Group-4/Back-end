@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Repository;
 using HospitalLibrary.BuildingManagmentMap.Model;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.BuildingManagmentMap.Repository.Interfaces
 {
