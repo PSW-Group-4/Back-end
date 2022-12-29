@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Service;
 using HospitalAPI.Dtos.Patient;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Patients.Service
 {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Admissions.Model;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Admissions.Repository
 {
