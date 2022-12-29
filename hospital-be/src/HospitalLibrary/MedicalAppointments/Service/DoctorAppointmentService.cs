@@ -90,8 +90,8 @@ namespace HospitalLibrary.Appointments.Service
             String emailText = "Vaš pregled dana " + medicalAppointment.DateRange.StartTime.ToString("dd.MM.yyyy. dd:mm") + " je otkazan";
 
             _medicalAppointmentService.Delete(appointmentId);
-            MimeMessage emailMessage = EmailSending.createTxtEmail(recipientName,recipientEmail,subject,emailText );
-            EmailSending.sendEmail(emailMessage);
+            MimeMessage emailMessage = EmailSending.CreateTxtEmail(recipientName,recipientEmail,subject,emailText );
+            EmailSending.SendEmail(emailMessage);
         }
         
         //PETAR

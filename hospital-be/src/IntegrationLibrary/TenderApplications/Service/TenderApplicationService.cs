@@ -42,13 +42,13 @@ namespace IntegrationLibrary.TenderApplications.Service
             {
                 if (tenderApplication.BloodBank.EmailAddress.Equals(application.BloodBank.EmailAddress))
                 {
-                    MimeMessage email = EmailSending.createTxtEmail(tenderApplication.BloodBank.Name, tenderApplication.BloodBank.EmailAddress, "Tender results", winnerMessage);
-                    EmailSending.sendEmail(email);
+                    MimeMessage email = EmailSending.CreateTxtEmail(tenderApplication.BloodBank.Name, tenderApplication.BloodBank.EmailAddress, "Tender results", winnerMessage);
+                    EmailSending.SendEmail(email);
                 }
                 else
                 {
-                    MimeMessage email = EmailSending.createTxtEmail(tenderApplication.BloodBank.Name, tenderApplication.BloodBank.EmailAddress, "Tender results", rejectionMessage);
-                    EmailSending.sendEmail(email);
+                    MimeMessage email = EmailSending.CreateTxtEmail(tenderApplication.BloodBank.Name, tenderApplication.BloodBank.EmailAddress, "Tender results", rejectionMessage);
+                    EmailSending.SendEmail(email);
                 }
             }
             return true;
