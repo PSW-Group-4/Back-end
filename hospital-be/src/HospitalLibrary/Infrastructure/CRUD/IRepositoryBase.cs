@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HospitalLibrary.Core.Repository
+namespace HospitalLibrary.Infrastructure.CRUD
 {
     public interface IRepositoryBase<T>
     {

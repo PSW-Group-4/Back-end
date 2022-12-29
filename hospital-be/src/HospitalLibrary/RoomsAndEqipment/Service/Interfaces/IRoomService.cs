@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Service;
+using HospitalLibrary.Infrastructure.CRUD;
 using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.RoomsAndEqipment.Service.Interfaces

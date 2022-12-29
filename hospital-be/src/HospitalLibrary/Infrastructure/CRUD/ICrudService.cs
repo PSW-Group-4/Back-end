@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HospitalLibrary.Core.Service
+namespace HospitalLibrary.Infrastructure.CRUD
 {
     public interface ICrudService<T>
     {

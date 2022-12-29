@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Core.Service
 {
