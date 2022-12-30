@@ -78,6 +78,7 @@ using HospitalLibrary.Renovation.Repository.Implementation;
 using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.AppointmentReport.Service;
+using HospitalLibrary.MedicalAppointmentSchedulingSession.Repository;
 
 namespace HospitalAPI
 {
@@ -287,6 +288,8 @@ namespace HospitalAPI
             //Report
             services.AddScoped<IMedicalAppointmentReportService, MedicalAppointmentReportService>();
 
+            //Medical appointment scheduling session
+            services.AddScoped<IMedicalAppointmentSchedulingSessionRepository, MedicalAppointmentSchedulingSessionRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
