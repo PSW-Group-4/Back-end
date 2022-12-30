@@ -1,9 +1,9 @@
 ﻿using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Exceptions;
-using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Symptoms.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Reports.Model
 {
@@ -14,7 +14,9 @@ namespace HospitalLibrary.Reports.Model
         public virtual MedicalAppointment MedicalAppointment { get; private set; }
         public string Text { get; private set; }
         public virtual List<Symptom> Symptoms { get; private set; }
-        public virtual List<Prescription> Prescriptions { get; private set; }
+
+        [Column(TypeName = "jsonb")]
+        public List<Prescription> Prescriptions { get; private set; }
         public DateTime DateTime { get; private set; }
 
         public Report() {}
@@ -99,7 +101,7 @@ namespace HospitalLibrary.Reports.Model
 
         public void AddPrescription(Prescription prescription)
         {
-            if (Prescriptions.Find(p => p.Id.Equals(prescription.Id)) == null)
+            if (Prescriptions.Find(p => p.Medicines.Equals(prescription.Medicines)) == null)
                 Prescriptions.Add(prescription);
         }
 

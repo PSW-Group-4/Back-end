@@ -8,9 +8,8 @@ using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.Prescriptions.Model;
-using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.Reports.Model;
+using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Symptoms.Model;
@@ -80,10 +79,8 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSymptom\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"MedicinePrescription\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Symptoms\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Prescriptions\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Medicines\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomsEquipment\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Admissions\" RESTART IDENTITY CASCADE;");
@@ -125,9 +122,6 @@ namespace TestHospitalApp.Setup
                 new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
                 new Email("doctor@test.com"), "066/123-456", "12345", "Surgeon", "1:00",
                 "21:00", room.Id, room);
-
-
-
          
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
@@ -140,9 +134,6 @@ namespace TestHospitalApp.Setup
             BloodSupply bloodSupply2 = new BloodSupply { BloodType = BloodType.FromString("B+"), Amount = 0.00 };
             context.BloodSupply.Add(bloodSupply2);
 
-        
-
-
             //Symptoms
             Symptom symptom1 = new Symptom (new Guid(), "Povišena temperatura", null);
             Symptom symptom2 = new Symptom (new Guid(), "Suv kašalj", null);
@@ -151,8 +142,8 @@ namespace TestHospitalApp.Setup
             context.Symptoms.Add(symptom2);
 
             //Medicines
-            Medicine medicine1 = new Medicine(new Guid(), "Aspirin", null);
-            Medicine medicine2 = new Medicine (new Guid(), "Brufen", null);
+            Medicine medicine1 = new Medicine(new Guid(), "Aspirin");
+            Medicine medicine2 = new Medicine (new Guid(), "Brufen");
 
             context.Medicines.Add(medicine1);
             context.Medicines.Add(medicine2);
@@ -187,12 +178,7 @@ namespace TestHospitalApp.Setup
             //     PatientId = patient.Id
             // };
 
-            Prescription prescription = new Prescription
-            {
-                Id = new Guid("0acea4a3-7101-4b0c-8c76-be553afbf84f"),
-                DateTime = new DateTime(),
-                Medicines = medicines
-            };
+            Prescription prescription = new Prescription(medicines);
             prescriptions.Add(prescription);
             List<Symptom> symptoms = new List<Symptom>();
             symptoms.Add(symptom1);

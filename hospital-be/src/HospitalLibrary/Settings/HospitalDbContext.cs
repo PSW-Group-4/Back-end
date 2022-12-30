@@ -24,7 +24,6 @@ using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Utility;
 using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
-using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.EntityConfigurations;
@@ -89,9 +88,6 @@ namespace HospitalLibrary.Settings
         // Symptoms
         public DbSet<Symptom> Symptoms { get; set; }
 
-        // Prescriptions
-        public DbSet<Prescription> Prescriptions { get; set; }
-
         // Reports
         public DbSet<Report> Reports { get; set; }
 
@@ -111,8 +107,6 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-
 
             modelBuilder
                 .Entity<Patient>()

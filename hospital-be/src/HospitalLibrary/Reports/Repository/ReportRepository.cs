@@ -1,6 +1,6 @@
 ﻿using HospitalLibrary.Exceptions;
 using HospitalLibrary.Medicines.Model;
-using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Symptoms.Model;

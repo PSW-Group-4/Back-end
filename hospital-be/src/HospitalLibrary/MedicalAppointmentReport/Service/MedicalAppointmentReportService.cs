@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Medicines.Model;
-using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Reports.Model;
 using HospitalLibrary.AppointmentReport.Model;
 
 namespace HospitalLibrary.AppointmentReport.Service
