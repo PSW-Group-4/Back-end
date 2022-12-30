@@ -7,7 +7,7 @@ namespace HospitalLibrary.Infrastructure.EventSourcing
     public abstract class EventSourcingRoot
     {
         public Guid Id { get; protected set; }
-        public List<DomainEvent> Events { get; private set; }
+        public List<DomainEvent> Events { get; protected set; }
         public int Version { get; protected set; }
 
         public EventSourcingRoot(Guid id)
@@ -16,7 +16,7 @@ namespace HospitalLibrary.Infrastructure.EventSourcing
             Events = new List<DomainEvent>();
         }
 
-        protected abstract void Apply(DomainEvent @event);
+        public abstract void Apply(DomainEvent @event);
         //Causes and When methods must be declared and implemented in inheriting class because of polymorphism restrictions in C#
     }
 }
