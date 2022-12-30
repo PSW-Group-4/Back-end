@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using HospitalLibrary.News;
 using HospitalLibrary.Users.Model;
 
 namespace HospitalAPI.Controllers
@@ -15,48 +16,27 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class NewsHeadlines : ControllerBase
     {
-        private readonly HttpClient _httpClient;
-        private readonly string _integrationEndpoint;
+   
+        private readonly INewsService _newsService;
 
-        public NewsHeadlines()
+        public NewsHeadlines(INewsService newsService)
         {
-            _httpClient = new HttpClient();
-            _integrationEndpoint = "http://localhost:45488/api/News/GetPublished";
+         
+            _newsService = newsService;
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAllAsync()
+        public ActionResult GetAllPublishedTitlesFromIntegrationAPI()
         {
-
-            using var httpResponse = await _httpClient.GetAsync(_integrationEndpoint, HttpCompletionOption.ResponseHeadersRead);
-
-            httpResponse.EnsureSuccessStatusCode(); // throws if not 200-299
-
-            if (httpResponse.Content is object && httpResponse.Content.Headers.ContentType.MediaType == "application/json")
+            try
             {
-                var contentStream = await httpResponse.Content.ReadAsStreamAsync();
 
-                using var streamReader = new StreamReader(contentStream);
-                using var jsonReader = new JsonTextReader(streamReader);
-
-                JsonSerializer serializer = new JsonSerializer();
-
-                try
-                {
-                    return Ok(serializer.Deserialize<List<NewsHeadlinesDTO>>(jsonReader));
-                }
-                catch (JsonReaderException)
-                {
-                    Console.WriteLine("Invalid JSON.");
-                }
+                return Ok( _newsService.GetAllPublishedTitlesFromIntegrationAPIAsync().Result ) ;
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine("HTTP Response was invalid and cannot be deserialised.");
+                return BadRequest(e.Message);
             }
-
-            return null;
-
         }
 
     }
