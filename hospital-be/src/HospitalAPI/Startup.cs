@@ -78,6 +78,7 @@ using HospitalLibrary.Renovation.Repository.Implementation;
 using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.AppointmentReport.Service;
+using HospitalLibrary.News;
 
 namespace HospitalAPI
 {
@@ -146,7 +147,9 @@ namespace HospitalAPI
             services.AddControllers();
 
 
-
+            //News
+            services.AddScoped<INewsService, NewsService>();
+     
 
             //AgeGroups
             services.AddScoped<IAgeGroupRepository, AgeGroupRepository>();
