@@ -10,7 +10,16 @@ namespace HospitalLibrary.Core.Model
         public string Country { get; set; }
         public string Street { get; set; }
         public string StreetNumber { get; set; }
-        
+
+        public Address(Guid id, string city, string country, string street, string streetNumber)
+        {
+            Id = id;
+            City = city;
+            Country = country;
+            Street = street;
+            StreetNumber = streetNumber;
+        }
+
         public void Update(Address address)
         {
             City = address.City;

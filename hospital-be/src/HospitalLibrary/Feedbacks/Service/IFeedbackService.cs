@@ -2,6 +2,7 @@
 using HospitalLibrary.Feedbacks.Model;
 using Microsoft.AspNetCore.JsonPatch;
 using System.Collections.Generic;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Feedbacks.Service
 {

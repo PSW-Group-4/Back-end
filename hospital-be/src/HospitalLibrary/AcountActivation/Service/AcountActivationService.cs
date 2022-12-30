@@ -54,8 +54,8 @@ namespace HospitalLibrary.AcountActivation.Service
             string subject = "Account activation";
             string emailText = "Please click the following link to activate your account: " + varifyUrl;
 
-            MimeMessage emailMessage = EmailSending.createTxtEmail(recipientName, recipientEmail, subject, emailText);
-            EmailSending.sendEmail(emailMessage);
+            MimeMessage emailMessage = EmailSending.CreateTxtEmail(recipientName, recipientEmail, subject, emailText);
+            EmailSending.SendEmail(emailMessage);
         }
 
         public AcountActivationInfo Update(AcountActivationInfo info)

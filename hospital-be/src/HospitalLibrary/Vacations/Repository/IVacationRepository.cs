@@ -2,6 +2,7 @@
 using HospitalLibrary.Vacations.Model;
 using System;
 using System.Collections.Generic;
+using HospitalLibrary.Infrastructure.CRUD;
 
 namespace HospitalLibrary.Vacations.Repository
 {
