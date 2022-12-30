@@ -26,8 +26,6 @@ namespace HospitalLibrary.Renovation.Model
         public RenovationAppointment(TypeOfRenovation type, IEnumerable<RoomRenovationPlan> plans, DateRange dateRange, Guid RoomId) : base(Guid.NewGuid(), dateRange, RoomId, null) {
             this.Type = type;
             this.RoomRenovationPlans = plans.ToList();
-            // this.DateRange = dateRange;
-            // this.RoomId = RoomId;
             Validate();
         }
 
@@ -67,8 +65,6 @@ namespace HospitalLibrary.Renovation.Model
         public void Finish() {
             this.FinishAppointment();
             this.DiscardRoom();
-            // this.Room = null;
-            // this.RoomId = (Guid?)null;
         }
 
         public bool IsPrimaryRenovationAppointment() {
