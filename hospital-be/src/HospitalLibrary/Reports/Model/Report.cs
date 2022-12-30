@@ -95,14 +95,12 @@ namespace HospitalLibrary.Reports.Model
 
         public void AddSymptom(Symptom symptom)
         {
-            if (Symptoms.Find(s => s.Id.Equals(symptom.Id)) == null)
-                Symptoms.Add(symptom);
+            Symptoms.Add(symptom);
         }
 
         public void AddPrescription(Prescription prescription)
         {
-            if (Prescriptions.Find(p => p.Medicines.Equals(prescription.Medicines)) == null)
-                Prescriptions.Add(prescription);
+            Prescriptions.Add(prescription);
         }
 
         public void Update(Report report)

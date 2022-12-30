@@ -11,8 +11,15 @@ namespace HospitalLibrary.Symptoms.Model
         public String Name { get; private set; }
         public virtual List<Report> Reports { get; private set; }
 
-        public Symptom() {}
-        
+        public Symptom(Guid id, String name)
+        {
+            Id = id;
+            Name = name;
+
+            if (!IsValid())
+                throw new EntityObjectValidationFailedException();
+        }
+
         public Symptom(Guid id, String name, List<Report> reports)
         {
             Id = id;

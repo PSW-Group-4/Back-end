@@ -8,8 +8,6 @@ namespace HospitalLibrary.Medicines.Model
         public Guid Id { get; private set; }
         public String Name { get; private set; }
 
-        public Medicine() {}
-
         public Medicine(Guid id, String name)
         {
             Id = id;

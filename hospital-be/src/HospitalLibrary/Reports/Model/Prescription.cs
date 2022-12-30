@@ -22,6 +22,11 @@ namespace HospitalLibrary.Reports.Model
             return Medicines.Count > 0;
         }
 
+        public void AddMedicine(Medicine medicine)
+        {
+            Medicines.Add(medicine);
+        }
+
         public override bool Equals(object obj)
         {
             return obj is Prescription prescription &&
