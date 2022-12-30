@@ -17,9 +17,7 @@ namespace HospitalLibrary.Reports.Model
         public virtual List<Prescription> Prescriptions { get; private set; }
         public DateTime DateTime { get; private set; }
 
-        public Report()
-        {
-        }
+        public Report() {}
 
         public Report(Guid id, Guid medicalAppointmentId, string text, List<Symptom> symptoms, List<Prescription> prescriptions, DateTime dateTime)
         {
@@ -32,9 +30,10 @@ namespace HospitalLibrary.Reports.Model
 
             if (!IsValid())
             {
-                throw new ValueObjectValidationFailedException("Report doesn't exist !");
+                throw new EntityObjectValidationFailedException();
             }
         }
+
         private bool IsValid()
         {
             if (!IsThereMedicalAppointment())
@@ -55,6 +54,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsThereMedicalAppointment()
         {
             if (MedicalAppointmentId.Equals(Guid.Empty))        //Stefan menjao, puca pri inicijalizaciji jer se provrava ceo objekat, koji je null
@@ -63,6 +63,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsThereText()
         {
             if (String.IsNullOrEmpty(Text))
@@ -71,6 +72,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsThereSymptoms()
         {
             if (Symptoms.Count <= 0)
@@ -79,6 +81,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsTherePrescriptions()
         {
             if (Prescriptions.Count <= 0)
@@ -87,6 +90,19 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
+        public void AddSymptom(Symptom symptom)
+        {
+            if (Symptoms.Find(s => s.Id.Equals(symptom.Id)) == null)
+                Symptoms.Add(symptom);
+        }
+
+        public void AddPrescription(Prescription prescription)
+        {
+            if (Prescriptions.Find(p => p.Id.Equals(prescription.Id)) == null)
+                Prescriptions.Add(prescription);
+        }
+
         public void Update(Report report)
         {
             Text = report.Text;

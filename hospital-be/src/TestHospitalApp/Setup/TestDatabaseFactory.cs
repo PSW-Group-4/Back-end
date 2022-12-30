@@ -4,7 +4,6 @@ using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BuildingManagment.Model;
-using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Medicines.Model;
@@ -26,7 +25,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 
 namespace TestHospitalApp.Setup
@@ -146,15 +144,15 @@ namespace TestHospitalApp.Setup
 
 
             //Symptoms
-            Symptom symptom1 = new Symptom { Name = "Povišena temperatura" };
-            Symptom symptom2 = new Symptom { Name = "Suv kašalj" };
+            Symptom symptom1 = new Symptom (new Guid(), "Povišena temperatura", null);
+            Symptom symptom2 = new Symptom (new Guid(), "Suv kašalj", null);
 
             context.Symptoms.Add(symptom1);
             context.Symptoms.Add(symptom2);
 
             //Medicines
-            Medicine medicine1 = new Medicine { Name = "Aspirin" };
-            Medicine medicine2 = new Medicine { Name = "Brufen" };
+            Medicine medicine1 = new Medicine(new Guid(), "Aspirin", null);
+            Medicine medicine2 = new Medicine (new Guid(), "Brufen", null);
 
             context.Medicines.Add(medicine1);
             context.Medicines.Add(medicine2);
@@ -305,7 +303,6 @@ namespace TestHospitalApp.Setup
             context.Equipments.Add(eq);
             context.Equipments.Add(eq2);
             context.Equipments.Add(eq3);
-
 
             Bed bed1 = new Bed
             {
@@ -550,7 +547,5 @@ namespace TestHospitalApp.Setup
             context.MedicalAppointments.Add(medicalAppointment);
             
         }
-
-
     }
 }
