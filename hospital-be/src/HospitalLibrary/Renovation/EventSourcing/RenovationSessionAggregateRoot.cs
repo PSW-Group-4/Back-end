@@ -11,7 +11,7 @@ namespace HospitalLibrary.Renovation.EventSourcing
 {
     public class RenovationSessionAggregateRoot : EventSourcingRoot
     {
-        public RenovationAppointment.TypeOfRenovation TypeOfRenovation {get; private set;}
+        public RenovationAppointment.TypeOfRenovation? TypeOfRenovation {get; private set;}
         private IEnumerable<RoomRenovationPlan> _RoomRenovationPlans {get; set;}
         public IEnumerable<RoomRenovationPlan> RoomRenovationPlans {
             get { return new List<RoomRenovationPlan>(_RoomRenovationPlans); }
@@ -31,13 +31,16 @@ namespace HospitalLibrary.Renovation.EventSourcing
             return Id;
         }
 
-        public RenovationSessionAggregateRoot SessionEnded(Guid id) {
+        public void SessionEnded(Guid id) {
             Causes(new SessionEnded(id));
-            return this;
         }
 
         public void TypeChosen(Guid id, Renovation.Model.RenovationAppointment.TypeOfRenovation type) {
             Causes(new TypeChosen(id, type));
+        }
+
+        public void OldRoomsChosen(Guid id, IEnumerable<RoomRenovationPlan> plans) {
+            Causes(new OldRoomsChosen(id, plans));
         }
 
         public void Causes(DomainEvent @event) {
@@ -51,9 +54,90 @@ namespace HospitalLibrary.Renovation.EventSourcing
         }
 
         public void When(SessionEnded @event) {
-            // Apply all events and create and save appointment
-            
+            return;
         }
+        public void When(SessionStarted @event) {
+            return;
+        }
+
+        public void When(TypeChosen @event) {
+            this.TypeOfRenovation = @event.Type;
+            this.RoomRenovationPlans = new List<RoomRenovationPlan>();
+        }
+        
+        public void When(OldRoomsChosen @event) {
+            this.RoomRenovationPlans.ToList().AddRange(@event.RoomRenovationPlans);
+        }
+
+        public void When(NewRoomsCreated @event) {
+            this.RoomRenovationPlans.ToList().AddRange(@event.RoomRenovationPlans);
+        }
+
+        public void When(TimeframeCreated @event) {
+            this.DateRange = @event.DateRange;
+        }
+
+        public void When(SpecificTimeChosen @event) {
+            this.DateRange = @event.DateRange;
+        }
+
+        // sets daterange to last known value
+        public void When(ReturnedToSpecificTimeSelection @event) {
+            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated) || de.GetType() == typeof(SpecificTimeChosen)).SkipLast(1).TakeLast(1).First();
+            if(lastEvent != null) {
+                this.DateRange = ((dynamic)lastEvent).DateRange;
+            }
+            else{
+                this.DateRange = null;
+            }
+        }
+
+        public void When(ReturnedToTimeframeCreation @event) {
+            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated)).SkipLast(1).TakeLast(1).First();
+            if(lastEvent != null) {
+                this.DateRange = ((dynamic)lastEvent).DateRange;
+            }
+            else{
+                this.DateRange = null;
+            }
+        }
+
+        public void When(ReturnedToNewRoomCreation @event) {
+            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(NewRoomsCreated) || de.GetType() == typeof(OldRoomsChosen)).SkipLast(1).TakeLast(1).First();
+            if(lastEvent != null) {
+                this.RoomRenovationPlans = ((dynamic)lastEvent).RoomRenovationPlans;
+            }
+            else{
+                this.RoomRenovationPlans = new List<RoomRenovationPlan>();
+            }
+        }
+
+        public void When(ReturnedToOldRoomsSelection @event) {
+            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(OldRoomsChosen)).SkipLast(1).TakeLast(1).First();
+            if(lastEvent != null) {
+                this.RoomRenovationPlans = ((dynamic)lastEvent).RoomRenovationPlans;
+            }
+            else{
+                this.RoomRenovationPlans = new List<RoomRenovationPlan>();
+            }
+            this.DateRange = null;
+        }
+
+        public void When(ReturnedToTypeSelection @event) {
+            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TypeChosen)).SkipLast(1).TakeLast(1).First();
+            if(lastEvent != null) {
+                this.TypeOfRenovation = ((dynamic)lastEvent).Type;
+            }
+            else{
+                this.TypeOfRenovation = null;
+            }
+            this.RoomRenovationPlans = new List<RoomRenovationPlan>();
+            this.DateRange = null;
+        }
+        
+        
+
+        
 
     }
 }
