@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.EventSourcingCore;
+using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.Renovation.EventSourcing.DomainEvents;
 using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.Renovation.EventSourcing
 {
-    public class RenovationSessionAggregateRoot : EventSourcedAggregate
+    public class RenovationSessionAggregateRoot : EventSourcingRoot
     {
         public RenovationAppointment.TypeOfRenovation TypeOfRenovation {get; private set;}
         private IEnumerable<RoomRenovationPlan> _RoomRenovationPlans {get; set;}
@@ -19,6 +19,10 @@ namespace HospitalLibrary.Renovation.EventSourcing
         }
 
         public DateRange DateRange { get; private set; }
+
+        public RenovationSessionAggregateRoot(Guid id) : base(id) {
+            this.RoomRenovationPlans = new List<RoomRenovationPlan>();
+        }
 
 
         public Guid SessionStarted() {
@@ -37,11 +41,11 @@ namespace HospitalLibrary.Renovation.EventSourcing
         }
 
         public void Causes(DomainEvent @event) {
-            Changes.Add(@event);
+            Events.Add(@event);
             Apply(@event);
         }
 
-        public override void Apply(DomainEvent @event) {
+        protected override void Apply(DomainEvent @event) {
             When((dynamic)@event);
             Version = Version++;
         }

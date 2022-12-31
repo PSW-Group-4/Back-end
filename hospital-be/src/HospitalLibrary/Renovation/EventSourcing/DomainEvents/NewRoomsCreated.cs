@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.EventSourcingCore;
+using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.Renovation.EventSourcing.DomainEvents
@@ -15,7 +15,7 @@ namespace HospitalLibrary.Renovation.EventSourcing.DomainEvents
             private set {_RoomRenovationPlans = value;}
         }
 
-        public NewRoomsCreated(Guid aggregateId, IEnumerable<RoomRenovationPlan> renovationPlans) : base(aggregateId){
+        public NewRoomsCreated(Guid aggregateId, IEnumerable<RoomRenovationPlan> renovationPlans) : base(aggregateId, DateTime.Now){
             this.RoomRenovationPlans = renovationPlans;
         }
     }

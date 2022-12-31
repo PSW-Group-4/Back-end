@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HospitalLibrary.Core.EventSourcingCore;
+using HospitalLibrary.Infrastructure.EventSourcing;
 
 
 namespace HospitalLibrary.Renovation.EventSourcing.DomainEvents
@@ -10,7 +10,7 @@ namespace HospitalLibrary.Renovation.EventSourcing.DomainEvents
     public class TypeChosen : DomainEvent
     {
         public Renovation.Model.RenovationAppointment.TypeOfRenovation Type {get; private set;}
-        public TypeChosen(Guid aggregateId, Renovation.Model.RenovationAppointment.TypeOfRenovation  type) : base(aggregateId) {
+        public TypeChosen(Guid aggregateId, Renovation.Model.RenovationAppointment.TypeOfRenovation  type) : base(aggregateId, DateTime.Now) {
             this.Type = type;
         }
     }
