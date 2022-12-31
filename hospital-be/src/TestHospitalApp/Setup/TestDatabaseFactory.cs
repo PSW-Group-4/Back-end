@@ -78,7 +78,6 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSymptom\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Symptoms\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Medicines\" RESTART IDENTITY CASCADE;");
@@ -135,8 +134,8 @@ namespace TestHospitalApp.Setup
             context.BloodSupply.Add(bloodSupply2);
 
             //Symptoms
-            Symptom symptom1 = new Symptom (new Guid(), "Povišena temperatura", null);
-            Symptom symptom2 = new Symptom (new Guid(), "Suv kašalj", null);
+            Symptom symptom1 = new Symptom (new Guid(), "Povišena temperatura");
+            Symptom symptom2 = new Symptom (new Guid(), "Suv kašalj");
 
             context.Symptoms.Add(symptom1);
             context.Symptoms.Add(symptom2);

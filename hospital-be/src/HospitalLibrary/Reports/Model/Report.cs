@@ -13,6 +13,8 @@ namespace HospitalLibrary.Reports.Model
         public Guid MedicalAppointmentId { get; private set; }
         public virtual MedicalAppointment MedicalAppointment { get; private set; }
         public string Text { get; private set; }
+
+        [Column(TypeName = "jsonb")]
         public virtual List<Symptom> Symptoms { get; private set; }
 
         [Column(TypeName = "jsonb")]

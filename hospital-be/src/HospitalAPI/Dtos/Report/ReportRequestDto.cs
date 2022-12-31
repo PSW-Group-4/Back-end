@@ -9,7 +9,7 @@ namespace HospitalAPI.Dtos.Report
     {
         public Guid MedicalAppointmentId { get; set; }
         public string Text { get; set; }
-        public List<SymptomRequestDto> Symptoms { get; set; }
+        public List<HospitalLibrary.Symptoms.Model.Symptom> Symptoms { get; set; }
         public List<PrescriptionRequestDto> Prescriptions { get; set; }
         public DateTime DateTime { get; set; }
     }
