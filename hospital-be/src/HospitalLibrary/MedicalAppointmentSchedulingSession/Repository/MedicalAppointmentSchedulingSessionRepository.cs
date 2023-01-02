@@ -26,6 +26,7 @@ namespace HospitalLibrary.MedicalAppointmentSchedulingSession.Repository
         public void SaveEvent(MedicalAppointmentSchedulingSessionEvent @event)
         {
             _context.MedicalAppointmentSchedulingSessionEvents.Add(@event);
+            _context.SaveChanges();
         }
 
         public MedicalAppointmentSchedulingSession GetById(Guid id)
