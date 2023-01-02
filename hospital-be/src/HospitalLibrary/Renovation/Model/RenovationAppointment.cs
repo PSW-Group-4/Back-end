@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Exceptions;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -27,6 +28,11 @@ namespace HospitalLibrary.Renovation.Model
             this.Type = type;
             this.RoomRenovationPlans = plans.ToList();
             Validate();
+        }
+
+        public RenovationAppointment(RenovationSessionAggregateRoot root, Guid roomId) : base(Guid.NewGuid(), root.DateRange, roomId, null){
+            this.RoomRenovationPlans = root.RoomRenovationPlans.ToList();
+            this.Type = root.TypeOfRenovation.Value;
         }
 
         private void Validate() {

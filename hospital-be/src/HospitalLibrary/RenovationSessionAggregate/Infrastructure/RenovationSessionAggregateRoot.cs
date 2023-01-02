@@ -25,10 +25,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
 
-        public Guid SessionStarted() {
-            Id = Guid.NewGuid();
+        public void SessionStarted() {
             Causes(new SessionStarted(Id));
-            return Id;
         }
 
         public void SessionEnded(Guid id) {
