@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.Renovation.Model;
 
-namespace HospitalLibrary.Renovation.EventSourcing.DomainEvents
+namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
     public class SessionEnded : DomainEvent
     {

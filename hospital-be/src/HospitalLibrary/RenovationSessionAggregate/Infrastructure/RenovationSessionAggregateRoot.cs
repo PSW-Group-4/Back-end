@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Infrastructure.EventSourcing;
-using HospitalLibrary.Renovation.EventSourcing.DomainEvents;
+using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
 using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.Core.Model;
 
-namespace HospitalLibrary.Renovation.EventSourcing
+namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
 {
     public class RenovationSessionAggregateRoot : EventSourcingRoot
     {
@@ -129,6 +129,10 @@ namespace HospitalLibrary.Renovation.EventSourcing
             this.DateRange = null;
         }
         
+        public void Update(RenovationSessionAggregateRoot entity) {
+            this.DateRange = entity.DateRange;
+            this.RoomRenovationPlans = entity.RoomRenovationPlans;
+        }
         
 
         

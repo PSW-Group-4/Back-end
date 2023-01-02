@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Infrastructure.EventSourcing;
 
-namespace HospitalLibrary.Renovation.EventSourcing.DomainEvents
+namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
     public class ReturnedToNewRoomCreation : DomainEvent
     {

@@ -29,6 +29,7 @@ using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.EntityConfigurations;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 
 namespace HospitalLibrary.Settings
 {
@@ -102,6 +103,9 @@ namespace HospitalLibrary.Settings
 
         // Consilium
         public DbSet<Consilium> Consiliums { get; set; }
+
+        // Aggregates
+        public DbSet<RenovationSessionAggregateRoot> RenovationSessionAggregateRoots {get; set;}
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
