@@ -103,7 +103,7 @@ namespace HospitalLibrary.Renovation.EventSourcing
         }
 
         public void When(ReturnedToNewRoomCreation @event) {
-            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(NewRoomsCreated) || de.GetType() == typeof(OldRoomsChosen)).SkipLast(1).TakeLast(1).First();
+            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(OldRoomsChosen)).SkipLast(1).TakeLast(1).First();
             if(lastEvent != null) {
                 this.RoomRenovationPlans = ((dynamic)lastEvent).RoomRenovationPlans;
             }
@@ -113,13 +113,7 @@ namespace HospitalLibrary.Renovation.EventSourcing
         }
 
         public void When(ReturnedToOldRoomsSelection @event) {
-            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(OldRoomsChosen)).SkipLast(1).TakeLast(1).First();
-            if(lastEvent != null) {
-                this.RoomRenovationPlans = ((dynamic)lastEvent).RoomRenovationPlans;
-            }
-            else{
-                this.RoomRenovationPlans = new List<RoomRenovationPlan>();
-            }
+            this.RoomRenovationPlans = new List<RoomRenovationPlan>();
             this.DateRange = null;
         }
 
