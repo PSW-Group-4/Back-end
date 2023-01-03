@@ -50,7 +50,7 @@ namespace TestIntegrationApp.IntegrationTesting
 
             TenderDto tenderDto = new()
             {
-                BloodProducts = bloodProductDtos,
+                Blood = bloodProductDtos,
                 Deadline = DateTime.Now.AddDays(3).ToString(),
             };
 

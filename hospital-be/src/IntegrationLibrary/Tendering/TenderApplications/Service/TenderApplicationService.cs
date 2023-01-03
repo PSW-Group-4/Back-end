@@ -18,14 +18,10 @@ namespace IntegrationLibrary.TenderApplications.Service
     public class TenderApplicationService : ITenderApplicationService
     {
         private readonly ITenderApplicationRepository _repository;
-        private readonly ITenderRepository _tenderRepository;
-        private readonly IBloodBankRepository _bloodBankRepository;
         private readonly IEventStore<TenderingEvent> _eventStore;
-        public TenderApplicationService(ITenderApplicationRepository repository, ITenderRepository tenderRepository, IBloodBankRepository _bloodBankRepository )
+        public TenderApplicationService(ITenderApplicationRepository repository)
         {
             _repository = repository;
-            _tenderRepository = tenderRepository;
-            _bloodBankRepository = _bloodBankRepository;
         }
 
         public TenderApplication Submit(TenderApplication application)
@@ -35,6 +31,7 @@ namespace IntegrationLibrary.TenderApplications.Service
         public void Submit(AppliedToTenderEvent appliedToTenderEvent)
         {
             new TenderApplication().Causes(appliedToTenderEvent);
+            _eventStore.Save(appliedToTenderEvent);
         }
         public string GenerateWinnerMessage(TenderApplication application) {
             return "Dear sir/madam we are happy to inform you that we have accepted your offer for our tender, please follow the link" +

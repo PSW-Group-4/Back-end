@@ -6,6 +6,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using IntegrationAPI.Authorization;
+using IntegrationAPI.Dtos.BloodProducts;
+using IntegrationLibrary.BloodBanks.Service;
+using IntegrationLibrary.Tendering.DomainEvents.Subtypes;
 using IntegrationLibrary.Tendering.Model;
 using IntegrationLibrary.Tendering.Service;
 
@@ -24,14 +27,15 @@ namespace IntegrationAPI.Controllers
             this.tenderConverter = tenderConverter;
         }
 
+
         [HttpPost]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult Create(TenderDto dto)
         {
-            _tenderService.Create(tenderConverter.Convert(dto));
+            TenderCreatedEvent tenderCreatedEvent = dto.Deadline == null ? new TenderCreatedEvent(BloodConverter.Convert(dto.Blood), null) :  new TenderCreatedEvent(BloodConverter.Convert(dto.Blood), DateTime.Parse(dto.Deadline));
+            _tenderService.Create(tenderCreatedEvent);
             return Ok();
         }
-
         [HttpGet]
         public ActionResult GetAll()
         {
@@ -40,6 +44,14 @@ namespace IntegrationAPI.Controllers
         [Route("active"), HttpGet]
         public ActionResult GetActive() {
             return Ok(_tenderService.GetActive());
+        }
+
+        [Route("{id}/winner/confirm"), HttpPut]
+        public ActionResult ConfirmWinner(Guid id)
+        {
+            WinnerConfirmedEvent winnerConfirmedEvent = new(id);
+            _tenderService.ConfirmWinner(winnerConfirmedEvent);
+            return Ok();
         }
     }
 }

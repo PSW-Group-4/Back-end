@@ -1,7 +1,7 @@
 ﻿namespace IntegrationAPI.Dtos.BloodBank
 {
-    public class BloodBankEmailDto
+    public record BloodBankEmailDto
     {
-        
+        public string Email { get; set; }
     }
 }

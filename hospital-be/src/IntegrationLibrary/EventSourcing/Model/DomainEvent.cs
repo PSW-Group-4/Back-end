@@ -10,6 +10,19 @@ namespace IntegrationLibrary.EventSourcing
         public string EventType { get; protected set; }
         public DateTime Timestamp { get; protected set; }
 
+        public DomainEvent()
+        {
+            Id = Guid.NewGuid();
+            Timestamp = DateTime.Now;
+        }
+
+        public DomainEvent(Guid aggregateId)
+        {
+            Id = Guid.NewGuid();
+            Timestamp = DateTime.Now;
+            AggregateId = aggregateId;
+        }
+
         public DomainEvent(Guid id, Guid aggregateId, string aggregateType, string eventType, DateTime timestamp)
         {
             Id = id;

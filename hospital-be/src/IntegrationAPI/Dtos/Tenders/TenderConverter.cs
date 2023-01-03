@@ -15,10 +15,10 @@ namespace IntegrationAPI.Dtos.Tenders
 
         public TenderDto Convert(Tender entity)
         {
-            //IEnumerable<BloodProductDto> bloodProductDtos = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() });
+            //IEnumerable<BloodProductDto> bloodProductDtos = entity.Blood.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() });
             /*return new TenderDto
             {
-                BloodProducts = entity.BloodProducts.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() }),
+                Blood = entity.Blood.Select(bloodProduct => new BloodProductDto { Amount = bloodProduct.Amount, BloodType = bloodProduct.BloodType.ToString() }),
                 Deadline = entity.Deadline.ToString()
             };*/
             return new TenderDto();
@@ -34,7 +34,7 @@ namespace IntegrationAPI.Dtos.Tenders
             {
                 deadline = null;
             }
-            IEnumerable<Blood> bloodProducts = dto.BloodProducts.Select
+            IEnumerable<Blood> bloodProducts = dto.Blood.Select
                 (dto => new Blood(
                     BloodTypeConverter.Convert(dto.BloodType),
                     dto.Amount));;

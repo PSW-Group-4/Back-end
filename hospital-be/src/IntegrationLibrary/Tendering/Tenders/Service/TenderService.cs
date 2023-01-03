@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using IntegrationLibrary.BloodBanks.Model;
-using IntegrationLibrary.Common;
 using IntegrationLibrary.EventSourcing;
 using IntegrationLibrary.Tendering.DomainEvents.Base;
 using IntegrationLibrary.Tendering.DomainEvents.Subtypes;
@@ -12,8 +10,8 @@ namespace IntegrationLibrary.Tendering.Service
 {
     public class TenderService : ITenderService
     {
-        private readonly ITenderRepository _repository;
         private readonly IEventStore<TenderingEvent> _eventStore;
+        private readonly ITenderRepository _repository;
 
         public TenderService(ITenderRepository repository)
         {
@@ -31,38 +29,19 @@ namespace IntegrationLibrary.Tendering.Service
             _repository.Create(tender);
         }
 
-        public void Create(IEnumerable<Blood> blood, DateTime deadline)
-        {
-            Tender.Create(blood, deadline);
-        }
-
         public void Create(TenderCreatedEvent tenderCreatedEvent)
         {
             new Tender().Causes(tenderCreatedEvent);
             _eventStore.Save(tenderCreatedEvent);
         }
 
-        public void Close(TenderFailedEvent tenderFailedEvent)
-        {
-            Tender tender = GetById(tenderFailedEvent.AggregateId);
-            tender.Causes(tenderFailedEvent);
-        }
-
-        public void ConfirmWinner(WinnerChosenEvent winnerChosenEvent)
-        {
-            Tender tender = GetById(winnerChosenEvent.AggregateId);
-            tender.Causes(winnerChosenEvent);
-        }
-
         public IEnumerable<Tender> GetActive()
         {
             IEnumerable<Tender> all = _repository.GetAll();
-            List<Tender> activeTenders = new List<Tender>();
-            foreach (Tender tender in all){
-                if (tender.IsActive()) {
+            List<Tender> activeTenders = new();
+            foreach (Tender tender in all)
+                if (tender.IsActive())
                     activeTenders.Add(tender);
-                }
-            }
             IEnumerable<Tender> active = activeTenders;
             return active;
         }
@@ -71,9 +50,31 @@ namespace IntegrationLibrary.Tendering.Service
         {
             return _repository.GetAll();
         }
-        public Tender GetById(Guid Id) 
+
+        public Tender GetById(Guid id)
         {
-            return _repository.GetById(Id);
+            return _repository.GetById(id);
+        }
+
+        public void Fail(TenderFailedEvent tenderFailedEvent)
+        {
+            Tender tender = GetById(tenderFailedEvent.AggregateId);
+            tender.Causes(tenderFailedEvent);
+            _eventStore.Save(tenderFailedEvent);
+        }
+
+        public void ChooseWinner(WinnerChosenEvent winnerChosenEvent)
+        {
+            Tender tender = GetById(winnerChosenEvent.AggregateId);
+            tender.Causes(winnerChosenEvent);
+            _eventStore.Save(winnerChosenEvent);
+        }
+
+        public void ConfirmWinner(WinnerConfirmedEvent winnerConfirmedEvent)
+        {
+            Tender tender = GetById(winnerConfirmedEvent.AggregateId);
+            tender.Causes(winnerConfirmedEvent);
+            _eventStore.Save(winnerConfirmedEvent);
         }
     }
 }

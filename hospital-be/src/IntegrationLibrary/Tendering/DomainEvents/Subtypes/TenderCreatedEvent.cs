@@ -17,11 +17,21 @@ namespace IntegrationLibrary.Tendering.DomainEvents.Subtypes
             EventType = "TenderCreatedEvent";
         }
 
-        public TenderCreatedEvent(Guid id, Guid aggregateId, string aggregateType, string eventType, DateTime timestamp,
-            List<Blood> blood) : base(id, aggregateId, aggregateType, eventType, timestamp)
+        public TenderCreatedEvent(List<Blood> blood, DateTime? deadline) : base()
         {
             AggregateType = "Tender";
             EventType = "TenderCreatedEvent";
+            Blood = blood;
+            Deadline = deadline;
+        }
+
+        public TenderCreatedEvent(Guid id, Guid aggregateId, string aggregateType, string eventType, DateTime timestamp,
+            List<Blood> blood, DateTime deadline) : base(id, aggregateId, aggregateType, eventType, timestamp)
+        {
+            AggregateType = "Tender";
+            EventType = "TenderCreatedEvent";
+            Blood = blood;
+            Deadline = deadline;
         }
     }
 }
