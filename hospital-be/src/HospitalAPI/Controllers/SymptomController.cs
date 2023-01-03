@@ -49,23 +49,6 @@ namespace HospitalAPI.Controllers
             return CreatedAtAction("GetById", new { id = symptom.Id }, symptom);
         }
 
-        [HttpPut("{id}")]
-        public ActionResult Update([FromRoute] Guid id, [FromBody] SymptomRequestDto symptomRequestDto)
-        {
-            var symptom = _mapper.Map<Symptom>(symptomRequestDto);
-            symptom.Id = id;
-
-            try
-            {
-                var result = _symptomService.Update(symptom);
-                return Ok(result);
-            }
-            catch (NotFoundException)
-            {
-                return NotFound();
-            }
-        }
-
         //DELETE: api/Symptom/222
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute] Guid id)

@@ -35,7 +35,6 @@ using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Feedbacks.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Symptoms.Model;
