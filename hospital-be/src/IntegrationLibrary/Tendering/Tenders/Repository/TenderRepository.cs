@@ -1,13 +1,11 @@
-﻿using IntegrationLibrary.Exceptions;
-using IntegrationLibrary.Settings;
-using IntegrationLibrary.Tenders.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IntegrationLibrary.Exceptions;
+using IntegrationLibrary.Settings;
+using IntegrationLibrary.Tendering.Model;
 
-namespace IntegrationLibrary.Tenders.Repository
+namespace IntegrationLibrary.Tendering.Repository
 {
     public class TenderRepository : ITenderRepository
     {

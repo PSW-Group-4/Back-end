@@ -1,13 +1,13 @@
 ﻿using IntegrationAPI.Dtos;
 using IntegrationAPI.Dtos.Tenders;
 using IntegrationLibrary.BloodBanks.Model;
-using IntegrationLibrary.Tenders.Model;
-using IntegrationLibrary.Tenders.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using IntegrationAPI.Authorization;
+using IntegrationLibrary.Tendering.Model;
+using IntegrationLibrary.Tendering.Service;
 
 namespace IntegrationAPI.Controllers
 {

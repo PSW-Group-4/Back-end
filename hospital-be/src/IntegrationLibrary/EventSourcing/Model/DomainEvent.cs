@@ -1,0 +1,22 @@
+﻿using System;
+
+namespace IntegrationLibrary.EventSourcing
+{
+    public abstract class DomainEvent
+    {
+        public Guid Id { get; protected set; }
+        public Guid AggregateId { get; protected set; }
+        public string AggregateType { get; protected set; }
+        public string EventType { get; protected set; }
+        public DateTime Timestamp { get; protected set; }
+
+        public DomainEvent(Guid id, Guid aggregateId, string aggregateType, string eventType, DateTime timestamp)
+        {
+            Id = id;
+            AggregateId = aggregateId;
+            AggregateType = aggregateType;
+            EventType = eventType;
+            Timestamp = timestamp;
+        }
+    }
+}

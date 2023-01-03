@@ -1,11 +1,8 @@
-﻿using IntegrationLibrary.Tenders.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using IntegrationLibrary.Tendering.Model;
 
-namespace IntegrationLibrary.Tenders.Repository
+namespace IntegrationLibrary.Tendering.Repository
 {
     public interface ITenderRepository
     {

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using IntegrationAPI.Dtos.BloodTypes;
 using IntegrationLibrary.Common;
-using IntegrationLibrary.Tenders.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using IntegrationLibrary.Tendering.Model;
 
 namespace IntegrationAPI.Dtos.Tenders
 {

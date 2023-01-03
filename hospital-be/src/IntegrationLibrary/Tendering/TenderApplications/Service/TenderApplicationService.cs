@@ -1,7 +1,6 @@
 ﻿using IntegrationLibrary.BloodBanks.Repository;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.TenderApplications.Repository;
-using IntegrationLibrary.Tenders.Repository;
 using IntegrationLibrary.Utilities;
 using MimeKit;
 using System;
@@ -9,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.Tendering.Repository;
 
 namespace IntegrationLibrary.TenderApplications.Service
 {

@@ -2,7 +2,6 @@
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.TenderApplications.Service;
-using IntegrationLibrary.Tenders.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,8 @@ using IntegrationAPI.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using JwtService = IntegrationLibrary.Utilities.JwtService;
 using IntegrationLibrary.BloodBanks.Model;
-using IntegrationLibrary.Tenders.Model;
+using IntegrationLibrary.Tendering.Model;
+using IntegrationLibrary.Tendering.Service;
 
 namespace IntegrationAPI.Controllers
 {

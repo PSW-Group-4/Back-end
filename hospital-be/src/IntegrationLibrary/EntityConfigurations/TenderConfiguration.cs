@@ -6,9 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IntegrationLibrary.Tenders.Model;
 using IntegrationLibrary.Common;
 using System.Text.Json;
+using IntegrationLibrary.EventSourcing;
+using IntegrationLibrary.Tendering.DomainEvents.Base;
+using IntegrationLibrary.Tendering.Model;
 
 namespace IntegrationLibrary.EntityConfigurations
 {
@@ -19,6 +21,9 @@ namespace IntegrationLibrary.EntityConfigurations
             builder.Property(tender => tender.Blood).HasConversion(
                 bloodProducts => JsonSerializer.Serialize(bloodProducts, (JsonSerializerOptions)null),
                 json => JsonSerializer.Deserialize<IEnumerable<Blood>>(json, (JsonSerializerOptions)null));
+            builder.Property(tender => tender.Events).HasConversion(
+                events => JsonSerializer.Serialize(events, (JsonSerializerOptions)null),
+                json => JsonSerializer.Deserialize<List<DomainEvent>>(json, (JsonSerializerOptions)null));
         }
     }
 }
