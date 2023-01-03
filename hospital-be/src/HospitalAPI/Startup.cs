@@ -65,8 +65,6 @@ using HospitalLibrary.BuildingManagment.Repository.Interfaces;
 using HospitalLibrary.BuildingManagment.Repository.Implementation;
 using HospitalLibrary.BuildingManagment.Service.Interfaces;
 using HospitalLibrary.BuildingManagment.Service.Implementation;
-using HospitalLibrary.Prescriptions.Repository;
-using HospitalLibrary.Prescriptions.Service;
 using HospitalLibrary.Symptoms.Repository;
 using HospitalLibrary.Symptoms.Service;
 using HospitalLibrary.Reports.Repository;
@@ -254,10 +252,6 @@ namespace HospitalAPI
             //Medicines
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IMedicineService, MedicineService>();
-
-            //Prescriptions
-            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
-            services.AddScoped<IPrescriptionService, PrescriptionService>();
 
             //Symptoms
             services.AddScoped<ISymptomRepository, SymptomRepository>();

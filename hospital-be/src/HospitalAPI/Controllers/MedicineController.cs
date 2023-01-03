@@ -11,7 +11,6 @@ using HospitalAPI.Dtos.Medicine;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Medicines.Service;
 using AutoMapper;
-using HospitalLibrary.RoomsAndEqipment.Service.Implementation;
 
 namespace HospitalAPI.Controllers
 {
