@@ -27,7 +27,7 @@ namespace HospitalLibrary.Patients.Repository
 
         public Patient GetById(Guid id)
         {
-            var result =  _context.Patients.Find(id);
+            var result =  _context.Patients.SingleOrDefault(p => p.Id == id);
             if (result == null)
             {
                 throw new NotFoundException();

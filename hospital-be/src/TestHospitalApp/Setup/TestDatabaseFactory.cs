@@ -25,6 +25,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
+using DateTime = System.DateTime;
 
 namespace TestHospitalApp.Setup
 {
@@ -363,6 +365,8 @@ namespace TestHospitalApp.Setup
             
             //Medical appointments
             initMedicalAppointments(context);
+            initMedicalAppointmentSchedulingSessions(context);
+            
 
 
             context.SaveChanges();
@@ -531,6 +535,55 @@ namespace TestHospitalApp.Setup
             context.Patients.Add(patient);
             context.MedicalAppointments.Add(medicalAppointment);
             
+        }
+
+        private static void initMedicalAppointmentSchedulingSessions(HospitalDbContext context)
+        {
+            
+            Address address = new Address
+            {
+                Id = new Guid("f6927bfe-1246-4e2b-94e1-4b8123ef3ea3"), Street = "Ulica", StreetNumber = "10", City = "Grad",
+                Country = "Država"
+            };
+            
+            Room room = new Room
+            {
+                Id = new Guid("f6927bfe-1246-4e2b-94e1-4b8023ef3ea3"), Name = "Soba", Number = 10, Description = "Opis sobe"
+            };
+            
+            Doctor doctor = new Doctor(new Guid("1c125fba-1318-4f4b-b153-90d75e60626e"), "Test Doctor Sastanak",
+                "Test Doctor Sastanak",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("0811000800021"),
+                new Email("doctor@test.com"), "066/123-456", "12345", "Surgeon", "03:00",
+                "05:00", room.Id, room);
+            
+            
+            
+            Patient patient = new Patient(Guid.NewGuid(), "Zakazivac", "Zakazivacevic", new DateTime(1990, 3, 21),
+                Gender.Male, new Address(Guid.NewGuid(), "Novi Sad", "Serbia", "Paragovska", "72"),
+                new Jmbg("0811000800021"), new Email("zakazivac@gmail.com"), "0612371234",
+                new BloodType(BloodGroup.B, RhFactor.NEGATIVE));
+            patient.AppointTheChosenDoctor(doctor);
+            
+            
+            context.Addresses.Add(address);
+            context.Rooms.Add(room);
+            context.Doctors.Add(doctor);
+            context.Patients.Add(patient);
+
+            Guid unfinishedAggregateId = new Guid("0e34318e-0bf6-4c8d-8b0e-153dae18d80b");
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(unfinishedAggregateId, DateTime.Now, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(unfinishedAggregateId, DateTime.Now, new DateTime(2023, 4, 4)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, DateTime.Now, "Chiropractor"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, DateTime.Now, doctor));
+
+            Guid finishedAggregateId = new Guid("055f61ca-9487-495f-8229-590c24e7b7da");
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(finishedAggregateId, DateTime.Now, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(finishedAggregateId, DateTime.Now, new DateTime(2023, 4, 4)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(finishedAggregateId, DateTime.Now, "Chiropractor"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(finishedAggregateId, DateTime.Now, doctor));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new FinishedScheduling(finishedAggregateId, DateTime.Now, new DateTime(2023, 1, 14, 12,30,0)));
+
         }
     }
 }
