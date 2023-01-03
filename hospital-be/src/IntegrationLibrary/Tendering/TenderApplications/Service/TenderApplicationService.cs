@@ -8,6 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IntegrationLibrary.EventSourcing;
+using IntegrationLibrary.Tendering.DomainEvents.Base;
+using IntegrationLibrary.Tendering.DomainEvents.Subtypes;
 using IntegrationLibrary.Tendering.Repository;
 
 namespace IntegrationLibrary.TenderApplications.Service
@@ -17,6 +20,7 @@ namespace IntegrationLibrary.TenderApplications.Service
         private readonly ITenderApplicationRepository _repository;
         private readonly ITenderRepository _tenderRepository;
         private readonly IBloodBankRepository _bloodBankRepository;
+        private readonly IEventStore<TenderingEvent> _eventStore;
         public TenderApplicationService(ITenderApplicationRepository repository, ITenderRepository tenderRepository, IBloodBankRepository _bloodBankRepository )
         {
             _repository = repository;
@@ -24,13 +28,17 @@ namespace IntegrationLibrary.TenderApplications.Service
             _bloodBankRepository = _bloodBankRepository;
         }
 
-        public TenderApplication Apply(TenderApplication application)
+        public TenderApplication Submit(TenderApplication application)
         {
-            return _repository.Apply(application);
+            return _repository.Submit(application);
+        }
+        public void Submit(AppliedToTenderEvent appliedToTenderEvent)
+        {
+            new TenderApplication().Causes(appliedToTenderEvent);
         }
         public string GenerateWinnerMessage(TenderApplication application) {
             return "Dear sir/madam we are happy to inform you that we have accepted your offer for our tender, please follow the link" +
-                " to accept the tearms of the tender. Kind regards Zdravo hospital." +
+                " to accept the terms of the tender. Kind regards Zdravo hospital." +
                 "http://localhost:4200/tender/winner/" + application.Tender.Id;
         }
         public string GenerateRejectionMessage() {
@@ -73,7 +81,7 @@ namespace IntegrationLibrary.TenderApplications.Service
         public IEnumerable<TenderApplication> GetByTender(Guid tenderId)
         {
             IEnumerable<TenderApplication> all = GetAll();
-            List<TenderApplication> applicationsByTender = new List<TenderApplication>();
+            List<TenderApplication> applicationsByTender = new();
             foreach(TenderApplication application in all) {
                 if (application.Tender.Id.Equals(tenderId)) {
                     applicationsByTender.Add(application);

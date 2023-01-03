@@ -49,7 +49,7 @@ namespace IntegrationAPI.Controllers
             Tender tender = _tenderService.GetById(tenderApplication.TenderId);
             Price price = tenderApplication.Price;
             TenderApplication application = new TenderApplication(bank,tender,price);
-            return Ok(_service.Apply(application));
+            return Ok(_service.Submit(application));
         }
 
         [Route("tender"), HttpPost]

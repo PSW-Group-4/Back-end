@@ -13,7 +13,7 @@ namespace IntegrationLibrary.TenderApplications.Service
          IEnumerable<TenderApplication> GetAll();
         IEnumerable<TenderApplication> GetByTender(Guid tenderId);
         TenderApplication FindById(Guid applicationId);
-        TenderApplication Apply(TenderApplication application);
+        TenderApplication Submit(TenderApplication application);
         Boolean AcceptOffer(TenderApplication application);
         public bool SendEmailsToParticipants(TenderApplication application, string winnerMessage, string rejectionMessage);
         public string GenerateRejectionMessage();

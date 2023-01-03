@@ -8,6 +8,7 @@ namespace IntegrationLibrary.Tendering.DomainEvents.Subtypes
     public class TenderCreatedEvent : TenderingEvent
     {
         public List<Blood> Blood { get; private set; }
+        public DateTime? Deadline { get; private set; }
 
         public TenderCreatedEvent(Guid id, Guid aggregateId, string aggregateType, string eventType, DateTime timestamp)
             : base(id, aggregateId, aggregateType, eventType, timestamp)

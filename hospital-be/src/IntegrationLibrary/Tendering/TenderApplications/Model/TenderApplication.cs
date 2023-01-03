@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using IntegrationLibrary.EventSourcing;
+using IntegrationLibrary.Tendering.DomainEvents.Subtypes;
 using IntegrationLibrary.Tendering.Model;
 
 namespace IntegrationLibrary.TenderApplications.Model
@@ -28,9 +29,26 @@ namespace IntegrationLibrary.TenderApplications.Model
             Price = price;
         }
 
+        private void AddEvent(DomainEvent @event)
+        {
+            Events.Add(@event);
+        }
+        public void Causes(DomainEvent @event)
+        {
+            Apply(@event);
+            AddEvent(@event);
+        }
         public override void Apply(DomainEvent @event)
         {
-            throw new NotImplementedException();
+            When((dynamic)@event);
+            Modify();
+        }
+        
+        private void When(AppliedToTenderEvent appliedToTenderEvent)
+        {
+            BloodBank = appliedToTenderEvent.BloodBank;
+            Tender = appliedToTenderEvent.Tender;
+            Price = appliedToTenderEvent.Price;
         }
     }
 }

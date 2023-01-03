@@ -55,6 +55,7 @@
         <Folder Include="Migrations\" />
         <Folder Include="Reports\" />
         <Folder Include="TenderApplications" />
+        <Folder Include="Tendering\DomainEventHandler" />
         <Folder Include="Tendering\TenderApplications" />
         <Folder Include="Tendering\Tenders" />
     </ItemGroup>

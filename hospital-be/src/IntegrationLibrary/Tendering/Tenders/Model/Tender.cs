@@ -74,6 +74,21 @@ namespace IntegrationLibrary.Tendering.Model
             }
         }
 
+        public static Tender Create(TenderCreatedEvent tenderCreatedEvent)
+        {
+            if(tenderCreatedEvent.Deadline == null)
+            {
+                return new Tender(tenderCreatedEvent.Blood);
+            }
+            if(DateTime.Compare(DateTime.Now, (DateTime)tenderCreatedEvent.Deadline) < 0)
+            {
+                return new Tender(tenderCreatedEvent.Blood, (DateTime)tenderCreatedEvent.Deadline);
+            } else
+            {
+                throw new DateIsBeforeTodayException();
+            }
+        }
+
         private void AddEvent(DomainEvent @event)
         {
             Events.Add(@event);
@@ -89,23 +104,44 @@ namespace IntegrationLibrary.Tendering.Model
             Modify();
         }
         
-        private void When(TenderCreatedEvent tenderCreatedEventEvent)
+        private void When(TenderCreatedEvent tenderCreatedEvent)
         {
-            Status = TenderStatus.ACTIVE;
-            Blood = tenderCreatedEventEvent.Blood;
-            Modify();
+            if(tenderCreatedEvent.Deadline == null)
+            {
+                Status = TenderStatus.ACTIVE;
+                Blood = tenderCreatedEvent.Blood;
+            }
+
+            if(DateTime.Compare(DateTime.Now, (DateTime)tenderCreatedEvent.Deadline) < 0)
+            {
+                Status = TenderStatus.ACTIVE;
+                Blood = tenderCreatedEvent.Blood;
+                Deadline = tenderCreatedEvent.Deadline;
+            } else
+            {
+                throw new DateIsBeforeTodayException();
+            }
+            AddEvent(tenderCreatedEvent);
         }
 
-        private void When(WinnerPickedEvent winnerPickedEventEvent)
+        private void When(WinnerChosenEvent winnerChosenEvent)
         {
-            Winner = winnerPickedEventEvent.Winner;
+            Winner = winnerChosenEvent.Winner;
+            Status = TenderStatus.PENDING_WINNER_CONFIRMATION;
             Modify();
         }
         
-        private void When(TenderClosedEvent tenderClosedEventEvent)
+        private void When(WinnerConfirmedEvent winnerConfirmedEvent)
         {
-            Status = tenderClosedEventEvent.Status;
+            Status = TenderStatus.COMPLETED;
             Modify();
         }
+        
+        private void When(TenderFailedEvent tenderFailedEvent)
+        {
+            Status = TenderStatus.FAILED;
+            Modify();
+        }
+        
     }
 }
