@@ -3,21 +3,21 @@ using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Settings;
-using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Users.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace HospitalLibrary.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221230131939_20221230001315_Added_MedicalAppointmentSchedulingSessionEvents_Table")]
+    partial class _20221230001315_Added_MedicalAppointmentSchedulingSessionEvents_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -471,6 +471,25 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Prescriptions.Model.Prescription", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<Guid>("ReportId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReportId");
+
+                    b.ToTable("Prescriptions");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
                 {
                     b.Property<Guid>("Id")
@@ -482,12 +501,6 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<Guid>("MedicalAppointmentId")
                         .HasColumnType("uuid");
-
-                    b.Property<List<Prescription>>("Prescriptions")
-                        .HasColumnType("jsonb");
-
-                    b.Property<List<Symptom>>("Symptoms")
-                        .HasColumnType("jsonb");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
@@ -680,6 +693,36 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("DoctorId");
 
                     b.ToTable("Vacations");
+                });
+
+            modelBuilder.Entity("MedicinePrescription", b =>
+                {
+                    b.Property<Guid>("MedicinesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PrescriptionsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("MedicinesId", "PrescriptionsId");
+
+                    b.HasIndex("PrescriptionsId");
+
+                    b.ToTable("MedicinePrescription");
+                });
+
+            modelBuilder.Entity("ReportSymptom", b =>
+                {
+                    b.Property<Guid>("ReportsId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SymptomsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("ReportsId", "SymptomsId");
+
+                    b.HasIndex("SymptomsId");
+
+                    b.ToTable("ReportSymptom");
                 });
 
             modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
@@ -1207,6 +1250,15 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Email");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.Prescriptions.Model.Prescription", b =>
+                {
+                    b.HasOne("HospitalLibrary.Reports.Model.Report", null)
+                        .WithMany("Prescriptions")
+                        .HasForeignKey("ReportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
                 {
                     b.HasOne("HospitalLibrary.Appointments.Model.MedicalAppointment", "MedicalAppointment")
@@ -1279,6 +1331,36 @@ namespace HospitalLibrary.Migrations
                         .IsRequired();
 
                     b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("MedicinePrescription", b =>
+                {
+                    b.HasOne("HospitalLibrary.Medicines.Model.Medicine", null)
+                        .WithMany()
+                        .HasForeignKey("MedicinesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Prescriptions.Model.Prescription", null)
+                        .WithMany()
+                        .HasForeignKey("PrescriptionsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ReportSymptom", b =>
+                {
+                    b.HasOne("HospitalLibrary.Reports.Model.Report", null)
+                        .WithMany()
+                        .HasForeignKey("ReportsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalLibrary.Symptoms.Model.Symptom", null)
+                        .WithMany()
+                        .HasForeignKey("SymptomsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
@@ -1366,6 +1448,11 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Floor", b =>
                 {
                     b.Navigation("RoomList");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
+                {
+                    b.Navigation("Prescriptions");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.Equipment", b =>

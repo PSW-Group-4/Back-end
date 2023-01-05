@@ -1,9 +1,9 @@
 ﻿using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.Exceptions;
-using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Symptoms.Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HospitalLibrary.Reports.Model
 {
@@ -13,13 +13,15 @@ namespace HospitalLibrary.Reports.Model
         public Guid MedicalAppointmentId { get; private set; }
         public virtual MedicalAppointment MedicalAppointment { get; private set; }
         public string Text { get; private set; }
+
+        [Column(TypeName = "jsonb")]
         public virtual List<Symptom> Symptoms { get; private set; }
-        public virtual List<Prescription> Prescriptions { get; private set; }
+
+        [Column(TypeName = "jsonb")]
+        public List<Prescription> Prescriptions { get; private set; }
         public DateTime DateTime { get; private set; }
 
-        public Report()
-        {
-        }
+        public Report() {}
 
         public Report(Guid id, Guid medicalAppointmentId, string text, List<Symptom> symptoms, List<Prescription> prescriptions, DateTime dateTime)
         {
@@ -32,9 +34,10 @@ namespace HospitalLibrary.Reports.Model
 
             if (!IsValid())
             {
-                throw new ValueObjectValidationFailedException("Report doesn't exist !");
+                throw new EntityObjectValidationFailedException();
             }
         }
+
         private bool IsValid()
         {
             if (!IsThereMedicalAppointment())
@@ -55,6 +58,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsThereMedicalAppointment()
         {
             if (MedicalAppointmentId.Equals(Guid.Empty))        //Stefan menjao, puca pri inicijalizaciji jer se provrava ceo objekat, koji je null
@@ -63,6 +67,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsThereText()
         {
             if (String.IsNullOrEmpty(Text))
@@ -71,6 +76,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsThereSymptoms()
         {
             if (Symptoms.Count <= 0)
@@ -79,6 +85,7 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
         private bool IsTherePrescriptions()
         {
             if (Prescriptions.Count <= 0)
@@ -87,6 +94,17 @@ namespace HospitalLibrary.Reports.Model
             }
             return true;
         }
+
+        public void AddSymptom(Symptom symptom)
+        {
+            Symptoms.Add(symptom);
+        }
+
+        public void AddPrescription(Prescription prescription)
+        {
+            Prescriptions.Add(prescription);
+        }
+
         public void Update(Report report)
         {
             Text = report.Text;

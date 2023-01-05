@@ -1,14 +1,27 @@
-﻿using HospitalLibrary.Reports.Model;
+﻿using HospitalLibrary.Exceptions;
 using System;
-using System.Collections.Generic;
 
 namespace HospitalLibrary.Symptoms.Model
 {
     public class Symptom
     {
-        public Guid Id { get; set; }
-        public String Name { get; set; }
-        public virtual List<Report> Reports { get; set; }
+        public Guid Id { get; private set; }
+        public String Name { get; private set; }
+
+        public Symptom(Guid id, String name)
+        {
+            Id = id;
+            Name = name;
+
+            if (!IsValid())
+                throw new EntityObjectValidationFailedException();
+        }
+
+        private bool IsValid()
+        {
+            return !String.IsNullOrWhiteSpace(Name);
+        }
+
         public void Update(Symptom symptom)
         {
             Name = symptom.Name;

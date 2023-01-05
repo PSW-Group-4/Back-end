@@ -77,6 +77,11 @@ namespace HospitalLibrary.Core.Model
             PhoneNumber = person.PhoneNumber;
         }
 
+        public int GetAge()
+        {
+            return DateTime.Now.Year - Birthdate.Year;
+        }
+
         public override bool Equals(object obj)
         {
             return base.Equals(obj);

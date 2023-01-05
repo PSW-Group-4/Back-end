@@ -3,7 +3,7 @@ using HospitalLibrary.Infrastructure.EventSourcing;
 
 namespace HospitalLibrary.MedicalAppointmentSchedulingSession.Events
 {
-    public class GoneBackToSelection : DomainEvent
+    public class GoneBackToSelection : MedicalAppointmentSchedulingSessionEvent
     {
         public Selection Selection { get; private set; }
         

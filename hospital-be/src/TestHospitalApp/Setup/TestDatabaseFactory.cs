@@ -4,14 +4,12 @@ using HospitalLibrary.Admissions.Model;
 using HospitalLibrary.Appointments.Model;
 using HospitalLibrary.BloodSupplies.Model;
 using HospitalLibrary.BuildingManagment.Model;
-using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Patients.Model;
-using HospitalLibrary.Prescriptions.Model;
-using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.Reports.Model;
+using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.RoomsAndEqipment.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Symptoms.Model;
@@ -26,8 +24,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
+using DateTime = System.DateTime;
 
 namespace TestHospitalApp.Setup
 {
@@ -81,11 +80,8 @@ namespace TestHospitalApp.Setup
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Vacations\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Appointments\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Users\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"ReportSymptom\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"MedicinePrescription\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Reports\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Symptoms\" RESTART IDENTITY CASCADE;");
-            context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Prescriptions\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Medicines\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"RoomsEquipment\" RESTART IDENTITY CASCADE;");
             context.Database.ExecuteSqlRaw("TRUNCATE TABLE \"Admissions\" RESTART IDENTITY CASCADE;");
@@ -127,9 +123,6 @@ namespace TestHospitalApp.Setup
                 new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
                 new Email("doctor@test.com"), "066/123-456", "12345", "Surgeon", "1:00",
                 "21:00", room.Id, room);
-
-
-
          
             context.Doctors.Add(doctor);
             context.Doctors.Add(doctor1);
@@ -142,19 +135,16 @@ namespace TestHospitalApp.Setup
             BloodSupply bloodSupply2 = new BloodSupply { BloodType = BloodType.FromString("B+"), Amount = 0.00 };
             context.BloodSupply.Add(bloodSupply2);
 
-        
-
-
             //Symptoms
-            Symptom symptom1 = new Symptom { Name = "Povišena temperatura" };
-            Symptom symptom2 = new Symptom { Name = "Suv kašalj" };
+            Symptom symptom1 = new Symptom (new Guid(), "Povišena temperatura");
+            Symptom symptom2 = new Symptom (new Guid(), "Suv kašalj");
 
             context.Symptoms.Add(symptom1);
             context.Symptoms.Add(symptom2);
 
             //Medicines
-            Medicine medicine1 = new Medicine { Name = "Aspirin" };
-            Medicine medicine2 = new Medicine { Name = "Brufen" };
+            Medicine medicine1 = new Medicine(new Guid(), "Aspirin");
+            Medicine medicine2 = new Medicine (new Guid(), "Brufen");
 
             context.Medicines.Add(medicine1);
             context.Medicines.Add(medicine2);
@@ -189,12 +179,7 @@ namespace TestHospitalApp.Setup
             //     PatientId = patient.Id
             // };
 
-            Prescription prescription = new Prescription
-            {
-                Id = new Guid("0acea4a3-7101-4b0c-8c76-be553afbf84f"),
-                DateTime = new DateTime(),
-                Medicines = medicines
-            };
+            Prescription prescription = new Prescription(medicines);
             prescriptions.Add(prescription);
             List<Symptom> symptoms = new List<Symptom>();
             symptoms.Add(symptom1);
@@ -306,7 +291,6 @@ namespace TestHospitalApp.Setup
             context.Equipments.Add(eq2);
             context.Equipments.Add(eq3);
 
-
             Bed bed1 = new Bed
             {
                 Id = new Guid("5c036fba-1118-4f4b-b153-90d75e606251"),
@@ -381,6 +365,9 @@ namespace TestHospitalApp.Setup
             
             //Medical appointments
             initMedicalAppointments(context);
+            initMedicalAppointmentSchedulingSessions(context);
+            InitAgeGroups(context);
+            
 
 
             context.SaveChanges();
@@ -551,6 +538,65 @@ namespace TestHospitalApp.Setup
             
         }
 
+        private static void initMedicalAppointmentSchedulingSessions(HospitalDbContext context)
+        {
+            
+            Address address = new Address
+            {
+                Id = new Guid("f6927bfe-1246-4e2b-94e1-4b8123ef3ea3"), Street = "Ulica", StreetNumber = "10", City = "Grad",
+                Country = "Država"
+            };
+            
+            Room room = new Room
+            {
+                Id = new Guid("f6927bfe-1246-4e2b-94e1-4b8023ef3ea3"), Name = "Soba", Number = 10, Description = "Opis sobe"
+            };
+            
+            Doctor doctor = new Doctor(new Guid("1c125fba-1318-4f4b-b153-90d75e60626e"), "Test Doctor Sastanak",
+                "Test Doctor Sastanak",
+                new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("0811000800021"),
+                new Email("doctor@test.com"), "066/123-456", "12345", "Surgeon", "03:00",
+                "05:00", room.Id, room);
+            
+            
+            
+            Patient patient = new Patient(Guid.NewGuid(), "Zakazivac", "Zakazivacevic", new DateTime(1990, 3, 21),
+                Gender.Male, new Address(Guid.NewGuid(), "Novi Sad", "Serbia", "Paragovska", "72"),
+                new Jmbg("0811000800021"), new Email("zakazivac@gmail.com"), "0612371234",
+                new BloodType(BloodGroup.B, RhFactor.NEGATIVE));
+            patient.AppointTheChosenDoctor(doctor);
+            
+            
+            context.Addresses.Add(address);
+            context.Rooms.Add(room);
+            context.Doctors.Add(doctor);
+            context.Patients.Add(patient);
+            
+            DateTime currentTime = DateTime.Now;
+            Guid unfinishedAggregateId = new Guid("0e34318e-0bf6-4c8d-8b0e-153dae18d80b");
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(unfinishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(unfinishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(15), doctor));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), Selection.Speciality));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(25), "Physician"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(30), doctor));
+
+            Guid finishedAggregateId = new Guid("055f61ca-9487-495f-8229-590c24e7b7da");
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(finishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(finishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(finishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(finishedAggregateId, currentTime.AddSeconds(15), doctor));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 14, 12,30,0)));
+
+        }
+        private static void InitAgeGroups(HospitalDbContext context)
+        {
+           context.AgeGroups.Add(new AgeGroup("Child", 0, 16));
+           context.AgeGroups.Add(new AgeGroup("Young adults", 17, 30));
+           context.AgeGroups.Add(new AgeGroup("Middle-aged adults", 31, 50));
+           context.AgeGroups.Add(new AgeGroup("Old Adults", 51, 999));
+        }
 
     }
 }

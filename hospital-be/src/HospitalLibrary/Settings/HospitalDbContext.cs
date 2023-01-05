@@ -24,10 +24,11 @@ using HospitalLibrary.Treatments.Model;
 using HospitalLibrary.Utility;
 using IntegrationLibrary.Common;
 using HospitalLibrary.Symptoms.Model;
-using HospitalLibrary.Prescriptions.Model;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Consiliums.Model;
 using HospitalLibrary.EntityConfigurations;
+using HospitalLibrary.Infrastructure.EventSourcing;
+using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.Settings
@@ -89,9 +90,6 @@ namespace HospitalLibrary.Settings
         // Symptoms
         public DbSet<Symptom> Symptoms { get; set; }
 
-        // Prescriptions
-        public DbSet<Prescription> Prescriptions { get; set; }
-
         // Reports
         public DbSet<Report> Reports { get; set; }
 
@@ -102,17 +100,16 @@ namespace HospitalLibrary.Settings
 
         // Consilium
         public DbSet<Consilium> Consiliums { get; set; }
+        
+        // Medical appointment scheduling session
+        public DbSet<MedicalAppointmentSchedulingSessionEvent> MedicalAppointmentSchedulingSessionEvents { get; set; }
 
 
-        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
-        {
-        }
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-
 
             modelBuilder
                 .Entity<Patient>()
@@ -130,16 +127,6 @@ namespace HospitalLibrary.Settings
                         .HasColumnName("RhFactor");
                 });
             
-            // modelBuilder
-            //     .Entity<Patient>()
-            //     .OwnsOne(p => p.Email, email =>
-            //     {
-            //         email.Property(prop => prop.Address)
-            //             .HasColumnName("EmailAddress");
-            //     });
-            
-            
-
             modelBuilder.Entity<User>()
                 .Ignore(u => u.SuspiciousActivities)  
                 .Property("suspicious_activities");

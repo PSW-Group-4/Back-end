@@ -1,7 +1,9 @@
 using System;
+using System.ComponentModel;
 using HospitalLibrary.Doctors.Model;
 using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
+using HospitalLibrary.MedicalAppointmentSchedulingSession.Repository;
 using HospitalLibrary.Patients.Model;
 
 namespace HospitalLibrary.MedicalAppointmentSchedulingSession
@@ -18,20 +20,33 @@ namespace HospitalLibrary.MedicalAppointmentSchedulingSession
         public DateTime? SelectedTime{ get; private set; }
         public bool IsScheduled { get; private set; }
 
+        private readonly IMedicalAppointmentSchedulingSessionRepository _repository;
 
-        public MedicalAppointmentSchedulingSession(Patient patient, DateTime schedulingStartTime) : base(Guid.NewGuid())
+        public MedicalAppointmentSchedulingSession() : base(Guid.NewGuid()) { }
+
+        public MedicalAppointmentSchedulingSession(IMedicalAppointmentSchedulingSessionRepository repository) : base(
+            Guid.NewGuid())
         {
-            Patient = patient;
-            Causes(new StartedScheduling(Id, schedulingStartTime));
+            _repository = repository;
+        }
+        public MedicalAppointmentSchedulingSession(Guid id, IMedicalAppointmentSchedulingSessionRepository repository) : base(id)
+        {
+            _repository = repository;
+        }
+
+        private void AddEvent(MedicalAppointmentSchedulingSessionEvent @event)  
+        {
+            Events.Add(@event);
+           _repository.SaveEvent(@event); 
         }
 
         public void Causes(DomainEvent @event)
         {
             Apply(@event);
-            Events.Add(@event);
+            AddEvent((MedicalAppointmentSchedulingSessionEvent)@event);
         }
 
-        protected override void Apply(DomainEvent @event)
+        public override void Apply(DomainEvent @event)
         {
             When((dynamic)@event);
             Version++;
@@ -39,6 +54,7 @@ namespace HospitalLibrary.MedicalAppointmentSchedulingSession
 
         private void When(StartedScheduling startedScheduling)
         {
+            Patient = startedScheduling.Patient;
             IsScheduled = false;
         }
 
