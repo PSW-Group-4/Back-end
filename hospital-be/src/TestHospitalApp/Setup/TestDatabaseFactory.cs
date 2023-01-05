@@ -366,6 +366,7 @@ namespace TestHospitalApp.Setup
             //Medical appointments
             initMedicalAppointments(context);
             initMedicalAppointmentSchedulingSessions(context);
+            InitAgeGroups(context);
             
 
 
@@ -570,20 +571,32 @@ namespace TestHospitalApp.Setup
             context.Rooms.Add(room);
             context.Doctors.Add(doctor);
             context.Patients.Add(patient);
-
+            
+            DateTime currentTime = DateTime.Now;
             Guid unfinishedAggregateId = new Guid("0e34318e-0bf6-4c8d-8b0e-153dae18d80b");
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(unfinishedAggregateId, DateTime.Now, patient));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(unfinishedAggregateId, DateTime.Now, new DateTime(2023, 4, 4)));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, DateTime.Now, "Chiropractor"));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, DateTime.Now, doctor));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(unfinishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(unfinishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(15), doctor));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), Selection.Speciality));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(25), "Physician"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(30), doctor));
 
             Guid finishedAggregateId = new Guid("055f61ca-9487-495f-8229-590c24e7b7da");
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(finishedAggregateId, DateTime.Now, patient));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(finishedAggregateId, DateTime.Now, new DateTime(2023, 4, 4)));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(finishedAggregateId, DateTime.Now, "Chiropractor"));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(finishedAggregateId, DateTime.Now, doctor));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new FinishedScheduling(finishedAggregateId, DateTime.Now, new DateTime(2023, 1, 14, 12,30,0)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(finishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(finishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(finishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(finishedAggregateId, currentTime.AddSeconds(15), doctor));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 14, 12,30,0)));
 
         }
+        private static void InitAgeGroups(HospitalDbContext context)
+        {
+           context.AgeGroups.Add(new AgeGroup("Child", 0, 16));
+           context.AgeGroups.Add(new AgeGroup("Young adults", 17, 30));
+           context.AgeGroups.Add(new AgeGroup("Middle-aged adults", 31, 50));
+           context.AgeGroups.Add(new AgeGroup("Old Adults", 51, 999));
+        }
+
     }
 }
