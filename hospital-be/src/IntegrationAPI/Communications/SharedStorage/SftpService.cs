@@ -44,6 +44,10 @@ namespace IntegrationAPI.Communications.SharedStorage
         {
             _client.PutFile(localFilePath, remoteFilePath);
         }
-        
+
+        public void DownloadFile(string localFilePath, string remoteFilePath)
+        {
+            _client.GetFile(remoteFilePath, localFilePath);
+        }
     }
 }

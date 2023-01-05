@@ -27,5 +27,12 @@ namespace TestIntegrationApp.IntegrationTesting
             Exception exception = Record.Exception(() => _sftpService.UploadFile(@"D:\PSW\Back-end\hospital-be\src\IntegrationAPI\Reports\Bankica202212162317008145.pdf", "/reports/Bankica202212162317008155.pdf"));
             Assert.Null(exception);
         }
+
+        [Fact]
+        public void Gets_File()
+        {
+            Exception exception = Record.Exception(() => _sftpService.DownloadFile(@"D:\PSW\Back-end\hospital-be\src\IntegrationAPI\Reports\BankicaReportFromSftpServer.pdf", "/reports/Bankica202212162317008155.pdf"));
+            Assert.Null(exception);
+        }
     }
 }
