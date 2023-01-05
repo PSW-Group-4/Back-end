@@ -5,106 +5,45 @@ using Microsoft.Extensions.Logging;
 using Renci.SshNet;
 using Renci.SshNet.Sftp;
 
+using Rebex.Net;
+
 namespace IntegrationAPI.Communications.SharedStorage
 {
     public class SftpService
     {
         private readonly SftpConfig _config;
+        private readonly Sftp _client;
 
         public SftpService(SftpConfig sftpConfig)
         {
             _config = sftpConfig;
+            Rebex.Licensing.Key = "==AFeeZVSzy8xk4CHcnI9hkMoxe6IW+JSJ/2DJeRjjBAuM==";
+            _client = new Rebex.Net.Sftp();
+            SetupClient();
         }
 
-        public void Connect()
+        ~SftpService()
         {
-            using SftpClient client = new(_config.Host, _config.Username, _config.Password);
-            try
-            {
-                client.Connect();
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine("Connection failed.");
-            }
+          _client.Disconnect();  
         }
 
-        public IEnumerable<SftpFile> ListAllFiles(string remoteDirectory = ".")
+        public void SetupClient()
         {
-            using SftpClient client = new(_config.Host, _config.Username, _config.Password);
-            try
-            {
-                client.Connect();
-                return client.ListDirectory(remoteDirectory);
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"Failed in listing files under [{remoteDirectory}]");
-                return null;
-            }
-            finally
-            {
-                client.Disconnect();
-            }
+            _client.Connect(_config.Host);
+            _client.Login(_config.Username, _config.Password);
+            if (!_client.DirectoryExists("/reports"))
+                _client.CreateDirectory("/reports");
+        }
+
+        public SftpItemCollection ListAll()
+        {
+            return _client.GetList();
         }
 
         public void UploadFile(string localFilePath, string remoteFilePath)
         {
-            using SftpClient client = new(_config.Host, _config.Username, _config.Password);
-            try
-            {
-                client.Connect();
-                using FileStream s = File.OpenRead(localFilePath);
-                client.UploadFile(s, remoteFilePath);
-                Console.WriteLine($"Finished uploading file [{localFilePath}] to [{remoteFilePath}]");
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"Failed in uploading file [{localFilePath}] to [{remoteFilePath}]");
-            }
-            finally
-            {
-                client.Disconnect();
-            }
+            _client.PutFile(localFilePath, remoteFilePath);
         }
-
-        public void DownloadFile(string remoteFilePath, string localFilePath)
-        {
-            using SftpClient client = new(_config.Host, _config.Username, _config.Password);
-            try
-            {
-                client.Connect();
-                using FileStream s = File.Create(localFilePath);
-                client.DownloadFile(remoteFilePath, s);
-                Console.WriteLine($"Finished downloading file [{localFilePath}] from [{remoteFilePath}]");
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"Failed in downloading file [{localFilePath}] from [{remoteFilePath}]");;
-            }
-            finally
-            {
-                client.Disconnect();
-            }
-        }
-
-        public void DeleteFile(string remoteFilePath)
-        {
-            using SftpClient client = new(_config.Host, _config.Username, _config.Password);
-            try
-            {
-                client.Connect();
-                client.DeleteFile(remoteFilePath);
-                Console.WriteLine($"File [{remoteFilePath}] deleted.");
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine($"Failed in deleting file [{remoteFilePath}]");
-            }
-            finally
-            {
-                client.Disconnect();
-            }
-        }
+        
     }
 }
