@@ -289,6 +289,7 @@ namespace HospitalAPI
             //Medical appointment scheduling session
             services.AddScoped<IMedicalAppointmentSchedulingSessionRepository, MedicalAppointmentSchedulingSessionRepository>();
             services.AddScoped<IMedicalAppointmentSchedulingEventSourcingService, MedicalAppointmentSchedulingEventSourcingService>();
+            services.AddScoped<IMedAppSchedulingStatisticsService, MedAppSchedulingStatisticsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
