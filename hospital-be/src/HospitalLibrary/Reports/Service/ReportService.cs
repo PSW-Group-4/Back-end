@@ -36,5 +36,10 @@ namespace HospitalLibrary.Reports.Service
         {
             _reportRepository.Delete(id);
         }
+
+        public Report GetByMedicalAppointmentId(Guid id)
+        {
+            return _reportRepository.GetByMedicalAppointmentId(id);
+        }
     }
 }

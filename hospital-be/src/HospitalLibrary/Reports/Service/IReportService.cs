@@ -11,5 +11,6 @@ namespace HospitalLibrary.Reports.Service
         Report Create(Report report);
         Report Update(Report report);
         void Delete(Guid symptomId);
+        public Report GetByMedicalAppointmentId(Guid id);
     }
 }
