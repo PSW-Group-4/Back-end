@@ -7,7 +7,7 @@ using HospitalLibrary.Infrastructure.EventSourcing;
 
 namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
-    public class TypeChosen : DomainEvent
+    public class TypeChosen : RenovationSessionEvent
     {
         public Renovation.Model.RenovationAppointment.TypeOfRenovation Type {get; private set;}
         public TypeChosen(Guid aggregateId, Renovation.Model.RenovationAppointment.TypeOfRenovation  type) : base(aggregateId, DateTime.Now) {

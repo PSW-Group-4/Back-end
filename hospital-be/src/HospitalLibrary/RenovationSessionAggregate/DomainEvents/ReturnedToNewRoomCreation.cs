@@ -6,7 +6,7 @@ using HospitalLibrary.Infrastructure.EventSourcing;
 
 namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
-    public class ReturnedToNewRoomCreation : DomainEvent
+    public class ReturnedToNewRoomCreation : RenovationSessionEvent
     {
         public ReturnedToNewRoomCreation(Guid aggregateId) : base(aggregateId, DateTime.Now){
             

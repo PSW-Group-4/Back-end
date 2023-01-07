@@ -6,9 +6,9 @@ using HospitalLibrary.Infrastructure.EventSourcing;
 
 namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
-    public class ReturnedToSpecificTimeSelection : RenovationSessionEvent
+    public class RenovationSessionEvent : DomainEvent
     {
-        public ReturnedToSpecificTimeSelection(Guid aggregateId) : base(aggregateId, DateTime.Now){
+        public RenovationSessionEvent(Guid aggregateId, DateTime time) : base(aggregateId, time){
             
         }
     }

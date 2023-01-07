@@ -7,7 +7,7 @@ using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
-    public class TimeframeCreated : DomainEvent
+    public class TimeframeCreated : RenovationSessionEvent
     {
         public DateRange DateRange {get; private set;}
         public TimeframeCreated(Guid aggregateId, DateRange dateRange) : base(aggregateId, DateTime.Now){

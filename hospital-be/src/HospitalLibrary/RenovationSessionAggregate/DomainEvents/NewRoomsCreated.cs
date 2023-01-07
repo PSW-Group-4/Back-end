@@ -7,7 +7,7 @@ using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
-    public class NewRoomsCreated : DomainEvent
+    public class NewRoomsCreated : RenovationSessionEvent
     {
         private IEnumerable<RoomRenovationPlan> _RoomRenovationPlans {get; set;}
         public IEnumerable<RoomRenovationPlan> RoomRenovationPlans {

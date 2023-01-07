@@ -7,7 +7,7 @@ using HospitalLibrary.Infrastructure.EventSourcing;
 
 namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
-    public class ReturnedToOldRoomsSelection : DomainEvent
+    public class ReturnedToOldRoomsSelection : RenovationSessionEvent
     {
         public ReturnedToOldRoomsSelection(Guid aggregateId) : base(aggregateId, DateTime.Now){
             
