@@ -7,7 +7,7 @@ using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 using HospitalLibrary.Renovation.Service.Interfaces;
 
-namespace HospitalLibrary.RenovationSessionAggregate.UseCases.Implementation
+namespace HospitalLibrary.RenovationSessionAggregate.Services.Implementation
 {
     public class RenovationSessionService : IRenovationSessionService
     {
@@ -48,24 +48,24 @@ namespace HospitalLibrary.RenovationSessionAggregate.UseCases.Implementation
             }
             root.EndSession(root.Id);
         }
-        public void ReturnedToNewRoomCreation(Guid id) {
+        public void ReturnToNewRoomCreation(Guid id) {
             RenovationSessionAggregateRoot root = _sessionRepository.GetById(id);
             root.ReturnToNewRoomCreation(root.Id);
         }
 
-        public void ReturnedToOldRoomsSelection(Guid id) {
+        public void ReturnToOldRoomsSelection(Guid id) {
             RenovationSessionAggregateRoot root = _sessionRepository.GetById(id);
             root.ReturnToOldRoomSelection(root.Id);
         }
-        public void ReturnedToSpecificTimeSelection(Guid id) {
+        public void ReturnToSpecificTimeSelection(Guid id) {
             RenovationSessionAggregateRoot root = _sessionRepository.GetById(id);
             root.ReturnToSpecificTimeSelection(root.Id);
         }
-        public void ReturnedToTimeframeCreation(Guid id) {
+        public void ReturnToTimeframeCreation(Guid id) {
             RenovationSessionAggregateRoot root = _sessionRepository.GetById(id);
             root.ReturnToTimeframeCreation(root.Id);
         }
-        public void ReturnedToTypeSelection(Guid id) {
+        public void ReturnToTypeSelection(Guid id) {
             RenovationSessionAggregateRoot root = _sessionRepository.GetById(id);
             root.ReturnToTypeSelection(root.Id);
         }

@@ -14,11 +14,11 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Interfaces
         public void CreateNewRooms(Guid id, IEnumerable<RoomRenovationPlan> rooms);
         public void CreateTimeframe(Guid id, DateTime start, DateTime end);
         public void EndSession(Guid id);
-        public void ReturnedToNewRoomCreation(Guid id);
-        public void ReturnedToOldRoomsSelection(Guid id);
-        public void ReturnedToSpecificTimeSelection(Guid id);
-        public void ReturnedToTimeframeCreation(Guid id);
-        public void ReturnedToTypeSelection(Guid id);
+        public void ReturnToNewRoomCreation(Guid id);
+        public void ReturnToOldRoomsSelection(Guid id);
+        public void ReturnToSpecificTimeSelection(Guid id);
+        public void ReturnToTimeframeCreation(Guid id);
+        public void ReturnToTypeSelection(Guid id);
         public Guid StartSession(); 
     }
 }
