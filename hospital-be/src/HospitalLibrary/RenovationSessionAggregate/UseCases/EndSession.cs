@@ -11,9 +11,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.UseCases
     public class EndSession
     {
         private IRenovationSessionAggregateRootRepository _sessionRepository;
-        private IRenovationAppointmentService _appointmentService;// TODO
-        // private IEventRepository _eventRepository
-        
+        private IRenovationAppointmentService _appointmentService;        
         public EndSession(IRenovationSessionAggregateRootRepository sessionRepository, IRenovationAppointmentService appointmentService) {
             this._sessionRepository = sessionRepository;
             this._appointmentService = appointmentService;
@@ -25,8 +23,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.UseCases
             if(root.TypeOfRenovation.Value.Equals(HospitalLibrary.Renovation.Model.RenovationAppointment.TypeOfRenovation.Merge)) {
                 this._appointmentService.Create(new RenovationAppointment(root, root.RoomRenovationPlans.ToArray()[1].Id));
             }
-            root.SessionEnded(root.Id);
-            // save event changes
+            root.EndSession(root.Id);
         }
     }
 }

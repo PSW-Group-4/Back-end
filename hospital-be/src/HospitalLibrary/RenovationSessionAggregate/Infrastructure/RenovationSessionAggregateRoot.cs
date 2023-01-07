@@ -25,22 +25,54 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
 
-        public void SessionStarted() {
+        public void StartSession() {
             Causes(new SessionStarted(Id));
         }
 
-        public void SessionEnded(Guid id) {
+        public void EndSession(Guid id) {
             Causes(new SessionEnded(id));
         }
 
-        public void TypeChosen(Guid id, Renovation.Model.RenovationAppointment.TypeOfRenovation type) {
+        public void ChooseType(Guid id, Renovation.Model.RenovationAppointment.TypeOfRenovation type) {
             Causes(new TypeChosen(id, type));
         }
 
-        public void OldRoomsChosen(Guid id, IEnumerable<RoomRenovationPlan> plans) {
+        public void ChooseOldRooms(Guid id, IEnumerable<RoomRenovationPlan> plans) {
             Causes(new OldRoomsChosen(id, plans));
         }
 
+        public void CreateNewRooms(Guid id, IEnumerable<RoomRenovationPlan> plans) {
+            Causes(new NewRoomsCreated(id, plans));
+        }
+
+        public void CreateTimeframe(Guid id, DateRange dateRange) {
+            Causes(new TimeframeCreated(id, dateRange));
+        }
+
+        public void ChooseSpecificTime(Guid id, DateRange dateRange) {
+            Causes(new SpecificTimeChosen(id, dateRange));
+        }
+        
+        public void ReturnToNewRoomCreation(Guid id) {
+            Causes(new ReturnedToNewRoomCreation(id));
+        }
+
+        public void ReturnToOldRoomSelection(Guid id) {
+            Causes(new ReturnedToOldRoomsSelection(id));
+        }
+
+        public void ReturnToSpecificTimeSelection(Guid id) {
+            Causes(new ReturnedToSpecificTimeSelection(id));
+        }
+
+        public void ReturnToTimeframeCreation(Guid id) {
+            Causes(new ReturnedToTimeframeCreation(id));
+        }
+
+        public void ReturnToTypeSelection(Guid id) {
+            Causes(new ReturnedToTypeSelection(id));
+        }
+        
         public void Causes(DomainEvent @event) {
             Events.Add(@event);
             Apply(@event);

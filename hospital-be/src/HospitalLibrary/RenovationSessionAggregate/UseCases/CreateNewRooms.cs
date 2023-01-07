@@ -3,22 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
+using HospitalLibrary.Renovation.Model;
 
 namespace HospitalLibrary.RenovationSessionAggregate.UseCases
 {
-    public class StartSession
+    public class CreateNewRooms
     {
         private IRenovationSessionAggregateRootRepository _sessionRepository;
         
-        public StartSession(IRenovationSessionAggregateRootRepository sessionRepository) {
+        public CreateNewRooms(IRenovationSessionAggregateRootRepository sessionRepository) {
             this._sessionRepository = sessionRepository;
         }
 
-        public Guid Execute() {
-            RenovationSessionAggregateRoot root = new RenovationSessionAggregateRoot(Guid.NewGuid());
-            root.StartSession();
-            this._sessionRepository.Create(root);
-            return root.Id;
+        public void Execute(Guid id, IEnumerable<RoomRenovationPlan> rooms) {
+            RenovationSessionAggregateRoot root = _sessionRepository.GetById(id);
+            root.CreateNewRooms(root.Id, rooms);
         }
     }
 }

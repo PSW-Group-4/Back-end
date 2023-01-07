@@ -6,19 +6,17 @@ using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 
 namespace HospitalLibrary.RenovationSessionAggregate.UseCases
 {
-    public class StartSession
+    public class ReturnToNewRoomCreation
     {
         private IRenovationSessionAggregateRootRepository _sessionRepository;
         
-        public StartSession(IRenovationSessionAggregateRootRepository sessionRepository) {
+        public ReturnToNewRoomCreation(IRenovationSessionAggregateRootRepository sessionRepository) {
             this._sessionRepository = sessionRepository;
         }
 
-        public Guid Execute() {
-            RenovationSessionAggregateRoot root = new RenovationSessionAggregateRoot(Guid.NewGuid());
-            root.StartSession();
-            this._sessionRepository.Create(root);
-            return root.Id;
+        public void Execute(Guid id) {
+            RenovationSessionAggregateRoot root = _sessionRepository.GetById(id);
+            root.ReturnToNewRoomCreation(root.Id);
         }
     }
 }
