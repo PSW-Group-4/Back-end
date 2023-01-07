@@ -78,7 +78,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             Apply(@event);
         }
 
-        protected override void Apply(DomainEvent @event) {
+        public override void Apply(DomainEvent @event) {
             When((dynamic)@event);
             Version = Version++;
         }
