@@ -30,7 +30,7 @@ namespace HospitalLibrary.Renovation.Model
             Validate();
         }
 
-        public RenovationAppointment(RenovationSessionAggregateRoot root, Guid roomId) : base(Guid.NewGuid(), root.DateRange, roomId, null){
+        public RenovationAppointment(RenovationSessionAggregateRoot root, Guid roomId) : base(Guid.NewGuid(), new DateRange(root.Start.Value, root.End.Value), roomId, null){
             this.RoomRenovationPlans = root.RoomRenovationPlans.ToList();
             this.Type = root.TypeOfRenovation.Value;
             Validate();
