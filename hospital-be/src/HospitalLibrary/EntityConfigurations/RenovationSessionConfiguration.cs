@@ -29,14 +29,6 @@ namespace HospitalLibrary.EntityConfigurations
                 json => JsonSerializer.Deserialize<IEnumerable<RoomRenovationPlan>>(json, (JsonSerializerOptions)null))
                 .Metadata
                 .SetValueComparer(valueComparer);
-        
-            builder.OwnsOne(usage => usage.DateRange, a =>
-            {
-                a.Property(prop => prop.StartTime)
-                .HasColumnName("StartTime");
-                a.Property(prop => prop.EndTime)
-                .HasColumnName("EndTime");
-            });
         }
     }
 }
