@@ -9,9 +9,11 @@ namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
     public class TimeframeCreated : RenovationSessionEvent
     {
-        public DateRange DateRange {get; private set;}
-        public TimeframeCreated(Guid aggregateId, DateRange dateRange) : base(aggregateId, DateTime.Now){
-            this.DateRange = dateRange;
+        public DateTime Start {get; private set;}
+        public DateTime End {get; private set;}
+        public TimeframeCreated(Guid aggregateId, DateTime start, DateTime end) : base(aggregateId, DateTime.Now){
+            this.Start = start;
+            this.End = end;
         }
     }
 }

@@ -18,7 +18,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             private set {_RoomRenovationPlans = value;}
         }
 
-        public DateRange DateRange { get; private set; }
+        public DateTime? Start { get; private set; }
+        public DateTime? End { get; private set; }
 
         public RenovationSessionAggregateRoot(Guid id) : base(id) {
             this.RoomRenovationPlans = new List<RoomRenovationPlan>();
@@ -45,12 +46,12 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             Causes(new NewRoomsCreated(id, plans));
         }
 
-        public void CreateTimeframe(Guid id, DateRange dateRange) {
-            Causes(new TimeframeCreated(id, dateRange));
+        public void CreateTimeframe(Guid id, DateTime start, DateTime end) {
+            Causes(new TimeframeCreated(id, start, end));
         }
 
-        public void ChooseSpecificTime(Guid id, DateRange dateRange) {
-            Causes(new SpecificTimeChosen(id, dateRange));
+        public void ChooseSpecificTime(Guid id, DateTime start, DateTime end) {
+            Causes(new SpecificTimeChosen(id, start, end));
         }
         
         public void ReturnToNewRoomCreation(Guid id) {
@@ -104,31 +105,37 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public void When(TimeframeCreated @event) {
-            this.DateRange = @event.DateRange;
+            this.Start = @event.Start;
+            this.End = @event.End;
         }
 
         public void When(SpecificTimeChosen @event) {
-            this.DateRange = @event.DateRange;
+            this.Start = @event.Start;
+            this.End = @event.End;
         }
 
         // sets daterange to last known value
         public void When(ReturnedToSpecificTimeSelection @event) {
             DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated) || de.GetType() == typeof(SpecificTimeChosen)).SkipLast(1).TakeLast(1).First();
             if(lastEvent != null) {
-                this.DateRange = ((dynamic)lastEvent).DateRange;
+                this.Start = ((dynamic)lastEvent).Start;
+                this.End = ((dynamic)lastEvent).End;
             }
             else{
-                this.DateRange = null;
+                this.Start = null;
+                this.End = null;
             }
         }
 
         public void When(ReturnedToTimeframeCreation @event) {
             DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated)).SkipLast(1).TakeLast(1).First();
             if(lastEvent != null) {
-                this.DateRange = ((dynamic)lastEvent).DateRange;
+                this.Start = ((dynamic)lastEvent).Start;
+                this.End = ((dynamic)lastEvent).End;
             }
             else{
-                this.DateRange = null;
+                this.Start = null;
+                this.End = null;
             }
         }
 
@@ -144,7 +151,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
 
         public void When(ReturnedToOldRoomsSelection @event) {
             this.RoomRenovationPlans = new List<RoomRenovationPlan>();
-            this.DateRange = null;
+            this.Start = null;
+            this.End = null;
         }
 
         public void When(ReturnedToTypeSelection @event) {
@@ -156,11 +164,13 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
                 this.TypeOfRenovation = null;
             }
             this.RoomRenovationPlans = new List<RoomRenovationPlan>();
-            this.DateRange = null;
+            this.Start = null;
+                this.End = null;
         }
         
         public void Update(RenovationSessionAggregateRoot entity) {
-            this.DateRange = entity.DateRange;
+            this.Start = entity.Start;
+            this.End = entity.End;
             this.RoomRenovationPlans = entity.RoomRenovationPlans;
         }
         
