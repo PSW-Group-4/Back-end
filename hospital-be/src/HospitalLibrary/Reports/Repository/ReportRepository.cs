@@ -1,6 +1,6 @@
 ﻿using HospitalLibrary.Exceptions;
 using HospitalLibrary.Medicines.Model;
-using HospitalLibrary.Prescriptions.Model;
+using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Symptoms.Model;
@@ -39,7 +39,7 @@ namespace HospitalLibrary.Reports.Repository
             report.Symptoms.Clear();
             foreach (Symptom symptom in symptoms)
             {
-                report.Symptoms.Add(_context.Symptoms.SingleOrDefault(s => s.Id.Equals(symptom.Id)));
+                report.AddSymptom(_context.Symptoms.SingleOrDefault(s => s.Id.Equals(symptom.Id)));
             }
             List<Prescription> prescriptions = new List<Prescription>(report.Prescriptions);
             report.Prescriptions.Clear();
@@ -50,9 +50,9 @@ namespace HospitalLibrary.Reports.Repository
                 prescription.Medicines.Clear();
                 foreach (Medicine medicine in medicines)
                 {
-                    prescription.Medicines.Add(_context.Medicines.SingleOrDefault(m => m.Id.Equals(medicine.Id)));
+                    prescription.AddMedicine(_context.Medicines.SingleOrDefault(m => m.Id.Equals(medicine.Id)));
                 }
-                report.Prescriptions.Add(prescription);
+                report.AddPrescription(prescription);
             }
 
             _context.Reports.Add(report);
@@ -78,6 +78,16 @@ namespace HospitalLibrary.Reports.Repository
             var report = GetById(reportId);
             _context.Reports.Remove(report);
             _context.SaveChanges();
+        }
+
+        public Report GetByMedicalAppointmentId(Guid id)
+        {
+            Report report = _context.Reports.Where(r => r.MedicalAppointmentId == id).FirstOrDefault();
+            if (report == null)
+            {
+                throw new NotFoundException();
+            }
+            return report;
         }
     }
 }

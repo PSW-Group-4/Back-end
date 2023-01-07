@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Patients.Model;
+using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Settings;
+using HospitalLibrary.Symptoms.Model;
 using HospitalLibrary.Users.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -354,6 +356,29 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Feedbacks");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("OccurrenceTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MedicalAppointmentSchedulingSessionEvents");
+
+                    b.HasDiscriminator<string>("Type").HasValue("MedicalAppointmentSchedulingSessionEvent");
+                });
+
             modelBuilder.Entity("HospitalLibrary.Medicines.Model.Medicine", b =>
                 {
                     b.Property<Guid>("Id")
@@ -446,25 +471,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Prescriptions.Model.Prescription", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<Guid>("ReportId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReportId");
-
-                    b.ToTable("Prescriptions");
-                });
-
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
                 {
                     b.Property<Guid>("Id")
@@ -476,6 +482,12 @@ namespace HospitalLibrary.Migrations
 
                     b.Property<Guid>("MedicalAppointmentId")
                         .HasColumnType("uuid");
+
+                    b.Property<List<Prescription>>("Prescriptions")
+                        .HasColumnType("jsonb");
+
+                    b.Property<List<Symptom>>("Symptoms")
+                        .HasColumnType("jsonb");
 
                     b.Property<string>("Text")
                         .HasColumnType("text");
@@ -670,36 +682,6 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Vacations");
                 });
 
-            modelBuilder.Entity("MedicinePrescription", b =>
-                {
-                    b.Property<Guid>("MedicinesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("PrescriptionsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("MedicinesId", "PrescriptionsId");
-
-                    b.HasIndex("PrescriptionsId");
-
-                    b.ToTable("MedicinePrescription");
-                });
-
-            modelBuilder.Entity("ReportSymptom", b =>
-                {
-                    b.Property<Guid>("ReportsId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("SymptomsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("ReportsId", "SymptomsId");
-
-                    b.HasIndex("SymptomsId");
-
-                    b.ToTable("ReportSymptom");
-                });
-
             modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
                 {
                     b.HasBaseType("HospitalLibrary.BuildingManagmentMap.Model.MapItem");
@@ -793,6 +775,70 @@ namespace HospitalLibrary.Migrations
                         .HasColumnName("RenovationAppointment_Type");
 
                     b.HasDiscriminator().HasValue("RenovationAppointment");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenDate", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasDiscriminator().HasValue("ChosenDate");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenDoctor", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasDiscriminator().HasValue("ChosenDoctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenSpeciality", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent");
+
+                    b.Property<string>("Speciality")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("ChosenSpeciality");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.FinishedScheduling", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent");
+
+                    b.Property<DateTime>("SelectedTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasDiscriminator().HasValue("FinishedScheduling");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.GoneBackToSelection", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent");
+
+                    b.Property<int>("Selection")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("GoneBackToSelection");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.StartedScheduling", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent");
+
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasDiscriminator().HasValue("StartedScheduling");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.CafeteriaRoom", b =>
@@ -1161,15 +1207,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Email");
                 });
 
-            modelBuilder.Entity("HospitalLibrary.Prescriptions.Model.Prescription", b =>
-                {
-                    b.HasOne("HospitalLibrary.Reports.Model.Report", null)
-                        .WithMany("Prescriptions")
-                        .HasForeignKey("ReportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
                 {
                     b.HasOne("HospitalLibrary.Appointments.Model.MedicalAppointment", "MedicalAppointment")
@@ -1244,36 +1281,6 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("MedicinePrescription", b =>
-                {
-                    b.HasOne("HospitalLibrary.Medicines.Model.Medicine", null)
-                        .WithMany()
-                        .HasForeignKey("MedicinesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Prescriptions.Model.Prescription", null)
-                        .WithMany()
-                        .HasForeignKey("PrescriptionsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ReportSymptom", b =>
-                {
-                    b.HasOne("HospitalLibrary.Reports.Model.Report", null)
-                        .WithMany()
-                        .HasForeignKey("ReportsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HospitalLibrary.Symptoms.Model.Symptom", null)
-                        .WithMany()
-                        .HasForeignKey("SymptomsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("HospitalLibrary.BuildingManagmentMap.Model.BuildingMap", b =>
                 {
                     b.HasOne("HospitalLibrary.BuildingManagment.Model.Building", "Building")
@@ -1329,6 +1336,28 @@ namespace HospitalLibrary.Migrations
                     b.Navigation("EquipmentToMove");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenDoctor", b =>
+                {
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.StartedScheduling", b =>
+                {
+                    b.HasOne("HospitalLibrary.Patients.Model.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Building", b =>
                 {
                     b.Navigation("FloorList");
@@ -1337,11 +1366,6 @@ namespace HospitalLibrary.Migrations
             modelBuilder.Entity("HospitalLibrary.BuildingManagment.Model.Floor", b =>
                 {
                     b.Navigation("RoomList");
-                });
-
-            modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
-                {
-                    b.Navigation("Prescriptions");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.Equipment", b =>

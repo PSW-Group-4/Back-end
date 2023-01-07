@@ -65,8 +65,6 @@ using HospitalLibrary.BuildingManagment.Repository.Interfaces;
 using HospitalLibrary.BuildingManagment.Repository.Implementation;
 using HospitalLibrary.BuildingManagment.Service.Interfaces;
 using HospitalLibrary.BuildingManagment.Service.Implementation;
-using HospitalLibrary.Prescriptions.Repository;
-using HospitalLibrary.Prescriptions.Service;
 using HospitalLibrary.Symptoms.Repository;
 using HospitalLibrary.Symptoms.Service;
 using HospitalLibrary.Reports.Repository;
@@ -79,6 +77,8 @@ using HospitalLibrary.Consiliums.Repository;
 using HospitalLibrary.Consiliums.Service;
 using HospitalLibrary.AppointmentReport.Service;
 using HospitalLibrary.News;
+using HospitalLibrary.MedicalAppointmentSchedulingSession.Repository;
+using HospitalLibrary.MedicalAppointmentSchedulingSession.Service;
 
 namespace HospitalAPI
 {
@@ -253,10 +253,6 @@ namespace HospitalAPI
             services.AddScoped<IMedicineRepository, MedicineRepository>();
             services.AddScoped<IMedicineService, MedicineService>();
 
-            //Prescriptions
-            services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
-            services.AddScoped<IPrescriptionService, PrescriptionService>();
-
             //Symptoms
             services.AddScoped<ISymptomRepository, SymptomRepository>();
             services.AddScoped<ISymptomService, SymptomService>();
@@ -290,6 +286,10 @@ namespace HospitalAPI
             //Report
             services.AddScoped<IMedicalAppointmentReportService, MedicalAppointmentReportService>();
 
+            //Medical appointment scheduling session
+            services.AddScoped<IMedicalAppointmentSchedulingSessionRepository, MedicalAppointmentSchedulingSessionRepository>();
+            services.AddScoped<IMedicalAppointmentSchedulingEventSourcingService, MedicalAppointmentSchedulingEventSourcingService>();
+            services.AddScoped<IMedAppSchedulingStatisticsService, MedAppSchedulingStatisticsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

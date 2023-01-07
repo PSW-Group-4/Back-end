@@ -21,7 +21,9 @@
         <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="5.0.17" />
         <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.10" />
+        <PackageReference Include="Rebex.Sftp" Version="6.0.8372" />
         <PackageReference Include="RestSharp" Version="108.0.3" />
+        <PackageReference Include="SSH.NET" Version="2020.0.2" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
     </ItemGroup>
 
