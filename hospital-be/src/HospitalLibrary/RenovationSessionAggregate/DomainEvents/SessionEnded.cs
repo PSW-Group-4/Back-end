@@ -9,7 +9,6 @@ namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
     public class SessionEnded : RenovationSessionEvent
     {
-        public RenovationAppointment Appointment {get; private set;}
         public SessionEnded(Guid aggregateId) : base(aggregateId, DateTime.Now){
             
         }

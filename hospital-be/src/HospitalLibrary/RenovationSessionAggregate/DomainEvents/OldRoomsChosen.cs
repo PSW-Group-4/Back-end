@@ -15,8 +15,11 @@ namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
             private set {_RoomRenovationPlans = value;}
         }
 
-        public OldRoomsChosen(Guid aggregateId, IEnumerable<RoomRenovationPlan> renovationPlans) : base(aggregateId, DateTime.Now) {
-            this.RoomRenovationPlans = renovationPlans;
+        public OldRoomsChosen(Guid aggregateId) : base(aggregateId, DateTime.Now) {
+        }
+
+        public OldRoomsChosen(Guid aggregateId, IEnumerable<RoomRenovationPlan> roomRenovationPlans) : base(aggregateId, DateTime.Now) {
+            this.RoomRenovationPlans = roomRenovationPlans;
         }
     }
 }

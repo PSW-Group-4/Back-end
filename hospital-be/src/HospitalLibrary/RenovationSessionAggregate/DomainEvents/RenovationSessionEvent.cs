@@ -8,7 +8,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
 {
     public class RenovationSessionEvent : DomainEvent
     {
-        public RenovationSessionEvent(Guid aggregateId, DateTime time) : base(aggregateId, time){
+        public RenovationSessionEvent(Guid aggregateId, DateTime occurrenceTime) : base(aggregateId, occurrenceTime){
             
         }
     }

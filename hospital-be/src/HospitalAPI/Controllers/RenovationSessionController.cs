@@ -34,7 +34,7 @@ namespace HospitalAPI.Controllers
             foreach(RoomRenovationPlanDto plan in data.roomPlans) {
                 plans.Add(new RoomRenovationPlan(Guid.Parse(plan.Id)));
             }
-            _renovationSessionService.CreateNewRooms(data.AggregateId, plans);
+            _renovationSessionService.ChooseOldRooms(data.AggregateId, plans);
             return Ok();
         }
 
@@ -66,7 +66,7 @@ namespace HospitalAPI.Controllers
         [HttpPost("create-timeframe")]
         public ActionResult CreateTimeframe([FromBody] RenovationSessionDateDto data)
         {
-            _renovationSessionService.ChooseSpecificTime(data.AggregateId, data.Start, data.End);
+            _renovationSessionService.CreateTimeframe(data.AggregateId, data.Start, data.End);
             return Ok();
         }
 
@@ -94,21 +94,21 @@ namespace HospitalAPI.Controllers
         [HttpPost("return-to-specific-time-selection")]
         public ActionResult ReturnToSpecificTimeSelection([FromBody] String aggregateId)
         {
-            _renovationSessionService.ReturnToNewRoomCreation(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToSpecificTimeSelection(Guid.Parse(aggregateId));
             return Ok();
         }
 
         [HttpPost("return-to-type-selection")]
         public ActionResult ReturnToTimeframeCreation([FromBody] String aggregateId)
         {
-            _renovationSessionService.ReturnToNewRoomCreation(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToTimeframeCreation(Guid.Parse(aggregateId));
             return Ok();
         }
 
         [HttpPost("start-session")]
         public ActionResult ReturnToTypeSelection([FromBody] String aggregateId)
         {
-            _renovationSessionService.ReturnToNewRoomCreation(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToTypeSelection(Guid.Parse(aggregateId));
             return Ok();
         }
 

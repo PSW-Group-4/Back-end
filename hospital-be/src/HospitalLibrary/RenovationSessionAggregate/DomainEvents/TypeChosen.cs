@@ -10,6 +10,10 @@ namespace HospitalLibrary.RenovationSessionAggregate.DomainEvents
     public class TypeChosen : RenovationSessionEvent
     {
         public Renovation.Model.RenovationAppointment.TypeOfRenovation Type {get; private set;}
+
+        public TypeChosen(Guid aggregateId) : base(aggregateId, DateTime.Now) {
+        }
+
         public TypeChosen(Guid aggregateId, Renovation.Model.RenovationAppointment.TypeOfRenovation  type) : base(aggregateId, DateTime.Now) {
             this.Type = type;
         }

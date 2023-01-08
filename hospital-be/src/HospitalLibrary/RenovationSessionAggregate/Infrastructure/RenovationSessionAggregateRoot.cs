@@ -97,11 +97,25 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
         
         public void When(OldRoomsChosen @event) {
-            this.RoomRenovationPlans.ToList().AddRange(@event.RoomRenovationPlans);
+            List<RoomRenovationPlan> temp = new List<RoomRenovationPlan>();
+            foreach(RoomRenovationPlan plan in RoomRenovationPlans) {
+                temp.Add(plan);
+            }
+            foreach(RoomRenovationPlan plan in @event.RoomRenovationPlans) {
+                temp.Add(plan);
+            }
+            this.RoomRenovationPlans = temp;
         }
 
         public void When(NewRoomsCreated @event) {
-            this.RoomRenovationPlans.ToList().AddRange(@event.RoomRenovationPlans);
+            List<RoomRenovationPlan> temp = new List<RoomRenovationPlan>();
+            foreach(RoomRenovationPlan plan in RoomRenovationPlans) {
+                temp.Add(plan);
+            }
+            foreach(RoomRenovationPlan plan in @event.RoomRenovationPlans) {
+                temp.Add(plan);
+            }
+            this.RoomRenovationPlans = temp;
         }
 
         public void When(TimeframeCreated @event) {
