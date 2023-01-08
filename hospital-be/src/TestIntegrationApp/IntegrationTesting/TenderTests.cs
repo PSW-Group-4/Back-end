@@ -42,13 +42,8 @@ namespace TestIntegrationApp.IntegrationTesting
         {
             return new TenderService(scope.ServiceProvider.GetRequiredService<ITenderRepository>(), scope.ServiceProvider.GetRequiredService<IEventStore<TenderingEvent>>());
         }
-
-        [Fact]
-
-        public void Creates_tender()
+        public TenderDto CreateTenderDto()
         {
-            using var scope = Factory.Services.CreateScope();
-            TenderController tenderController = SetupController(scope);
             List<BloodDto> bloodProductDtos = new()
             {
                 new BloodDto(new BloodTypeDto("A", "POSITIVE"), 5000)
@@ -60,10 +55,34 @@ namespace TestIntegrationApp.IntegrationTesting
                 Deadline = DateTime.Now.AddDays(3).ToString(),
             };
 
+            return tenderDto;
+        }
+
+        [Fact]
+
+        public void Creates_tender()
+        {
+            using var scope = Factory.Services.CreateScope();
+            TenderController tenderController = SetupController(scope);
+            TenderDto tenderDto = CreateTenderDto();
             tenderController.Create(tenderDto);
             IEnumerable<Tender> result = ((OkObjectResult)tenderController.GetAll())?.Value as IEnumerable<Tender>;
 
             Assert.Single(result);
+        }
+
+        [Fact]
+        public void Chooses_Winner()
+        {
+            using var scope = Factory.Services.CreateScope();
+            TenderController tenderController = SetupController(scope);
+            TenderDto tenderDto = CreateTenderDto();
+            tenderController.Create(tenderDto);
+            Tender tender = (((OkObjectResult)tenderController.GetAll())?.Value as IEnumerable<Tender>).First();
+            tenderController.chooseWinner(tender.Id.ToString(), "37ae7862-f847-4a39-b39f-f8ff31452b5e");
+            Tender tenderUpdated = (((OkObjectResult)tenderController.GetAll())?.Value as IEnumerable<Tender>).First();
+            
+            Assert.True(tenderUpdated.Winner.Id.ToString() == "37ae7862-f847-4a39-b39f-f8ff31452b5e");
         }
     }
 }
