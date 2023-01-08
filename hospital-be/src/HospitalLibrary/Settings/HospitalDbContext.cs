@@ -30,6 +30,7 @@ using HospitalLibrary.EntityConfigurations;
 using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.MedicalAppointmentReportSession.Model.Events;
 
 namespace HospitalLibrary.Settings
 {
@@ -103,6 +104,9 @@ namespace HospitalLibrary.Settings
         
         // Medical appointment scheduling session
         public DbSet<MedicalAppointmentSchedulingSessionEvent> MedicalAppointmentSchedulingSessionEvents { get; set; }
+        
+        // Medical appointment report session
+        public DbSet<MedicalAppointmentReportSessionEvent> MedicalAppointmentReportSessionEvents { get; set; }
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
