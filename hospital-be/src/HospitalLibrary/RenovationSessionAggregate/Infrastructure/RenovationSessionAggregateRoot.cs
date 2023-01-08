@@ -92,7 +92,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public void When(TypeChosen @event) {
-            this.TypeOfRenovation = @event.Type;
+            this.TypeOfRenovation = @event.TypeOfRenovationChosen;
             this.RoomRenovationPlans = new List<RoomRenovationPlan>();
         }
         

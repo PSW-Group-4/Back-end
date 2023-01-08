@@ -33,6 +33,7 @@ using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
 
+
 namespace HospitalLibrary.Settings
 {
     public class HospitalDbContext : DbContext
@@ -117,6 +118,8 @@ namespace HospitalLibrary.Settings
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Ignore<DomainEvent>();
 
             modelBuilder
                 .Entity<Patient>()
