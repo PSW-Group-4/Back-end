@@ -79,6 +79,8 @@ using HospitalLibrary.AppointmentReport.Service;
 using HospitalLibrary.News;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Repository;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Service;
+using HospitalLibrary.MedicalAppointmentReportSession.Repository;
+using HospitalLibrary.MedicalAppointmentReportSession.Service;
 
 namespace HospitalAPI
 {
@@ -290,6 +292,10 @@ namespace HospitalAPI
             services.AddScoped<IMedicalAppointmentSchedulingSessionRepository, MedicalAppointmentSchedulingSessionRepository>();
             services.AddScoped<IMedicalAppointmentSchedulingEventSourcingService, MedicalAppointmentSchedulingEventSourcingService>();
             services.AddScoped<IMedAppSchedulingStatisticsService, MedAppSchedulingStatisticsService>();
+
+            //Medical appointment report session
+            services.AddScoped<IMedicalAppointmentReportSessionRepository, MedicalAppointmentReportSessionRepository>();
+            services.AddScoped<IMedicalAppointmentReportEventSourcingService, MedicalAppointmentReportEventSourcingService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
