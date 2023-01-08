@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using IntegrationAPI;
 using IntegrationLibrary.Settings;
 using Microsoft.AspNetCore.Hosting;
@@ -47,7 +48,7 @@ namespace TestIntegrationApp.Setup
             context.Database.EnsureCreated();
             context.Database.ExecuteSqlRaw(
                 "INSERT INTO public.blood_banks(\r\n\t\"Id\", \"Name\", \"ServerAddress\", \"EmailAddress\", \"Password\", \"ApiKey\", \"Activated\")\r\n\tVALUES ('37ae7862-f847-4a39-b39f-f8ff31452b5e', 'Bankica', 'localhost', 'isaproject202223@gmail.com', 'password', 'apikey', true);");
-
+            context.Database.ExecuteSqlRaw("INSERT INTO public.tenders(\r\n\t\"Id\", \"WinnerId\", \"Status\", \"Blood\", \"Deadline\", \"CreatedDate\", \"ModifiedDate\", \"Version\", \"Events\")\r\n\tVALUES (\'3d606bff-4875-4140-9b81-17ae261d698c\', null, 0,null, \'2023-12-30 00:00:00\', \'2022-12-30 00:00:00\', \'2022-12-30 00:00:00\', 1.0, null);");
             context.SaveChanges();
         }
     }
