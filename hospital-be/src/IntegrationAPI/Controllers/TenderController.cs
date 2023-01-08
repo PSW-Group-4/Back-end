@@ -42,6 +42,12 @@ namespace IntegrationAPI.Controllers
         {
             return Ok(_tenderService.GetAll());
         }
+        
+        [HttpGet]
+        public ActionResult GetById(Guid id)
+        {
+            return Ok(_tenderService.GetById(id));
+        }
         [Route("active"), HttpGet]
         public ActionResult GetActive() {
             return Ok(_tenderService.GetActive());
@@ -55,7 +61,7 @@ namespace IntegrationAPI.Controllers
             return Ok();
         }
         [Route("{tenderId}/winner/{bloodBankId}"), HttpPut]
-        public ActionResult chooseWinner(string tenderId, string bloodBankId) {
+        public ActionResult ChooseWinner(string tenderId, string bloodBankId) {
             BloodBank winner = _bloodBankService.GetById(Guid.Parse(bloodBankId));
             WinnerChosenEvent winnerChosenEvent = new( Guid.Parse(tenderId), winner);
             _tenderService.ChooseWinner(winnerChosenEvent);

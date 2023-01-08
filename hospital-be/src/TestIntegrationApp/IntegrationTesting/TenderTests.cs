@@ -79,10 +79,22 @@ namespace TestIntegrationApp.IntegrationTesting
             TenderDto tenderDto = CreateTenderDto();
             tenderController.Create(tenderDto);
             Tender tender = (((OkObjectResult)tenderController.GetAll())?.Value as IEnumerable<Tender>).First();
-            tenderController.chooseWinner(tender.Id.ToString(), "37ae7862-f847-4a39-b39f-f8ff31452b5e");
-            Tender tenderUpdated = (((OkObjectResult)tenderController.GetAll())?.Value as IEnumerable<Tender>).First();
+            tenderController.ChooseWinner(tender.Id.ToString(), "37ae7862-f847-4a39-b39f-f8ff31452b5e");
             
-            Assert.True(tenderUpdated.Winner.Id.ToString() == "37ae7862-f847-4a39-b39f-f8ff31452b5e");
+            Assert.True(tender.Winner.Id.ToString().Equals("37ae7862-f847-4a39-b39f-f8ff31452b5e") && tender.Status.Equals(TenderStatus.PENDING_WINNER_CONFIRMATION));
+        }
+
+        [Fact]
+        public void Confirms_Winner()
+        {
+            using var scope = Factory.Services.CreateScope();
+            TenderController tenderController = SetupController(scope);
+            TenderDto tenderDto = CreateTenderDto();
+            tenderController.Create(tenderDto);
+            Tender tender = (((OkObjectResult)tenderController.GetAll())?.Value as IEnumerable<Tender>).First();
+            tenderController.ChooseWinner(tender.Id.ToString(), "37ae7862-f847-4a39-b39f-f8ff31452b5e");
+            tenderController.ConfirmWinner(tender.Id);
+            Assert.True(tender.Status.Equals(TenderStatus.COMPLETED));
         }
     }
 }
