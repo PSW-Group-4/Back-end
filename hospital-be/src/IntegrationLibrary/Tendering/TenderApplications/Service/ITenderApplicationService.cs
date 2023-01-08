@@ -14,7 +14,7 @@ namespace IntegrationLibrary.TenderApplications.Service
         IEnumerable<TenderApplication> GetByTender(Guid tenderId);
         TenderApplication FindById(Guid applicationId);
         TenderApplication Submit(TenderApplication application);
-        Boolean AcceptOffer(TenderApplication application);
+        Boolean NotifyParticipants(TenderApplication application);
         public bool SendEmailsToParticipants(TenderApplication application, string winnerMessage, string rejectionMessage);
         public string GenerateRejectionMessage();
         public string GenerateWinnerMessage(TenderApplication application);

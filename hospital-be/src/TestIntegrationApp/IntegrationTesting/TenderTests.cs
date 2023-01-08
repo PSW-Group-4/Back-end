@@ -22,6 +22,12 @@ using IntegrationLibrary.Tendering.Repository;
 using IntegrationLibrary.Tendering.Service;
 using TestIntegrationApp.Setup;
 using Xunit;
+using IntegrationLibrary.BloodBanks.Repository;
+using IntegrationLibrary.Utilities;
+using IntegrationLibrary.BloodBanks.Service;
+using IntegrationLibrary.EventSourcing;
+using IntegrationLibrary.Tendering.DomainEvents.Base;
+
 namespace TestIntegrationApp.IntegrationTesting
 {
     public class TenderTests : BaseIntegrationTest
@@ -30,11 +36,11 @@ namespace TestIntegrationApp.IntegrationTesting
         public TenderTests(TestDatabaseFactory<Startup> factory) : base(factory) { }
         private static TenderController SetupController(IServiceScope scope)
         {
-            return new TenderController(scope.ServiceProvider.GetRequiredService<ITenderService>(), new TenderConverter());
+            return new TenderController(scope.ServiceProvider.GetRequiredService<ITenderService>(), new TenderConverter(), new BloodBankService(scope.ServiceProvider.GetRequiredService<IBloodBankRepository>(), scope.ServiceProvider.GetRequiredService<IPasswordHandler>()));
         }
         private static TenderService SetupService(IServiceScope scope)
         {
-            return new TenderService(scope.ServiceProvider.GetRequiredService<ITenderRepository>());
+            return new TenderService(scope.ServiceProvider.GetRequiredService<ITenderRepository>(), scope.ServiceProvider.GetRequiredService<IEventStore<TenderingEvent>>());
         }
 
         [Fact]

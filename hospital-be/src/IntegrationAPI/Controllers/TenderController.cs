@@ -20,11 +20,12 @@ namespace IntegrationAPI.Controllers
     {
         private readonly ITenderService _tenderService;
         private readonly IConverter<Tender, TenderDto> tenderConverter;
-
-        public TenderController(ITenderService tenderService, IConverter<Tender, TenderDto> tenderConverter)
+        private readonly IBloodBankService _bloodBankService;
+        public TenderController(ITenderService tenderService, IConverter<Tender, TenderDto> tenderConverter, IBloodBankService bloodBankService)
         {
             _tenderService = tenderService;
             this.tenderConverter = tenderConverter;
+            this._bloodBankService = bloodBankService;
         }
 
 
@@ -52,6 +53,14 @@ namespace IntegrationAPI.Controllers
             WinnerConfirmedEvent winnerConfirmedEvent = new(id);
             _tenderService.ConfirmWinner(winnerConfirmedEvent);
             return Ok();
+        }
+        [Route("{tenderId}/winner/{bloodBankId}"), HttpPut]
+        public ActionResult chooseWinner(string tenderId, string bloodBankId) {
+            BloodBank winner = _bloodBankService.GetById(Guid.Parse(bloodBankId));
+            WinnerChosenEvent winnerChosenEvent = new( Guid.Parse(tenderId), winner);
+            _tenderService.ChooseWinner(winnerChosenEvent);
+             return Ok( );
+
         }
     }
 }

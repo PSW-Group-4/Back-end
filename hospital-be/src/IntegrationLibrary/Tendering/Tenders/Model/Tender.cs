@@ -15,7 +15,7 @@ namespace IntegrationLibrary.Tendering.Model
     public class Tender : AggregateRoot
     {
         private IEnumerable<Blood> _blood;
-        public BloodBank Winner { get; private set; }
+        public virtual BloodBank Winner { get; private set; }
         public TenderStatus Status { get; private set;  }
 
         [JsonInclude]
@@ -40,6 +40,7 @@ namespace IntegrationLibrary.Tendering.Model
             Version = 1.0;
             Status = TenderStatus.ACTIVE;
             Winner = null;
+            Events = new List<DomainEvent>();
         }
 
         private Tender(IEnumerable<Blood> blood)
@@ -51,6 +52,7 @@ namespace IntegrationLibrary.Tendering.Model
             Version = 1.0;
             Status = TenderStatus.ACTIVE;
             Winner = null;
+            Events = new List<DomainEvent>();
         }
 
         public bool IsActive()
@@ -142,6 +144,11 @@ namespace IntegrationLibrary.Tendering.Model
             Status = TenderStatus.FAILED;
             Modify();
         }
-        
+        public void InitializeEvents() {
+            if (Events == null)
+            {
+               Events = new List<DomainEvent>();
+            }
+        } 
     }
 }

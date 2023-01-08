@@ -58,12 +58,12 @@ namespace IntegrationAPI.Controllers
             return Ok(_service.GetByTender(Guid.Parse(tenderId)));
         }
 
-        [Route("accept"), HttpPost]
+        [Route("notify"), HttpPost]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
-        public ActionResult AcceptOffer(string applicationId)
+        public ActionResult NotifyParticipants(string applicationId)
         {
             TenderApplication application = _service.FindById(Guid.Parse(applicationId));
-            return Ok(_service.AcceptOffer(application));
+            return Ok(_service.NotifyParticipants(application));
         }
     }
 }

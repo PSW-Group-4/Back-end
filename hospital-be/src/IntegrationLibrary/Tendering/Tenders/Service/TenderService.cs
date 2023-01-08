@@ -13,11 +13,7 @@ namespace IntegrationLibrary.Tendering.Service
         private readonly IEventStore<TenderingEvent> _eventStore;
         private readonly ITenderRepository _repository;
 
-        public TenderService(ITenderRepository repository)
-        {
-            _repository = repository;
-        }
-
+       
         public TenderService(ITenderRepository repository, IEventStore<TenderingEvent> eventStore)
         {
             _repository = repository;
@@ -66,6 +62,7 @@ namespace IntegrationLibrary.Tendering.Service
         public void ChooseWinner(WinnerChosenEvent winnerChosenEvent)
         {
             Tender tender = GetById(winnerChosenEvent.AggregateId);
+            tender.InitializeEvents();
             tender.Causes(winnerChosenEvent);
             _eventStore.Save(winnerChosenEvent);
         }

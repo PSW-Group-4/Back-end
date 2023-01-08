@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IntegrationLibrary.EventSourcing
 {
+    [NotMapped]
     public abstract class DomainEvent
     {
         public Guid Id { get; protected set; }

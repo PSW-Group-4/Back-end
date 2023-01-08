@@ -19,9 +19,10 @@ namespace IntegrationLibrary.TenderApplications.Service
     {
         private readonly ITenderApplicationRepository _repository;
         private readonly IEventStore<TenderingEvent> _eventStore;
-        public TenderApplicationService(ITenderApplicationRepository repository)
+        public TenderApplicationService(ITenderApplicationRepository repository, IEventStore<TenderingEvent> eventStore)
         {
             _repository = repository;
+            _eventStore = eventStore;
         }
 
         public TenderApplication Submit(TenderApplication application)
@@ -58,7 +59,7 @@ namespace IntegrationLibrary.TenderApplications.Service
             }
             return true;
         }
-        public bool AcceptOffer(TenderApplication application)
+        public bool NotifyParticipants(TenderApplication application)
         {
             string winnerMessage = GenerateWinnerMessage(application);
             string rejectionMessage = GenerateRejectionMessage();

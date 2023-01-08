@@ -20,5 +20,8 @@ namespace IntegrationLibrary.Tendering.DomainEvents.Subtypes
             EventType = "WinnerChosenEvent";
             Winner = winner;
         }
+        public WinnerChosenEvent(Guid aggregateId, BloodBank winner) : base(Guid.NewGuid(), aggregateId, "Tender", "WinnerChosenEvent", DateTime.Now) {
+            Winner = winner;
+        }
     }
 }

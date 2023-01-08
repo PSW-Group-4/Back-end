@@ -21,6 +21,8 @@ using IntegrationLibrary.Tendering.Repository;
 using IntegrationLibrary.Tendering.Service;
 using TestIntegrationApp.Setup;
 using Xunit;
+using IntegrationLibrary.Tendering.DomainEvents.Base;
+using IntegrationLibrary.EventSourcing;
 
 namespace TestIntegrationApp.IntegrationTesting
 {
@@ -33,9 +35,7 @@ namespace TestIntegrationApp.IntegrationTesting
         }
         private static TenderApplicationService SetupService(IServiceScope scope)
         {
-            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>(),
-                                                scope.ServiceProvider.GetRequiredService<ITenderRepository>(),
-                                                scope.ServiceProvider.GetRequiredService<IBloodBankRepository>());
+            return new TenderApplicationService(scope.ServiceProvider.GetRequiredService<ITenderApplicationRepository>(), scope.ServiceProvider.GetRequiredService<IEventStore<TenderingEvent>>());
         }
         private static BloodBankService SetupBloodBankService(IServiceScope scope)
         {
@@ -43,7 +43,7 @@ namespace TestIntegrationApp.IntegrationTesting
         }
         private static TenderService SetupTenderService(IServiceScope scope)
         {
-            return new TenderService(scope.ServiceProvider.GetRequiredService<ITenderRepository>());
+            return new TenderService(scope.ServiceProvider.GetRequiredService<ITenderRepository>(), scope.ServiceProvider.GetRequiredService<IEventStore<TenderingEvent>>());
         }
         [Fact]
 
