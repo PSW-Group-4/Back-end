@@ -112,6 +112,7 @@ namespace IntegrationLibrary.Tendering.Model
             {
                 Status = TenderStatus.ACTIVE;
                 Blood = tenderCreatedEvent.Blood;
+                Events = new List<DomainEvent>();
             }
 
             if(DateTime.Compare(DateTime.Now, (DateTime)tenderCreatedEvent.Deadline) < 0)
@@ -119,11 +120,12 @@ namespace IntegrationLibrary.Tendering.Model
                 Status = TenderStatus.ACTIVE;
                 Blood = tenderCreatedEvent.Blood;
                 Deadline = tenderCreatedEvent.Deadline;
+                Events = new List<DomainEvent>();
             } else
             {
                 throw new DateIsBeforeTodayException();
             }
-            AddEvent(tenderCreatedEvent);
+
         }
 
         private void When(WinnerChosenEvent winnerChosenEvent)

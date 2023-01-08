@@ -27,8 +27,11 @@ namespace IntegrationLibrary.Tendering.Service
 
         public void Create(TenderCreatedEvent tenderCreatedEvent)
         {
-            new Tender().Causes(tenderCreatedEvent);
+            Tender tender = new();
+            tender.Causes(tenderCreatedEvent);
             _eventStore.Save(tenderCreatedEvent);
+            _repository.Create(tender);
+            
         }
 
         public IEnumerable<Tender> GetActive()
@@ -55,6 +58,7 @@ namespace IntegrationLibrary.Tendering.Service
         public void Fail(TenderFailedEvent tenderFailedEvent)
         {
             Tender tender = GetById(tenderFailedEvent.AggregateId);
+            tender.InitializeEvents();
             tender.Causes(tenderFailedEvent);
             _eventStore.Save(tenderFailedEvent);
         }
@@ -70,6 +74,7 @@ namespace IntegrationLibrary.Tendering.Service
         public void ConfirmWinner(WinnerConfirmedEvent winnerConfirmedEvent)
         {
             Tender tender = GetById(winnerConfirmedEvent.AggregateId);
+            tender.InitializeEvents();
             tender.Causes(winnerConfirmedEvent);
             _eventStore.Save(winnerConfirmedEvent);
         }
