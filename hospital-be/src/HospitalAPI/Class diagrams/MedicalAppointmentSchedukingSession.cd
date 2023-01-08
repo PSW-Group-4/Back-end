@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.MedicalAppointmentSchedulingSession">
+    <Position X="3.5" Y="7.5" Width="7.75" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Patient" />
+      <Property Name="SelectedDoctor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HospitalLibrary.Infrastructure.EventSourcing.EventSourcingRoot">
+    <Position X="5.75" Y="4.5" Width="3.25" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HospitalLibrary.Infrastructure.EventSourcing.DomainEvent" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HospitalLibrary.Patients.Model.Patient" Collapsed="true">
+    <Position X="2.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HospitalLibrary.Doctors.Model.Doctor" Collapsed="true">
+    <Position X="6.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent" Collapsed="true">
+    <Position X="8.5" Y="1.75" Width="3.25" />
+    <InheritanceLine Type="HospitalLibrary.Infrastructure.EventSourcing.DomainEvent" FixedFromPoint="true">
+      <Path>
+        <Point X="10.125" Y="1.062" />
+        <Point X="10.125" Y="1.75" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Events.StartedScheduling" Collapsed="true">
+    <Position X="3.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Patient" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenDate" Collapsed="true">
+    <Position X="10.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenSpeciality" Collapsed="true">
+    <Position X="12.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Speciality" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenDoctor" Collapsed="true">
+    <Position X="6" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+    <ShowAsAssociation>
+      <Property Name="Doctor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Events.GoneBackToSelection" Collapsed="true">
+    <Position X="8.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Events.FinishedScheduling" Collapsed="true">
+    <Position X="15" Y="3.25" Width="1.5" />
+    <TypeIdentifier />
+  </Class>
+  <Class Name="System.String" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="HospitalLibrary.MedicalAppointmentSchedulingSession.Repository.IMedicalAppointmentSchedulingSessionRepository">
+    <Position X="12.25" Y="8" Width="3.25" />
+    <InheritanceLine Type="HospitalLibrary.Infrastructure.EventSourcing.IEventRepository&lt;TEvent, TAggregateRoot&gt;" FixedFromPoint="true">
+      <Path>
+        <Point X="13.875" Y="7.312" />
+        <Point X="13.875" Y="8" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier />
+  </Interface>
+  <Interface Name="HospitalLibrary.Infrastructure.EventSourcing.IEventRepository&lt;TEvent, TAggregateRoot&gt;" Collapsed="true">
+    <Position X="13" Y="6.75" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
