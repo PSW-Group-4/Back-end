@@ -55,5 +55,9 @@ namespace IntegrationLibrary.BloodRequests.Repository
         {
             return _context.BloodRequests.Where(b => b.IsApproved == true && b.Status.Equals(BloodRequestStatus.TO_BE_SENT) && b.IsUrgent == true).ToList();
         }
+        public IEnumerable<BloodRequest> GetUrgentApprovedSent()
+        {
+            return _context.BloodRequests.Where(b => b.IsApproved == true && b.Status.Equals(BloodRequestStatus.FULFILLED) && b.IsUrgent == true).ToList();
+        }
     }
 }

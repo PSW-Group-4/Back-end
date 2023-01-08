@@ -15,5 +15,6 @@ namespace IntegrationLibrary.BloodRequests.Repository
         public BloodRequest Update(BloodRequest bloodRequest);
         public IEnumerable<BloodRequest> GetUnapproved();
         public IEnumerable<BloodRequest> GetAllUrgentApprovedNotSent();
+        public IEnumerable<BloodRequest> GetUrgentApprovedSent();
     }
 }

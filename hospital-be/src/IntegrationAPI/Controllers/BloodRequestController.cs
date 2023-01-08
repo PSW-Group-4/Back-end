@@ -91,5 +91,10 @@ namespace IntegrationAPI.Controllers
             };
             return Ok(_service.Create(bloodRequest));
         }
+        [System.Web.Mvc.Route("report/{begining}/{ending}"), System.Web.Mvc.HttpPut]
+        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
+        public ActionResult GenerateUrgentBloodRequestReportForDateRange(DateTime begining, DateTime end) {
+            
+        }
     }
 }

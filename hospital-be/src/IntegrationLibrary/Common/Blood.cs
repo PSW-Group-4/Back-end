@@ -41,5 +41,6 @@ namespace IntegrationLibrary.Common
             var splitted = input.Split(',');
             return new Blood(BloodType.FromString(splitted[0]), double.Parse(splitted[1]));
         }
+       
     }
 }
