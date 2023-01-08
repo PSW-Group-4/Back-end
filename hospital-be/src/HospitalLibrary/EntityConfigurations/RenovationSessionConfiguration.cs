@@ -14,10 +14,7 @@ namespace HospitalLibrary.EntityConfigurations
     public class RenovationSessionConfiguration : IEntityTypeConfiguration<RenovationSessionAggregateRoot>
     {
         public void Configure(EntityTypeBuilder<RenovationSessionAggregateRoot> builder)
-        {
-            builder.
-                ToTable("RenovationSessionRoots");
-            
+        {            
             var valueComparer = new ValueComparer<IEnumerable<RoomRenovationPlan>>(
                 (c1, c2) => c1.SequenceEqual(c2),
                 c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),

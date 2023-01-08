@@ -12,7 +12,7 @@ using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
 
 namespace HospitalLibrary.EntityConfigurations
 {
-    public class RenovationSessionEventsConfiguration
+    public class RenovationSessionEventsConfiguration : IEntityTypeConfiguration<RenovationSessionEvent>
     {
         public void Configure(EntityTypeBuilder<RenovationSessionEvent> builder)
         {

@@ -31,6 +31,7 @@ using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using HospitalLibrary.Renovation.Model;
 using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
+using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
 
 namespace HospitalLibrary.Settings
 {
@@ -107,6 +108,8 @@ namespace HospitalLibrary.Settings
 
         // Aggregates
         public DbSet<RenovationSessionAggregateRoot> RenovationSessionAggregateRoots {get; set;}
+        public DbSet<RenovationSessionEvent> RenovationSessionEvents {get; set;}
+        
 
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
