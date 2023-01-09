@@ -47,7 +47,7 @@ namespace HospitalAPI.Controllers
         [Authorize(Roles = "Doctor")]
         public ActionResult ChooseSymptom([FromBody] ChooseSymptomDto dto)
         {
-            _sessionService.ChooseSymptom(dto.AggregateId, dto.Symptoms, dto.OccurenceTime.ToLocalTime());
+            _sessionService.ChooseSymptom(dto.AggregateId, dto.NumberOfSymptoms, dto.OccurenceTime.ToLocalTime());
             return Ok();
         }
 
@@ -65,7 +65,7 @@ namespace HospitalAPI.Controllers
         {
             try
             {
-                _sessionService.ChooseMedicine(dto.AggregateId, dto.Medicines, dto.OccurenceTime.ToLocalTime());
+                _sessionService.ChooseMedicine(dto.AggregateId, dto.NumberOfMedicines, dto.OccurenceTime.ToLocalTime());
                 return Ok();
             }
             catch (NotFoundException e)

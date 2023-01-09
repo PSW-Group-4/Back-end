@@ -9,15 +9,11 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Model.Events
 {
     public class ChosenMedicine : MedicalAppointmentReportSessionEvent
     {
-        public List<Guid> MedicineIds { get; private set; }
-        public virtual List<Medicine> Medicines { get; private set; }
+        public int NumberOfMedicines { get; private set; }
 
-        //EF needs this constructor
-        public ChosenMedicine(Guid aggregateId, DateTime occurrenceTime) : base(aggregateId, occurrenceTime) { }
-        public ChosenMedicine(Guid aggregateId, DateTime occurrenceTime, List<Medicine> medicines) : base(aggregateId, occurrenceTime)
+        public ChosenMedicine(Guid aggregateId, DateTime occurrenceTime, int numberOfMedicines) : base(aggregateId, occurrenceTime)
         {
-            //MedicineIds = doctor.Id;
-            Medicines = medicines;
+            NumberOfMedicines = numberOfMedicines;
         }
     }
 }

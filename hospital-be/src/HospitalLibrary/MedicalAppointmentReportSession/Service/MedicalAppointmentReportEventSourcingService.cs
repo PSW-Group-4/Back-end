@@ -41,11 +41,10 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             return session.Id;
         }
 
-        public void ChooseSymptom(Guid aggregateId, List<Guid> symptoms, DateTime occurenceTime)
+        public void ChooseSymptom(Guid aggregateId, int numberOfSymptoms, DateTime occurenceTime)
         {
             MedicalAppointmentReportSession session = _medAppReportSessionRepository.GetById(aggregateId);
-            List<Symptom> Symptoms = GetSelectedSymptoms(symptoms);
-            session.Causes(new ChosenSymptom(aggregateId, occurenceTime, Symptoms));
+            session.Causes(new ChosenSymptom(aggregateId, occurenceTime, numberOfSymptoms));
         }
 
 
@@ -55,11 +54,10 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             session.Causes(new ChosenReportText(aggregateId, occurenceTime, reportText));
         }
 
-        public void ChooseMedicine(Guid aggregateId, List<Guid> medicines, DateTime occurenceTime)
+        public void ChooseMedicine(Guid aggregateId, int numberOfMedicines, DateTime occurenceTime)
         {
             MedicalAppointmentReportSession session = _medAppReportSessionRepository.GetById(aggregateId);
-            List<Medicine> Medicines = GetSelectedMedicines(medicines);
-            session.Causes(new ChosenMedicine(aggregateId, occurenceTime, Medicines));
+            session.Causes(new ChosenMedicine(aggregateId, occurenceTime, numberOfMedicines));
         }
 
 

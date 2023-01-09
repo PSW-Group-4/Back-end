@@ -15,9 +15,9 @@ namespace HospitalLibrary.MedicalAppointmentReportSession
     public class MedicalAppointmentReportSession : EventSourcingRoot
     {
         public Doctor Doctor { get; private set; }
-        public List<Symptom>? SelectedSymptoms { get; private set; }
+        public int? SelectedNumberOfSymptoms { get; private set; }
         public string? SelectedReportText { get; private set; }
-        public List<Medicine>? SelectedMedicines { get; private set; }
+        public int? SelectedNumberOfMedicines { get; private set; }
 
         //Exact time is selected after selecting end
         public DateTime? SelectedTime { get; private set; }
@@ -63,7 +63,7 @@ namespace HospitalLibrary.MedicalAppointmentReportSession
 
         private void When(ChosenSymptom chosenSympton)
         {
-            SelectedSymptoms = chosenSympton.Symptoms;
+            SelectedNumberOfSymptoms = chosenSympton.NumberOfSymptoms;
         }
 
         private void When(ChosenReportText chosenReportText)
@@ -73,7 +73,7 @@ namespace HospitalLibrary.MedicalAppointmentReportSession
 
         private void When(ChosenMedicine chosenMedicine)
         {
-            SelectedMedicines = chosenMedicine.Medicines;
+            SelectedNumberOfMedicines = chosenMedicine.NumberOfMedicines;
         }
 
         private void When(GoneBackToSelection goneBackToSelection)
