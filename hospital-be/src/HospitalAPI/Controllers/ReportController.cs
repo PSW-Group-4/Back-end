@@ -48,6 +48,21 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("get-by-appointment-id/{id}")]
+        public ActionResult GetByAppointmentId([FromRoute] Guid id)
+        {
+            try
+            {
+                Report report = _reportService.GetByMedicalAppointmentId(id);
+                return Ok(report.Id);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Chosen medical appointment has no reports");
+            }
+        }
+
         //POST: api/Report
         [HttpPost]
         public ActionResult Create([FromBody] ReportRequestDto reportRequestDto)

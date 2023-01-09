@@ -79,5 +79,15 @@ namespace HospitalLibrary.Reports.Repository
             _context.Reports.Remove(report);
             _context.SaveChanges();
         }
+
+        public Report GetByMedicalAppointmentId(Guid id)
+        {
+            Report report = _context.Reports.Where(r => r.MedicalAppointmentId == id).FirstOrDefault();
+            if (report == null)
+            {
+                throw new NotFoundException();
+            }
+            return report;
+        }
     }
 }

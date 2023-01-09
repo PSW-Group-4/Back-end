@@ -28,7 +28,7 @@ namespace TestHospitalApp.IntegrationTesting.AppointmentSchedulingTests.Simple
         private static MedicalAppointmentController SetupMedicalAppointmentController(
             IServiceScope scope, ControllerContext controllerContext)
         {
-            var test = new MedicalAppointmentController(scope.ServiceProvider.GetRequiredService<IMedicalAppointmentService>(),
+            MedicalAppointmentController controller = new MedicalAppointmentController(scope.ServiceProvider.GetRequiredService<IMedicalAppointmentService>(),
                                                     scope.ServiceProvider.GetRequiredService<IMapper>(),
                                                     scope.ServiceProvider.GetRequiredService<IJwtService>(),
                                                     scope.ServiceProvider.GetRequiredService<IDoctorAppointmentService>(),
@@ -37,7 +37,7 @@ namespace TestHospitalApp.IntegrationTesting.AppointmentSchedulingTests.Simple
             {
                 ControllerContext = controllerContext
             };
-            return test;
+            return controller;
         }
 
         [Fact]
