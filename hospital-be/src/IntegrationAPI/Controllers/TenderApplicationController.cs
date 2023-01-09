@@ -45,8 +45,9 @@ namespace IntegrationAPI.Controllers
         [Authorize(Roles = "BloodBank")]
         public ActionResult Submit(ApplyForTenderDto tenderApplication)
         {    
-            BloodBank bank =
-                _bloodBankService.GetByEmail(tenderApplication.BloodBank);
+            /*BloodBank bank =
+                _bloodBankService.GetByEmail(tenderApplication.BloodBank);*/
+            BloodBank bank = _bloodBankService.GetByEmail(JwtService.GetEmailFromToken(tenderApplication.BloodBank));
             Tender tender = _tenderService.GetById(tenderApplication.TenderId);
             Price price = tenderApplication.Price;
             AppliedToTenderEvent appliedToTenderEvent = new AppliedToTenderEvent(bank, tender, price);
