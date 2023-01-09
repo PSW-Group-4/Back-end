@@ -31,8 +31,10 @@ namespace IntegrationLibrary.TenderApplications.Service
         }
         public void Submit(AppliedToTenderEvent appliedToTenderEvent)
         {
-            new TenderApplication().Causes(appliedToTenderEvent);
+            TenderApplication tenderApplication = new();
+            tenderApplication.Causes(appliedToTenderEvent);
             _eventStore.Save(appliedToTenderEvent);
+            _repository.Submit(tenderApplication);
         }
         public string GenerateWinnerMessage(TenderApplication application) {
             return "Dear sir/madam we are happy to inform you that we have accepted your offer for our tender, please follow the link" +

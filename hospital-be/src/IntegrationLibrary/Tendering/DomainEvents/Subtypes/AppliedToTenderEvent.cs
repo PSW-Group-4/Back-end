@@ -12,6 +12,14 @@ namespace IntegrationLibrary.Tendering.DomainEvents.Subtypes
         public Tender Tender { get; private set; }
         public Price Price { get; private set; }
 
+        public AppliedToTenderEvent(BloodBank bloodBank, Tender tender, Price price) : base()
+        {
+            AggregateType = "TenderApplication";
+            EventType = "AppliedToTenderEvent";
+            BloodBank = bloodBank;
+            Tender = tender;
+            Price = price;
+        }
         public AppliedToTenderEvent(Guid id, Guid aggregateId, string aggregateType, string eventType, DateTime timestamp) : base(id, aggregateId, aggregateType, eventType, timestamp)
         {
             AggregateType = "TenderApplication";

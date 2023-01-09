@@ -12,6 +12,7 @@ using IntegrationAPI.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using JwtService = IntegrationLibrary.Utilities.JwtService;
 using IntegrationLibrary.BloodBanks.Model;
+using IntegrationLibrary.Tendering.DomainEvents.Subtypes;
 using IntegrationLibrary.Tendering.Model;
 using IntegrationLibrary.Tendering.Service;
 
@@ -42,14 +43,15 @@ namespace IntegrationAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "BloodBank")]
-        public ActionResult Apply(ApplyForTenderDto tenderApplication)
+        public ActionResult Submit(ApplyForTenderDto tenderApplication)
         {    
             BloodBank bank =
-                _bloodBankService.GetByEmail(JwtService.GetEmailFromToken(tenderApplication.BloodBank));
+                _bloodBankService.GetByEmail(tenderApplication.BloodBank);
             Tender tender = _tenderService.GetById(tenderApplication.TenderId);
             Price price = tenderApplication.Price;
-            TenderApplication application = new TenderApplication(bank,tender,price);
-            return Ok(_service.Submit(application));
+            AppliedToTenderEvent appliedToTenderEvent = new AppliedToTenderEvent(bank, tender, price);
+            _service.Submit(appliedToTenderEvent);
+            return Ok();
         }
 
         [Route("tender"), HttpPost]
