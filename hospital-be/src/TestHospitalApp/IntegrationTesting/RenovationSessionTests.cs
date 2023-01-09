@@ -75,7 +75,7 @@ namespace TestHospitalApp.IntegrationTesting
             });
 
 
-            var rv = renovationAppointmentController.EndSession(rootId.ToString());
+            var rv = renovationAppointmentController.EndSession(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
             rv.ShouldNotBe(null);
         }
 
@@ -128,7 +128,7 @@ namespace TestHospitalApp.IntegrationTesting
             });
 
 
-            var rv = renovationAppointmentController.EndSession(rootId.ToString());
+            var rv = renovationAppointmentController.EndSession(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
             rv.ShouldNotBe(null);
         }
 
@@ -185,7 +185,7 @@ namespace TestHospitalApp.IntegrationTesting
             });
 
 
-            var rv = renovationAppointmentController.EndSession(rootId.ToString());
+            var rv = renovationAppointmentController.EndSession(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
             rv.ShouldNotBe(null);
         }
 
@@ -242,7 +242,7 @@ namespace TestHospitalApp.IntegrationTesting
             });
 
 
-            var rv = renovationAppointmentController.EndSession(rootId.ToString());
+            var rv = renovationAppointmentController.EndSession(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
             rv.ShouldNotBe(null);
         }
 
@@ -259,7 +259,7 @@ namespace TestHospitalApp.IntegrationTesting
                 Type = "Split"
             });
 
-            renovationAppointmentController.ReturnToTypeSelection(rootId.ToString());
+            renovationAppointmentController.ReturnToTypeSelection(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
 
             renovationAppointmentController.ChooseType(new HospitalAPI.Dtos.RenovationSession.RenovationSessionTypeDto{
                 AggregateId = rootId,
@@ -276,7 +276,7 @@ namespace TestHospitalApp.IntegrationTesting
                 roomPlans = oldRooms
             });
 
-            renovationAppointmentController.ReturnToOldRoomsSelection(rootId.ToString());
+            renovationAppointmentController.ReturnToOldRoomsSelection(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
 
             renovationAppointmentController.ChooseOldRooms(new HospitalAPI.Dtos.RenovationSession.RenovationSessionRoomsDto{
                 AggregateId = rootId,
@@ -300,7 +300,7 @@ namespace TestHospitalApp.IntegrationTesting
                 roomPlans = newRooms
             });            
 
-            renovationAppointmentController.ReturnToNewRoomCreation(rootId.ToString());
+            renovationAppointmentController.ReturnToNewRoomCreation(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
 
             renovationAppointmentController.CreateNewRooms(new HospitalAPI.Dtos.RenovationSession.RenovationSessionRoomsDto{
                 AggregateId = rootId,
@@ -313,7 +313,7 @@ namespace TestHospitalApp.IntegrationTesting
                 End = DateTime.Now.AddDays(12)
             });
 
-            renovationAppointmentController.ReturnToTimeframeCreation(rootId.ToString());
+            renovationAppointmentController.ReturnToTimeframeCreation(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
 
             renovationAppointmentController.CreateTimeframe(new HospitalAPI.Dtos.RenovationSession.RenovationSessionDateDto{
                 AggregateId = rootId,
@@ -327,7 +327,7 @@ namespace TestHospitalApp.IntegrationTesting
                 End = DateTime.Now.AddDays(12)
             });
 
-            renovationAppointmentController.ReturnToSpecificTimeSelection(rootId.ToString());
+            renovationAppointmentController.ReturnToSpecificTimeSelection(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
             
             renovationAppointmentController.ChooseSpecificTime(new HospitalAPI.Dtos.RenovationSession.RenovationSessionDateDto{
                 AggregateId = rootId,
@@ -335,7 +335,7 @@ namespace TestHospitalApp.IntegrationTesting
                 End = DateTime.Now.AddDays(12)
             });
 
-            var rv = renovationAppointmentController.EndSession(rootId.ToString());
+            var rv = renovationAppointmentController.EndSession(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
             rv.ShouldNotBe(null);
         }
 
@@ -392,11 +392,11 @@ namespace TestHospitalApp.IntegrationTesting
                 End = DateTime.Now.AddDays(12)
             });
 
-            renovationAppointmentController.ReturnToSpecificTimeSelection(rootId.ToString());
-            renovationAppointmentController.ReturnToTimeframeCreation(rootId.ToString());
-            renovationAppointmentController.ReturnToNewRoomCreation(rootId.ToString());
-            renovationAppointmentController.ReturnToOldRoomsSelection(rootId.ToString());
-            renovationAppointmentController.ReturnToTypeSelection(rootId.ToString());
+            renovationAppointmentController.ReturnToSpecificTimeSelection(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
+            renovationAppointmentController.ReturnToTimeframeCreation(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
+            renovationAppointmentController.ReturnToNewRoomCreation(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
+            renovationAppointmentController.ReturnToOldRoomsSelection(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
+            renovationAppointmentController.ReturnToTypeSelection(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
 
             renovationAppointmentController.ChooseType(new HospitalAPI.Dtos.RenovationSession.RenovationSessionTypeDto{
                 AggregateId = rootId,
@@ -425,7 +425,7 @@ namespace TestHospitalApp.IntegrationTesting
                 End = DateTime.Now.AddDays(12)
             });
 
-            var rv = renovationAppointmentController.EndSession(rootId.ToString());
+            var rv = renovationAppointmentController.EndSession(new HospitalAPI.Dtos.RenovationSession.RenovationSessionIdOnlyDto{AggregateId = rootId});
             rv.ShouldNotBe(null);
         }
     }

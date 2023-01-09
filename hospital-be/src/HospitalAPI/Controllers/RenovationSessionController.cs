@@ -71,44 +71,44 @@ namespace HospitalAPI.Controllers
         }
 
         [HttpPost("end-session")]
-        public ActionResult EndSession([FromBody] String aggregateId)
+        public ActionResult EndSession([FromBody] RenovationSessionIdOnlyDto dto)
         {
-            _renovationSessionService.EndSession(Guid.Parse(aggregateId));
+            _renovationSessionService.EndSession(Guid.Parse(dto.AggregateId.ToString()));
             return Ok();
         }
 
         [HttpPost("return-to-new-room-creation")]
-        public ActionResult ReturnToNewRoomCreation([FromBody] String aggregateId)
+        public ActionResult ReturnToNewRoomCreation([FromBody] RenovationSessionIdOnlyDto dto)
         {
-            _renovationSessionService.ReturnToNewRoomCreation(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToNewRoomCreation(Guid.Parse(dto.AggregateId.ToString()));
             return Ok();
         }
 
         [HttpPost("return-to-old-rooms-selection")]
-        public ActionResult ReturnToOldRoomsSelection([FromBody] String aggregateId)
+        public ActionResult ReturnToOldRoomsSelection([FromBody] RenovationSessionIdOnlyDto dto)
         {
-            _renovationSessionService.ReturnToOldRoomsSelection(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToOldRoomsSelection(Guid.Parse(dto.AggregateId.ToString()));
             return Ok();
         }
 
         [HttpPost("return-to-specific-time-selection")]
-        public ActionResult ReturnToSpecificTimeSelection([FromBody] String aggregateId)
+        public ActionResult ReturnToSpecificTimeSelection([FromBody] RenovationSessionIdOnlyDto dto)
         {
-            _renovationSessionService.ReturnToSpecificTimeSelection(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToSpecificTimeSelection(Guid.Parse(dto.AggregateId.ToString()));
             return Ok();
         }
 
         [HttpPost("return-to-timeframe-creation")]
-        public ActionResult ReturnToTimeframeCreation([FromBody] String aggregateId)
+        public ActionResult ReturnToTimeframeCreation([FromBody] RenovationSessionIdOnlyDto dto)
         {
-            _renovationSessionService.ReturnToTimeframeCreation(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToTimeframeCreation(Guid.Parse(dto.AggregateId.ToString()));
             return Ok();
         }
 
         [HttpPost("return-to-type-selection")]
-        public ActionResult ReturnToTypeSelection([FromBody] String aggregateId)
+        public ActionResult ReturnToTypeSelection([FromBody] RenovationSessionIdOnlyDto dto)
         {
-            _renovationSessionService.ReturnToTypeSelection(Guid.Parse(aggregateId));
+            _renovationSessionService.ReturnToTypeSelection(Guid.Parse(dto.AggregateId.ToString()));
             return Ok();
         }
 
