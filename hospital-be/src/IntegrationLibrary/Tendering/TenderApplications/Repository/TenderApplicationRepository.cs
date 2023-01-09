@@ -18,7 +18,7 @@ namespace IntegrationLibrary.TenderApplications.Repository
             _context = context;
         }
 
-        public TenderApplication Apply(TenderApplication tenderApplication)
+        public TenderApplication Submit(TenderApplication tenderApplication)
         {
             _context.TenderApplications.Add(tenderApplication);
             _context.SaveChanges();

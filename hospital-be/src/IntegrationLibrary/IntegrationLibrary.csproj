@@ -51,8 +51,12 @@
 
     <ItemGroup>
         <Folder Include="BloodReport\Service\" />
+        <Folder Include="EventSourcing\Service" />
         <Folder Include="Migrations\" />
         <Folder Include="Reports\" />
+        <Folder Include="TenderApplications" />
+        <Folder Include="Tendering\TenderApplications" />
+        <Folder Include="Tendering\Tenders" />
     </ItemGroup>
 
 </Project>
