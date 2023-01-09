@@ -58,6 +58,8 @@
         <Folder Include="Tendering\DomainEventHandler" />
         <Folder Include="Tendering\TenderApplications" />
         <Folder Include="Tendering\Tenders" />
+        <Folder Include="UrgentBloodRequestReports\Repository\" />
+        <Folder Include="UrgentBloodRequestReports\Service\" />
     </ItemGroup>
 
 </Project>

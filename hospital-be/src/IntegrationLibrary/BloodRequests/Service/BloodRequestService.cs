@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using IntegrationLibrary.BloodBanks.Model;
 using IntegrationLibrary.UrgentBloodRequestReports.Model;
 using IntegrationLibrary.Common;
+using IntegrationLibrary.Utilities.Converters;
 
 namespace IntegrationLibrary.BloodRequests.Service
 {
@@ -100,6 +101,34 @@ namespace IntegrationLibrary.BloodRequests.Service
         {
             List<BloodRequest> requests = GetUrgentRequestsInDateRange(begining, ending);
             List<UrgentBloodRequestReport> report = FillTheReport(banks, requests);
+            string html = GenerateHtmlForReport(report, begining, ending);
+            HtmlToPdfConverter.Convert(html, HtmlToPdfConverter.defaultPath, "Urgent blood supply report");
+        }
+        public string GenerateHtmlForReport(List<UrgentBloodRequestReport> reportSegments, DateTime begining, DateTime ending) {
+            string html = "<h1>Urgent Blood Supply Report Between {0} And {1}</h1>";
+            html = string.Format(html, begining.ToString(), ending.ToString());
+
+            foreach (UrgentBloodRequestReport reportSegment in reportSegments)
+            {
+                    html += Environment.NewLine + "<h2>Bank: " + reportSegment.Bank.Name + "</h2>"+
+                    Environment.NewLine + "<table>" + 
+                    Environment.NewLine + "\t<tr>" +
+                    Environment.NewLine + "\t\t<th>Blood type</th>" +
+                    Environment.NewLine + "\t\t<th>RH Factor</th>" +
+                    Environment.NewLine + "\t\t<th>Amount (ml)</th>" +
+                    Environment.NewLine + "\t</tr>" +
+                    Environment.NewLine;
+
+                foreach (Blood blood in reportSegment.Blood) {
+                    html += Environment.NewLine + "\t<tr>" +
+                        Environment.NewLine + "\t\t<td>" + blood.BloodType.BloodGroup.ToString() + "</td>" +
+                        Environment.NewLine + "\t\t<td>" + blood.BloodType.RhFactor.ToString() + "</td>" +
+                        Environment.NewLine + "\t\t<td>" + blood.Amount.ToString() + "</td>" +
+                        Environment.NewLine + "\t</tr>";
+                }
+                html += Environment.NewLine + "</table>";
+            }    
+                return html;
         }
     }
 }

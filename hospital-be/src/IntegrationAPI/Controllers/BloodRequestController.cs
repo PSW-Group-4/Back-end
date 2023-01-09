@@ -18,6 +18,8 @@ using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationLibrary.BloodBanks.Service;
 using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
+using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
 
 namespace IntegrationAPI.Controllers
 {
@@ -91,10 +93,12 @@ namespace IntegrationAPI.Controllers
             };
             return Ok(_service.Create(bloodRequest));
         }
-        [System.Web.Mvc.Route("report/{begining}/{ending}"), System.Web.Mvc.HttpPut]
-        [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
+        [Route("report/{begining}/{ending}"), HttpPut]
+        //[AllowAnonymous]
+        //[ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult GenerateUrgentBloodRequestReportForDateRange(DateTime begining, DateTime end) {
-            
+            _service.GenerateUrgentRequestReportForDateRange(begining, end, bloodBankService.GetAll());
+            return Ok();
         }
     }
 }

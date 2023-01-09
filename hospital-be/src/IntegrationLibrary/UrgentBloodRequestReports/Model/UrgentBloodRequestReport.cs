@@ -10,8 +10,8 @@ namespace IntegrationLibrary.UrgentBloodRequestReports.Model
 {
    public class UrgentBloodRequestReport
     {
-        BloodBank Bank { get; set; }
-        List<Blood> Blood { get; set; }
+        public BloodBank Bank { get; set; }
+        public List<Blood> Blood { get; set; }
 
         public UrgentBloodRequestReport(BloodBank bank, List<Blood> blood)
         {
