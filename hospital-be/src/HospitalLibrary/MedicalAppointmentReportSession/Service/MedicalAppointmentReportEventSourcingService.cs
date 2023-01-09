@@ -67,7 +67,7 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             session.Causes(new FinishedScheduling(aggregateId, occurenceTime, time));
         }
 
-        public void GoBackToSelection(Guid aggregateId, Selection selection, DateTime occurenceTime)
+        public void GoBackToSelection(Guid aggregateId, SelectionReport selection, DateTime occurenceTime)
         {
             MedicalAppointmentReportSession session = _medAppReportSessionRepository.GetById(aggregateId);
             session.Causes(new GoneBackToSelection(aggregateId, occurenceTime, selection));

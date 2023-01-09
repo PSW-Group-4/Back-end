@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.MedicalAppointmentReportSession.Model.Events
 {
-    public enum Selection
+    public enum SelectionReport
     {
         Symptom,
         ReportText,
