@@ -98,21 +98,21 @@ namespace HospitalAPI.Controllers
             return Ok();
         }
 
-        [HttpPost("return-to-type-selection")]
+        [HttpPost("return-to-timeframe-creation")]
         public ActionResult ReturnToTimeframeCreation([FromBody] String aggregateId)
         {
             _renovationSessionService.ReturnToTimeframeCreation(Guid.Parse(aggregateId));
             return Ok();
         }
 
-        [HttpPost("start-session")]
+        [HttpPost("return-to-type-selection")]
         public ActionResult ReturnToTypeSelection([FromBody] String aggregateId)
         {
             _renovationSessionService.ReturnToTypeSelection(Guid.Parse(aggregateId));
             return Ok();
         }
 
-        [HttpPost("new-rooms-created")]
+        [HttpPost("start-session")]
         public ActionResult StartSession()
         {
             Guid id = _renovationSessionService.StartSession();

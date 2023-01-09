@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Settings;
 using HospitalLibrary.Exceptions;
+using HospitalLibrary.RenovationSessionAggregate.Repository.Interfaces;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 
-namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
+namespace HospitalLibrary.RenovationSessionAggregate.Repository.Implementation
 {
     public class RenovationSessionAggregateRootRepository : IRenovationSessionAggregateRootRepository
     {
