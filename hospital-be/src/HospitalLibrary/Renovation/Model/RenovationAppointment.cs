@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Core.Model;
 using HospitalLibrary.Exceptions;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -26,8 +27,12 @@ namespace HospitalLibrary.Renovation.Model
         public RenovationAppointment(TypeOfRenovation type, IEnumerable<RoomRenovationPlan> plans, DateRange dateRange, Guid RoomId) : base(Guid.NewGuid(), dateRange, RoomId, null) {
             this.Type = type;
             this.RoomRenovationPlans = plans.ToList();
-            // this.DateRange = dateRange;
-            // this.RoomId = RoomId;
+            Validate();
+        }
+
+        public RenovationAppointment(RenovationSessionAggregateRoot root, Guid roomId) : base(Guid.NewGuid(), new DateRange(root.Start.Value, root.End.Value), roomId, null){
+            this.RoomRenovationPlans = root.RoomRenovationPlans.ToList();
+            this.Type = root.TypeOfRenovation.Value;
             Validate();
         }
 
@@ -67,8 +72,6 @@ namespace HospitalLibrary.Renovation.Model
         public void Finish() {
             this.FinishAppointment();
             this.DiscardRoom();
-            // this.Room = null;
-            // this.RoomId = (Guid?)null;
         }
 
         public bool IsPrimaryRenovationAppointment() {
