@@ -11,7 +11,7 @@ namespace HospitalLibrary.Renovation.Repository.Implementation
 {
     public class RenovationAppointmentRepository : IRenovationAppointmentRepository
     {
-         private readonly HospitalDbContext _context;
+        private readonly HospitalDbContext _context;
 
         public RenovationAppointmentRepository(HospitalDbContext context)
         {

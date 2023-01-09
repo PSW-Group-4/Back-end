@@ -30,6 +30,9 @@ using HospitalLibrary.EntityConfigurations;
 using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
+using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
+
 
 namespace HospitalLibrary.Settings
 {
@@ -104,12 +107,19 @@ namespace HospitalLibrary.Settings
         // Medical appointment scheduling session
         public DbSet<MedicalAppointmentSchedulingSessionEvent> MedicalAppointmentSchedulingSessionEvents { get; set; }
 
+        // Aggregates
+        public DbSet<RenovationSessionAggregateRoot> RenovationSessionAggregateRoots {get; set;}
+        public DbSet<RenovationSessionEvent> RenovationSessionEvents {get; set;}
+        
+
 
         public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+            modelBuilder.Ignore<DomainEvent>();
 
             modelBuilder
                 .Entity<Patient>()

@@ -79,6 +79,10 @@ using HospitalLibrary.AppointmentReport.Service;
 using HospitalLibrary.News;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Repository;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Service;
+using HospitalLibrary.RenovationSessionAggregate.Services.Interfaces;
+using HospitalLibrary.RenovationSessionAggregate.Services.Implementation;
+using HospitalLibrary.RenovationSessionAggregate.Repository.Implementation;
+using HospitalLibrary.RenovationSessionAggregate.Repository.Interfaces;
 
 namespace HospitalAPI
 {
@@ -290,6 +294,13 @@ namespace HospitalAPI
             services.AddScoped<IMedicalAppointmentSchedulingSessionRepository, MedicalAppointmentSchedulingSessionRepository>();
             services.AddScoped<IMedicalAppointmentSchedulingEventSourcingService, MedicalAppointmentSchedulingEventSourcingService>();
             services.AddScoped<IMedAppSchedulingStatisticsService, MedAppSchedulingStatisticsService>();
+
+            //Renovation session
+            services.AddScoped<IRenovationSessionService, RenovationSessionService>();
+            services.AddScoped<IRenovationSessionAggregateRootRepository, RenovationSessionAggregateRootRepository>();
+            services.AddScoped<IRenovationSessionEventRepository, RenovationSessionEventRepository>();
+            services.AddScoped<IRenovationSessionEventService, RenovationSessionEventService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
