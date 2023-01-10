@@ -42,8 +42,8 @@ namespace IntegrationAPI.Controllers
         {
             return Ok(_tenderService.GetAll());
         }
-        
-        [HttpGet]
+
+        [Route("{id}"), HttpPut]
         public ActionResult GetById(Guid id)
         {
             return Ok(_tenderService.GetById(id));

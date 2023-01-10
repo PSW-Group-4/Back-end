@@ -58,6 +58,7 @@ using Microsoft.IdentityModel.Tokens;
 using IntegrationLibrary.Tendering.DomainEvents.Base;
 using IntegrationLibrary.EventSourcing;
 using IntegrationLibrary.Tendering.DomainEventStore;
+using IntegrationAPI.Communications.SharedStorage;
 
 namespace IntegrationAPI
 {
@@ -171,6 +172,8 @@ namespace IntegrationAPI
             services.AddScoped<IConsumer<Blood>, BloodConsumer>();
             services.AddScoped<IBloodSubscriptionResponseRepository, BloodSubscriptionResponseRepository>();
             services.AddScoped<IBloodSubscriptionResponseService, BloodSubscriptionResponseService>();
+
+            services.AddScoped<ISftpService, SftpService>();
 
             services.AddScoped<IEventStore<TenderingEvent>, TenderingEventStore>();
 
