@@ -300,6 +300,9 @@ namespace HospitalAPI
             //Medical appointment report session
             services.AddScoped<IMedicalAppointmentReportSessionRepository, MedicalAppointmentReportSessionRepository>();
             services.AddScoped<IMedicalAppointmentReportEventSourcingService, MedicalAppointmentReportEventSourcingService>();
+            services.AddScoped<IMedAppReportStatisticsService, MedAppReportStatisticsService>();
+
+
             //Renovation session
             services.AddScoped<IRenovationSessionService, RenovationSessionService>();
             services.AddScoped<IRenovationSessionAggregateRootRepository, RenovationSessionAggregateRootRepository>();
