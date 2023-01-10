@@ -24,7 +24,6 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
         public IDictionary<string, int> GetNumberSteps()
         {
             IEnumerable<MedicalAppointmentReportSession> sessions = _medAppSessionRepository.GetAll();
-            IEnumerable<MedicalAppointmentReportSessionEvent> events = _medAppSessionRepository.GetAllEvents();
             IDictionary<string, int> timesPerSelection = new Dictionary<string, int>();
 
             List<string> steps = new List<string>()
@@ -42,16 +41,16 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
 
             foreach (MedicalAppointmentReportSession session in sessions)
             {
-                int count = events.Where(x => x.AggregateId.Equals(session.Id)).Count();
+                int count = session.Events.Count();
                 if (count < 4)
                 {
                     timesPerSelection["Small"] += count;
                 }
-                else if (count >= 4 || count < 8 )
+                else if (count >= 4 && count < 8 )
                 {
                     timesPerSelection["SmallNormal"] += count;
                 }
-                else if (count >= 8 || count < 12)
+                else if (count >= 8 && count < 12)
                 {
                     timesPerSelection["BigNormal"] += count;
                 }
@@ -71,7 +70,49 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
 
         public IDictionary<string, double> GetTimeSteps()
         {
-            return null;
+            IEnumerable<MedicalAppointmentReportSession> sessions = _medAppSessionRepository.GetAll();
+            IDictionary<string, double> timesPerSelection = new Dictionary<string, double>();
+
+            List<string> steps = new List<string>()
+            {
+              // <<15      15 - 30         30 - 60     60>>
+                "Small","SmallNormal","BigNormal","Big"
+            };
+            foreach (string selection in steps)
+            {
+                timesPerSelection.Add(selection, 0);
+            }
+
+            if (!sessions.Any()) return timesPerSelection;
+
+
+            foreach (MedicalAppointmentReportSession session in sessions)
+            {
+                double count = GetSpentTimeOnSesion(session);
+                if (count < 15)
+                {
+                    timesPerSelection["Small"] += count;
+                }
+                else if (count >= 15 && count < 30)
+                {
+                    timesPerSelection["SmallNormal"] += count;
+                }
+                else if (count >= 30 && count < 60)
+                {
+                    timesPerSelection["BigNormal"] += count;
+                }
+                else
+                {
+                    timesPerSelection["Big"] += count;
+                }
+            }
+
+            foreach (var count in timesPerSelection)
+            {
+                timesPerSelection[count.Key] = count.Value / sessions.Count();
+            }
+
+            return timesPerSelection;
         }
 
         public IDictionary<SelectionReport, int> GetNumberEachStep()
@@ -133,7 +174,54 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
 
         public IDictionary<string, double> GetDoctorTimeSteps()
         {
-            return null;
+            IEnumerable<MedicalAppointmentReportSession> sessions = _medAppSessionRepository.GetAll();
+            IDictionary<string, double> timesPerSelection = new Dictionary<string, double>();
+
+            List<string> steps = new List<string>()
+            {
+              // <<4      4 - 8         8 - 12     12>>
+                "Small","SmallNormal","BigNormal","Big"
+            };
+            List<int> yearSteps = new List<int>()
+            {
+              25,45,60
+            };
+            foreach (string selection in steps)
+            {
+                timesPerSelection.Add(selection, 0);
+            }
+
+            if (!sessions.Any()) return timesPerSelection;
+
+
+            foreach (MedicalAppointmentReportSession session in sessions)
+            {
+                int years = DateTime.Now.Year - session.Doctor.Birthdate.Year;
+                double count = GetSpentTimeOnSesion(session);
+                if (years < yearSteps[0])
+                {
+                    timesPerSelection["Small"] += count;
+                }
+                else if (years >= yearSteps[0] && years < yearSteps[1])
+                {
+                    timesPerSelection["SmallNormal"] += count;
+                }
+                else if (years >= yearSteps[1] && years < yearSteps[2])
+                {
+                    timesPerSelection["BigNormal"] += count;
+                }
+                else
+                {
+                    timesPerSelection["Big"] += count;
+                }
+            }
+
+            foreach (var count in timesPerSelection)
+            {
+                timesPerSelection[count.Key] = count.Value / sessions.Count();
+            }
+
+            return timesPerSelection;
         }
 
 
@@ -220,5 +308,26 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             }
             return timeSpent;
         }
+
+        private double GetSpentTimeOnSesion(MedicalAppointmentReportSession session)
+        {
+            double timeSpent = 0;
+
+            for (int i = 0; i < session.Events.Count(); i++)
+            {
+                //Base type is accesed because EF sometimes returns proxy of an object
+                var baseType = session.Events[i].GetType().BaseType;
+                var type = baseType == typeof(MedicalAppointmentReportSessionEvent)
+                    ? session.Events[i].GetType()
+                    : baseType;
+                if (i + 1 >= session.Events.Count()) continue;
+                timeSpent += session.Events[i + 1].OccurrenceTime.Subtract(session.Events[i].OccurrenceTime)
+                        .TotalSeconds;
+                
+            }
+            return timeSpent;
+        }
+
+
     }
 }
