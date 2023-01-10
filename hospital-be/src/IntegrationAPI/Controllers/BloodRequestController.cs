@@ -79,7 +79,7 @@ namespace IntegrationAPI.Controllers
 
         [Microsoft.AspNetCore.Mvc.HttpPost]
         [AllowAnonymous]
-        [ExternalAuthorizationFilter(ExpectedRoles = "Doctor")]
+        //[ExternalAuthorizationFilter(ExpectedRoles = "Doctor")]
         public ActionResult Create([FromBody] BloodRequestsCreateDto bloodRequestDto)
         {
             BloodRequest bloodRequest = new()
@@ -93,7 +93,7 @@ namespace IntegrationAPI.Controllers
             };
             return Ok(_service.Create(bloodRequest));
         }
-        [Route("report/{begining}/{ending}"), HttpPut]
+        [Route("report/{begining}/{end}"), HttpPut]
         //[AllowAnonymous]
         //[ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult GenerateUrgentBloodRequestReportForDateRange(DateTime begining, DateTime end) {

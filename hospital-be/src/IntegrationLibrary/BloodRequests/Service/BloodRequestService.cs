@@ -49,12 +49,17 @@ namespace IntegrationLibrary.BloodRequests.Service
             return _repository.GetAllUrgentApprovedNotSent();
         }
         public List<BloodRequest> GetUrgentRequestsInDateRange(DateTime begining, DateTime ending) {
-            IEnumerable<BloodRequest> requests = _repository.GetUrgentApprovedSent();
+            IEnumerable<BloodRequest> requests = _repository.GetAll();
             List<BloodRequest> requestsInRange = new List<BloodRequest>();
             foreach (BloodRequest request in requests) {
-                if (request.SendOnDate >= begining) {
-                    if (request.SendOnDate <= ending) {
-                        requestsInRange.Add(request);
+                if (request.IsUrgent)
+                {
+                    if (request.SendOnDate >= begining)
+                    {
+                        if (request.SendOnDate <= ending)
+                        {
+                            requestsInRange.Add(request);
+                        }
                     }
                 }
             }
@@ -74,10 +79,10 @@ namespace IntegrationLibrary.BloodRequests.Service
         }
         public List<UrgentBloodRequestReport> FillTheReport(IEnumerable<BloodBank> banks, List<BloodRequest> requests) {
             List<UrgentBloodRequestReport> report = new List<UrgentBloodRequestReport>();
-            List<Blood> bloodAfterCalculation = new List<Blood>();
+            List<Blood> allBlood = FillBlood();
             foreach (BloodBank bank in banks)
             {
-                List<Blood> allBlood = FillBlood();
+                List<Blood> bloodAfterCalculation = new List<Blood>(); 
                 foreach (Blood blood in allBlood)
                 {
                    double bloodAmount = 0;
