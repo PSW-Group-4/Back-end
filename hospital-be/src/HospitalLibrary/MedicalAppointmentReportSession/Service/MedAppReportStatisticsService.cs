@@ -21,7 +21,12 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             _ageGroupRepository = ageGroupRepository;
         }
 
-        public IDictionary<string, double> GetDoctorTimeSteps()
+        public IDictionary<string, int> GetNumberSteps()
+        {
+            return null;
+        }
+
+        public IDictionary<string, double> GetTimeSteps()
         {
             return null;
         }
@@ -54,17 +59,36 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             return timesPerSelection;
         }
 
-        public IDictionary<string, int> GetNumberSteps()
-        {
-            return null;
-        }
-
         public IDictionary<SelectionReport, double> GetTimeEachStep()
         {
-            return null;
+            IEnumerable<MedicalAppointmentReportSession> sessions = _medAppSessionRepository.GetAll();
+
+            IDictionary<SelectionReport, double> timesPerSelection = new Dictionary<SelectionReport, double>();
+            foreach (SelectionReport selection in Enum.GetValues(typeof(SelectionReport)))
+            {
+                timesPerSelection.Add(selection, 0);
+            }
+
+            if (!sessions.Any()) return timesPerSelection;
+
+            foreach (MedicalAppointmentReportSession session in sessions)
+            {
+                timesPerSelection[SelectionReport.Symptom] += GetSpentTime(session, typeof(StartedScheduling));
+                timesPerSelection[SelectionReport.Symptom] += GetSpentTime(session, typeof(GoneBackToSelection));
+                timesPerSelection[SelectionReport.ReportText] += GetSpentTime(session, typeof(ChosenSymptom));
+                timesPerSelection[SelectionReport.Medicine] += GetSpentTime(session, typeof(ChosenReportText));
+                timesPerSelection[SelectionReport.Review] += GetSpentTime(session, typeof(ChosenMedicine));
+            }
+
+            foreach (var count in timesPerSelection)
+            {
+                timesPerSelection[count.Key] = count.Value / sessions.Count();
+            }
+
+            return timesPerSelection;
         }
 
-        public IDictionary<string, double> GetTimeSteps()
+        public IDictionary<string, double> GetDoctorTimeSteps()
         {
             return null;
         }
@@ -116,6 +140,42 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
                 .OfType<GoneBackToSelection>().Count(e => e.Selection == SelectionReport.Review);
 
             return timesAtTimeSelection;
+        }
+
+        //Time is measured in seconds
+        private double GetSpentTime(MedicalAppointmentReportSession session, Type eventType)
+        {
+            double timeSpent = 0;
+
+            for (int i = 0; i < session.Events.Count(); i++)
+            {
+                //Base type is accesed because EF sometimes returns proxy of an object
+                var baseType = session.Events[i].GetType().BaseType;
+                var type = baseType == typeof(MedicalAppointmentReportSessionEvent)
+                    ? session.Events[i].GetType()
+                    : baseType;
+
+                if (type == eventType)
+                {
+                    //Edge case for Choosing date
+                    if (type == typeof(GoneBackToSelection))
+                    {
+                        GoneBackToSelection backToSelectionEvent =
+                            (GoneBackToSelection)_medAppSessionRepository.GetEventById(session.Events[i].Id);
+                        if (backToSelectionEvent.Selection != SelectionReport.Symptom)
+                        {
+                            return 0;
+                        }
+                    }
+
+                    //This can happen when you have ChosenDoctor and customer doesn't finish scheduling
+                    if (i + 1 >= session.Events.Count()) continue;
+
+                    timeSpent += session.Events[i + 1].OccurrenceTime.Subtract(session.Events[i].OccurrenceTime)
+                        .TotalSeconds;
+                }
+            }
+            return timeSpent;
         }
     }
 }
