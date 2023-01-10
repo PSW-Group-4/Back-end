@@ -64,5 +64,10 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Repository
         {
             return _context.MedicalAppointmentReportSessionEvents.SingleOrDefault(e => e.Id == id);
         }
+
+        public IEnumerable<MedicalAppointmentReportSessionEvent> GetAllEvents()
+        {
+            return _context.MedicalAppointmentReportSessionEvents.ToList();
+        }
     }
 }

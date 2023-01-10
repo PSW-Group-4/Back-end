@@ -23,7 +23,50 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
 
         public IDictionary<string, int> GetNumberSteps()
         {
-            return null;
+            IEnumerable<MedicalAppointmentReportSession> sessions = _medAppSessionRepository.GetAll();
+            IEnumerable<MedicalAppointmentReportSessionEvent> events = _medAppSessionRepository.GetAllEvents();
+            IDictionary<string, int> timesPerSelection = new Dictionary<string, int>();
+
+            List<string> steps = new List<string>()
+            {
+              // <<4      4 - 8         8 - 12     12>>
+                "Small","SmallNormal","BigNormal","Big"
+            };
+            foreach (string selection in steps)
+            {
+                timesPerSelection.Add(selection, 0);
+            }
+
+            if (!sessions.Any()) return timesPerSelection;
+
+
+            foreach (MedicalAppointmentReportSession session in sessions)
+            {
+                int count = events.Where(x => x.AggregateId.Equals(session.Id)).Count();
+                if (count < 4)
+                {
+                    timesPerSelection["Small"] += count;
+                }
+                else if (count >= 4 || count < 8 )
+                {
+                    timesPerSelection["SmallNormal"] += count;
+                }
+                else if (count >= 8 || count < 12)
+                {
+                    timesPerSelection["BigNormal"] += count;
+                }
+                else
+                {
+                    timesPerSelection["Big"] += count;
+                }
+            }
+
+            foreach (var count in timesPerSelection)
+            {
+                timesPerSelection[count.Key] = count.Value / sessions.Count();
+            }
+
+            return timesPerSelection;
         }
 
         public IDictionary<string, double> GetTimeSteps()
