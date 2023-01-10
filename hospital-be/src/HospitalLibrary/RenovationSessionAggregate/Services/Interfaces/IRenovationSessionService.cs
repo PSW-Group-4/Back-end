@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 
 namespace HospitalLibrary.RenovationSessionAggregate.Services.Interfaces
 {
@@ -19,6 +20,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Interfaces
         public void ReturnToSpecificTimeSelection(Guid id);
         public void ReturnToTimeframeCreation(Guid id);
         public void ReturnToTypeSelection(Guid id);
-        public Guid StartSession(); 
+        public Guid StartSession();
+        public IEnumerable<RenovationSessionAggregateRoot> GetAll();
+        public IEnumerable<RenovationSessionAggregateRoot> GetAllFinished();
     }
 }

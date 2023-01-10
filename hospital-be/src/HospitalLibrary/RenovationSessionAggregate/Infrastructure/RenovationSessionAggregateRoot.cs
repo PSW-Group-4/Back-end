@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Core.Model;
 
 namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
@@ -188,8 +189,54 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             this.RoomRenovationPlans = entity.RoomRenovationPlans;
         }
         
+        public Boolean IsFinished() {
+            if(this.Events.ToArray().Length < 1) {
+                return false;
+            }
+            if(this.Events.Last().GetType() == typeof(SessionEnded)) {
+                return true;
+            }
+            return false;
+        }
 
+        public double GetAverageTimeForEvent(Type eventType) {
+            double totalTime = 0;
+            int numberOfOccurences = 0;
+            for(int i = 1; i < this.Events.ToArray().Length; i++) {
+                if(this.Events.ToArray()[i].GetType().Equals(eventType)) {
+                    totalTime += (this.Events.ToArray()[i].OccurrenceTime - this.Events.ToArray()[i-1].OccurrenceTime).Seconds;
+                    numberOfOccurences += 1;
+                }
+            }
+            if(numberOfOccurences == 0) {
+                throw new InvalidValueException();
+            }
+            return totalTime/numberOfOccurences;
+        }
         
+        public double GetTotalTimeSpent() {
+            if(this.Events.ToArray().Length < 1) {
+                throw new InvalidValueException();
+            }
+            return (this.Events.ToArray()[0].OccurrenceTime - this.Events.ToArray()[this.Events.ToArray().Length - 1].OccurrenceTime).Seconds;
+        }
 
+        public DateTime GetStartTime() {
+            return this.Events.ToArray()[0].OccurrenceTime;
+        }
+
+        public int GetTimesGoneBack() {
+            int numberOfOccurences = 0;
+            for(int i = 1; i < this.Events.ToArray().Length; i++) {
+                if(this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToNewRoomCreation)) ||
+                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToOldRoomsSelection)) ||
+                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToSpecificTimeSelection)) ||
+                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToTimeframeCreation)) ||
+                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToTypeSelection))) {
+                    numberOfOccurences += 1;
+                }
+            }
+            return numberOfOccurences;
+        }
     }
 }

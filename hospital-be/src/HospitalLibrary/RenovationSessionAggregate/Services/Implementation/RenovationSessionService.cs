@@ -100,5 +100,13 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Implementation
             this._sessionRepository.Create(root);
             return root.Id;
         }
+
+        public IEnumerable<RenovationSessionAggregateRoot> GetAllFinished() {
+            return from root in this._sessionRepository.GetAll() where root.IsFinished() select root;
+        }
+
+        public IEnumerable<RenovationSessionAggregateRoot> GetAll() {
+            return this._sessionRepository.GetAll();
+        }
     }
 }
