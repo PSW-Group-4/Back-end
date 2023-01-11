@@ -225,7 +225,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             if(this.Events.ToArray().Length < 1) {
                 throw new InvalidValueException();
             }
-            return (this.Events.ToArray()[0].OccurrenceTime - this.Events.ToArray()[this.Events.ToArray().Length - 1].OccurrenceTime).Seconds;
+            return (this.Events.ToArray()[this.Events.ToArray().Length - 1].OccurrenceTime - this.Events.ToArray()[0].OccurrenceTime).Seconds;
         }
 
         public DateTime GetStartTime() {
