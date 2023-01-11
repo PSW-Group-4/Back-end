@@ -228,12 +228,17 @@ namespace HospitalLibrary.Reports.Repository
         {
 
             string[] words = search.Split(' ');
+            
             List<Report> reportList = new List<Report>();
             List<Report> result = new List<Report>();
-            result = BasicSearch(words[0]);
-            
+            reportList = BasicSearch(words[0]);
+            if (words.Count() == 1)
+            {
+                return reportList;
+            }
             foreach (string word in words.Skip(1))
             {
+                result.Clear();
                 bool add = false;
                 var reports = BasicSearch(word);
                 if(reports.Count == 0)
@@ -244,7 +249,7 @@ namespace HospitalLibrary.Reports.Repository
                 
                 foreach(var report in reports)
                 {
-                    foreach(var allReports in result)
+                    foreach(var allReports in reportList)
                     {
                         if(report.Id == allReports.Id)
                         {
