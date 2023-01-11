@@ -102,15 +102,20 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Implementation
         }
 
         public IEnumerable<RenovationSessionAggregateRoot> GetAllFinished() {
-            return from root in this._sessionRepository.GetAll() where root.IsFinished() select root;
+            return from root in this.GetAll() where root.IsFinished() select root;
         }
 
         public IEnumerable<RenovationSessionAggregateRoot> GetAllUnfinished() {
-            return from root in this._sessionRepository.GetAll() where !root.IsFinished() select root;
+            return from root in this.GetAll() where !root.IsFinished() select root;
         }
 
         public IEnumerable<RenovationSessionAggregateRoot> GetAll() {
-            return this._sessionRepository.GetAll();
+            List<RenovationSessionAggregateRoot> roots = new List<RenovationSessionAggregateRoot>();
+            foreach(RenovationSessionAggregateRoot root in this._sessionRepository.GetAll()) {
+                root.Rehydrate( _eventService.GetAllForRootId(root.Id));
+                roots.Add(root);
+            }
+            return roots;
         }
     }
 }

@@ -19,6 +19,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             private set {_RoomRenovationPlans = value;}
         }
 
+
         public DateTime? Start { get; private set; }
         public DateTime? End { get; private set; }
 
@@ -182,6 +183,10 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             this.Start = null;
                 this.End = null;
         }
+
+        public void Rehydrate(IEnumerable<DomainEvent> events) {
+            this.Events = events.ToList();
+        }
         
         public void Update(RenovationSessionAggregateRoot entity) {
             this.Start = entity.Start;
@@ -193,8 +198,10 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             if(this.Events.ToArray().Length < 1) {
                 return false;
             }
-            if(this.Events.Last().GetType() == typeof(SessionEnded)) {
-                return true;
+            foreach(DomainEvent e in Events) {
+                if(this.ConvertTypes(e.GetType()).Equals(typeof(SessionEnded))) {
+                    return true;
+                }
             }
             return false;
         }
@@ -203,7 +210,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             double totalTime = 0;
             int numberOfOccurences = 0;
             for(int i = 1; i < this.Events.ToArray().Length; i++) {
-                if(this.Events.ToArray()[i].GetType().Equals(eventType)) {
+                if(this.ConvertTypes(this.Events.ToArray()[i].GetType()).Equals(eventType)) {
                     totalTime += (this.Events.ToArray()[i].OccurrenceTime - this.Events.ToArray()[i-1].OccurrenceTime).Seconds;
                     numberOfOccurences += 1;
                 }
@@ -222,7 +229,12 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public DateTime GetStartTime() {
-            return this.Events.ToArray()[0].OccurrenceTime;
+            foreach(DomainEvent e in Events) {
+                if(this.ConvertTypes(e.GetType()) == typeof(SessionStarted)) {
+                    return e.OccurrenceTime;
+                }
+            }
+            return DateTime.Now;
         }
 
         public int GetTimesGoneBack() {
@@ -234,7 +246,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         public int GetNumberOfOccurences(Type eventType) {
             int numberOfOccurences = 0;
             for(int i = 1; i < this.Events.ToArray().Length; i++) {
-                if(this.Events.ToArray()[i].GetType().Equals(eventType)) {
+                if(this.ConvertTypes(this.Events.ToArray()[i].GetType()).Equals(eventType)) {
                     numberOfOccurences += 1;
                 }
             }
@@ -242,7 +254,52 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public Type GetSessionLastEventType() {
-            return this.Events.Last().GetType();
+            DomainEvent lastEvent = Events.ToArray()[0];
+            foreach(dynamic e in Events) {
+                if(e.OccurrenceTime < lastEvent.OccurrenceTime) {
+                    lastEvent = e; 
+                }
+            }
+            return this.ConvertTypes(lastEvent.GetType());
+        }
+
+        private Type ConvertTypes(Type proxyType) {
+            if(proxyType.ToString().Contains("SessionStarted")) {
+                return typeof(SessionStarted);
+            }
+            else if(proxyType.ToString().Contains("NewRoomsCreated")) {
+                return typeof(NewRoomsCreated);
+            }
+            else if(proxyType.ToString().Contains("ReturnedToNewRoomCreation")) {
+                return typeof(ReturnedToNewRoomCreation);
+            }
+            else if(proxyType.ToString().Contains("ReturnedToOldRoomsSelection")) {
+                return typeof(ReturnedToOldRoomsSelection);
+            }
+            else if(proxyType.ToString().Contains("ReturnedToSpecificTimeSelection")) {
+                return typeof(ReturnedToSpecificTimeSelection);
+            }
+            else if(proxyType.ToString().Contains("ReturnedToTimeframeCreation")) {
+                return typeof(ReturnedToTimeframeCreation);
+            }
+            else if(proxyType.ToString().Contains("ReturnedToTypeSelection")) {
+                return typeof(ReturnedToTypeSelection);
+            }
+            else if(proxyType.ToString().Contains("SpecificTimeChosen")) {
+                return typeof(SpecificTimeChosen);
+            }
+            else if(proxyType.ToString().Contains("TimeframeCreated")) {
+                return typeof(TimeframeCreated);
+            }
+            else if(proxyType.ToString().Contains("TypeChosen")) {
+                return typeof(TypeChosen);
+            }
+            else if(proxyType.ToString().Contains("OldRoomsChosen")) {
+                return typeof(OldRoomsChosen);
+            }
+            else {
+                return typeof(SessionEnded);
+            }
         }
 
     }
