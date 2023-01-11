@@ -44,5 +44,55 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Implementation
             }
             return AverageTimeSpentOnStepsInSession.AverageOutList(listOfStepsLengts);
         }
+
+        public AverageNumberOfTimesWentBackPerStep GetAverageNumberOfTimesWentBackPerStep() {
+            List<RenovationSessionAggregateRoot> listAll = this._renovationSessionService.GetAll().ToList();
+            List<AverageNumberOfTimesWentBackPerStep> listOfStepsLengts = new List<AverageNumberOfTimesWentBackPerStep>();
+            foreach(RenovationSessionAggregateRoot root in listAll) {
+                AverageNumberOfTimesWentBackPerStep timeSpent = new AverageNumberOfTimesWentBackPerStep(root.GetNumberOfOccurences(typeof(ReturnedToOldRoomsSelection)),
+                                                 root.GetNumberOfOccurences(typeof(ReturnedToTypeSelection)),root.GetNumberOfOccurences(typeof(ReturnedToTimeframeCreation)),
+                                                 root.GetNumberOfOccurences(typeof(ReturnedToNewRoomCreation)),root.GetNumberOfOccurences(typeof(ReturnedToSpecificTimeSelection)));
+                listOfStepsLengts.Add(timeSpent);
+            }
+            return AverageNumberOfTimesWentBackPerStep.AverageOutList(listOfStepsLengts);
+        }
+
+        public AverageTimeSpentOnStepsInSession GetAverageTimeSpentOnStepsInSessionForTimeframe(DateTime start, DateTime end) {
+            List<RenovationSessionAggregateRoot> listAll = this._renovationSessionService.GetAll().ToList();
+            List<AverageTimeSpentOnStepsInSession> listOfStepsLengts = new List<AverageTimeSpentOnStepsInSession>();
+            foreach(RenovationSessionAggregateRoot root in listAll) {
+                if(!(root.GetStartTime().Hour >= start.Hour && root.GetStartTime().Hour < end.Hour)) {
+                    continue;
+                }
+                AverageTimeSpentOnStepsInSession timeSpent = new AverageTimeSpentOnStepsInSession(root.GetAverageTimeForEvent(typeof(OldRoomsChosen)),
+                                                 root.GetAverageTimeForEvent(typeof(TypeChosen)),root.GetAverageTimeForEvent(typeof(TimeframeCreated)),
+                                                 root.GetAverageTimeForEvent(typeof(NewRoomsCreated)),root.GetAverageTimeForEvent(typeof(SpecificTimeChosen)));
+                listOfStepsLengts.Add(timeSpent);
+            }
+            return AverageTimeSpentOnStepsInSession.AverageOutList(listOfStepsLengts);
+        }
+
+        public NumberOfSessionLeftOffOnEachStep GetNumberOfSessionLeftOffOnEachStep() {
+            List<RenovationSessionAggregateRoot> listUnfinished = this._renovationSessionService.GetAllUnfinished().ToList();
+            NumberOfSessionLeftOffOnEachStep statistic = new NumberOfSessionLeftOffOnEachStep();
+            foreach(RenovationSessionAggregateRoot root in listUnfinished) {
+                if(root.GetSessionLastEventType().Equals(typeof(TypeChosen)) || root.GetSessionLastEventType().Equals(typeof(ReturnedToTypeSelection))) {
+                    statistic.NumberOnType += 1;
+                }
+                else if(root.GetSessionLastEventType().Equals(typeof(OldRoomsChosen)) || root.GetSessionLastEventType().Equals(typeof(ReturnedToOldRoomsSelection))) {
+                    statistic.NumberOnOldRooms += 1;
+                }
+                else if(root.GetSessionLastEventType().Equals(typeof(TimeframeCreated)) || root.GetSessionLastEventType().Equals(typeof(ReturnedToTimeframeCreation))) {
+                    statistic.NumberOnTimeframe += 1;
+                }
+                else if(root.GetSessionLastEventType().Equals(typeof(NewRoomsCreated)) || root.GetSessionLastEventType().Equals(typeof(ReturnedToNewRoomCreation))) {
+                    statistic.NumberOnNewRooms += 1;
+                }
+                else{
+                    statistic.NumberOnSpecificTime += 1;
+                }
+            }
+            return statistic;
+        }
     }
 }

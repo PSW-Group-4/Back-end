@@ -105,6 +105,10 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Implementation
             return from root in this._sessionRepository.GetAll() where root.IsFinished() select root;
         }
 
+        public IEnumerable<RenovationSessionAggregateRoot> GetAllUnfinished() {
+            return from root in this._sessionRepository.GetAll() where !root.IsFinished() select root;
+        }
+
         public IEnumerable<RenovationSessionAggregateRoot> GetAll() {
             return this._sessionRepository.GetAll();
         }

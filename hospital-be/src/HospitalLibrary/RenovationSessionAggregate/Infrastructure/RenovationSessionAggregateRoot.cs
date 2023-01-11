@@ -226,17 +226,24 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public int GetTimesGoneBack() {
+            int numberOfOccurences = this.GetNumberOfOccurences(typeof(ReturnedToNewRoomCreation)) + this.GetNumberOfOccurences(typeof(ReturnedToOldRoomsSelection))
+                + this.GetNumberOfOccurences(typeof(ReturnedToSpecificTimeSelection)) + this.GetNumberOfOccurences(typeof(ReturnedToTimeframeCreation)) +this.GetNumberOfOccurences(typeof(ReturnedToTypeSelection));
+            return numberOfOccurences;
+        }
+
+        public int GetNumberOfOccurences(Type eventType) {
             int numberOfOccurences = 0;
             for(int i = 1; i < this.Events.ToArray().Length; i++) {
-                if(this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToNewRoomCreation)) ||
-                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToOldRoomsSelection)) ||
-                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToSpecificTimeSelection)) ||
-                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToTimeframeCreation)) ||
-                    this.Events.ToArray()[i].GetType().Equals(typeof(ReturnedToTypeSelection))) {
+                if(this.Events.ToArray()[i].GetType().Equals(eventType)) {
                     numberOfOccurences += 1;
                 }
             }
             return numberOfOccurences;
         }
+
+        public Type GetSessionLastEventType() {
+            return this.Events.Last().GetType();
+        }
+
     }
 }

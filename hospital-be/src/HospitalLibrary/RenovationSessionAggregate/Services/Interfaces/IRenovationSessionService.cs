@@ -23,5 +23,6 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Interfaces
         public Guid StartSession();
         public IEnumerable<RenovationSessionAggregateRoot> GetAll();
         public IEnumerable<RenovationSessionAggregateRoot> GetAllFinished();
+        public IEnumerable<RenovationSessionAggregateRoot> GetAllUnfinished();
     }
 }
