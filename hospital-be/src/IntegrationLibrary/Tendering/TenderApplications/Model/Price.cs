@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace IntegrationLibrary.TenderApplications.Model
 {
-   public class Price
+    public class Price
     {
-        [JsonInclude]
-        public double Amount { get; private set; }
-        [JsonInclude]
-        public string Currency { get; private set; }
-
         public Price() { }
 
         public Price(double amount, string currency)
@@ -21,23 +14,31 @@ namespace IntegrationLibrary.TenderApplications.Model
             Amount = amount;
             Currency = currency;
         }
-        public static Price Create(double amount, string currency) {
+
+        [JsonInclude] public double Amount { get; private set; }
+        [JsonInclude] public string Currency { get; private set; }
+
+        public static Price Create(double amount, string currency)
+        {
             return new Price(amount, currency);
         }
+
         public override string ToString()
         {
-            return Amount.ToString() + " " + Currency.ToString();
+            return Amount + " " + Currency;
         }
+
         public override bool Equals(object obj)
         {
             if (obj == null) return false;
 
             if (GetType() != obj.GetType())
-                throw new ArgumentException($"Invalid comparison of Value Objects of different types: {GetType()} and {obj.GetType()}");
-            var valueObject = (Price)obj;
+                throw new ArgumentException(
+                    $"Invalid comparison of Value Objects of different types: {GetType()} and {obj.GetType()}");
+            Price valueObject = (Price)obj;
             return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
         }
-        //GetEqualityComponents exists so that we can use SequenceEqual to compare 2 blood types field by field 
+
         protected IEnumerable<object> GetEqualityComponents()
         {
             yield return Amount;
@@ -47,10 +48,7 @@ namespace IntegrationLibrary.TenderApplications.Model
         public override int GetHashCode()
         {
             return GetEqualityComponents()
-            .Aggregate(1, (current, obj) =>
-            {
-                return HashCode.Combine(current, obj);
-            });
+                .Aggregate(1, (current, obj) => { return HashCode.Combine(current, obj); });
         }
 
         public static bool operator ==(Price a, Price b)
@@ -61,18 +59,22 @@ namespace IntegrationLibrary.TenderApplications.Model
                 return false;
             return a.Equals(b);
         }
+
         public static bool operator !=(Price a, Price b)
         {
             return !(a == b);
         }
-        public static bool IsValid(Price price) {
+
+        public static bool IsValid(Price price)
+        {
             bool valid = false;
             if (price.Amount > 0)
-            {
-                if (!(price.Currency.Contains("0") || price.Currency.Contains("1") || price.Currency.Contains("2") || price.Currency.Contains("3") || price.Currency.Contains("4") || price.Currency.Contains("5") || price.Currency.Contains("6") || price.Currency.Contains("7") || price.Currency.Contains("8") || price.Currency.Contains("9"))) {
+                if (!(price.Currency.Contains("0") || price.Currency.Contains("1") || price.Currency.Contains("2") ||
+                      price.Currency.Contains("3") || price.Currency.Contains("4") || price.Currency.Contains("5") ||
+                      price.Currency.Contains("6") || price.Currency.Contains("7") || price.Currency.Contains("8") ||
+                      price.Currency.Contains("9")))
                     valid = true;
-                }
-            }
+
             return valid;
         }
     }

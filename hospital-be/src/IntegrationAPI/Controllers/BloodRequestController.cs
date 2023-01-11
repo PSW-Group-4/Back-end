@@ -18,6 +18,7 @@ using IntegrationAPI.Dtos.BloodProducts;
 using IntegrationLibrary.BloodBanks.Service;
 using ActionResult = Microsoft.AspNetCore.Mvc.ActionResult;
 using ControllerBase = Microsoft.AspNetCore.Mvc.ControllerBase;
+using IntegrationAPI.Communications.SharedStorage;
 
 namespace IntegrationAPI.Controllers
 {
@@ -29,12 +30,14 @@ namespace IntegrationAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IProducer bloodRequestProducer;
         private readonly IBloodBankService bloodBankService;
+        private readonly ISftpService sftpService;
 
-        public BloodRequestController(IBloodRequestService service, IBloodBankService bloodBankService, IProducer bloodRequestProducer)
+        public BloodRequestController(IBloodRequestService service, IBloodBankService bloodBankService, IProducer bloodRequestProducer, ISftpService sftpService)
         {
             _service = service;
             this.bloodBankService = bloodBankService;
             this.bloodRequestProducer = bloodRequestProducer;
+            this.sftpService = sftpService;
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]
@@ -91,5 +94,16 @@ namespace IntegrationAPI.Controllers
             };
             return Ok(_service.Create(bloodRequest));
         }
+        [Microsoft.AspNetCore.Mvc.Route("report/{begining}/{end}"), Microsoft.AspNetCore.Mvc.HttpPut]
+        //[AllowAnonymous]
+        //[ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
+        public ActionResult GenerateUrgentBloodRequestReportForDateRange(DateTime begining, DateTime end)
+        {
+           string path = _service.GenerateUrgentRequestReportForDateRange(begining, end, bloodBankService.GetAll());
+            string[] name = path.Split("blood supply");
+            sftpService.UploadFile(path,"Urgent blood supply "+ name[1]);
+            return Ok();
+        }
     }
 }
+

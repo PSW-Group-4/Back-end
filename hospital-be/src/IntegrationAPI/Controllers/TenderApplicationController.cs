@@ -2,7 +2,6 @@
 using IntegrationLibrary.BloodBanks.Service;
 using IntegrationLibrary.TenderApplications.Model;
 using IntegrationLibrary.TenderApplications.Service;
-using IntegrationLibrary.Tenders.Service;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,9 @@ using IntegrationAPI.Authorization;
 using Microsoft.AspNetCore.Authorization;
 using JwtService = IntegrationLibrary.Utilities.JwtService;
 using IntegrationLibrary.BloodBanks.Model;
-using IntegrationLibrary.Tenders.Model;
+using IntegrationLibrary.Tendering.DomainEvents.Subtypes;
+using IntegrationLibrary.Tendering.Model;
+using IntegrationLibrary.Tendering.Service;
 
 namespace IntegrationAPI.Controllers
 {
@@ -42,14 +43,16 @@ namespace IntegrationAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "BloodBank")]
-        public ActionResult Apply(ApplyForTenderDto tenderApplication)
+        public ActionResult Submit(ApplyForTenderDto tenderApplication)
         {    
-            BloodBank bank =
-                _bloodBankService.GetByEmail(JwtService.GetEmailFromToken(tenderApplication.BloodBank));
+            /*BloodBank bank =
+                _bloodBankService.GetByEmail(tenderApplication.BloodBank);*/
+            BloodBank bank = _bloodBankService.GetByEmail(JwtService.GetEmailFromToken(tenderApplication.BloodBank));
             Tender tender = _tenderService.GetById(tenderApplication.TenderId);
             Price price = tenderApplication.Price;
-            TenderApplication application = new TenderApplication(bank,tender,price);
-            return Ok(_service.Apply(application));
+            AppliedToTenderEvent appliedToTenderEvent = new AppliedToTenderEvent(bank, tender, price);
+            _service.Submit(appliedToTenderEvent);
+            return Ok();
         }
 
         [Route("tender"), HttpPost]
@@ -58,12 +61,12 @@ namespace IntegrationAPI.Controllers
             return Ok(_service.GetByTender(Guid.Parse(tenderId)));
         }
 
-        [Route("accept"), HttpPost]
+        [Route("notify"), HttpPost]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
-        public ActionResult AcceptOffer(string applicationId)
+        public ActionResult NotifyParticipants(string applicationId)
         {
             TenderApplication application = _service.FindById(Guid.Parse(applicationId));
-            return Ok(_service.AcceptOffer(application));
+            return Ok(_service.NotifyParticipants(application));
         }
     }
 }

@@ -30,9 +30,6 @@ using Microsoft.AspNetCore.Mvc;
 using IntegrationAPI.HostedServices;
 using IntegrationAPI.Dtos.ReportsConfiguration;
 using Confluent.Kafka;
-using IntegrationLibrary.Tenders.Repository;
-using IntegrationLibrary.Tenders.Service;
-using IntegrationLibrary.Tenders.Model;
 using IntegrationAPI.Dtos.Tenders;
 using IntegrationLibrary.BloodSubscriptions.Service;
 using IntegrationLibrary.BloodSubscriptions.Repository;
@@ -53,8 +50,15 @@ using IntegrationLibrary.BloodSubscriptionResponses.Repository;
 using IntegrationLibrary.BloodSubscriptionResponses.Service;
 using IntegrationLibrary.ManagerBloodRequests.Repository;
 using IntegrationLibrary.ManagerBloodRequests.Service;
+using IntegrationLibrary.Tendering.Model;
+using IntegrationLibrary.Tendering.Repository;
+using IntegrationLibrary.Tendering.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using IntegrationLibrary.Tendering.DomainEvents.Base;
+using IntegrationLibrary.EventSourcing;
+using IntegrationLibrary.Tendering.DomainEventStore;
+using IntegrationAPI.Communications.SharedStorage;
 
 namespace IntegrationAPI
 {
@@ -160,6 +164,7 @@ namespace IntegrationAPI
             services.AddScoped<IBloodSubscriptionRepository, BloodSubscriptionRepository>();
             services.AddScoped<IBloodSubscriptionService, BloodSubscriptionService>();
             services.AddScoped<ITenderApplicationService, TenderApplicationService>();
+            
             services.AddScoped<ITenderApplicationRepository, TenderApplicationRepository>();
             services.AddScoped<IProducer, Producer>();
             services.AddScoped<IConsumer<News>, NewsConsumer>();
@@ -167,6 +172,10 @@ namespace IntegrationAPI
             services.AddScoped<IConsumer<Blood>, BloodConsumer>();
             services.AddScoped<IBloodSubscriptionResponseRepository, BloodSubscriptionResponseRepository>();
             services.AddScoped<IBloodSubscriptionResponseService, BloodSubscriptionResponseService>();
+
+            services.AddScoped<ISftpService, SftpService>();
+
+            services.AddScoped<IEventStore<TenderingEvent>, TenderingEventStore>();
 
             services.AddScoped<IManagerRequestRepository, ManagerRequestRepository>();
             services.AddScoped<IManagerRequestService, ManagerRequestService>();

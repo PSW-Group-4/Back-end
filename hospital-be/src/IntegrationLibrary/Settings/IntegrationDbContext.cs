@@ -7,7 +7,8 @@ using IntegrationLibrary.BloodSubscriptions;
 using IntegrationLibrary.EntityConfigurations;
 using IntegrationLibrary.ManagerBloodRequests.Model;
 using IntegrationLibrary.TenderApplications.Model;
-using IntegrationLibrary.Tenders.Model;
+using IntegrationLibrary.Tendering.DomainEvents.Base;
+using IntegrationLibrary.Tendering.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace IntegrationLibrary.Settings
@@ -29,6 +30,7 @@ namespace IntegrationLibrary.Settings
         public DbSet<TenderApplication> TenderApplications { get; set; }
         public DbSet<ManagerRequest> ManagerBloodRequests { get; set; }
         public DbSet<BloodSubscriptionResponse> BloodSubscriptionResponses { get; set; }
+        public DbSet<TenderingEvent> TenderingEvents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +40,7 @@ namespace IntegrationLibrary.Settings
             modelBuilder.ApplyConfiguration(new TenderConfiguration());
             modelBuilder.ApplyConfiguration(new BloodSubscriptionConfiguration());
             modelBuilder.ApplyConfiguration(new ManagerRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new TenderingEventConfiguration());
         }
     }
 }
