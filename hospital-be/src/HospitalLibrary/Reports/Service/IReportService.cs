@@ -12,5 +12,11 @@ namespace HospitalLibrary.Reports.Service
         Report Update(Report report);
         void Delete(Guid symptomId);
         public Report GetByMedicalAppointmentId(Guid id);
+
+        public List<Report> GetBySymptom(String sipmtom);
+        public List<Report> GetByPrescription(String prescription);
+        public List<Report> GetByPatientName(String name);
+        public List<Report> GetByPatientSurname(String name);
+        public List<Report> BasicSearch(String search);
     }
 }

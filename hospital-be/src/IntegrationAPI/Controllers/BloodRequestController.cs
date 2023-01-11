@@ -31,6 +31,9 @@ namespace IntegrationAPI.Controllers
         private readonly IProducer bloodRequestProducer;
         private readonly IBloodBankService bloodBankService;
         private readonly ISftpService sftpService;
+        private IBloodRequestService bloodRequestService;
+        private IBloodBankService bloodBankService1;
+        private IProducer producer;
 
         public BloodRequestController(IBloodRequestService service, IBloodBankService bloodBankService, IProducer bloodRequestProducer, ISftpService sftpService)
         {
@@ -38,6 +41,13 @@ namespace IntegrationAPI.Controllers
             this.bloodBankService = bloodBankService;
             this.bloodRequestProducer = bloodRequestProducer;
             this.sftpService = sftpService;
+        }
+
+        public BloodRequestController(IBloodRequestService bloodRequestService, IBloodBankService bloodBankService1, IProducer producer)
+        {
+            this.bloodRequestService = bloodRequestService;
+            this.bloodBankService1 = bloodBankService1;
+            this.producer = producer;
         }
 
         [Microsoft.AspNetCore.Mvc.HttpGet]

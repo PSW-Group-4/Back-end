@@ -1,4 +1,5 @@
-﻿using HospitalLibrary.Exceptions;
+﻿using HospitalLibrary.Appointments.Model;
+using HospitalLibrary.Exceptions;
 using HospitalLibrary.Medicines.Model;
 using HospitalLibrary.Reports.Model;
 using HospitalLibrary.Reports.Model;
@@ -88,6 +89,138 @@ namespace HospitalLibrary.Reports.Repository
                 throw new NotFoundException();
             }
             return report;
+        }
+
+        public List<Report> GetBySymptom(String sipmtom)
+        {
+            List<Report> reportList = new List<Report>();
+            foreach(var report in GetAll())
+            {
+                foreach(var s in report.Symptoms)
+                {
+                    if (s.Name.ToLower().Contains(sipmtom.ToLower())){
+                        reportList.Add(report);
+                    }
+                }
+            }
+
+            return reportList;
+        }
+
+        public List<Report> GetByPrescription(String prescription)
+        {
+            List<Report> reportList = new List<Report>();
+            foreach(var report in GetAll())
+            {
+                foreach(var p in report.Prescriptions)
+                {
+                    foreach(var medicine in p.Medicines)
+                    {
+                        if (medicine.Name.ToLower().Contains(prescription.ToLower()))
+                        {
+                            reportList.Add(report);
+                        }
+                    }
+                }
+            }
+            return reportList;
+        }
+
+        public List<Report> GetByPatientName(String name)
+        {
+            List<Report> reportList = new List<Report>();
+            foreach(var report in GetAll())
+            {
+                foreach(var medicalAppointment in _context.MedicalAppointments.ToList())
+                {
+                    if(report.MedicalAppointmentId == medicalAppointment.Id)
+                    {
+                        foreach(var patient in _context.Patients)
+                        {
+                            if(patient.Id == medicalAppointment.PatientId)
+                            {
+                                if (patient.Name.ToLower().Contains(name.ToLower())){
+                                    reportList.Add(report);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return reportList;
+        }
+
+        public List<Report> GetByPatientSurname(String name)
+        {
+            List<Report> reportList = new List<Report>();
+            foreach (var report in GetAll())
+            {
+                foreach (var medicalAppointment in _context.MedicalAppointments.ToList())
+                {
+                    if (report.MedicalAppointmentId == medicalAppointment.Id)
+                    {
+                        foreach (var patient in _context.Patients)
+                        {
+                            if (patient.Id == medicalAppointment.PatientId)
+                            {
+                                if (patient.Surname.ToLower().Contains(name.ToLower()))
+                                {
+                                    reportList.Add(report);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return reportList;
+        }
+
+        public List<Report> BasicSearch(String search)
+        {
+            string[] words = search.Split(' ');
+            List<Report> reportList = new List<Report>();
+            foreach (var word in words)
+            {
+                var getByName = GetByPatientName(word);
+                var getBySurname = GetByPatientSurname(word);
+                var getByPrescription = GetByPrescription(word);
+                var getBySymptom = GetBySymptom(word);
+
+                if(getByName != null)
+                {
+                    foreach (var report in getByName)
+                    {
+                        if (!reportList.Contains(report))
+                            reportList.Add(report);
+                    }
+                }
+                if (getBySurname != null)
+                {
+                    foreach (var report in getBySurname)
+                    {
+                        if (!reportList.Contains(report))
+                            reportList.Add(report);
+                    }
+                }
+                if (getByPrescription != null)
+                {
+                    foreach (var report in getByPrescription)
+                    {
+                        if (!reportList.Contains(report))
+                            reportList.Add(report);
+                    }
+                }
+                if (getBySymptom != null)
+                {
+                    foreach (var report in getBySymptom)
+                    {
+                        if (!reportList.Contains(report))
+                            reportList.Add(report);
+                    }
+                }
+
+            }
+            return reportList;
         }
     }
 }

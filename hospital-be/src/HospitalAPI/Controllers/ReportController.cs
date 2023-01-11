@@ -63,6 +63,67 @@ namespace HospitalAPI.Controllers
             }
         }
 
+        [HttpGet("symptom/{name}")]
+        public ActionResult GetBySymptom([FromRoute] String name)
+        {
+            try
+            {
+                return Ok(_reportService.GetBySymptom(name));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Not found");
+            }
+        }
+
+        [HttpGet("prescription/{name}")]
+        public ActionResult GetByPrescription([FromRoute] String name)
+        {
+            try
+            {
+                return Ok(_reportService.GetByPrescription(name));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Not found");
+            }
+        }
+        [HttpGet("patientName/{name}")]
+        public ActionResult GetByPatientName([FromRoute] String name)
+        {
+            try
+            {
+                return Ok(_reportService.GetByPatientName(name));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Not found");
+            }
+        }
+        [HttpGet("patientSurname/{name}")]
+        public ActionResult GetByPatientSurname([FromRoute] String name)
+        {
+            try
+            {
+                return Ok(_reportService.GetByPatientSurname(name));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Not found");
+            }
+        }
+        [HttpGet("search/{name}")]
+        public ActionResult BasicSearch([FromRoute] String name)
+        {
+            try
+            {
+                return Ok(_reportService.BasicSearch(name));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Not found");
+            }
+        }
         //POST: api/Report
         [HttpPost]
         public ActionResult Create([FromBody] ReportRequestDto reportRequestDto)

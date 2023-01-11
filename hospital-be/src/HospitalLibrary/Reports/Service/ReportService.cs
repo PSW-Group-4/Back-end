@@ -41,5 +41,26 @@ namespace HospitalLibrary.Reports.Service
         {
             return _reportRepository.GetByMedicalAppointmentId(id);
         }
+        public List<Report> GetBySymptom(String sipmtom)
+        {
+            return _reportRepository.GetBySymptom(sipmtom);
+        }
+        public List<Report> GetByPrescription(String prescription)
+        {
+            return _reportRepository.GetByPrescription(prescription);
+        }
+
+        public List<Report> GetByPatientName(String name)
+        {
+            return _reportRepository.GetByPatientName(name);
+        }
+        public List<Report> GetByPatientSurname(String name)
+        {
+            return _reportRepository.GetByPatientSurname(name);
+        }
+        public List<Report> BasicSearch(String search)
+        {
+            return _reportRepository.BasicSearch(search); 
+        }
     }
 }
