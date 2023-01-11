@@ -11,5 +11,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Interfaces
         public FinishedAndUnfinishedSessionStatistic GetFinishedAndUnfinishedSessionStatistic();
         public IEnumerable<FinishedSessionStatisticsForTable> GetFinishedSessionStatisticsForTable();
         public AverageTimeSpentOnStepsInSession GetAverageTimeSpentOnStepsInSession();
+        public AverageNumberOfTimesWentBackPerStep GetAverageNumberOfTimesWentBackPerStep();
+        public AverageTimeSpentOnStepsInSession GetAverageTimeSpentOnStepsInSessionForTimeframe(DateTime start, DateTime end);
+        public NumberOfSessionLeftOffOnEachStep GetNumberOfSessionLeftOffOnEachStep();
     }
 }
