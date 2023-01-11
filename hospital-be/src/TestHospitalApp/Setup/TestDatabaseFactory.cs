@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using DateTime = System.DateTime;
+using HospitalLibrary.MedicalAppointmentReportSession.Model.Events;
 
 namespace TestHospitalApp.Setup
 {
@@ -105,9 +106,6 @@ namespace TestHospitalApp.Setup
                 new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
                 new Email("doctor@test.com"), "066/123-456", LicenceNum1, Speciality1, WorkingTimeStart1,
                 WorkingTimeEnd1, room.Id, room);
-
-
-
 
             String WorkingTimeStart = "9:00";
             String WorkingTimeEnd = "12:00";
@@ -366,6 +364,7 @@ namespace TestHospitalApp.Setup
             //Medical appointments
             initMedicalAppointments(context);
             initMedicalAppointmentSchedulingSessions(context);
+            initMedicalAppointmentReportSessions(context);
             InitAgeGroups(context);
             
 
@@ -574,22 +573,81 @@ namespace TestHospitalApp.Setup
             
             DateTime currentTime = DateTime.Now;
             Guid unfinishedAggregateId = new Guid("0e34318e-0bf6-4c8d-8b0e-153dae18d80b");
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(unfinishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.StartedScheduling(unfinishedAggregateId, currentTime, patient));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(unfinishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(15), doctor));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), Selection.Speciality));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), Selection.Speciality));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(25), "Physician"));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(30), doctor));
 
             Guid finishedAggregateId = new Guid("055f61ca-9487-495f-8229-590c24e7b7da");
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(finishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.StartedScheduling(finishedAggregateId, currentTime, patient));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(finishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(finishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(finishedAggregateId, currentTime.AddSeconds(15), doctor));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 14, 12,30,0)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 14, 12,30,0)));
 
         }
+
+        private static void initMedicalAppointmentReportSessions(HospitalDbContext context)
+        {
+
+            Address address = new Address
+            {
+                Id = Guid.NewGuid(),
+                Street = "Ulica",
+                StreetNumber = "10",
+                City = "Grad",
+                Country = "Država"
+            };
+
+            Room room = new Room
+            {
+                Id = Guid.NewGuid(),
+                Name = "Soba",
+                Number = 10,
+                Description = "Opis sobe"
+            };
+
+            Doctor doctor = new Doctor(Guid.NewGuid(), "Test Doctor Report",
+                "Test Doctor Report",
+                new DateTime(1980, 10, 1, 0, 0, 0), Gender.Male, address, new Jmbg("0811000800021"),
+                new Email("doctorreport@test.com"), "066/123-456", "12345", "Surgeon", "09:00",
+                "15:00", room.Id, room);
+
+
+            Patient patient = new Patient(Guid.NewGuid(), "Test Patient Report", "Test Patient Report", new DateTime(1990, 10, 1),
+                Gender.Female, new Address(Guid.NewGuid(), "Novi Sad", "Serbia", "Ulica 1", "50"),
+                new Jmbg("0811000800021"), new Email("pacijent@gmail.com"), "066/555-666",
+                new BloodType(BloodGroup.O, RhFactor.POSITIVE));
+            patient.AppointTheChosenDoctor(doctor);
+
+
+            context.Addresses.Add(address);
+            context.Rooms.Add(room);
+            context.Doctors.Add(doctor);
+            context.Patients.Add(patient);
+
+            DateTime currentTime = DateTime.Now;
+            Guid unfinishedAggregateId = new Guid("4f82557d-2a4d-4f1f-9f0f-02196f1a7d4f");
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.StartedScheduling(unfinishedAggregateId, currentTime, doctor));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenSymptom(unfinishedAggregateId, currentTime.AddSeconds(5), 2));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenReportText(unfinishedAggregateId, currentTime.AddSeconds(10), "Report text 1"));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenMedicine(unfinishedAggregateId, currentTime.AddSeconds(15), 1));
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), SelectionReport.ReportText));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenReportText(unfinishedAggregateId, currentTime.AddSeconds(25), "Fixed report text"));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenMedicine(unfinishedAggregateId, currentTime.AddSeconds(30), 1));
+
+            Guid finishedAggregateId = new Guid("c4b12ea1-417c-4f89-9028-67077a229661");
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.StartedScheduling(finishedAggregateId, currentTime, doctor));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenSymptom(finishedAggregateId, currentTime.AddSeconds(5), 1));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenReportText(finishedAggregateId, currentTime.AddSeconds(10), "Report text 2"));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenMedicine(finishedAggregateId, currentTime.AddSeconds(15), 2));
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 20, 12, 0, 0)));
+
+        }
+
         private static void InitAgeGroups(HospitalDbContext context)
         {
            context.AgeGroups.Add(new AgeGroup("Child", 0, 16));

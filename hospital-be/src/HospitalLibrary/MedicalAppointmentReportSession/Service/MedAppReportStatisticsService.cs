@@ -243,7 +243,10 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
 
             foreach (MedicalAppointmentReportSession session in sessions)
             {
-                int years = DateTime.Now.Year - session.Doctor.Birthdate.Year;
+                int years = 0;
+                if (session.Doctor != null)
+                    years = DateTime.Now.Year - session.Doctor.Birthdate.Year;
+
                 double count = GetSpentTimeOnSesion(session);
                 if (years < yearSteps[0])
                 {
