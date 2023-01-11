@@ -21,6 +21,53 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             _ageGroupRepository = ageGroupRepository;
         }
 
+
+        public IDictionary<string, int> GetReportTable()
+        {
+            IEnumerable<MedicalAppointmentReportSession> sessions = _medAppSessionRepository.GetAll();
+            IDictionary<string, int> timesPerSelection = new Dictionary<string, int>();
+
+            List<string> steps = new List<string>()
+            {
+                "averageSteps","averageTime","averageSymptom","averageReportLenght", "averageMedicine"
+            };
+            foreach (string selection in steps)
+            {
+                timesPerSelection.Add(selection, 0);
+            }
+
+            if (!sessions.Any()) return timesPerSelection;
+
+
+            foreach (MedicalAppointmentReportSession session in sessions)
+            {
+                int count = session.Events.Count();
+                timesPerSelection["averageSteps"] += count;
+                timesPerSelection["averageTime"] += Convert.ToInt32(GetSpentTimeOnSesion(session));
+                if (session.SelectedNumberOfSymptoms.HasValue)
+                {
+                    timesPerSelection["averageSymptom"] += session.SelectedNumberOfSymptoms.Value;
+                }
+                if (session.SelectedReportText != null)
+                {
+                    timesPerSelection["averageReportLenght"] += session.SelectedReportText.Length;
+                }
+                if (session.SelectedNumberOfMedicines.HasValue)
+                {
+                    timesPerSelection["averageMedicine"] += session.SelectedNumberOfMedicines.Value;
+                }
+
+            }
+
+            foreach (var count in timesPerSelection)
+            {
+                timesPerSelection[count.Key] = count.Value / sessions.Count();
+            }
+
+            return timesPerSelection;
+        }
+
+
         public IDictionary<string, int> GetNumberSteps()
         {
             IEnumerable<MedicalAppointmentReportSession> sessions = _medAppSessionRepository.GetAll();
@@ -327,7 +374,6 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
             }
             return timeSpent;
         }
-
 
     }
 }

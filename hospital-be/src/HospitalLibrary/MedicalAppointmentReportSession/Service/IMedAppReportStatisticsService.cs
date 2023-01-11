@@ -12,7 +12,7 @@ namespace HospitalLibrary.MedicalAppointmentReportSession.Service
         public IDictionary<SelectionReport, int> GetNumberEachStep();
         public IDictionary<SelectionReport, double> GetTimeEachStep();
 
-
+        public IDictionary<string, int> GetReportTable();
         public IDictionary<string, int> GetNumberSteps();
         public IDictionary<string, double> GetTimeSteps();
         public IDictionary<string, double> GetDoctorTimeSteps();

@@ -16,6 +16,13 @@ namespace HospitalAPI.Controllers
             _service = service;
         }
 
+
+        [HttpGet("reportTable")]
+        public ActionResult GetReportTable()
+        {
+            return Ok(_service.GetReportTable());
+        }
+
         [HttpGet("numberSteps")]
         public ActionResult GetNumberSteps()
         {
