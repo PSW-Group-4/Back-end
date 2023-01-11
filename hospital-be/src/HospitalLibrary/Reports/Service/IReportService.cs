@@ -18,5 +18,6 @@ namespace HospitalLibrary.Reports.Service
         public List<Report> GetByPatientName(String name);
         public List<Report> GetByPatientSurname(String name);
         public List<Report> BasicSearch(String search);
+        public List<Report> AdvancedSearch(String search);
     }
 }

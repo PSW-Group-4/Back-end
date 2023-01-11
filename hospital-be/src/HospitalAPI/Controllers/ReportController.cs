@@ -124,6 +124,18 @@ namespace HospitalAPI.Controllers
                 return NotFound("Not found");
             }
         }
+        [HttpGet("advancedSearch/{name}")]
+        public ActionResult AdvancedSearch([FromRoute] String name)
+        {
+            try
+            {
+                return Ok(_reportService.AdvancedSearch(name));
+            }
+            catch (NotFoundException)
+            {
+                return NotFound("Not found");
+            }
+        }
         //POST: api/Report
         [HttpPost]
         public ActionResult Create([FromBody] ReportRequestDto reportRequestDto)

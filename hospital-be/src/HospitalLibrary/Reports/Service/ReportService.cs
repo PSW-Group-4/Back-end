@@ -62,5 +62,9 @@ namespace HospitalLibrary.Reports.Service
         {
             return _reportRepository.BasicSearch(search); 
         }
+        public List<Report> AdvancedSearch(String search)
+        {
+            return _reportRepository.AdvancedSearch(search);
+        }
     }
 }

@@ -174,6 +174,7 @@ namespace HospitalLibrary.Reports.Repository
             }
             return reportList;
         }
+        
 
         public List<Report> BasicSearch(String search)
         {
@@ -221,6 +222,47 @@ namespace HospitalLibrary.Reports.Repository
 
             }
             return reportList;
+        }
+
+        public List<Report> AdvancedSearch(String search)
+        {
+
+            string[] words = search.Split(' ');
+            List<Report> reportList = new List<Report>();
+            List<Report> result = new List<Report>();
+            result = BasicSearch(words[0]);
+            
+            foreach (string word in words.Skip(1))
+            {
+                bool add = false;
+                var reports = BasicSearch(word);
+                if(reports.Count == 0)
+                {
+                    result = new List<Report>();
+                    return result;
+                }
+                
+                foreach(var report in reports)
+                {
+                    foreach(var allReports in result)
+                    {
+                        if(report.Id == allReports.Id)
+                        {
+                            add = true;
+                            if(!result.Contains(report))
+                            result.Add(report);
+                        }
+                    }
+                }
+                if(add == false)
+                {
+                    result = new List<Report>();
+                    return result;
+                }
+            }
+
+
+            return result;
         }
     }
 }
