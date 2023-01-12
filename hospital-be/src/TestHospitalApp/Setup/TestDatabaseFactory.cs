@@ -28,6 +28,8 @@ using System.Linq;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using DateTime = System.DateTime;
 using HospitalLibrary.MedicalAppointmentReportSession.Model.Events;
+using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 
 namespace TestHospitalApp.Setup
 {
@@ -366,8 +368,7 @@ namespace TestHospitalApp.Setup
             initMedicalAppointmentSchedulingSessions(context);
             initMedicalAppointmentReportSessions(context);
             InitAgeGroups(context);
-            
-
+            initRenovationSessions(context);
 
             context.SaveChanges();
 
@@ -645,6 +646,117 @@ namespace TestHospitalApp.Setup
             context.MedicalAppointmentReportSessionEvents.Add(new ChosenReportText(finishedAggregateId, currentTime.AddSeconds(10), "Report text 2"));
             context.MedicalAppointmentReportSessionEvents.Add(new ChosenMedicine(finishedAggregateId, currentTime.AddSeconds(15), 2));
             context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 20, 12, 0, 0)));
+
+        }
+
+        private static void initRenovationSessions(HospitalDbContext context) {
+            Guid rootId = Guid.NewGuid();
+            SessionStarted sessionStarted = new SessionStarted(rootId);
+            TypeChosen typeChosen = new TypeChosen(rootId,RenovationAppointment.TypeOfRenovation.Merge);
+
+            List<RoomRenovationPlan> oldRooms = new List<RoomRenovationPlan>();
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("fbcf2919-ef1c-49fe-9556-f99188bdbad9")));
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("18e98c94-5081-4020-ac91-d00f995c7e4f")));
+            OldRoomsChosen oldRoomsChosen =  new OldRoomsChosen(rootId, oldRooms);
+
+            TimeframeCreated timeframeCreated = new TimeframeCreated(rootId, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+            SpecificTimeChosen specificTimeChosen = new SpecificTimeChosen(rootId, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+
+            List<RoomRenovationPlan> newRooms = new List<RoomRenovationPlan>();
+            newRooms.Add(new RoomRenovationPlan("Na8211","Description123",212));
+            NewRoomsCreated newRoomsCreated = new NewRoomsCreated(rootId, newRooms);         
+
+            SessionEnded sessionEnded = new SessionEnded(rootId);
+
+            RenovationSessionAggregateRoot root = new RenovationSessionAggregateRoot(rootId);
+            root.StartSession();
+            root.ChooseType(typeChosen.AggregateId, typeChosen.TypeOfRenovationChosen);
+            root.ChooseOldRooms(oldRoomsChosen.AggregateId, oldRoomsChosen.RoomRenovationPlans);
+            root.CreateTimeframe(timeframeCreated.AggregateId, timeframeCreated.Start, timeframeCreated.End);
+            root.ChooseSpecificTime(specificTimeChosen.AggregateId, specificTimeChosen.Start, specificTimeChosen.End);
+            root.CreateNewRooms(newRoomsCreated.AggregateId, newRoomsCreated.RoomRenovationPlans);
+            root.EndSession(sessionEnded.AggregateId);
+
+            context.RenovationSessionAggregateRoots.Add(root);
+
+            context.RenovationSessionEvents.Add(sessionStarted);
+            context.RenovationSessionEvents.Add(oldRoomsChosen);
+            context.RenovationSessionEvents.Add(timeframeCreated);
+            context.RenovationSessionEvents.Add(specificTimeChosen);
+            context.RenovationSessionEvents.Add(sessionEnded);
+            context.RenovationSessionEvents.Add(newRoomsCreated);
+
+
+            Guid rootId2 = Guid.NewGuid();
+            SessionStarted sessionStarted2 = new SessionStarted(rootId2);
+            TypeChosen typeChosen2 = new TypeChosen(rootId2,RenovationAppointment.TypeOfRenovation.Merge);
+
+            List<RoomRenovationPlan> oldRooms2 = new List<RoomRenovationPlan>();
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("fbcf2919-ef1c-49fe-9556-f99188bdbad9")));
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("18e98c94-5081-4020-ac91-d00f995c7e4f")));
+            OldRoomsChosen oldRoomsChosen2 =  new OldRoomsChosen(rootId2, oldRooms);
+
+            TimeframeCreated timeframeCreated2 = new TimeframeCreated(rootId2, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+            SpecificTimeChosen specificTimeChosen2 = new SpecificTimeChosen(rootId2, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+
+            List<RoomRenovationPlan> newRooms2 = new List<RoomRenovationPlan>();
+            newRooms.Add(new RoomRenovationPlan("Na8211","Description123",212));
+            NewRoomsCreated newRoomsCreated2 = new NewRoomsCreated(rootId2, newRooms);         
+
+            ReturnedToNewRoomCreation returnedToNewRoomCreation = new ReturnedToNewRoomCreation(rootId2);
+            ReturnedToSpecificTimeSelection returnedToSpecificTimeSelection = new ReturnedToSpecificTimeSelection(rootId2);
+            ReturnedToTimeframeCreation returnedToTimeframeCreation = new ReturnedToTimeframeCreation(rootId2);
+            ReturnedToOldRoomsSelection returnedToOldRoomsSelection = new ReturnedToOldRoomsSelection(rootId2);
+            ReturnedToTypeSelection returnedToType = new ReturnedToTypeSelection(rootId2);
+            
+            TypeChosen typeChosen3 = new TypeChosen(rootId2,RenovationAppointment.TypeOfRenovation.Merge);
+            OldRoomsChosen oldRoomsChosen3 =  new OldRoomsChosen(rootId2, oldRooms);
+
+            TimeframeCreated timeframeCreated3 = new TimeframeCreated(rootId2, DateTime.Now.AddDays(28), DateTime.Now.AddDays(29));
+            SpecificTimeChosen specificTimeChosen3 = new SpecificTimeChosen(rootId2, DateTime.Now.AddDays(28), DateTime.Now.AddDays(29));
+
+            NewRoomsCreated newRoomsCreated3 = new NewRoomsCreated(rootId2, newRooms); 
+            
+
+            SessionEnded sessionEnded2 = new SessionEnded(rootId2);
+
+
+            RenovationSessionAggregateRoot root2 = new RenovationSessionAggregateRoot(rootId2);
+            root2.StartSession();
+            root2.ChooseType(typeChosen2.AggregateId, typeChosen2.TypeOfRenovationChosen);
+            root2.ChooseOldRooms(oldRoomsChosen2.AggregateId, oldRoomsChosen2.RoomRenovationPlans);
+            root2.CreateTimeframe(timeframeCreated2.AggregateId, timeframeCreated2.Start, timeframeCreated2.End);
+            root2.ChooseSpecificTime(specificTimeChosen2.AggregateId, specificTimeChosen2.Start, specificTimeChosen2.End);
+            root2.CreateNewRooms(newRoomsCreated2.AggregateId, newRoomsCreated2.RoomRenovationPlans);
+            root2.ReturnToNewRoomCreation(returnedToNewRoomCreation.AggregateId);
+            root2.ReturnToSpecificTimeSelection(returnedToSpecificTimeSelection.AggregateId);
+            root2.ReturnToTimeframeCreation(returnedToTimeframeCreation.AggregateId);
+            root2.ReturnToOldRoomSelection(returnedToOldRoomsSelection.AggregateId);
+            root2.ReturnToTypeSelection(returnedToType.AggregateId);
+            root2.ChooseType(typeChosen3.AggregateId, typeChosen3.TypeOfRenovationChosen);
+            root2.ChooseOldRooms(oldRoomsChosen3.AggregateId, oldRoomsChosen3.RoomRenovationPlans);
+            root2.CreateTimeframe(timeframeCreated3.AggregateId, timeframeCreated3.Start, timeframeCreated3.End);
+            root2.ChooseSpecificTime(specificTimeChosen3.AggregateId, specificTimeChosen3.Start, specificTimeChosen3.End);
+            root2.CreateNewRooms(newRoomsCreated3.AggregateId, newRoomsCreated3.RoomRenovationPlans);
+            root2.EndSession(sessionEnded2.AggregateId);
+
+            context.RenovationSessionAggregateRoots.Add(root2);
+
+            context.RenovationSessionEvents.Add(sessionStarted2);
+            context.RenovationSessionEvents.Add(oldRoomsChosen2);
+            context.RenovationSessionEvents.Add(timeframeCreated2);
+            context.RenovationSessionEvents.Add(specificTimeChosen2);
+            context.RenovationSessionEvents.Add(newRoomsCreated2);
+            context.RenovationSessionEvents.Add(returnedToNewRoomCreation);
+            context.RenovationSessionEvents.Add(returnedToSpecificTimeSelection);
+            context.RenovationSessionEvents.Add(returnedToTimeframeCreation);
+            context.RenovationSessionEvents.Add(returnedToOldRoomsSelection);
+            context.RenovationSessionEvents.Add(returnedToType);
+            context.RenovationSessionEvents.Add(oldRoomsChosen3);
+            context.RenovationSessionEvents.Add(timeframeCreated3);
+            context.RenovationSessionEvents.Add(specificTimeChosen3);
+            context.RenovationSessionEvents.Add(newRoomsCreated3);
+            context.RenovationSessionEvents.Add(sessionEnded2);
 
         }
 
