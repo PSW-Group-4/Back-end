@@ -5,6 +5,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using IntegrationLibrary.BloodReport.Model;
+using IntegrationLibrary.Utilities;
+using MimeKit;
 
 namespace IntegrationAPI.HostedServices
 {
@@ -28,7 +30,11 @@ namespace IntegrationAPI.HostedServices
             var retVal = _reportService.CreateAllTimeElapsed();
             foreach(ReportPathTransporter report in retVal)
             {
+                
                 PdfSender.SendPdf(IntegrationLibrary.Settings.PdfSenderResources.isaUrl, report.ReportPath);
+                byte[] attachment = EmailSending.CreateEmailAttachment(report.ReportPath);
+                MimeMessage email = EmailSending.CreateAttachedEmail(report.Report.BloodBank.Name, report.Report.BloodBank.EmailAddress, "Blood usage report", "Here is your blood usage report on the day:"+DateTime.Now.ToString(), "bloodReport"+ DateTime.Now.ToString()+ ".pdf", attachment);
+                EmailSending.SendEmail(email);
             }
             return Task.CompletedTask;
         }
