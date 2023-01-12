@@ -31,7 +31,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.StatisticsModel
             double avgSpecific = 0;
             int length = list.ToArray().Length;
             if(length == 0) {
-                throw new InvalidValueException();
+                new AverageTimeSpentOnStepsInSession(0,0,0,0,0); 
             }
 
             foreach(AverageTimeSpentOnStepsInSession s in list.ToList()) {
