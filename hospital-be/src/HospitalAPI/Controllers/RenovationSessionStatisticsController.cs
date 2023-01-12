@@ -40,10 +40,10 @@ namespace HospitalAPI.Controllers
             return Ok(_renovationStatisticsService.GetAverageTimeSpentOnStepsInSession());
         }
 
-        [HttpGet("average-time-spent-on-steps-timeframe/{start}/{end}")]
-        public ActionResult GetAverageTimeSpentOnStepsInSessionForTimeframe(DateTime start, DateTime end)
+        [HttpGet("average-time-spent-on-steps-timeframe/{start},{end}")]
+        public ActionResult GetAverageTimeSpentOnStepsInSessionForTimeframe(String start, String end)
         {
-            return Ok(_renovationStatisticsService.GetAverageTimeSpentOnStepsInSessionForTimeframe(start, end));
+            return Ok(_renovationStatisticsService.GetAverageTimeSpentOnStepsInSessionForTimeframe(DateTime.Now.AddHours(int.Parse(start) -DateTime.Now.Hour ), DateTime.Now.AddHours(int.Parse(end) -DateTime.Now.Hour )));
         }
 
         [HttpGet("finished-unfinished-statistics")]

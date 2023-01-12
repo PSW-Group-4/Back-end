@@ -216,7 +216,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
                 }
             }
             if(numberOfOccurences == 0) {
-                throw new InvalidValueException();
+                numberOfOccurences = 1;
             }
             return totalTime/numberOfOccurences;
         }
@@ -256,7 +256,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         public Type GetSessionLastEventType() {
             DomainEvent lastEvent = Events.ToArray()[0];
             foreach(dynamic e in Events) {
-                if(e.OccurrenceTime < lastEvent.OccurrenceTime) {
+                if(e.OccurrenceTime > lastEvent.OccurrenceTime) {
                     lastEvent = e; 
                 }
             }
