@@ -9,17 +9,23 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
 {
     public class RoomMap : MapItem
     {
-        public virtual Room Room { get; set; }
+        public virtual Room Room { get; private set; }
 
         public RoomMap() {}
         public RoomMap(Room room, MapLocation location) {
             this.Room = room;
             this.MapLocation = location;
+            if (!Validate()) {
+                throw new Exception();
+            }
         }
         public void Update(RoomMap map)
         {
             base.Update(map);
             Room = map.Room;
+            if (!Validate()) {
+                throw new Exception();
+            }
         }
 
         // Expects rooms to be on a same floor
@@ -48,6 +54,15 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
                 return new MapLocation(location.CoordinateX, location.CoordinateY, this.MapLocation.Height + location.Height, this.MapLocation.Width);
             }
             return this.MapLocation;
+        }
+
+        public bool Validate()
+        {
+            if (this.MapLocation == null)
+                return false;
+            if (this.Room == null)
+                return false;
+            return true;
         }
     }
 }

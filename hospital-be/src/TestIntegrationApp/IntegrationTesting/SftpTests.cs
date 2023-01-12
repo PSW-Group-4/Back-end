@@ -11,7 +11,7 @@ namespace TestIntegrationApp.IntegrationTesting
         private SftpService _sftpService;
         public SftpTests(TestDatabaseFactory<Startup> factory) : base(factory)
         {
-            _sftpService = new SftpService(new SftpConfig());
+            
         }
 
         [Fact]

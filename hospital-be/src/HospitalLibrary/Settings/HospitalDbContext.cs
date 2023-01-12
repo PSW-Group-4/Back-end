@@ -30,6 +30,7 @@ using HospitalLibrary.EntityConfigurations;
 using HospitalLibrary.Infrastructure.EventSourcing;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using HospitalLibrary.Renovation.Model;
+using HospitalLibrary.MedicalAppointmentReportSession.Model.Events;
 using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
 
@@ -106,6 +107,9 @@ namespace HospitalLibrary.Settings
         
         // Medical appointment scheduling session
         public DbSet<MedicalAppointmentSchedulingSessionEvent> MedicalAppointmentSchedulingSessionEvents { get; set; }
+        
+        // Medical appointment report session
+        public DbSet<MedicalAppointmentReportSessionEvent> MedicalAppointmentReportSessionEvents { get; set; }
 
         // Aggregates
         public DbSet<RenovationSessionAggregateRoot> RenovationSessionAggregateRoots {get; set;}
