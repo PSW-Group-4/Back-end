@@ -21,6 +21,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Interfaces
         public void ReturnToTimeframeCreation(Guid id);
         public void ReturnToTypeSelection(Guid id);
         public Guid StartSession();
+        public RenovationSessionAggregateRoot GetById(Guid id);
         public IEnumerable<RenovationSessionAggregateRoot> GetAll();
         public IEnumerable<RenovationSessionAggregateRoot> GetAllFinished();
         public IEnumerable<RenovationSessionAggregateRoot> GetAllUnfinished();

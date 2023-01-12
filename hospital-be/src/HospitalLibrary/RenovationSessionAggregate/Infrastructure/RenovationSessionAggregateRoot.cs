@@ -132,8 +132,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
 
         // sets daterange to last known value
         public void When(ReturnedToSpecificTimeSelection @event) {
-            if(this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated) || de.GetType() == typeof(SpecificTimeChosen)).ToArray().Length >= 2) {
-                DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated) || de.GetType() == typeof(SpecificTimeChosen)).SkipLast(1).TakeLast(1).First();
+            if(this.Events.ToList().FindAll(de => this.ConvertTypes(de.GetType()) == typeof(TimeframeCreated) || this.ConvertTypes(de.GetType()) == typeof(SpecificTimeChosen)).ToArray().Length >= 2) {
+                DomainEvent lastEvent = this.Events.ToList().FindAll(de =>this.ConvertTypes(de.GetType()) == typeof(TimeframeCreated) || this.ConvertTypes(de.GetType()) == typeof(SpecificTimeChosen)).SkipLast(1).TakeLast(1).First();
                 this.Start = ((dynamic)lastEvent).Start;
                 this.End = ((dynamic)lastEvent).End;
             }
@@ -144,8 +144,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public void When(ReturnedToTimeframeCreation @event) {
-            if(this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated)).ToArray().Length >= 2) {
-                DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TimeframeCreated)).SkipLast(1).TakeLast(1).First();
+            if(this.Events.ToList().FindAll(de => this.ConvertTypes(de.GetType()) == typeof(TimeframeCreated)).ToArray().Length >= 2) {
+                DomainEvent lastEvent = this.Events.ToList().FindAll(de => this.ConvertTypes(de.GetType()) == typeof(TimeframeCreated)).SkipLast(1).TakeLast(1).First();
                 this.Start = ((dynamic)lastEvent).Start;
                 this.End = ((dynamic)lastEvent).End;
             }
@@ -156,7 +156,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public void When(ReturnedToNewRoomCreation @event) {
-            DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(OldRoomsChosen)).TakeLast(1).First();
+            DomainEvent lastEvent = this.Events.ToList().FindAll(de => this.ConvertTypes(de.GetType()) == typeof(OldRoomsChosen)).TakeLast(1).First();
             if(lastEvent != null) {
                 this.RoomRenovationPlans = ((dynamic)lastEvent).RoomRenovationPlans;
             }
@@ -172,8 +172,8 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
         }
 
         public void When(ReturnedToTypeSelection @event) {
-            if(this.Events.ToList().FindAll(de => de.GetType() == typeof(TypeChosen)).ToArray().Length >= 2) {
-                DomainEvent lastEvent = this.Events.ToList().FindAll(de => de.GetType() == typeof(TypeChosen)).SkipLast(1).TakeLast(1).First();
+            if(this.Events.ToList().FindAll(de => this.ConvertTypes(de.GetType()) == typeof(TypeChosen)).ToArray().Length >= 2) {
+                DomainEvent lastEvent = this.Events.ToList().FindAll(de => this.ConvertTypes(de.GetType()) == typeof(TypeChosen)).SkipLast(1).TakeLast(1).First();
                 this.TypeOfRenovation = ((dynamic)lastEvent).Type;
             }
             else {
