@@ -9,6 +9,6 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Interfaces
 {
     public interface IRenovationSessionEventService : ICrudService<RenovationSessionEvent> 
     {
-        
+        public IEnumerable<RenovationSessionEvent> GetAllForRootId(Guid id);
     }
 }

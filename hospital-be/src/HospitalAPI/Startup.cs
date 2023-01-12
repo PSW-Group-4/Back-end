@@ -308,6 +308,7 @@ namespace HospitalAPI
             services.AddScoped<IRenovationSessionAggregateRootRepository, RenovationSessionAggregateRootRepository>();
             services.AddScoped<IRenovationSessionEventRepository, RenovationSessionEventRepository>();
             services.AddScoped<IRenovationSessionEventService, RenovationSessionEventService>();
+            services.AddScoped<IRenovationSessionStatisticsService, RenovationSessionStatisticsService>();
             
         }
 

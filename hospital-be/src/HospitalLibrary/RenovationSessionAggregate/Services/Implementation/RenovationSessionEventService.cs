@@ -41,5 +41,15 @@ namespace HospitalLibrary.RenovationSessionAggregate.Services.Implementation
         {
             return _renovationSessionEventRepository.Update(entity);
         }
+
+        public IEnumerable<RenovationSessionEvent> GetAllForRootId(Guid id) {
+            List<RenovationSessionEvent> events = new List<RenovationSessionEvent>();
+            foreach(RenovationSessionEvent e in this.GetAll()) {
+                if(e.AggregateId.Equals(id)) {
+                    events.Add(e);
+                }
+            }
+            return events;
+        }
     }
 }
