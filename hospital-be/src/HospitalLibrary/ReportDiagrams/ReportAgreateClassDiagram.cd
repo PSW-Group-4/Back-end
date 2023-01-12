@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HospitalLibrary.Exceptions.ValueObjectValidationFailedException" Collapsed="true">
+    <Position X="43" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ValueObjectValidationFailedException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Infrastructure.EventSourcing.DomainEvent" Collapsed="true">
+    <Position X="45.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\EventSourcing\DomainEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Infrastructure.EventSourcing.EventSourcingRoot" Collapsed="true">
+    <Position X="40.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAAABAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Infrastructure\EventSourcing\EventSourcingRoot.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.Model.Events.ChosenMedicine" Collapsed="true">
+    <Position X="40" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\Events\ChosenMedicine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.Model.Events.ChosenReportText" Collapsed="true">
+    <Position X="42.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\Events\ChosenReportText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.Model.Events.ChosenSymptom" Collapsed="true">
+    <Position X="44.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\Events\ChosenSymptom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.Model.Events.FinishedScheduling" Collapsed="true">
+    <Position X="46.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\Events\FinishedScheduling.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.Model.Events.GoneBackToSelection" Collapsed="true">
+    <Position X="49" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\Events\GoneBackToSelection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent" Collapsed="true">
+    <Position X="45.5" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\Events\MedicalAppointmentReportSessionEvent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.Model.Events.StartedScheduling" Collapsed="true">
+    <Position X="51.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAACAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\Events\StartedScheduling.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.MedicalAppointmentReportSession.MedicalAppointmentReportSession" Collapsed="true">
+    <Position X="40.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAADDAAAFAAAgAAAAAAAAAAQQAAAAAAAAAAAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Model\MedicalAppointmentReportSession.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Reports.Model.Prescription" Collapsed="true">
+    <Position X="52" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAgAgAAAAAAAAAAIAAAAAAAAAACAA=</HashCode>
+      <FileName>Reports\Model\Prescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Reports.Model.Report" Collapsed="true">
+    <Position X="48.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQCAABAAABgAgAAAAgAAQQAABAAQAQAAAAACAAAEAA=</HashCode>
+      <FileName>Reports\Model\Report.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Reports.Repository.ReportRepository" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="55.5" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEAABAAAAAAAAAAAAAEAAEAAAgAAAAAAAIA=</HashCode>
+      <FileName>Reports\Repository\ReportRepository.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HospitalLibrary.Reports.Service.ReportService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="53.75" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEAAAAAAAAAAAAgAAAEAAEAAAgAAAAAAAIA=</HashCode>
+      <FileName>Reports\Service\ReportService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="HospitalLibrary.Symptoms.Model.Symptom" Collapsed="true">
+    <Position X="52" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAAAAAAAAAAAAgAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Symptoms\Model\Symptom.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Appointments.Model.MedicalAppointment" Collapsed="true">
+    <Position X="50.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAQQCAAAAAAAAAAAAAAAACAAQAAAAAAAAACQA=</HashCode>
+      <FileName>MedicalAppointments\Model\MedicalAppointment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HospitalLibrary.Core.Model.Appointment" Collapsed="true">
+    <Position X="50.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCACAKAAKAAACAABAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Core\Model\Appointment.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="HospitalLibrary.Infrastructure.EventSourcing.IEventRepository&lt;TEvent, TAggregateRoot&gt;" Collapsed="true">
+    <Position X="37.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAgIAAAAAAAAAAAgAAAAAAAIA=</HashCode>
+      <FileName>Infrastructure\EventSourcing\IEventRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HospitalLibrary.MedicalAppointmentReportSession.Repository.IMedicalAppointmentReportSessionRepository" Collapsed="true">
+    <Position X="37.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>MedicalAppointmentReportSession\Repository\IMedicalAppointmentReportSessionRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HospitalLibrary.Reports.Repository.IReportRepository" Collapsed="true">
+    <Position X="55.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Reports\Repository\IReportRepository.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HospitalLibrary.Reports.Service.IReportService" Collapsed="true">
+    <Position X="53.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAEAAAAAAAAAAAAAAAAEAAEAAAgAAAAAAAIA=</HashCode>
+      <FileName>Reports\Service\IReportService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
