@@ -211,7 +211,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             int numberOfOccurences = 0;
             for(int i = 1; i < this.Events.ToArray().Length; i++) {
                 if(this.ConvertTypes(this.Events.ToArray()[i].GetType()).Equals(eventType)) {
-                    totalTime += (this.Events.ToArray()[i].OccurrenceTime - this.Events.ToArray()[i-1].OccurrenceTime).Seconds;
+                    totalTime += Math.Abs((this.Events.ToArray()[i].OccurrenceTime - this.Events.ToArray()[i-1].OccurrenceTime).Seconds);
                     numberOfOccurences += 1;
                 }
             }
@@ -225,7 +225,7 @@ namespace HospitalLibrary.RenovationSessionAggregate.Infrastructure
             if(this.Events.ToArray().Length < 1) {
                 throw new InvalidValueException();
             }
-            return (this.Events.ToArray()[this.Events.ToArray().Length - 1].OccurrenceTime - this.Events.ToArray()[0].OccurrenceTime).Seconds;
+            return Math.Abs((this.Events.ToArray()[this.Events.ToArray().Length - 1].OccurrenceTime - this.Events.ToArray()[0].OccurrenceTime).Seconds);
         }
 
         public DateTime GetStartTime() {
