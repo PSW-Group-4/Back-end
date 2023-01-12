@@ -21,6 +21,7 @@ namespace HospitalAPI
                 .ConfigureServices(services =>
                 {
                     services.AddHostedService<BloodSupplyStateListener>();
+                    services.AddHttpClient();
                 });
     }
 }

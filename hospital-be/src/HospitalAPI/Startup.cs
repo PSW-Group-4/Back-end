@@ -85,6 +85,7 @@ using HospitalLibrary.RenovationSessionAggregate.Services.Interfaces;
 using HospitalLibrary.RenovationSessionAggregate.Services.Implementation;
 using HospitalLibrary.RenovationSessionAggregate.Repository.Implementation;
 using HospitalLibrary.RenovationSessionAggregate.Repository.Interfaces;
+using HospitalLibrary.TenderReport.Service;
 
 namespace HospitalAPI
 {
@@ -309,7 +310,10 @@ namespace HospitalAPI
             services.AddScoped<IRenovationSessionEventRepository, RenovationSessionEventRepository>();
             services.AddScoped<IRenovationSessionEventService, RenovationSessionEventService>();
             services.AddScoped<IRenovationSessionStatisticsService, RenovationSessionStatisticsService>();
-            
+
+            //Tender Report
+            services.AddScoped<ITenderReportService, TenderReportService>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
