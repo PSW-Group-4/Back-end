@@ -60,7 +60,8 @@ namespace HospitalLibrary.Appointments.Repository
 
         public IEnumerable<MedicalAppointment> GetDoneByPatient(Guid patientId)
         {
-            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && a.IsDone).ToList();
+            return _context.MedicalAppointments.Where(a => a.PatientId == patientId && 
+            (a.IsDone || a.DateRange.StartTime < DateTime.Now)).ToList();   //stefan menjao da bih se uskladio sa doktorima
         }
 
         public IEnumerable<MedicalAppointment> GetCacneledByPatient(Guid patientId)
