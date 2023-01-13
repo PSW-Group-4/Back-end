@@ -77,5 +77,17 @@ namespace HospitalAPI.Controllers
                 return NotFound();
             }
         }
+
+        [HttpGet("Yearly/{id}/{selectedYear}")]
+        public ActionResult GetDoctorsYearlyAppointment([FromRoute] Guid id, [FromRoute] int selectedYear)
+        {
+            return Ok(_doctorAppointmentService.GetAppointmentsPerYear(id, selectedYear));
+        }
+
+        [HttpGet("Monthly/{id}/{selectedYear}/{selectedMonth}")]
+        public ActionResult GetDoctorsMonthlyAppointment([FromRoute] Guid id, [FromRoute] int selectedYear, [FromRoute] int selectedMonth)
+        {
+            return Ok(_doctorAppointmentService.GetAppointmentsPerMonth(id, selectedYear, selectedMonth));
+        }
     }
 }

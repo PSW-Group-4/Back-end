@@ -15,6 +15,7 @@ using HospitalLibrary.Utility;
 using HospitalLibrary.Exceptions;
 using iTextSharp.text;
 using System.Linq;
+using HospitalLibrary.Vacations.Model;
 
 namespace HospitalLibrary.Appointments.Service
 {
@@ -335,6 +336,37 @@ namespace HospitalLibrary.Appointments.Service
             return false;
             
         }
+
+        public List<int> GetAppointmentsPerYear(Guid doctorId, int selectedYear)
+        {
+            List<int> returnList = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }; 
+            IEnumerable<MedicalAppointment> appointments = GetDoctorAppointments(doctorId);
+
+            foreach (MedicalAppointment v in appointments)
+            {
+                if(v.DateRange.EndTime.Year == selectedYear)
+                {
+                    returnList[v.DateRange.EndTime.Month - 1] += 1;
+                }
+            }
+            return returnList;
+        }
+
+        public List<int> GetAppointmentsPerMonth(Guid doctorId, int selectedYear, int selectedMonth)
+        {
+            List<int> returnList = new List<int> { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            IEnumerable<MedicalAppointment> appointments = GetDoctorAppointments(doctorId);
+
+            foreach (MedicalAppointment v in appointments)
+            {
+                if (v.DateRange.EndTime.Year == selectedYear && v.DateRange.EndTime.Month == selectedMonth)
+                {
+                    returnList[v.DateRange.EndTime.Day - 1] += 1;
+                }
+            }
+            return returnList;
+        }
+    
 
 
 
