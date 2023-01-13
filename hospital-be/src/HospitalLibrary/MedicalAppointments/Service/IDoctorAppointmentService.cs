@@ -22,5 +22,8 @@ namespace HospitalLibrary.Appointments.Service
         public List<AppointmentSuggestionsWithTheirDoctors> GetAppointmentSuggestionsForDateRange(
             RequestForAppointmentSlotSuggestions request);
 
+        public List<int> GetAppointmentsPerYear(Guid doctorId, int selectedYear);
+        public List<int> GetAppointmentsPerMonth(Guid doctorId, int selectedYear, int selectedMonth);
+
     }
 }

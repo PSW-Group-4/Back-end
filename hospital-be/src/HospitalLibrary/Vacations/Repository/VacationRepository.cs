@@ -27,7 +27,7 @@ namespace HospitalLibrary.Vacations.Repository
 
         public IEnumerable<Vacation> GetAllManager()
         {
-            return _context.Vacations.ToList().OrderBy(x => x.DateEnd); //.OrderBy(x => x.DateEnd);
+            return _context.Vacations.ToList().OrderBy(x => x.DateEnd); 
         }
 
         public Vacation GetById(Guid id)
