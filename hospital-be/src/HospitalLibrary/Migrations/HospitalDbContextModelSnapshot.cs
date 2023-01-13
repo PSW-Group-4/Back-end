@@ -356,6 +356,29 @@ namespace HospitalLibrary.Migrations
                     b.ToTable("Feedbacks");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccurrenceTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MedicalAppointmentReportSessionEvents");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MedicalAppointmentReportSessionEvent");
+                });
+
             modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent", b =>
                 {
                     b.Property<Guid>("Id")
@@ -365,18 +388,18 @@ namespace HospitalLibrary.Migrations
                     b.Property<Guid>("AggregateId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("OccurrenceTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("Type")
+                    b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<DateTime>("OccurrenceTime")
+                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
                     b.ToTable("MedicalAppointmentSchedulingSessionEvents");
 
-                    b.HasDiscriminator<string>("Type").HasValue("MedicalAppointmentSchedulingSessionEvent");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("MedicalAppointmentSchedulingSessionEvent");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Medicines.Model.Medicine", b =>
@@ -469,6 +492,55 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("ChosenDoctorId");
 
                     b.ToTable("Patients");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("OccurrenceTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RenovationSessionEvents");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("RenovationSessionEvent");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.Infrastructure.RenovationSessionAggregateRoot", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("End")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("RoomRenovationPlans")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Start")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("TypeOfRenovation")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Version")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RenovationSessionAggregateRoots");
                 });
 
             modelBuilder.Entity("HospitalLibrary.Reports.Model.Report", b =>
@@ -777,6 +849,68 @@ namespace HospitalLibrary.Migrations
                     b.HasDiscriminator().HasValue("RenovationAppointment");
                 });
 
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.ChosenMedicine", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent");
+
+                    b.Property<int>("NumberOfMedicines")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("ChosenMedicine");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.ChosenReportText", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent");
+
+                    b.Property<string>("ReportText")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("ChosenReportText");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.ChosenSymptom", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent");
+
+                    b.Property<int>("NumberOfSymptoms")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("ChosenSymptom");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.FinishedScheduling", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent");
+
+                    b.Property<DateTime>("SelectedTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasDiscriminator().HasValue("FinishedScheduling");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.GoneBackToSelection", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent");
+
+                    b.Property<int>("Selection")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("GoneBackToSelection");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.StartedScheduling", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.MedicalAppointmentReportSessionEvent");
+
+                    b.Property<Guid>("DoctorId")
+                        .HasColumnType("uuid");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasDiscriminator().HasValue("StartedScheduling");
+                });
+
             modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenDate", b =>
                 {
                     b.HasBaseType("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.MedicalAppointmentSchedulingSessionEvent");
@@ -839,6 +973,114 @@ namespace HospitalLibrary.Migrations
                     b.HasIndex("PatientId");
 
                     b.HasDiscriminator().HasValue("StartedScheduling");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.NewRoomsCreated", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.Property<string>("RoomRenovationPlans")
+                        .HasColumnType("text")
+                        .HasColumnName("NewRoomsCreated_RoomRenovationPlans");
+
+                    b.HasDiscriminator().HasValue("NewRoomsCreated");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.OldRoomsChosen", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.Property<string>("RoomRenovationPlans")
+                        .HasColumnType("text");
+
+                    b.HasDiscriminator().HasValue("OldRoomsChosen");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.ReturnedToNewRoomCreation", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.HasDiscriminator().HasValue("ReturnedToNewRoomCreation");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.ReturnedToOldRoomsSelection", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.HasDiscriminator().HasValue("ReturnedToOldRoomsSelection");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.ReturnedToSpecificTimeSelection", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.HasDiscriminator().HasValue("ReturnedToSpecificTimeSelection");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.ReturnedToTimeframeCreation", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.HasDiscriminator().HasValue("ReturnedToTimeframeCreation");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.ReturnedToTypeSelection", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.HasDiscriminator().HasValue("ReturnedToTypeSelection");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.SessionEnded", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.HasDiscriminator().HasValue("SessionEnded");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.SessionStarted", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.HasDiscriminator().HasValue("SessionStarted");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.SpecificTimeChosen", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasDiscriminator().HasValue("SpecificTimeChosen");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.TimeframeCreated", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("TimeframeCreated_End");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("TimeframeCreated_Start");
+
+                    b.HasDiscriminator().HasValue("TimeframeCreated");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.RenovationSessionAggregate.DomainEvents.TypeChosen", b =>
+                {
+                    b.HasBaseType("HospitalLibrary.RenovationSessionAggregate.DomainEvents.RenovationSessionEvent");
+
+                    b.Property<int>("TypeOfRenovationChosen")
+                        .HasColumnType("integer");
+
+                    b.HasDiscriminator().HasValue("TypeChosen");
                 });
 
             modelBuilder.Entity("HospitalLibrary.RoomsAndEqipment.Model.CafeteriaRoom", b =>
@@ -1334,6 +1576,17 @@ namespace HospitalLibrary.Migrations
                         .HasForeignKey("EquipmentToMoveId");
 
                     b.Navigation("EquipmentToMove");
+                });
+
+            modelBuilder.Entity("HospitalLibrary.MedicalAppointmentReportSession.Model.Events.StartedScheduling", b =>
+                {
+                    b.HasOne("HospitalLibrary.Doctors.Model.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
                 });
 
             modelBuilder.Entity("HospitalLibrary.MedicalAppointmentSchedulingSession.Events.ChosenDoctor", b =>

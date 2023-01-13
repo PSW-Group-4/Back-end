@@ -27,6 +27,9 @@ using System.Collections.Generic;
 using System.Linq;
 using HospitalLibrary.MedicalAppointmentSchedulingSession.Events;
 using DateTime = System.DateTime;
+using HospitalLibrary.MedicalAppointmentReportSession.Model.Events;
+using HospitalLibrary.RenovationSessionAggregate.DomainEvents;
+using HospitalLibrary.RenovationSessionAggregate.Infrastructure;
 
 namespace TestHospitalApp.Setup
 {
@@ -105,9 +108,6 @@ namespace TestHospitalApp.Setup
                 new DateTime(1973, 9, 28, 0, 0, 0), Gender.Female, address, new Jmbg("1807000730038"),
                 new Email("doctor@test.com"), "066/123-456", LicenceNum1, Speciality1, WorkingTimeStart1,
                 WorkingTimeEnd1, room.Id, room);
-
-
-
 
             String WorkingTimeStart = "9:00";
             String WorkingTimeEnd = "12:00";
@@ -366,9 +366,9 @@ namespace TestHospitalApp.Setup
             //Medical appointments
             initMedicalAppointments(context);
             initMedicalAppointmentSchedulingSessions(context);
+            initMedicalAppointmentReportSessions(context);
             InitAgeGroups(context);
-            
-
+            initRenovationSessions(context);
 
             context.SaveChanges();
 
@@ -574,22 +574,192 @@ namespace TestHospitalApp.Setup
             
             DateTime currentTime = DateTime.Now;
             Guid unfinishedAggregateId = new Guid("0e34318e-0bf6-4c8d-8b0e-153dae18d80b");
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(unfinishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.StartedScheduling(unfinishedAggregateId, currentTime, patient));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(unfinishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(15), doctor));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), Selection.Speciality));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), Selection.Speciality));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(unfinishedAggregateId, currentTime.AddSeconds(25), "Physician"));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(unfinishedAggregateId, currentTime.AddSeconds(30), doctor));
 
             Guid finishedAggregateId = new Guid("055f61ca-9487-495f-8229-590c24e7b7da");
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new StartedScheduling(finishedAggregateId, currentTime, patient));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.StartedScheduling(finishedAggregateId, currentTime, patient));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDate(finishedAggregateId, currentTime.AddSeconds(5), new DateTime(2023, 4, 4)));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenSpeciality(finishedAggregateId, currentTime.AddSeconds(10), "Chiropractor"));
             context.MedicalAppointmentSchedulingSessionEvents.Add(new ChosenDoctor(finishedAggregateId, currentTime.AddSeconds(15), doctor));
-            context.MedicalAppointmentSchedulingSessionEvents.Add(new FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 14, 12,30,0)));
+            context.MedicalAppointmentSchedulingSessionEvents.Add(new HospitalLibrary.MedicalAppointmentSchedulingSession.Events.FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 14, 12,30,0)));
 
         }
+
+        private static void initMedicalAppointmentReportSessions(HospitalDbContext context)
+        {
+
+            Address address = new Address
+            {
+                Id = Guid.NewGuid(),
+                Street = "Ulica",
+                StreetNumber = "10",
+                City = "Grad",
+                Country = "Država"
+            };
+
+            Room room = new Room
+            {
+                Id = Guid.NewGuid(),
+                Name = "Soba",
+                Number = 10,
+                Description = "Opis sobe"
+            };
+
+            Doctor doctor = new Doctor(Guid.NewGuid(), "Test Doctor Report",
+                "Test Doctor Report",
+                new DateTime(1980, 10, 1, 0, 0, 0), Gender.Male, address, new Jmbg("0811000800021"),
+                new Email("doctorreport@test.com"), "066/123-456", "12345", "Surgeon", "09:00",
+                "15:00", room.Id, room);
+
+
+            Patient patient = new Patient(Guid.NewGuid(), "Test Patient Report", "Test Patient Report", new DateTime(1990, 10, 1),
+                Gender.Female, new Address(Guid.NewGuid(), "Novi Sad", "Serbia", "Ulica 1", "50"),
+                new Jmbg("0811000800021"), new Email("pacijent@gmail.com"), "066/555-666",
+                new BloodType(BloodGroup.O, RhFactor.POSITIVE));
+            patient.AppointTheChosenDoctor(doctor);
+
+
+            context.Addresses.Add(address);
+            context.Rooms.Add(room);
+            context.Doctors.Add(doctor);
+            context.Patients.Add(patient);
+
+            DateTime currentTime = DateTime.Now;
+            Guid unfinishedAggregateId = new Guid("4f82557d-2a4d-4f1f-9f0f-02196f1a7d4f");
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.StartedScheduling(unfinishedAggregateId, currentTime, doctor));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenSymptom(unfinishedAggregateId, currentTime.AddSeconds(5), 2));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenReportText(unfinishedAggregateId, currentTime.AddSeconds(10), "Report text 1"));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenMedicine(unfinishedAggregateId, currentTime.AddSeconds(15), 1));
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.GoneBackToSelection(unfinishedAggregateId, currentTime.AddSeconds(20), SelectionReport.ReportText));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenReportText(unfinishedAggregateId, currentTime.AddSeconds(25), "Fixed report text"));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenMedicine(unfinishedAggregateId, currentTime.AddSeconds(30), 1));
+
+            Guid finishedAggregateId = new Guid("c4b12ea1-417c-4f89-9028-67077a229661");
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.StartedScheduling(finishedAggregateId, currentTime, doctor));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenSymptom(finishedAggregateId, currentTime.AddSeconds(5), 1));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenReportText(finishedAggregateId, currentTime.AddSeconds(10), "Report text 2"));
+            context.MedicalAppointmentReportSessionEvents.Add(new ChosenMedicine(finishedAggregateId, currentTime.AddSeconds(15), 2));
+            context.MedicalAppointmentReportSessionEvents.Add(new HospitalLibrary.MedicalAppointmentReportSession.Model.Events.FinishedScheduling(finishedAggregateId, currentTime.AddSeconds(20), new DateTime(2023, 1, 20, 12, 0, 0)));
+
+        }
+
+        private static void initRenovationSessions(HospitalDbContext context) {
+            Guid rootId = Guid.NewGuid();
+            SessionStarted sessionStarted = new SessionStarted(rootId);
+            TypeChosen typeChosen = new TypeChosen(rootId,RenovationAppointment.TypeOfRenovation.Merge);
+
+            List<RoomRenovationPlan> oldRooms = new List<RoomRenovationPlan>();
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("fbcf2919-ef1c-49fe-9556-f99188bdbad9")));
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("18e98c94-5081-4020-ac91-d00f995c7e4f")));
+            OldRoomsChosen oldRoomsChosen =  new OldRoomsChosen(rootId, oldRooms);
+
+            TimeframeCreated timeframeCreated = new TimeframeCreated(rootId, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+            SpecificTimeChosen specificTimeChosen = new SpecificTimeChosen(rootId, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+
+            List<RoomRenovationPlan> newRooms = new List<RoomRenovationPlan>();
+            newRooms.Add(new RoomRenovationPlan("Na8211","Description123",212));
+            NewRoomsCreated newRoomsCreated = new NewRoomsCreated(rootId, newRooms);         
+
+            SessionEnded sessionEnded = new SessionEnded(rootId);
+
+            RenovationSessionAggregateRoot root = new RenovationSessionAggregateRoot(rootId);
+            root.StartSession();
+            root.ChooseType(typeChosen.AggregateId, typeChosen.TypeOfRenovationChosen);
+            root.ChooseOldRooms(oldRoomsChosen.AggregateId, oldRoomsChosen.RoomRenovationPlans);
+            root.CreateTimeframe(timeframeCreated.AggregateId, timeframeCreated.Start, timeframeCreated.End);
+            root.ChooseSpecificTime(specificTimeChosen.AggregateId, specificTimeChosen.Start, specificTimeChosen.End);
+            root.CreateNewRooms(newRoomsCreated.AggregateId, newRoomsCreated.RoomRenovationPlans);
+            root.EndSession(sessionEnded.AggregateId);
+
+            context.RenovationSessionAggregateRoots.Add(root);
+
+            context.RenovationSessionEvents.Add(sessionStarted);
+            context.RenovationSessionEvents.Add(oldRoomsChosen);
+            context.RenovationSessionEvents.Add(timeframeCreated);
+            context.RenovationSessionEvents.Add(specificTimeChosen);
+            context.RenovationSessionEvents.Add(sessionEnded);
+            context.RenovationSessionEvents.Add(newRoomsCreated);
+
+
+            Guid rootId2 = Guid.NewGuid();
+            SessionStarted sessionStarted2 = new SessionStarted(rootId2);
+            TypeChosen typeChosen2 = new TypeChosen(rootId2,RenovationAppointment.TypeOfRenovation.Merge);
+
+            List<RoomRenovationPlan> oldRooms2 = new List<RoomRenovationPlan>();
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("fbcf2919-ef1c-49fe-9556-f99188bdbad9")));
+            oldRooms.Add(new RoomRenovationPlan(Guid.Parse("18e98c94-5081-4020-ac91-d00f995c7e4f")));
+            OldRoomsChosen oldRoomsChosen2 =  new OldRoomsChosen(rootId2, oldRooms);
+
+            TimeframeCreated timeframeCreated2 = new TimeframeCreated(rootId2, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+            SpecificTimeChosen specificTimeChosen2 = new SpecificTimeChosen(rootId2, DateTime.Now.AddDays(22), DateTime.Now.AddDays(23));
+
+            List<RoomRenovationPlan> newRooms2 = new List<RoomRenovationPlan>();
+            newRooms.Add(new RoomRenovationPlan("Na8211","Description123",212));
+            NewRoomsCreated newRoomsCreated2 = new NewRoomsCreated(rootId2, newRooms);         
+
+            ReturnedToNewRoomCreation returnedToNewRoomCreation = new ReturnedToNewRoomCreation(rootId2);
+            ReturnedToSpecificTimeSelection returnedToSpecificTimeSelection = new ReturnedToSpecificTimeSelection(rootId2);
+            ReturnedToTimeframeCreation returnedToTimeframeCreation = new ReturnedToTimeframeCreation(rootId2);
+            ReturnedToOldRoomsSelection returnedToOldRoomsSelection = new ReturnedToOldRoomsSelection(rootId2);
+            ReturnedToTypeSelection returnedToType = new ReturnedToTypeSelection(rootId2);
+            
+            TypeChosen typeChosen3 = new TypeChosen(rootId2,RenovationAppointment.TypeOfRenovation.Merge);
+            OldRoomsChosen oldRoomsChosen3 =  new OldRoomsChosen(rootId2, oldRooms);
+
+            TimeframeCreated timeframeCreated3 = new TimeframeCreated(rootId2, DateTime.Now.AddDays(28), DateTime.Now.AddDays(29));
+            SpecificTimeChosen specificTimeChosen3 = new SpecificTimeChosen(rootId2, DateTime.Now.AddDays(28), DateTime.Now.AddDays(29));
+
+            NewRoomsCreated newRoomsCreated3 = new NewRoomsCreated(rootId2, newRooms); 
+            
+
+            SessionEnded sessionEnded2 = new SessionEnded(rootId2);
+
+
+            RenovationSessionAggregateRoot root2 = new RenovationSessionAggregateRoot(rootId2);
+            root2.StartSession();
+            root2.ChooseType(typeChosen2.AggregateId, typeChosen2.TypeOfRenovationChosen);
+            root2.ChooseOldRooms(oldRoomsChosen2.AggregateId, oldRoomsChosen2.RoomRenovationPlans);
+            root2.CreateTimeframe(timeframeCreated2.AggregateId, timeframeCreated2.Start, timeframeCreated2.End);
+            root2.ChooseSpecificTime(specificTimeChosen2.AggregateId, specificTimeChosen2.Start, specificTimeChosen2.End);
+            root2.CreateNewRooms(newRoomsCreated2.AggregateId, newRoomsCreated2.RoomRenovationPlans);
+            root2.ReturnToNewRoomCreation(returnedToNewRoomCreation.AggregateId);
+            root2.ReturnToSpecificTimeSelection(returnedToSpecificTimeSelection.AggregateId);
+            root2.ReturnToTimeframeCreation(returnedToTimeframeCreation.AggregateId);
+            root2.ReturnToOldRoomSelection(returnedToOldRoomsSelection.AggregateId);
+            root2.ReturnToTypeSelection(returnedToType.AggregateId);
+            root2.ChooseType(typeChosen3.AggregateId, typeChosen3.TypeOfRenovationChosen);
+            root2.ChooseOldRooms(oldRoomsChosen3.AggregateId, oldRoomsChosen3.RoomRenovationPlans);
+            root2.CreateTimeframe(timeframeCreated3.AggregateId, timeframeCreated3.Start, timeframeCreated3.End);
+            root2.ChooseSpecificTime(specificTimeChosen3.AggregateId, specificTimeChosen3.Start, specificTimeChosen3.End);
+            root2.CreateNewRooms(newRoomsCreated3.AggregateId, newRoomsCreated3.RoomRenovationPlans);
+            root2.EndSession(sessionEnded2.AggregateId);
+
+            context.RenovationSessionAggregateRoots.Add(root2);
+
+            context.RenovationSessionEvents.Add(sessionStarted2);
+            context.RenovationSessionEvents.Add(oldRoomsChosen2);
+            context.RenovationSessionEvents.Add(timeframeCreated2);
+            context.RenovationSessionEvents.Add(specificTimeChosen2);
+            context.RenovationSessionEvents.Add(newRoomsCreated2);
+            context.RenovationSessionEvents.Add(returnedToNewRoomCreation);
+            context.RenovationSessionEvents.Add(returnedToSpecificTimeSelection);
+            context.RenovationSessionEvents.Add(returnedToTimeframeCreation);
+            context.RenovationSessionEvents.Add(returnedToOldRoomsSelection);
+            context.RenovationSessionEvents.Add(returnedToType);
+            context.RenovationSessionEvents.Add(oldRoomsChosen3);
+            context.RenovationSessionEvents.Add(timeframeCreated3);
+            context.RenovationSessionEvents.Add(specificTimeChosen3);
+            context.RenovationSessionEvents.Add(newRoomsCreated3);
+            context.RenovationSessionEvents.Add(sessionEnded2);
+
+        }
+
         private static void InitAgeGroups(HospitalDbContext context)
         {
            context.AgeGroups.Add(new AgeGroup("Child", 0, 16));

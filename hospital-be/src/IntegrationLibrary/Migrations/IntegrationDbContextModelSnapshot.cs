@@ -309,7 +309,33 @@ namespace IntegrationLibrary.Migrations
                     b.ToTable("tender_applications");
                 });
 
-            modelBuilder.Entity("IntegrationLibrary.Tenders.Model.Tender", b =>
+            modelBuilder.Entity("IntegrationLibrary.Tendering.DomainEvents.Base.TenderingEvent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AggregateId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AggregateType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("EventType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Timestamp")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("tendering_events");
+
+                    b.HasDiscriminator<string>("EventType");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Tendering.Model.Tender", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -324,13 +350,24 @@ namespace IntegrationLibrary.Migrations
                     b.Property<DateTime?>("Deadline")
                         .HasColumnType("timestamp without time zone");
 
+                    b.Property<string>("Events")
+                        .HasColumnType("text");
+
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
 
                     b.Property<double>("Version")
                         .HasColumnType("double precision");
 
+                    b.Property<Guid?>("WinnerId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("WinnerId");
 
                     b.ToTable("tenders");
                 });
@@ -450,13 +487,22 @@ namespace IntegrationLibrary.Migrations
                         .WithMany()
                         .HasForeignKey("BloodBankId");
 
-                    b.HasOne("IntegrationLibrary.Tenders.Model.Tender", "Tender")
+                    b.HasOne("IntegrationLibrary.Tendering.Model.Tender", "Tender")
                         .WithMany()
                         .HasForeignKey("TenderId");
 
                     b.Navigation("BloodBank");
 
                     b.Navigation("Tender");
+                });
+
+            modelBuilder.Entity("IntegrationLibrary.Tendering.Model.Tender", b =>
+                {
+                    b.HasOne("IntegrationLibrary.BloodBanks.Model.BloodBank", "Winner")
+                        .WithMany()
+                        .HasForeignKey("WinnerId");
+
+                    b.Navigation("Winner");
                 });
 #pragma warning restore 612, 618
         }

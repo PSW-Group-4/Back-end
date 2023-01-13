@@ -9,14 +9,14 @@ using Rebex.Net;
 
 namespace IntegrationAPI.Communications.SharedStorage
 {
-    public class SftpService
+    public class SftpService : ISftpService
     {
-        private readonly SftpConfig _config;
+        //private readonly SftpConfig _config;
         private readonly Sftp _client;
 
-        public SftpService(SftpConfig sftpConfig)
+        public SftpService()//SftpConfig sftpConfig)
         {
-            _config = sftpConfig;
+           // _config = sftpConfig;
             Rebex.Licensing.Key = "==AFeeZVSzy8xk4CHcnI9hkMoxe6IW+JSJ/2DJeRjjBAuM==";
             _client = new Rebex.Net.Sftp();
             SetupClient();
@@ -29,8 +29,8 @@ namespace IntegrationAPI.Communications.SharedStorage
 
         public void SetupClient()
         {
-            _client.Connect(_config.Host);
-            _client.Login(_config.Username, _config.Password);
+            _client.Connect("localhost");
+            _client.Login("psw", "psw");
             if (!_client.DirectoryExists("/reports"))
                 _client.CreateDirectory("/reports");
         }

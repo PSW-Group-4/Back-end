@@ -1,3 +1,4 @@
+using HospitalLibrary.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace HospitalLibrary.BuildingManagmentMap.Model
 {
-    public class MapLocation
+    public class MapLocation : IComparable<MapLocation>, IEquatable<MapLocation>
     {
-        public int CoordinateX { get; set; } 
+        public int CoordinateX { get; private set; } 
 
-        public int CoordinateY { get; set; }
+        public int CoordinateY { get; private set; }
 
-        public int Height  { get; set; }  
+        public int Height  { get; private set; }  
 
-        public int Width { get; set; }
+        public int Width { get; private set; }
 
         public MapLocation(){}
 
@@ -22,11 +23,22 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
             this.CoordinateY = CoordinateY;
             this.Height = Height;
             this.Width = Width;
-            Validate();
+            if (!Validate())
+            {
+                throw new ValueObjectValidationFailedException("Map Location is not in correct format");
+            }
         }
 
-        public void Validate() {
-
+        public bool Validate() {
+            if (this.CoordinateX < 0)
+                return false;
+            if(this.CoordinateY < 0)
+                return false;
+            if(this.Height < 0)
+                return false;
+            if(this.Width < 0)
+                return false;
+            return true;
         }
 
         // Used for checking which location is on top
@@ -77,6 +89,24 @@ namespace HospitalLibrary.BuildingManagmentMap.Model
                 }
             }
             return false;
+        }
+
+        public int CompareTo(MapLocation other)
+        {
+            if(!(other.CoordinateX == this.CoordinateX))
+                return -1;
+            if (!(other.CoordinateY == this.CoordinateY))
+                return -1;
+            if (!(other.Height == this.Height))
+                return -1;
+            if(!(other.Width == this.Width))
+                return -1; 
+            return 0;
+        }
+
+        public bool Equals(MapLocation other)
+        {
+            return CompareTo(other) == 0;
         }
     }
 }

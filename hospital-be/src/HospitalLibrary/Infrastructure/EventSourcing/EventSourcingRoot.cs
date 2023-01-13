@@ -7,7 +7,7 @@ namespace HospitalLibrary.Infrastructure.EventSourcing
     public abstract class EventSourcingRoot
     {
         public Guid Id { get; protected set; }
-        public List<DomainEvent> Events { get; protected set; }
+        public virtual List<DomainEvent> Events { get; protected set; }
         public int Version { get; protected set; }
 
         public EventSourcingRoot(Guid id)
