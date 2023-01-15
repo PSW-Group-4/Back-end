@@ -222,11 +222,17 @@ INSERT INTO "PatientAllergies" ("AllergiesId", "PatientsId") VALUES ('e4cb7241-8
 INSERT INTO "PatientAllergies" ("AllergiesId", "PatientsId") VALUES ('6868ae25-ab9b-4549-931f-8b39c0117026', 'ba871e05-a586-4d23-aa90-b7a86bbfb264');
 INSERT INTO "PatientAllergies" ("AllergiesId", "PatientsId") VALUES ('01f0d06f-e4e4-4a35-94d1-8e34547a548d', '5d3afaa2-9680-4ec2-8993-384a5509c0ae');
 
+
 INSERT INTO public."Feedbacks" ("Id","Text","IsAnonimous","IsDesiredPublic","Status","PatientId","Date") VALUES
-	 ('da243b20-2d31-458f-ab28-66f2d6653149','Very good',true,true,2,'501cb78e-d157-49b5-9093-f87833f5ab42','2022-10-29 19:06:26.026728'),
-	 ('d27eff98-5e81-420d-83a3-6175be4939b7','Could be better',false,false,1,'7306ce59-2c2e-4b8c-8dc6-6b1977a237fa','2022-10-29 19:08:33.852363'),
-	 ('3e75f50a-6cf1-4818-8f82-445c89c4e430','Excellent',false,true,0,'11f66ba5-eabb-4956-bdd4-960b83201d0b','2022-10-29 19:07:45.829214'),
-	 ('aec658b3-bcd5-43db-8668-8361363923ef','Doctor Strahinja chopped my finger and laughed',true,false,0,'13984a82-bdac-42f5-b856-d76df3f85f9b','2022-10-29 19:07:12.273741');
+	 ('17535a9b-d2d7-4369-8612-0223c8e9b398','Good maintenance of rooms. Nice gesture by nursing staff. Overall had a very good experience and feel at home. Good job. Cheers..! ',false,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 20:48:51.440084'),
+	 ('04311e21-af8d-45ed-957e-823b3b1db240','Attention given by the doctors and staff is good. I am impressed and feel safe to refer any patient, who requires treatment, to this hospital.',false,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 20:51:07.041038'),
+	 ('06f2538b-8480-42ad-b7f4-804d7f6cc731','Nursing Staff is excellent and dedicated. Housekeeping is very good. Doctors are professional and gave confidence to the patients. Please keep up the good work.',false,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 20:51:50.878855'),
+	 ('4eb45012-7216-4184-99fe-2a4e59ef6428','very advanced hospital with the technology and also doctors….they take care of patients verygood…the entire staff reciveing and treating of the patients is very excellent… ',true,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 20:52:33.035477'),
+	 ('3e4c0ade-116f-436a-b5d0-8ccaeba568b7','Extremely well maintained hospital with a terrific team of doctors, who leave no stone unturned for a patient and stand by you on the journey to recovery. ',true,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 20:52:50.85633'),
+	 ('b976e01f-4e5e-40c4-8bb0-6cb99088af1e','Nothing to specify in particular. Everything is in good manner. 100% marks when it comes to cleanliness. Never seen such a well maintained hospital. ',true,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 20:53:09.838134'),
+	 ('ce18681d-98bc-48e4-9b0e-e81bd924b9f1','I''m truly baffled by all the stellar reviews on the page. I wonder if dr Haleigh Dysert actually paid for them. I am very unhappy with the results of my appointment.',false,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 21:03:14.557594'),
+	 ('0d7a2ed3-dbf2-4be4-9fbb-bf06c60ac5c2','After you get past the fancy white spaceship interior, you realize the service is super overpriced. Haleigh Dysert charges way more than anyone else.',true,true,0,'aa1e8e3b-d110-40dd-a7fa-c97756b3f179','2023-01-15 21:04:50.451376');
+
 
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('hgradon0', '{"PasswordValue":"54XpdkOd14ha"}', true, false, 0, '123a835d-0998-4e5e-b55f-d1ec6f8f1ad2');
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('gtorbeck1', '{"PasswordValue":"U0LHHu3X60"}', true, false, 0, '3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17');
