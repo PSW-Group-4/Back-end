@@ -25,6 +25,7 @@ namespace HospitalLibrary.AppointmentReport.Service
                 Rectangle documentPage = new Rectangle(PageSize.A4);
                 documentPage.BackgroundColor = new BaseColor(System.Drawing.Color.WhiteSmoke);
 
+                //Fonts
                 Font titleFont = FontFactory.GetFont("Segoe UI", 22, iTextSharp.text.Font.BOLD,
                     mainColor);
                 Font elementFont = FontFactory.GetFont("Segoe UI", 14, iTextSharp.text.Font.BOLD,
@@ -40,10 +41,18 @@ namespace HospitalLibrary.AppointmentReport.Service
                 PdfContentByte cb = writer.DirectContent;
 
                 DrawBorders(cb, document);
+                //AddLogo(document);
 
                 AddHorizontalSpace(document, titleFont);
 
-                Paragraph par = new Paragraph("Appointment report", titleFont);
+                Image logo = Image.GetInstance("../HospitalLibrary/Images/health-check.png");
+                Chunk image = new Chunk(logo, -55f, 0, true);
+                Chunk title = new Chunk("Appointment report", titleFont);
+
+                Paragraph par = new Paragraph();
+                par.Add(image);
+                par.Add(title);
+
                 par.Alignment = Element.ALIGN_CENTER;
                 par.SpacingAfter = 30;
                 document.Add(par);
@@ -173,6 +182,12 @@ namespace HospitalLibrary.AppointmentReport.Service
                 return constant;
 
             }
+        }
+
+        private void AddLogo(iTextSharp.text.Document document)
+        {
+            Image logo = Image.GetInstance("../HospitalLibrary/Images/health-check.png");
+            document.Add(logo);
         }
 
         private static void AddHorizontalSpace(iTextSharp.text.Document document, Font titleFont)
