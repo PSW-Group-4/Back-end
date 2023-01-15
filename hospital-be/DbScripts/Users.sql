@@ -1,12 +1,20 @@
-﻿INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('hgradon0', '{"PasswordValue":"54XpdkOd14ha"}', true, false, 0, '123a835d-0998-4e5e-b55f-d1ec6f8f1ad2');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('gtorbeck1', '{"PasswordValue":"U0LHHu3X60"}', true, false, 0, '3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('nsaffill2', '{"PasswordValue":"FRufwDOeE"}', true, false, 0, '501cb78e-d157-49b5-9093-f87833f5ab42');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('agreengrass3', '{"PasswordValue":"HSrLcZW"}', true, false, 0, '7306ce59-2c2e-4b8c-8dc6-6b1977a237fa');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('rprozescky4', '{"PasswordValue":"gv8G2dR"}', true, false, 0, '11f66ba5-eabb-4956-bdd4-960b83201d0b');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('rlanphier5', '{"PasswordValue":"WcKFFAV"}', true, false, 0, '13984a82-bdac-42f5-b856-d76df3f85f9b');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('dbattie6', '{"PasswordValue":"VdUtpYaryJf"}', true, false, 0, 'ba871e05-a586-4d23-aa90-b7a86bbfb264');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('clotwich7', '{"PasswordValue":"ZlYRG56SHGh"}', true, false, 0, '12cd00c4-cd4f-4597-97d7-d642181c278f');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('mbanthorpe8', '{"PasswordValue":"pjrFxYt"}', true, false, 0, '210809af-8fdc-467a-a07f-2ee188a345e1');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES ('pat', '{"PasswordValue":"12345678"}', true, false, 0, '44cf702e-4e04-40c0-9098-841852fe498f');
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role") VALUES ('man', '{"PasswordValue":"12345678"}', true, false, 2);
-INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role") VALUES ('manager1', '{"PasswordValue":"manager1"}', true, false, 2);
+﻿INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES
+('hgradon0', '{"PasswordValue":"54XpdkOd14ha"}', true, false, 0, '123a835d-0998-4e5e-b55f-d1ec6f8f1ad2'),
+('gtorbeck1', '{"PasswordValue":"U0LHHu3X60"}', true, false, 0, '3b3b7c87-5ed8-4ed1-a39a-fbb9e07e2a17'),
+('nsaffill2', '{"PasswordValue":"FRufwDOeE"}', true, false, 0, '501cb78e-d157-49b5-9093-f87833f5ab42'),
+('agreengrass3', '{"PasswordValue":"HSrLcZW"}', true, false, 0, '7306ce59-2c2e-4b8c-8dc6-6b1977a237fa'),
+('rprozescky4', '{"PasswordValue":"gv8G2dR"}', true, false, 0, '11f66ba5-eabb-4956-bdd4-960b83201d0b'),
+('rlanphier5', '{"PasswordValue":"WcKFFAV"}', true, false, 0, '13984a82-bdac-42f5-b856-d76df3f85f9b'),
+('dbattie6', '{"PasswordValue":"VdUtpYaryJf"}', true, false, 0, 'ba871e05-a586-4d23-aa90-b7a86bbfb264'),
+('clotwich7', '{"PasswordValue":"ZlYRG56SHGh"}', true, false, 0, '12cd00c4-cd4f-4597-97d7-d642181c278f'),
+('mbanthorpe8', '{"PasswordValue":"pjrFxYt"}', true, false, 0, '210809af-8fdc-467a-a07f-2ee188a345e1'),
+('pat', '{"PasswordValue":"12345678"}', true, false, 0, '44cf702e-4e04-40c0-9098-841852fe498f'),
+('manager0', '{"PasswordValue":"manager0"}', true, false, 2, null),
+('manager1', '{"PasswordValue":"manager1"}', true, false, 2, null),
+
+('doktor0', '{"PasswordValue": "doktor0"}', true, false, 1, '631732d1-2be0-481f-b104-604efb32014d'),
+('doktor1', '{"PasswordValue": "doktor1"}', true, false, 1, '85bfee13-907e-410b-ad3a-9d4e0b7b87b7'),
+('doktor2', '{"PasswordValue": "doktor2"}', true, false, 1, '487d0767-1f8b-4a09-a593-4f076bdb9881'),
+('doktor3', '{"PasswordValue": "doktor3"}', true, false, 1, '13936c4b-03ef-4b43-8c37-b928a5ee9d38'),
+('doktor4', '{"PasswordValue": "doktor4"}', true, false, 1, '20770be2-7a1f-4656-8d9c-4c615ab27b5c'),
+('doktor5', '{"PasswordValue": "doktor5"}', true, false, 1, 'bdffc1c1-4765-4184-802e-d70388f2f429');
