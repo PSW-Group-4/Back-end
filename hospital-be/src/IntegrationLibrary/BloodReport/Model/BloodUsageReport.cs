@@ -20,7 +20,8 @@ namespace IntegrationLibrary.BloodBanks.Model
 
         public string GenerateHtml()
         {
-            string html = "<h1>Blood Usage Report</h1>" +
+            string html = "" +
+                Environment.NewLine + "<h1>Blood Usage Report</h1>" +
                 Environment.NewLine + "<h2>Bank: {0}</h2>" +
                 Environment.NewLine + "<h2>Date: {1}</h2>" +
                 Environment.NewLine + "<h2>Frequency: {2}</h2>" +
@@ -32,7 +33,7 @@ namespace IntegrationLibrary.BloodBanks.Model
                 Environment.NewLine + "\t\t<th>Amount(ml)</th>" +
                 Environment.NewLine + "\t</tr>";
             html = string.Format(html,this.BloodBank.Name,this.timeOfCreation.ToString(),this.ReportConfiguration.RequestFrequency.ToString());
-
+            html = "<html><head><style>body{background-color:#bbf6fc; color: black; font-family: Arial, Helvetica, sans-serif; display:flex; flex-direction: column; align-items: center;}table{border-collapse: collapse;} table td{padding: .5em;} table th{padding: .5em;} table tr{ border-bottom: 2px solid lightslategray;}</style></head><body>" + html;
             foreach (BloodUsageDto bloodUsage in BloodUsage)
             {
                 html += Environment.NewLine + "\t<tr>" +
@@ -42,7 +43,7 @@ namespace IntegrationLibrary.BloodBanks.Model
                         Environment.NewLine + "\t</tr>";
             }
 
-            html += Environment.NewLine + "</table>";
+            html += Environment.NewLine + "</table> </body> </html>";
             return html;
         }
     }
