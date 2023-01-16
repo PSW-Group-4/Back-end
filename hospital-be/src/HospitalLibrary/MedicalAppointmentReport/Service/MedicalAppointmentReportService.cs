@@ -86,7 +86,12 @@ namespace HospitalLibrary.AppointmentReport.Service
                     String simp = "";
                     foreach (Symptom s in medicalAppointmentReport.Report.Symptoms)
                     {
-                        simp = simp + s.Name + ",";
+                        simp = simp + s.Name + ", ";
+                    }
+
+                    if (!simp.Equals("")) {
+                        simp = simp.TrimEnd(' ');
+                        simp = simp.TrimEnd(',');
                     }
 
                     Chunk simp1 = new Chunk("Symptoms: ", elementFont);
@@ -122,7 +127,13 @@ namespace HospitalLibrary.AppointmentReport.Service
                     foreach (Prescription s in medicalAppointmentReport.Report.Prescriptions)
                     {
                         foreach (Medicine m in s.Medicines)
-                            lek = lek + m.Name + ",";
+                            lek = lek + m.Name + ", ";
+                    }
+
+                    if (!lek.Equals(""))
+                    {
+                        lek = lek.TrimEnd(' ');
+                        lek = lek.TrimEnd(',');
                     }
 
                     Chunk med1 = new Chunk("Prescribed medicine: ", elementFont);
