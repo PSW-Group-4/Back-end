@@ -1,6 +1,6 @@
-﻿INSERT INTO "Allergies" ("Id", "Name") VALUES ('a6739c08-1939-4a6e-8ca9-e58b087bc9a5', 'Nonea Medik.');
-INSERT INTO "Allergies" ("Id", "Name") VALUES ('04eee618-5b2c-481b-8e52-4e32f7ab6ce8', 'Arctostaphylos viscida Parry ssp. pulchella (Howell) P.V. Wells');
-INSERT INTO "Allergies" ("Id", "Name") VALUES ('d281b879-f344-461a-ada7-a8ef826f1155', 'Acarospora caesiofusca (Müll. Arg.) H. Magn.');
+﻿INSERT INTO "Allergies" ("Id", "Name") VALUES ('a6739c08-1939-4a6e-8ca9-e58b087bc9a5', 'Peanuts');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('04eee618-5b2c-481b-8e52-4e32f7ab6ce8', 'Soy');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('d281b879-f344-461a-ada7-a8ef826f1155', 'Crustaceans');
 INSERT INTO "Allergies" ("Id", "Name") VALUES ('e4cb7241-82ff-44fd-880d-60fb1b42079b', 'Pellaea bridgesii Hook.');
 INSERT INTO "Allergies" ("Id", "Name") VALUES ('6868ae25-ab9b-4549-931f-8b39c0117026', 'Trillium pusillum Michx.');
 INSERT INTO "Allergies" ("Id", "Name") VALUES ('01f0d06f-e4e4-4a35-94d1-8e34547a548d', 'Nicolletia edwardsii A. Gray');

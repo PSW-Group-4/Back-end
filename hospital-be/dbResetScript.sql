@@ -1,3 +1,4 @@
+delete from "Appointments";
 delete from "RenovationSessionEvents";
 delete from "RenovationSessionAggregateRoots";
 delete from "Admissions";
@@ -70,9 +71,9 @@ INSERT INTO "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") VALU
 INSERT INTO "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") VALUES ('2b95ffec-86dd-4931-a9e8-cc571c5af3f0', 'Tõrva', 'Serbia', 'Corry', '6');
 INSERT INTO "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") VALUES ('fc982639-c2bd-42f3-a9b2-b763d4871cbe', 'Wenhe', 'Serbia', 'Clyde Gallagher', '2239');
 INSERT INTO "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") VALUES ('18d73b88-60f2-4f77-a25e-622c8d6de090', 'Santiago De Compostela', 'Serbia', 'Carberry', '25');
-INSERT INTO "Allergies" ("Id", "Name") VALUES ('a6739c08-1939-4a6e-8ca9-e58b087bc9a5', 'Nonea Medik.');
-INSERT INTO "Allergies" ("Id", "Name") VALUES ('04eee618-5b2c-481b-8e52-4e32f7ab6ce8', 'Arctostaphylos viscida Parry ssp. pulchella (Howell) P.V. Wells');
-INSERT INTO "Allergies" ("Id", "Name") VALUES ('d281b879-f344-461a-ada7-a8ef826f1155', 'Acarospora caesiofusca (Müll. Arg.) H. Magn.');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('a6739c08-1939-4a6e-8ca9-e58b087bc9a5', 'Peanuts');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('04eee618-5b2c-481b-8e52-4e32f7ab6ce8', 'Soy');
+INSERT INTO "Allergies" ("Id", "Name") VALUES ('d281b879-f344-461a-ada7-a8ef826f1155', 'Crustaceans');
 INSERT INTO "Allergies" ("Id", "Name") VALUES ('e4cb7241-82ff-44fd-880d-60fb1b42079b', 'Pellaea bridgesii Hook.');
 INSERT INTO "Allergies" ("Id", "Name") VALUES ('6868ae25-ab9b-4549-931f-8b39c0117026', 'Trillium pusillum Michx.');
 INSERT INTO "Allergies" ("Id", "Name") VALUES ('01f0d06f-e4e4-4a35-94d1-8e34547a548d', 'Nicolletia edwardsii A. Gray');
@@ -215,7 +216,7 @@ insert into "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") valu
 ('f0b17c41-acaa-493d-912c-500669a1c466', 'Manaquiri', 'Brazil', 'Lakeland', '1'),
 ('3749cc8a-a884-440e-b91d-eaf3c3b98a23', 'Yanji', 'China', 'Steensland', '5710'),
 ('64fc95c7-f3fc-4e95-8ab2-2df4488bfe80', 'Sujji', 'Mongolia', 'Darwin', '156'),
-('76bfb7c4-26ce-4f12-bf4a-7f5a8984300e', 'Kikinda', 'Serbia', 'Izvorska', '27');
+('76bfb7c4-26ce-4f12-bf4a-7f5a8984300e', 'Zrenjanin', 'Serbia', 'Izvorska', '27');
 
 
 -- Patients
@@ -250,7 +251,7 @@ insert into "Patients" ("Id", "BloodGroup", "RhFactor", "ChosenDoctorId", "Name"
   '1998-07-12 19:31:42', 1, '3749cc8a-a884-440e-b91d-eaf3c3b98a23', '{"JmbgValue": "1807000730038"}', 'cmievillec@nsw.gov.au', '680-810-0737'),
  ('edf25aa4-a19a-4a03-ae71-ef1078eadc17', 1, 1,     'cd8be910-f742-4319-8db5-8fefaeccfc0f', 'Ogdon', 'Durrant',
   '1952-02-04 07:18:48', 0, '64fc95c7-f3fc-4e95-8ab2-2df4488bfe80', '{"JmbgValue": "1807000730038"}', 'odurrantd@sphinn.com', '367-523-3316'),
- ('79978326-f136-4cec-813b-6b12c962752b', 2, 0, 'c74a1a2f-6553-488a-a28e-d77f6d34072a', 'Jovan', 'Srdanov',
+ ('79978326-f136-4cec-813b-6b12c962752b', 3, 0, 'c74a1a2f-6553-488a-a28e-d77f6d34072a', 'Jovan', 'Srdanov',
   '2000-11-01 02:14:45', 0, '76bfb7c4-26ce-4f12-bf4a-7f5a8984300e',  '{"JmbgValue": "0111000850019"}', 'jovansrdanov@gmail.com', '064-327-2628');
 
 -- Users for patients
@@ -276,7 +277,6 @@ INSERT INTO "PatientAllergies" ("AllergiesId", "PatientsId") VALUES ('a6739c08-1
 INSERT INTO "PatientAllergies" ("AllergiesId", "PatientsId") VALUES ('04eee618-5b2c-481b-8e52-4e32f7ab6ce8','79978326-f136-4cec-813b-6b12c962752b');
 INSERT INTO "PatientAllergies" ("AllergiesId", "PatientsId") VALUES ('d281b879-f344-461a-ada7-a8ef826f1155','79978326-f136-4cec-813b-6b12c962752b');
 
-
 INSERT INTO public."Feedbacks" ("Id","Text","IsAnonimous","IsDesiredPublic","Status","PatientId","Date") VALUES
 	 ('17535a9b-d2d7-4369-8612-0223c8e9b398','Good maintenance of rooms. Nice gesture by nursing staff. Overall had a very good experience and feel at home. Good job. Cheers..! ',false,true,0,'3e9e456a-7948-4e82-b33c-583737856111','2021-02-07 19:48:51.44'),
 	 ('04311e21-af8d-45ed-957e-823b3b1db240','Attention given by the doctors and staff is good. I am impressed and feel safe to refer any patient, who requires treatment, to this hospital.',false,true,0,'43d8ef21-2f8e-47a3-97fa-bb9253ea7d04','2021-01-15 20:51:07.041'),
@@ -286,7 +286,6 @@ INSERT INTO public."Feedbacks" ("Id","Text","IsAnonimous","IsDesiredPublic","Sta
 	 ('b976e01f-4e5e-40c4-8bb0-6cb99088af1e','Nothing to specify in particular. Everything is in good manner. 100% marks when it comes to cleanliness. Never seen such a well maintained hospital. ',true,true,0,'ddbe195e-2337-4347-86f2-d702cd206543','2023-01-10 17:53:09.838'),
 	 ('0d7a2ed3-dbf2-4be4-9fbb-bf06c60ac5c2','After you get past the fancy white spaceship interior, you realize the service is super overpriced. Haleigh Dysert charges way more than anyone else.',true,true,0,'24826bea-0ebb-492c-96db-3d7e5f214028','2023-01-13 21:04:50.451'),
 	 ('ce18681d-98bc-48e4-9b0e-e81bd924b9f1','Dr Haleigh Dysert is constantly disrespectful of my time. I had a noon appointment and walked out at 12:45 without getting seen.',false,true,0,'e2415681-422e-4870-84e1-9b3b2a108643','2023-01-16 10:49:14.557');
-
 
 INSERT INTO "Users" ("Username", "Password", "IsAccountActive", "IsBlocked", "Role", "PersonId") VALUES
 ('manager0', '{"PasswordValue":"manager0"}', true, false, 2, null),
@@ -607,4 +606,31 @@ INSERT INTO Public."RenovationSessionEvents"("Id","Discriminator","NewRoomsCreat
 INSERT INTO Public."RenovationSessionEvents"("Id","Discriminator","NewRoomsCreated_RoomRenovationPlans","RoomRenovationPlans","Start","End","TimeframeCreated_Start","TimeframeCreated_End","TypeOfRenovationChosen","AggregateId","OccurrenceTime") VALUES ('fd6a6905-6b5a-48a6-a610-76ee1d3d9399','TypeChosen',NULL,NULL,NULL,NULL,NULL,NULL,1,'87ecc6e9-47e3-4719-abc2-8ee90a482e76','2023-01-12 02:02:01.134828');
 INSERT INTO Public."RenovationSessionEvents"("Id","Discriminator","NewRoomsCreated_RoomRenovationPlans","RoomRenovationPlans","Start","End","TimeframeCreated_Start","TimeframeCreated_End","TypeOfRenovationChosen","AggregateId","OccurrenceTime") VALUES ('fd7d2033-ebf7-4918-b8f6-759bd1a4091e','NewRoomsCreated','[{"Id":"00000000-0000-0000-0000-000000000000","Name":"123","Description":"123","Type":1,"Number":123}]',NULL,NULL,NULL,NULL,NULL,0,'d2619d7c-9779-4c7e-9ef9-6e0486dc7e81','2023-01-12 02:09:33.744746');
 INSERT INTO Public."RenovationSessionEvents"("Id","Discriminator","NewRoomsCreated_RoomRenovationPlans","RoomRenovationPlans","Start","End","TimeframeCreated_Start","TimeframeCreated_End","TypeOfRenovationChosen","AggregateId","OccurrenceTime") VALUES ('ff9bfd42-e98d-48f9-9843-db5a2303a059','SessionStarted',NULL,NULL,NULL,NULL,NULL,NULL,0,'37e5221a-6c29-4f0b-9a2d-1230ae443ec9','2023-01-12 02:09:07.376063');
+
+-- Skripta puca, pa sam privremeno zakomentarisao
+
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('500be7f7-2105-458f-96e5-a06074a2257c','2023-01-25 13:15:00','2023-01-25 13:30:00','dde5590b-1bea-489e-a503-302a9b9fc0ca','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'1f0821a6-adad-4c5f-aad0-6543863c50b1',0,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('51c5a18e-9e68-4251-abfd-eb8805a109a7','2023-01-25 09:00:00','2023-01-25 09:15:00','6b046e88-546c-4071-9431-24511e1e2d28','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'0c683ed3-ea47-46c2-88ae-a257c7b9fc34',1,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('59dd3fa9-738a-4ffa-841f-fc0af3bf6137','2023-01-30 15:00:00','2023-01-30 15:15:00','66b63e58-17a2-4a4a-9fa4-b5a26afd0fc6','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'26d8ded0-f7bd-4da7-be46-7f41bd85cc16',1,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('7f4b4399-e37d-4735-a746-52772c866506','2023-01-25 09:00:00','2023-01-25 09:15:00','9ae3255d-261f-472f-a961-7f2e7d05d95c','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'a4a3bfd3-feb5-4250-bcc5-83343726a286',0,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('85ae0b9d-ca58-42d8-b8a2-c2d315a644ed','2023-01-19 10:00:00','2023-01-19 10:15:00','a2c565f7-d61e-4302-a417-1ed48919bb8f','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'e5e07046-a3f9-4005-9b31-0d045897eced',1,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('aa1076c4-ae1d-4cd3-80db-a085eb3245fe','2023-01-30 15:00:00','2023-01-30 15:15:00','54c6de76-bc71-4615-8c73-4ebf9546444f','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'96f4effe-49a2-4751-a8dc-605a9001eb7f',0,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('ad9cdfea-1e3b-4c44-8edc-694f506c2461','2023-01-29 18:30:00','2023-01-29 18:45:00','be5d6557-f0fa-42fb-bff0-823923d6dfd9','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'9427486b-7639-4cbe-ae2e-fb4d3635ecf0',0,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('d2bb655e-4410-4bbe-8c10-74875b3072bc','2023-01-19 10:00:00','2023-01-19 10:15:00','bfd7238a-1157-47fd-97d4-ed61a3acc03b','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'e36a880d-8f02-43a3-ae6f-d57113f6b65e',0,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('da8459a5-88e6-4529-84f4-085ce275e496','2023-01-25 13:15:00','2023-01-25 13:30:00','8dd731ee-197f-40a8-a5e1-845662b0c0cd','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'daadaac8-e543-4074-9652-7e84e54e4694',1,NULL,NULL);
+--INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('f45ef1d5-15b7-4a9a-937a-e628b40a46bb','2023-01-29 18:30:00','2023-01-29 18:45:00','66b63e58-17a2-4a4a-9fa4-b5a26afd0fc6','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'6bacf315-f405-4b59-ba72-20fd06f68800',1,NULL,NULL);
+
+
+-- Medical appointments
+INSERT INTO public."Appointments" ("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES
+	 ('9db40539-a39d-4831-b01b-4187ddd40987','2023-02-02 11:00:00','2023-02-02 11:30:00','fda46699-49a4-49c8-83a0-9efb86db9079','MedicalAppointment',false,'3cc3c6a7-0849-4c6e-90b9-ea18641b3af7','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
+	 ('9ac93783-c6f9-4866-9ca4-697feb2851ee','2023-02-15 18:00:00','2023-02-15 18:30:00','537f4833-bd4b-45be-92a0-d82f29e7c352','MedicalAppointment',false,'8c3c8455-574b-44c2-a5b5-2554bd5e669f','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
+	 ('9e95aaf0-8d5e-41d9-895d-5353c81887b1','2023-04-12 10:30:00','2023-04-12 11:00:00','0a675efc-9118-47e7-8701-392b2fce8f24','MedicalAppointment',false,'9f35094e-339a-4e57-85f4-9cb8e48108b9','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
+	 ('f1f98760-26e8-46db-aca7-070edb293a45','2023-03-31 10:30:00','2023-03-31 11:00:00','3c8bb35e-cc74-46db-8c3e-fe757b0643e7','MedicalAppointment',false,'46214694-a5cd-4472-be02-0912a8b807f7','79978326-f136-4cec-813b-6b12c962752b',true,NULL,NULL,NULL,NULL,NULL),
+	 ('63ddcb6d-faa6-4089-ae4c-9a4eafa1fb29','2023-01-27 08:00:00','2023-01-27 08:30:00','bfd7238a-1157-47fd-97d4-ed61a3acc03b','MedicalAppointment',false,'da40fbc6-f341-4126-9e04-4e891cd75ec0','79978326-f136-4cec-813b-6b12c962752b',true,NULL,NULL,NULL,NULL,NULL),
+	 ('6b3cb57c-357c-4f4c-b4b3-830fdee78615','2023-02-06 07:00:00','2023-02-06 07:30:00','ca404f3e-a95d-44f5-9fab-42719dbcdd21','MedicalAppointment',false,'f19b7905-9bb7-4d07-abf6-7b9d4e782714','79978326-f136-4cec-813b-6b12c962752b',true,NULL,NULL,NULL,NULL,NULL),
+	 ('eb71b54b-7eef-4e23-b2c2-4db336244893','2023-01-05 10:30:00','2023-01-05 11:00:00','9ae3255d-261f-472f-a961-7f2e7d05d95c','MedicalAppointment',false,'631732d1-2be0-481f-b104-604efb32014d','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
+	 ('afc6da3c-91bc-400c-8853-45abe2d169d5','2023-01-11 13:30:00','2023-01-11 14:00:00','133962ea-c543-497b-81a6-6a2efb54212a','MedicalAppointment',false,'13936c4b-03ef-4b43-8c37-b928a5ee9d38','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
+	 ('f349d7d2-3baf-423c-8937-d3c30c0efae3','2023-01-16 16:00:00','2023-01-16 16:30:00','620472d5-85b1-4f2d-aafc-3c9d9a59904f','MedicalAppointment',false,'20770be2-7a1f-4656-8d9c-4c615ab27b5c','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL);
+
 

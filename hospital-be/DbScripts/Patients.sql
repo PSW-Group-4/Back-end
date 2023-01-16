@@ -14,7 +14,7 @@ insert into "Addresses" ("Id", "City", "Country", "Street", "StreetNumber") valu
 ('f0b17c41-acaa-493d-912c-500669a1c466', 'Manaquiri', 'Brazil', 'Lakeland', '1'),
 ('3749cc8a-a884-440e-b91d-eaf3c3b98a23', 'Yanji', 'China', 'Steensland', '5710'),
 ('64fc95c7-f3fc-4e95-8ab2-2df4488bfe80', 'Sujji', 'Mongolia', 'Darwin', '156'),
-('76bfb7c4-26ce-4f12-bf4a-7f5a8984300e', 'Kikinda', 'Serbia', 'Izvorska', '27');
+('76bfb7c4-26ce-4f12-bf4a-7f5a8984300e', 'Zrenjanin', 'Serbia', 'Izvorska', '27');
 
 
 -- Patients
@@ -49,7 +49,7 @@ insert into "Patients" ("Id", "BloodGroup", "RhFactor", "ChosenDoctorId", "Name"
   '1998-07-12 19:31:42', 1, '3749cc8a-a884-440e-b91d-eaf3c3b98a23', '{"JmbgValue": "1807000730038"}', 'cmievillec@nsw.gov.au', '680-810-0737'),
  ('edf25aa4-a19a-4a03-ae71-ef1078eadc17', 1, 1,     'cd8be910-f742-4319-8db5-8fefaeccfc0f', 'Ogdon', 'Durrant',
   '1952-02-04 07:18:48', 0, '64fc95c7-f3fc-4e95-8ab2-2df4488bfe80', '{"JmbgValue": "1807000730038"}', 'odurrantd@sphinn.com', '367-523-3316'),
- ('79978326-f136-4cec-813b-6b12c962752b', 2, 0, 'c74a1a2f-6553-488a-a28e-d77f6d34072a', 'Jovan', 'Srdanov',
+ ('79978326-f136-4cec-813b-6b12c962752b', 3, 0, 'c74a1a2f-6553-488a-a28e-d77f6d34072a', 'Jovan', 'Srdanov',
   '2000-11-01 02:14:45', 0, '76bfb7c4-26ce-4f12-bf4a-7f5a8984300e',  '{"JmbgValue": "0111000850019"}', 'jovansrdanov@gmail.com', '064-327-2628');
 
 -- Users for patients
