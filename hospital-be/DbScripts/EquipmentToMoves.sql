@@ -1,0 +1,10 @@
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('0c683ed3-ea47-46c2-88ae-a257c7b9fc34','497f7913-2139-4091-9a4c-0091d3b76216',3);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('1f0821a6-adad-4c5f-aad0-6543863c50b1','a00e71fd-7d8f-427e-afb7-ff1b45749fd8',2);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('26d8ded0-f7bd-4da7-be46-7f41bd85cc16','2d6e94c6-775a-499f-861f-c432439bc7ff',2);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('6bacf315-f405-4b59-ba72-20fd06f68800','497f7913-2139-4091-9a4c-0091d3b76216',2);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('9427486b-7639-4cbe-ae2e-fb4d3635ecf0','497f7913-2139-4091-9a4c-0091d3b76216',2);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('96f4effe-49a2-4751-a8dc-605a9001eb7f','2d6e94c6-775a-499f-861f-c432439bc7ff',2);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('a4a3bfd3-feb5-4250-bcc5-83343726a286','497f7913-2139-4091-9a4c-0091d3b76216',3);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('daadaac8-e543-4074-9652-7e84e54e4694','a00e71fd-7d8f-427e-afb7-ff1b45749fd8',2);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('e36a880d-8f02-43a3-ae6f-d57113f6b65e','2d6e94c6-775a-499f-861f-c432439bc7ff',3);
+INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('e5e07046-a3f9-4005-9b31-0d045897eced','2d6e94c6-775a-499f-861f-c432439bc7ff',3);
