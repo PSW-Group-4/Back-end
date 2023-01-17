@@ -40,7 +40,6 @@ namespace IntegrationLibrary.Tendering.Model
             Version = 1.0;
             Status = TenderStatus.ACTIVE;
             Winner = null;
-            Events = new List<DomainEvent>();
         }
 
         private Tender(IEnumerable<Blood> blood)
@@ -52,7 +51,6 @@ namespace IntegrationLibrary.Tendering.Model
             Version = 1.0;
             Status = TenderStatus.ACTIVE;
             Winner = null;
-            Events = new List<DomainEvent>();
         }
 
         public bool IsActive()
@@ -93,7 +91,6 @@ namespace IntegrationLibrary.Tendering.Model
 
         private void AddEvent(DomainEvent @event)
         {
-            Events.Add(@event);
         }
         public void Causes(DomainEvent @event)
         {
@@ -112,19 +109,21 @@ namespace IntegrationLibrary.Tendering.Model
             {
                 Status = TenderStatus.ACTIVE;
                 Blood = tenderCreatedEvent.Blood;
-                Events = new List<DomainEvent>();
+            }
+            else
+            {
+                if(DateTime.Compare(DateTime.Now, (DateTime)tenderCreatedEvent.Deadline) < 0)
+                {
+                    Status = TenderStatus.ACTIVE;
+                    Blood = tenderCreatedEvent.Blood;
+                    Deadline = tenderCreatedEvent.Deadline;
+                } else
+                {
+                    throw new DateIsBeforeTodayException();
+                }
             }
 
-            if(DateTime.Compare(DateTime.Now, (DateTime)tenderCreatedEvent.Deadline) < 0)
-            {
-                Status = TenderStatus.ACTIVE;
-                Blood = tenderCreatedEvent.Blood;
-                Deadline = tenderCreatedEvent.Deadline;
-                Events = new List<DomainEvent>();
-            } else
-            {
-                throw new DateIsBeforeTodayException();
-            }
+            
 
         }
 
@@ -147,10 +146,6 @@ namespace IntegrationLibrary.Tendering.Model
             Modify();
         }
         public void InitializeEvents() {
-            if (Events == null)
-            {
-               Events = new List<DomainEvent>();
-            }
         } 
     }
 }
