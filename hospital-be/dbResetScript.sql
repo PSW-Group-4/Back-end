@@ -1,10 +1,9 @@
 delete from "Reports";
-delete from "Medicines";
-delete from "Symptoms";
 delete from "Appointments";
 delete from "EquipmentToMoves";
 delete from "RenovationSessionEvents";
 delete from "RenovationSessionAggregateRoots";
+delete from "AdmissionHistories";
 delete from "Admissions";
 delete from "MapItem";
 delete from "RoomsEquipment";
@@ -20,6 +19,11 @@ delete from "Buildings";
 delete from "Allergies";
 delete from "Addresses";
 delete from "AgeGroups";
+delete from "Treatments";
+delete from "BloodConsumptionRecords";
+delete from "Medicines";
+delete from "Symptoms";
+
 insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
 	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
 	('113faa92-ea79-4bd7-9b9a-6413098f39ec','Young adults',17,30),
