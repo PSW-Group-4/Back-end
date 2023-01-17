@@ -16,6 +16,7 @@ using HospitalLibrary.Users.Model;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using System.Collections;
+using System.Linq;
 using HospitalLibrary.Utility;
 using HospitalLibrary.Patients.Service;
 using HospitalLibrary.Core.Model;
@@ -179,7 +180,8 @@ namespace HospitalAPI.Controllers
                 {
                     appsDto.Add(new MedicalAppointmentDto(a));
                 }
-                return Ok(appsDto);
+                //YOLO
+                return Ok(appsDto.OrderBy(app => app.StartTime));
             }
             catch (NotFoundException)
             {
@@ -205,7 +207,8 @@ namespace HospitalAPI.Controllers
                 {
                     appsDto.Add(new MedicalAppointmentDto(a));
                 }
-                return Ok(appsDto);
+                //YOLO
+                return Ok(appsDto.OrderBy(app => app.StartTime));
             }
             catch (NotFoundException)
             {
@@ -231,7 +234,7 @@ namespace HospitalAPI.Controllers
                 {
                     appsDto.Add(new MedicalAppointmentDto(a));
                 }
-                return Ok(appsDto);
+                return Ok(appsDto.OrderBy(app => app.StartTime));
             }
             catch (NotFoundException)
             {
