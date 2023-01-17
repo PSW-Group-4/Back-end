@@ -17,6 +17,8 @@ delete from "Buildings";
 delete from "Allergies";
 delete from "Addresses";
 delete from "AgeGroups";
+delete from "Medicines";
+delete from "Symptoms";
 insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
 	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
 	('113faa92-ea79-4bd7-9b9a-6413098f39ec','Young adults',17,30),
@@ -619,6 +621,39 @@ INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('daad
 INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('e36a880d-8f02-43a3-ae6f-d57113f6b65e','2d6e94c6-775a-499f-861f-c432439bc7ff',3);
 INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('e5e07046-a3f9-4005-9b31-0d045897eced','2d6e94c6-775a-499f-861f-c432439bc7ff',3);
 
+
+-- Medicines
+INSERT INTO public."Medicines" ("Id","Name") VALUES
+	('d5796196-18b7-4e65-94d8-0094733ddb10','Aspirin'),
+	('909d551d-88ad-4496-bfe1-361c85fc2166','Brufen'),
+	('227a40a4-609f-4b80-b89c-b0760591794a','Aspirin'),
+	('839c1918-7e27-42a0-87da-f0185beb2b7a','Brufen'),
+	('be83b11e-0cb2-4338-8029-e7580d5d1a1b','Panadol'),
+	('a0d369ff-61b5-4d64-b934-5138737c2500','Linex'),
+	('524b99a6-3d14-44ab-a9e4-29c1fa6d29c0','Corex'),
+	('9028f723-b735-453e-9ea7-92ae228a28cf','Bleturs');
+
+-- Symptoms
+INSERT INTO public."Symptoms" ("Id","Name") VALUES
+	('02776ef1-45e9-4bf1-b6ce-58e2be21b865','Temperature'),
+	('e03dfbcc-c934-4e3b-a4a6-a0255d7898aa','Sore throat'),
+	('bf63dbb1-cce0-4b30-807b-2ba7e51d70b4','Headache'),
+	('f5575217-44a8-45ad-9a39-ef78f22ece79','Toothache'),
+	('b7ca7cde-58fc-4971-9e39-0f6ceaafbd5e','Stomachache'),
+	('3df0969c-c43c-4315-a1ea-2a2960212eb4','Ill'),
+	('d497d3db-93d0-421a-8ece-ea8631772cba','Broken bone'),
+	('3d1ffa79-6ef9-4460-aafe-c51a8e56728b','Fever');
+
+-- BloodSyply
+INSERT INTO public."BloodSupply" ("Id","BloodGroup","RhFactor","Amount") VALUES
+	('b14fb18a-e0d9-460c-8dd5-043b0b87dfa4',1,0,200.00),
+	('a6ac6cbf-4d30-4c4c-9b7a-fc110433257c',1,1,450.00),
+	('4996bada-9081-41e9-9fac-79c484237b3f',2,0,0.00),
+	('986f00ae-4a94-46a8-b34b-c2a2a572ee50',2,1,875.00),
+	('91b65daf-f81b-47d4-bf15-7da65beb3eab',3,0,380.00),
+	('5c5a9b38-0d4a-4106-9e28-c9f26dbe37f4',3,1,0.00),
+	('90341a02-a1e2-4622-8955-5bb8baef12b8',0,0,1150.00),
+	('52d280df-3c9f-46e7-8be2-69da3235ad26',0,1,700.00);
 -- Vise ne puca, pa sam privremeno otkomentarisao, Relocation appointments
 
 INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('500be7f7-2105-458f-96e5-a06074a2257c','2023-01-25 13:15:00','2023-01-25 13:30:00','dde5590b-1bea-489e-a503-302a9b9fc0ca','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'1f0821a6-adad-4c5f-aad0-6543863c50b1',0,NULL,NULL);
