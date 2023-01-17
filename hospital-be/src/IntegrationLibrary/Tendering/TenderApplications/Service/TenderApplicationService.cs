@@ -39,7 +39,7 @@ namespace IntegrationLibrary.TenderApplications.Service
         public string GenerateWinnerMessage(TenderApplication application) {
             return "Dear sir/madam we are happy to inform you that we have accepted your offer for our tender, please follow the link" +
                 " to accept the terms of the tender. Kind regards Zdravo hospital." +
-                "http://localhost:4200/tender/winner/" + application.Tender.Id;
+                "http://localhost:4200/bloodBank/tender/winner/" + application.Tender.Id;
         }
         public string GenerateRejectionMessage() {
             return "Dear sir/madam we are sorry to inform you that we have chosen a different offer, thank you for applying for our tender," +
