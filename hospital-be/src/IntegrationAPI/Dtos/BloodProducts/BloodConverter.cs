@@ -29,6 +29,10 @@ namespace IntegrationAPI.Dtos.BloodProducts
 
         internal static List<Blood> Convert(List<BloodDto> bloodDto)
         {
+            if (bloodDto == null)
+            {
+                return new List<Blood>();
+            }
             var retVal = new List<Blood>();
             foreach (var bloodItem in bloodDto)
             {

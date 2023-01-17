@@ -5,9 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using IntegrationAPI.Authorization;
+using IntegrationAPI.Communications.Producer;
 using IntegrationAPI.Dtos.BloodProducts;
+using IntegrationAPI.Dtos.BloodSupplies;
 using IntegrationLibrary.BloodBanks.Service;
+using IntegrationLibrary.Common;
 using IntegrationLibrary.Tendering.DomainEvents.Subtypes;
 using IntegrationLibrary.Tendering.Model;
 using IntegrationLibrary.Tendering.Service;
@@ -19,13 +24,15 @@ namespace IntegrationAPI.Controllers
     public class TenderController : Controller
     {
         private readonly ITenderService _tenderService;
-        private readonly IConverter<Tender, TenderDto> tenderConverter;
+        private readonly IConverter<Tender, TenderDto> _tenderConverter;
         private readonly IBloodBankService _bloodBankService;
-        public TenderController(ITenderService tenderService, IConverter<Tender, TenderDto> tenderConverter, IBloodBankService bloodBankService)
+        private readonly IProducer _producer;
+        public TenderController(ITenderService tenderService, IConverter<Tender, TenderDto> tenderConverter, IBloodBankService bloodBankService, IProducer producer)
         {
             _tenderService = tenderService;
-            this.tenderConverter = tenderConverter;
-            this._bloodBankService = bloodBankService;
+            _tenderConverter = tenderConverter;
+            _bloodBankService = bloodBankService;
+            _producer = producer;
         }
 
 
@@ -53,16 +60,22 @@ namespace IntegrationAPI.Controllers
             return Ok(_tenderService.GetActive());
         }
 
-        [Route("{id}/winner/confirm"), HttpPut]
+        [Route("{id}/winner/confirm"), HttpPost]
         public ActionResult ConfirmWinner(Guid id)
         {
             WinnerConfirmedEvent winnerConfirmedEvent = new(id);
             _tenderService.ConfirmWinner(winnerConfirmedEvent);
+            Tender tender = _tenderService.GetById(winnerConfirmedEvent.AggregateId);
+            foreach (Blood blood in tender.Blood)
+            {
+                ReceivedBloodDto dto = new(blood.BloodType.ToString(), blood.Amount);
+                _producer.Send(JsonSerializer.Serialize(dto), "hospital.blood.supply.topic");
+            }
             return Ok();
         }
         [Route("{tenderId}/winner/{bloodBankId}"), HttpPut]
         public ActionResult ChooseWinner(string tenderId, string bloodBankId) {
-            BloodBank winner = _bloodBankService.GetById(Guid.Parse(bloodBankId));
+            BloodBank winner = _bloodBankService.GetByApiKey(bloodBankId);
             WinnerChosenEvent winnerChosenEvent = new( Guid.Parse(tenderId), winner);
             _tenderService.ChooseWinner(winnerChosenEvent);
              return Ok( );

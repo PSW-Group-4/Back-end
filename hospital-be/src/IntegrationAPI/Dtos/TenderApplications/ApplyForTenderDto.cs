@@ -10,6 +10,6 @@ namespace IntegrationAPI.Dtos.TenderApplications
     {
         public String BloodBank { get; set; }
         public Guid TenderId { get; set; }
-        public Price Price { get; set; }
+        public Double PriceInRSD { get; set; }
     }
 }

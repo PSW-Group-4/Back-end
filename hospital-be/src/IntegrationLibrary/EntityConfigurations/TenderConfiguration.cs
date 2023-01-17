@@ -21,9 +21,6 @@ namespace IntegrationLibrary.EntityConfigurations
             builder.Property(tender => tender.Blood).HasConversion(
                 bloodProducts => JsonSerializer.Serialize(bloodProducts, (JsonSerializerOptions)null),
                 json => JsonSerializer.Deserialize<IEnumerable<Blood>>(json, (JsonSerializerOptions)null));
-            builder.Property(tender => tender.Events).HasConversion(
-                events => JsonSerializer.Serialize(events, (JsonSerializerOptions)null),
-                json => JsonSerializer.Deserialize<List<DomainEvent>>(json, (JsonSerializerOptions)null));
         }
     }
 }

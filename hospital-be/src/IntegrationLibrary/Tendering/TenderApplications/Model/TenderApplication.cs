@@ -27,12 +27,10 @@ namespace IntegrationLibrary.TenderApplications.Model
             Tender = tender;
             Version = 1.0;
             Price = price;
-            Events = new List<DomainEvent>();
         }
 
         private void AddEvent(DomainEvent @event)
         {
-            Events.Add(@event);
         }
         public void Causes(DomainEvent @event)
         {
@@ -50,7 +48,6 @@ namespace IntegrationLibrary.TenderApplications.Model
             BloodBank = appliedToTenderEvent.BloodBank;
             Tender = appliedToTenderEvent.Tender;
             Price = appliedToTenderEvent.Price;
-            Events = new List<DomainEvent>();
         }
     }
 }
