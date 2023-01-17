@@ -15,7 +15,7 @@ namespace HospitalLibrary.Settings.Configurations
         public void Configure(EntityTypeBuilder<Admission> builder)
         {
             builder
-            .OwnsOne(b => b.Reason, amount =>
+            .OwnsOne(b => b.ReasonText, amount =>
             {
                 amount.Property(prop => prop.Text)
                     .HasColumnName("ReasonText");

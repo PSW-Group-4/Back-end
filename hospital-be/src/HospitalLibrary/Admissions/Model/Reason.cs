@@ -17,10 +17,10 @@ namespace HospitalLibrary.Admissions.Model
         public Reason(string text)
         {
             Text = text;
-            if (!IsValid())
-            {
-                throw new ValueObjectValidationFailedException("Reason is not in proper format");
-            }
+           // if (!IsValid())
+            //{
+            //    throw new ValueObjectValidationFailedException("Reason is not in proper format");
+            //}
         }        
 
         private bool IsValid()

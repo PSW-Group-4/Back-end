@@ -42,7 +42,7 @@ namespace TestHospitalApp.IntegrationTesting
             var bloodConsumptionRecord = new BloodConsumptionRecordRequestDto
             {
                 DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
-                Amount = 50.00,
+                Amount = new Amount(50.0),
                 BloodType = "A+",
                 Reason = "Reason 1"
             };
@@ -62,7 +62,7 @@ namespace TestHospitalApp.IntegrationTesting
             var bloodConsumptionRecord = new BloodConsumptionRecordRequestDto
             {
                 DoctorId = new Guid("5c036fba-1118-4f4b-b153-90d75e60625e"),
-                Amount = 50.00,
+                Amount = new Amount(50.00),
                 BloodType = "B+",
                 Reason = "Reason 2"
             };

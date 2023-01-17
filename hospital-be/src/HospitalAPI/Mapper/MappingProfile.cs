@@ -133,8 +133,8 @@ namespace HospitalAPI.Mapper
 
             CreateMap<AdmissionRequestDto, Admission>();
             CreateMap<Admission, AdmissionRequestDto>();
-            CreateMap<Admission, AdmissionRequestDto>().ForMember(dest => dest.Reason,
-                opt => opt.MapFrom(src => src.Reason.Text));
+            CreateMap<Admission, AdmissionRequestDto>().ForMember(dest => dest.ReasonText,
+                opt => opt.MapFrom(src => src.ReasonText.Text));
 
             CreateMap<MedicineRequestDto, Medicine>();
             CreateMap<Medicine, MedicineRequestDto>();

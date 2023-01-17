@@ -19,7 +19,7 @@ namespace HospitalLibrary.BloodConsumptionRecords.Model
 
         private bool IsValid()
         {
-            return Value > 0;
+            return Value >= 0;
         }
 
         protected bool Equals(Amount other)
