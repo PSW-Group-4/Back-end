@@ -658,6 +658,7 @@ INSERT INTO public."Appointments" ("Id","StartTime","EndTime","RoomId","Discrimi
 	 ('6b3cb57c-357c-4f4c-b4b3-830fdee78615','2023-02-06 07:00:00','2023-02-06 07:30:00','ca404f3e-a95d-44f5-9fab-42719dbcdd21','MedicalAppointment',false,'f19b7905-9bb7-4d07-abf6-7b9d4e782714','79978326-f136-4cec-813b-6b12c962752b',true,NULL,NULL,NULL,NULL,NULL),
 	 ('eb71b54b-7eef-4e23-b2c2-4db336244893','2023-01-05 10:30:00','2023-01-05 11:00:00','9ae3255d-261f-472f-a961-7f2e7d05d95c','MedicalAppointment',false,'631732d1-2be0-481f-b104-604efb32014d','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
 	 ('afc6da3c-91bc-400c-8853-45abe2d169d5','2023-01-11 13:30:00','2023-01-11 14:00:00','133962ea-c543-497b-81a6-6a2efb54212a','MedicalAppointment',false,'13936c4b-03ef-4b43-8c37-b928a5ee9d38','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
+	 ('f349d7d2-3baf-423c-8937-d3c30c11fae3','2022-01-16 16:00:00','2022-01-16 16:30:00','620472d5-85b1-4f2d-aafc-3c9d9a59904f','MedicalAppointment',true,'631732d1-2be0-481f-b104-604efb32014d','22fc8a6a-609a-4177-be8b-cecb48640c88',false,NULL,NULL,NULL,NULL,NULL),
 	 ('f349d7d2-3baf-423c-8937-d3c30c0efae3','2023-01-16 16:00:00','2023-01-16 16:30:00','620472d5-85b1-4f2d-aafc-3c9d9a59904f','MedicalAppointment',false,'20770be2-7a1f-4656-8d9c-4c615ab27b5c','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL);
 
 
