@@ -6,6 +6,7 @@ delete from "Admissions";
 delete from "MapItem";
 delete from "RoomsEquipment";
 delete from "Equipments";
+delete from "Beds";
 delete from "Users";
 delete from "Feedbacks";
 delete from "PatientAllergies";
@@ -19,6 +20,7 @@ delete from "Addresses";
 delete from "AgeGroups";
 delete from "Medicines";
 delete from "Symptoms";
+delete from "BloodSupply";
 insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
 	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
 	('113faa92-ea79-4bd7-9b9a-6413098f39ec','Young adults',17,30),
@@ -309,7 +311,22 @@ insert into public."Equipments" ("Id", "Name") values ('a00e71fd-7d8f-427e-afb7-
 insert into public."Equipments" ("Id", "Name") values ('fef16a98-f2e5-4d12-9346-ddd6b8840d74','Table');
 insert into public."Equipments" ("Id", "Name") values ('4de7e93f-95d9-4d49-8856-d3d6a8af8442','Cabinet');
 
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59999', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59998', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59997', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59996', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59995', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59994', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59993', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59992', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
 
+INSERT INTO "Rooms" ("Id", "Description","Name", "Number", "Discriminator", "FloorId", "Workhours", "BedIds") values
+('497f7913-2139-4091-9a4c-0091d3b76101', 'This is a patient room'      , 'NEW R009', '009', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59999}'),
+('497f7913-2139-4091-9a4c-0091d3b76102', 'This is a patient room'      , 'NEW R010', '010', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59998}'),
+('497f7913-2139-4091-9a4c-0091d3b76103', 'This is a patient room'      , 'NEW R011', '011', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59997, c8da3993-1a84-46c0-97bd-187991b59996}'),
+('497f7913-2139-4091-9a4c-0091d3b76104', 'This is a patient room'      , 'NEW R012', '012', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59995, c8da3993-1a84-46c0-97bd-187991b59994}'),
+('497f7913-2139-4091-9a4c-0091d3b76105', 'This is a patient room'      , 'NEW R013', '013', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59993}'),
+('497f7913-2139-4091-9a4c-0091d3b76106', 'This is a patient room'      , 'NEW R014', '014', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59992}');
 
 insert into public."RoomsEquipment" ("EquipmentId", "Amount", "RoomId") values ('497f7913-2139-4091-9a4c-0091d3b76216',3, '133962ea-c543-497b-81a6-6a2efb54212a');
 insert into public."RoomsEquipment" ("EquipmentId", "Amount", "RoomId") values ('2d6e94c6-775a-499f-861f-c432439bc7ff',2, '25d39e5f-26f4-4254-a6f8-82d5e1abb6f0');
