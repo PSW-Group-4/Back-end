@@ -49,19 +49,19 @@ namespace IntegrationAPI.Controllers
                 _bloodBankService.GetByEmail(tenderApplication.BloodBank);*/
             BloodBank bank = _bloodBankService.GetByEmail(JwtService.GetEmailFromToken(tenderApplication.BloodBank));
             Tender tender = _tenderService.GetById(tenderApplication.TenderId);
-            Price price = tenderApplication.Price;
-            AppliedToTenderEvent appliedToTenderEvent = new AppliedToTenderEvent(bank, tender, price);
+            Price price = new(tenderApplication.PriceInRSD, "RSD");
+            AppliedToTenderEvent appliedToTenderEvent = new(bank, tender, price);
             _service.Submit(appliedToTenderEvent);
             return Ok();
         }
 
-        [Route("tender"), HttpPost]
+        [Route("tender/{tenderId}"), HttpGet]
         public ActionResult GetByTender(string tenderId)
         {
             return Ok(_service.GetByTender(Guid.Parse(tenderId)));
         }
 
-        [Route("notify"), HttpPost]
+        [Route("notify/{applicationId}"), HttpPost]
         [ExternalAuthorizationFilter(ExpectedRoles = "Manager")]
         public ActionResult NotifyParticipants(string applicationId)
         {

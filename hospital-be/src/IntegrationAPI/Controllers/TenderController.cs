@@ -60,7 +60,7 @@ namespace IntegrationAPI.Controllers
             return Ok(_tenderService.GetActive());
         }
 
-        [Route("{id}/winner/confirm"), HttpPut]
+        [Route("{id}/winner/confirm"), HttpPost]
         public ActionResult ConfirmWinner(Guid id)
         {
             WinnerConfirmedEvent winnerConfirmedEvent = new(id);
@@ -75,7 +75,7 @@ namespace IntegrationAPI.Controllers
         }
         [Route("{tenderId}/winner/{bloodBankId}"), HttpPut]
         public ActionResult ChooseWinner(string tenderId, string bloodBankId) {
-            BloodBank winner = _bloodBankService.GetById(Guid.Parse(bloodBankId));
+            BloodBank winner = _bloodBankService.GetByApiKey(bloodBankId);
             WinnerChosenEvent winnerChosenEvent = new( Guid.Parse(tenderId), winner);
             _tenderService.ChooseWinner(winnerChosenEvent);
              return Ok( );
