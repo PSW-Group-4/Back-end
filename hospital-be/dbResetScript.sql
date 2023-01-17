@@ -1,3 +1,6 @@
+delete from "Reports";
+delete from "Medicines";
+delete from "Symptoms";
 delete from "Appointments";
 delete from "EquipmentToMoves";
 delete from "RenovationSessionEvents";
@@ -6,7 +9,6 @@ delete from "Admissions";
 delete from "MapItem";
 delete from "RoomsEquipment";
 delete from "Equipments";
-delete from "Beds";
 delete from "Users";
 delete from "Feedbacks";
 delete from "PatientAllergies";
@@ -18,9 +20,6 @@ delete from "Buildings";
 delete from "Allergies";
 delete from "Addresses";
 delete from "AgeGroups";
-delete from "Medicines";
-delete from "Symptoms";
-delete from "BloodSupply";
 insert into	public."AgeGroups" ("Id","GropuName","MinAge","MaxAge")values 
 	('1e9ab3fc-3b7c-4ef4-a67c-5026db4e3188','Child',0,16),
 	('113faa92-ea79-4bd7-9b9a-6413098f39ec','Young adults',17,30),
@@ -311,22 +310,7 @@ insert into public."Equipments" ("Id", "Name") values ('a00e71fd-7d8f-427e-afb7-
 insert into public."Equipments" ("Id", "Name") values ('fef16a98-f2e5-4d12-9346-ddd6b8840d74','Table');
 insert into public."Equipments" ("Id", "Name") values ('4de7e93f-95d9-4d49-8856-d3d6a8af8442','Cabinet');
 
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59999', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59998', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59997', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59996', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59995', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59994', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59993', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
-insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59992', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
 
-INSERT INTO "Rooms" ("Id", "Description","Name", "Number", "Discriminator", "FloorId", "Workhours", "BedIds") values
-('497f7913-2139-4091-9a4c-0091d3b76101', 'This is a patient room'      , 'NEW R009', '009', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59999}'),
-('497f7913-2139-4091-9a4c-0091d3b76102', 'This is a patient room'      , 'NEW R010', '010', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59998}'),
-('497f7913-2139-4091-9a4c-0091d3b76103', 'This is a patient room'      , 'NEW R011', '011', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59997, c8da3993-1a84-46c0-97bd-187991b59996}'),
-('497f7913-2139-4091-9a4c-0091d3b76104', 'This is a patient room'      , 'NEW R012', '012', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59995, c8da3993-1a84-46c0-97bd-187991b59994}'),
-('497f7913-2139-4091-9a4c-0091d3b76105', 'This is a patient room'      , 'NEW R013', '013', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59993}'),
-('497f7913-2139-4091-9a4c-0091d3b76106', 'This is a patient room'      , 'NEW R014', '014', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59992}');
 
 insert into public."RoomsEquipment" ("EquipmentId", "Amount", "RoomId") values ('497f7913-2139-4091-9a4c-0091d3b76216',3, '133962ea-c543-497b-81a6-6a2efb54212a');
 insert into public."RoomsEquipment" ("EquipmentId", "Amount", "RoomId") values ('2d6e94c6-775a-499f-861f-c432439bc7ff',2, '25d39e5f-26f4-4254-a6f8-82d5e1abb6f0');
@@ -638,39 +622,6 @@ INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('daad
 INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('e36a880d-8f02-43a3-ae6f-d57113f6b65e','2d6e94c6-775a-499f-861f-c432439bc7ff',3);
 INSERT INTO Public."EquipmentToMoves"("Id","EquipmentId","Amount") VALUES ('e5e07046-a3f9-4005-9b31-0d045897eced','2d6e94c6-775a-499f-861f-c432439bc7ff',3);
 
-
--- Medicines
-INSERT INTO public."Medicines" ("Id","Name") VALUES
-	('d5796196-18b7-4e65-94d8-0094733ddb10','Aspirin'),
-	('909d551d-88ad-4496-bfe1-361c85fc2166','Brufen'),
-	('227a40a4-609f-4b80-b89c-b0760591794a','Aspirin'),
-	('839c1918-7e27-42a0-87da-f0185beb2b7a','Brufen'),
-	('be83b11e-0cb2-4338-8029-e7580d5d1a1b','Panadol'),
-	('a0d369ff-61b5-4d64-b934-5138737c2500','Linex'),
-	('524b99a6-3d14-44ab-a9e4-29c1fa6d29c0','Corex'),
-	('9028f723-b735-453e-9ea7-92ae228a28cf','Bleturs');
-
--- Symptoms
-INSERT INTO public."Symptoms" ("Id","Name") VALUES
-	('02776ef1-45e9-4bf1-b6ce-58e2be21b865','Temperature'),
-	('e03dfbcc-c934-4e3b-a4a6-a0255d7898aa','Sore throat'),
-	('bf63dbb1-cce0-4b30-807b-2ba7e51d70b4','Headache'),
-	('f5575217-44a8-45ad-9a39-ef78f22ece79','Toothache'),
-	('b7ca7cde-58fc-4971-9e39-0f6ceaafbd5e','Stomachache'),
-	('3df0969c-c43c-4315-a1ea-2a2960212eb4','Ill'),
-	('d497d3db-93d0-421a-8ece-ea8631772cba','Broken bone'),
-	('3d1ffa79-6ef9-4460-aafe-c51a8e56728b','Fever');
-
--- BloodSyply
-INSERT INTO public."BloodSupply" ("Id","BloodGroup","RhFactor","Amount") VALUES
-	('b14fb18a-e0d9-460c-8dd5-043b0b87dfa4',1,0,200.00),
-	('a6ac6cbf-4d30-4c4c-9b7a-fc110433257c',1,1,450.00),
-	('4996bada-9081-41e9-9fac-79c484237b3f',2,0,500.00),
-	('986f00ae-4a94-46a8-b34b-c2a2a572ee50',2,1,875.00),
-	('91b65daf-f81b-47d4-bf15-7da65beb3eab',3,0,380.00),
-	('5c5a9b38-0d4a-4106-9e28-c9f26dbe37f4',3,1,500.00),
-	('90341a02-a1e2-4622-8955-5bb8baef12b8',0,0,1150.00),
-	('52d280df-3c9f-46e7-8be2-69da3235ad26',0,1,700.00);
 -- Vise ne puca, pa sam privremeno otkomentarisao, Relocation appointments
 
 INSERT INTO Public."Appointments"("Id","StartTime","EndTime","RoomId","Discriminator","IsDone","DoctorId","PatientId","IsCanceled","Reason","EquipmentToMoveId","Type","RenovationAppointment_Type","RoomRenovationPlans") VALUES ('500be7f7-2105-458f-96e5-a06074a2257c','2023-01-25 13:15:00','2023-01-25 13:30:00','dde5590b-1bea-489e-a503-302a9b9fc0ca','MoveEquipmentAppointment','False',NULL,NULL,NULL,NULL,'1f0821a6-adad-4c5f-aad0-6543863c50b1',0,NULL,NULL);
@@ -704,4 +655,42 @@ INSERT INTO public."Appointments" ("Id","StartTime","EndTime","RoomId","Discrimi
 	 ('afc6da3c-91bc-400c-8853-45abe2d169d5','2023-01-11 13:30:00','2023-01-11 14:00:00','133962ea-c543-497b-81a6-6a2efb54212a','MedicalAppointment',false,'13936c4b-03ef-4b43-8c37-b928a5ee9d38','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL),
 	 ('f349d7d2-3baf-423c-8937-d3c30c0efae3','2023-01-16 16:00:00','2023-01-16 16:30:00','620472d5-85b1-4f2d-aafc-3c9d9a59904f','MedicalAppointment',false,'20770be2-7a1f-4656-8d9c-4c615ab27b5c','79978326-f136-4cec-813b-6b12c962752b',false,NULL,NULL,NULL,NULL,NULL);
 
+
+INSERT INTO public."Symptoms" ("Id","Name") VALUES
+	('02776ef1-45e9-4bf1-b6ce-58e2be21b865','Temperature'),
+	('e03dfbcc-c934-4e3b-a4a6-a0255d7898aa','Sore throat'),
+	('bf63dbb1-cce0-4b30-807b-2ba7e51d70b4','Headache'),
+	('f5575217-44a8-45ad-9a39-ef78f22ece79','Toothache'),
+	('b7ca7cde-58fc-4971-9e39-0f6ceaafbd5e','Stomachache'),
+	('3df0969c-c43c-4315-a1ea-2a2960212eb4','Ill'),
+	('d497d3db-93d0-421a-8ece-ea8631772cba','Broken bone'),
+	('3d1ffa79-6ef9-4460-aafe-c51a8e56728b','Fever');
+
+INSERT INTO public."Medicines" ("Id","Name") VALUES
+	('d5796196-18b7-4e65-94d8-0094733ddb10','Aspirin'),
+	('909d551d-88ad-4496-bfe1-361c85fc2166','Brufen'),
+	('227a40a4-609f-4b80-b89c-b0760591794a','Aspirin'),
+	('839c1918-7e27-42a0-87da-f0185beb2b7a','Brufen'),
+	('be83b11e-0cb2-4338-8029-e7580d5d1a1b','Panadol'),
+	('a0d369ff-61b5-4d64-b934-5138737c2500','Linex'),
+	('524b99a6-3d14-44ab-a9e4-29c1fa6d29c0','Corex'),
+	('9028f723-b735-453e-9ea7-92ae228a28cf','Bleturs');
+
+INSERT INTO public."Reports" ("Id","MedicalAppointmentId","Text","DateTime","Prescriptions","Symptoms") VALUES
+	 ('f95e12b5-7352-40f7-82f0-05b02d593743','eb71b54b-7eef-4e23-b2c2-4db336244893','Exam Findings: Blood pressure: 140/85 mmHg, Heart rate: 78 bpm, Weight: 190 lbs, Height: 6''0"
+
+Assessment: The patient''s vital signs are elevated, indicating a potential risk for hypertension and heart disease. 
+
+Recommendations: The patient is advised to make lifestyle changes, including diet and exercise, and follow a healthy lifestyle.','2023-01-17 00:00:00','[{"Medicines": [{"Id": "d5796196-18b7-4e65-94d8-0094733ddb10", "Name": "Aspirin"}]}]','[{"Id": "bf63dbb1-cce0-4b30-807b-2ba7e51d70b4", "Name": "Headache"}]'),
+	 ('d6c3fa87-bd58-4727-bc78-ca360e3ea5e5','afc6da3c-91bc-400c-8853-45abe2d169d5','Exam Findings: Blood pressure: 140/85 mmHg, Heart rate: 78 bpm, Weight: 190 lbs, Height: 6''0", Electrocardiogram (ECG) showed signs of left ventricular hypertrophy.
+
+Assessment: The patient''s vital signs are elevated and ECG results indicate potential cardiac issues.
+
+Recommendations: The patient is advised to undergo further cardiac testing, such as an echocardiogram or stress test, to determine the extent of the cardiac involvement. ','2023-01-17 00:00:00','[{"Medicines": [{"Id": "524b99a6-3d14-44ab-a9e4-29c1fa6d29c0", "Name": "Corex"}]}]','[{"Id": "bf63dbb1-cce0-4b30-807b-2ba7e51d70b4", "Name": "Headache"}]'),
+	 ('e128e154-f6d1-4eed-b708-ded2ce63666e','f349d7d2-3baf-423c-8937-d3c30c0efae3','Exam Findings: Blood pressure: 140/85 mmHg, Heart rate: 78 bpm, Weight: 190 lbs, Height: 6''0", Neurological examination revealed no abnormalities, patient reported experiencing seizures.
+
+Assessment: The patient appears to have epilepsy, the cause of which needs to be determined through further testing. 
+
+Recommendations: The patient is advised to undergo an EEG (electroencephalogram) to confirm the diagnosis and to determine the type of epilepsy.
+','2023-01-17 00:00:00','[{"Medicines": [{"Id": "9028f723-b735-453e-9ea7-92ae228a28cf", "Name": "Bleturs"}]}]','[{"Id": "b7ca7cde-58fc-4971-9e39-0f6ceaafbd5e", "Name": "Stomachache"}]');
 
