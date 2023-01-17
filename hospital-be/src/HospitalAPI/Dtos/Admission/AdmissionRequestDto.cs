@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HospitalLibrary.Admissions.Model;
+using System;
 
 namespace HospitalAPI.Dtos.Admission
 {
@@ -6,7 +7,7 @@ namespace HospitalAPI.Dtos.Admission
     {
         public Guid RoomId { get; set; }
         public Guid PatientId { get; set; }
-        public string Reason { get; set; }
+        public Reason ReasonText { get; set; }
         public DateTime arrivalDate { get; set; }
     }
 }

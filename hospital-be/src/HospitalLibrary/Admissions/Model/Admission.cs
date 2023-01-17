@@ -17,7 +17,7 @@ namespace HospitalLibrary.Admissions.Model
         public Guid Id { get; private set; }
         public Guid PatientId { get; private set; }
         public virtual Patient Patient { get; private set; }        
-        public Reason Reason { get; private set; }
+        public Reason ReasonText { get; private set; }
         public Guid RoomId { get; private set; }
         public virtual Room Room { get; private set; }
         public DateTime arrivalDate { get; private set; }
@@ -29,7 +29,7 @@ namespace HospitalLibrary.Admissions.Model
             Id = id;
             PatientId = patientId;
             Patient = patient;
-            Reason = reason;
+            ReasonText = reason;
             RoomId = roomId;
             Room = room;
             this.arrivalDate = arrivalDate;
@@ -58,7 +58,7 @@ namespace HospitalLibrary.Admissions.Model
         public void Update(Admission admission)
         {
             PatientId = admission.PatientId;
-            Reason = admission.Reason;
+            ReasonText = admission.ReasonText;
             RoomId = admission.RoomId;
             arrivalDate = admission.arrivalDate;
             TreatmentId = admission.TreatmentId;

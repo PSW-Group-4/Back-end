@@ -37,7 +37,7 @@ namespace HospitalLibrary.MedicalReport.Services
                 para3.SpacingAfter = 10;
                 document.Add(para3);
 
-                Paragraph para4 = new Paragraph("Razlog prijema u bolnicu :" + admissionHistory.Admission.Reason, new Font(Font.FontFamily.HELVETICA, 12));
+                Paragraph para4 = new Paragraph("Razlog prijema u bolnicu :" + admissionHistory.Admission.ReasonText, new Font(Font.FontFamily.HELVETICA, 12));
                 para4.Alignment = Element.ALIGN_LEFT;
                 para4.SpacingAfter = 10;
                 document.Add(para4);
