@@ -8,6 +8,7 @@ delete from "Admissions";
 delete from "MapItem";
 delete from "RoomsEquipment";
 delete from "Equipments";
+delete from "Beds";
 delete from "Users";
 delete from "Feedbacks";
 delete from "PatientAllergies";
@@ -698,3 +699,19 @@ Assessment: The patient appears to have epilepsy, the cause of which needs to be
 Recommendations: The patient is advised to undergo an EEG (electroencephalogram) to confirm the diagnosis and to determine the type of epilepsy.
 ','2023-01-17 00:00:00','[{"Medicines": [{"Id": "9028f723-b735-453e-9ea7-92ae228a28cf", "Name": "Bleturs"}]}]','[{"Id": "b7ca7cde-58fc-4971-9e39-0f6ceaafbd5e", "Name": "Stomachache"}]');
 
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59999', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59998', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59997', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59996', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59995', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59994', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59993', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+insert into public."Beds" ("Id", "equipmentId", "IsFree") values ('c8da3993-1a84-46c0-97bd-187991b59992', 'c8da3993-1a84-46c0-97bd-187991b54b4a', true);
+
+INSERT INTO "Rooms" ("Id", "Description","Name", "Number", "Discriminator", "FloorId", "Workhours", "BedIds") values
+('497f7913-2139-4091-9a4c-0091d3b76101', 'This is a patient room'      , 'NEW R009', '009', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59999}'),
+('497f7913-2139-4091-9a4c-0091d3b76102', 'This is a patient room'      , 'NEW R010', '010', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59998}'),
+('497f7913-2139-4091-9a4c-0091d3b76103', 'This is a patient room'      , 'NEW R011', '011', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59997, c8da3993-1a84-46c0-97bd-187991b59996}'),
+('497f7913-2139-4091-9a4c-0091d3b76104', 'This is a patient room'      , 'NEW R012', '012', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59995, c8da3993-1a84-46c0-97bd-187991b59994}'),
+('497f7913-2139-4091-9a4c-0091d3b76105', 'This is a patient room'      , 'NEW R013', '013', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59993}'),
+('497f7913-2139-4091-9a4c-0091d3b76106', 'This is a patient room'      , 'NEW R014', '014', 'PatientRoom', '1b7f1f98-8737-4c53-87e3-3399705be80d', '00-24', '{c8da3993-1a84-46c0-97bd-187991b59992}');
