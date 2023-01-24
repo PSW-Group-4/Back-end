@@ -26,7 +26,7 @@ namespace HospitalAPI.Communications
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Console.WriteLine("Started BloodSupplyStateListener");
-            Task.Run(() => Listen(cancellationToken));
+            //Task.Run(() => Listen(cancellationToken));
             return Task.CompletedTask;
         }
 

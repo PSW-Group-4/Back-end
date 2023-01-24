@@ -2,6 +2,10 @@ using HospitalAPI.Communications;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RabbitMQ.Client;
+using System.Text;
+using System;
+using System.Diagnostics;
 
 namespace HospitalAPI
 {
