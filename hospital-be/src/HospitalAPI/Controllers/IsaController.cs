@@ -6,6 +6,9 @@ using System;
 using RabbitMQ.Client.Events;
 using Confluent.Kafka;
 using System.Threading;
+using Newtonsoft.Json;
+using HospitalAPI.RabbitMqPaket;
+using Castle.Core.Resource;
 
 namespace HospitalAPI.Controllers
 {
@@ -13,8 +16,8 @@ namespace HospitalAPI.Controllers
     [ApiController]
     public class IsaController : ControllerBase
     {
-        [HttpGet("produce")]
-        public ActionResult Produce()
+        [HttpPost("produce")]
+        public ActionResult Produce([FromBody] ContractDTO dto)
         {
             Console.WriteLine("Starting");
 
@@ -25,26 +28,24 @@ namespace HospitalAPI.Controllers
             using var channel = connection.CreateModel();
 
             channel.QueueDeclare(
-                queue: "letterbox",
-                durable: false,
+                queue: "createContract",
+                durable: true,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
 
             int i = 0;
 
-            while(true)
-            {
-                var message = "This is my first Message " + i;
+            dto.id = "35b1196c-9581-4a32-b3f9-abab3bbea959";
 
-                var body = Encoding.UTF8.GetBytes(message);
+            var message = dto;
 
-                channel.BasicPublish("", "letterbox", null, body);
+            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
 
-                Console.WriteLine($"Send message: {message}");
-                i++;
-                Thread.Sleep(2000);
-            }
+            channel.BasicPublish("", "createContract", null, body);
+
+            Console.WriteLine($"Send message: {message}");
+            i++;
 
             return Ok("EndProduce");
         }
@@ -59,31 +60,29 @@ namespace HospitalAPI.Controllers
             using var channel = connection.CreateModel();
 
             channel.QueueDeclare(
-                queue: "letterbox",
-                durable: false,
+                queue: "pswBolnica",
+                durable: true,
                 exclusive: false,
                 autoDelete: false,
                 arguments: null);
 
             var consumer = new EventingBasicConsumer(channel);
 
-            string mess = "a";
-
             consumer.Received += (model, ea) =>
             {
                 var body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
+                //TestDto dto = JsonConvert.DeserializeObject<TestDto>(message);
                 Console.WriteLine($"Recieved new message: {message}");
-                mess = message;
             };
 
-            channel.BasicConsume(queue: "letterbox", autoAck: true, consumer: consumer);
+            channel.BasicConsume(queue: "pswBolnica", autoAck: true, consumer: consumer);
 
             Console.WriteLine("Consuming");
 
             Console.ReadKey();
 
-            return Ok(mess);
+            return Ok();
         }
     }
 }
